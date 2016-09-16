@@ -1,0 +1,91 @@
+//======================================================================
+// Standard DOM Objects
+//======================================================================
+
+   html, body { margin: 0; padding: 0; }
+
+   h1, h2, h3, h4, h5 {
+      margin: 0;
+   }
+
+   a {
+      text-decoration: none;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color:rgba(0,0,0,0);
+   }
+
+   a:active { outline: none; }
+   a:focus { -moz-outline-style: none; outline:0;  }
+
+   img { border: none; margin: 0; padding: 0; display: block; }
+
+   *{
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: transparent; // "turn off" link highlight
+   }
+
+   html {
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+   }
+
+   *, *:before, *:after {
+      -webkit-box-sizing: inherit;
+      -moz-box-sizing: inherit;
+      box-sizing: inherit;
+  }
+
+//======================================================================
+// Tables
+//======================================================================
+
+
+   table {
+      border-collapse: collapse;
+      border: none;
+   }
+
+   th, td { text-align: left; padding: 0; }
+
+   td { vertical-align: top; }
+
+
+//======================================================================
+// Clearfix
+//======================================================================
+
+   .clearfix:after {
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: " ";
+      clear: both;
+      height: 0;
+   }
+   * html .clearfix {
+      zoom: 1;
+   }
+   /* IE6 */
+   *:first-child + html .clearfix {
+      zoom: 1;
+   }
+
+   p {
+      margin: 0;
+   }
+
+//======================================================================
+// Input
+//======================================================================
+
+   input[type=text], input[type=tel], input[type=password], input[type=submit], input[type=button], textarea {
+      -webkit-appearance: none;
+      //.rounded(0);
+      margin: 0;
+      background: none;
+      outline: none;
+      border: none;
+   }

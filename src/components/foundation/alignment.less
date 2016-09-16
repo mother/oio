@@ -1,0 +1,47 @@
+:global {
+   .left         { float: left !important; }
+   .right        { float: right !important; }
+
+   .centerAlign { text-align: center; }
+   .leftAlign   { text-align: left; }
+   .rightAlign  { text-align: right; }
+}
+
+//======================================================================
+// Responsive Alignment
+//======================================================================
+
+.generate-alignment(center);
+.generate-alignment(@name) {
+  .@{name}-align,
+  .sm .@{name}-align-a1,
+
+  .xs .@{name}-align-a1,
+  .xs .@{name}-align-a2,
+  .xs .@{name}-align-a3,
+
+  .sm .@{name}-align-a2,
+  .sm .@{name}-align-a3,
+  .sm .@{name}-align-b1,
+  .sm .@{name}-align-b4,
+
+  .md .@{name}-align-a3,
+  .md .@{name}-align-b4,
+  .md .@{name}-align-c1,
+  .md .@{name}-align-c2,
+  .md .@{name}-align-c3,
+
+  .lg .@{name}-align-b4,
+  .lg .@{name}-align-c2,
+  .lg .@{name}-align-c3,
+  .lg .@{name}-align-d1,
+  .lg .@{name}-align-d2,
+
+  .xl .@{name}-align-b4,
+  .xl .@{name}-align-c3,
+  .xl .@{name}-align-d2,
+  .xl .@{name}-align-e1,
+  {
+     text-align: @name;
+  }
+}

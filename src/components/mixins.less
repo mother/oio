@@ -1,0 +1,84 @@
+// Mixins used by foundation and other components independently
+// Needs to be cleaned and reorganized
+
+@import 'fonts/ionicons/src';
+@import 'fonts/acumin-pro/index';
+@import 'defaultConstants';
+@import 'typography/mixins';
+
+//---------------------------------------------------------------------------
+// Core Mixins
+//---------------------------------------------------------------------------
+
+.color(@hexcolor, @alpha: 1) {
+  @color: rgba( red(@hexcolor), green(@hexcolor), blue(@hexcolor), @alpha);
+}
+
+.overflow-hidden { overflow: hidden !important; }
+
+.rounded(@radius: 2px) {
+   -webkit-border-radius: @radius;
+   -moz-border-radius: @radius;
+   border-radius: @radius;
+}
+
+.rounded-top(@radius: 3px) {
+   -webkit-border-top-left-radius: @radius;
+   -webkit-border-top-right-radius: @radius;
+}
+
+.rounded-left(@radius: 3px) {
+   -webkit-border-top-left-radius: @radius;
+   -webkit-border-bottom-left-radius: @radius;
+}
+
+.rounded-right(@radius: 3px) {
+   -webkit-border-bottom-right-radius: @radius;
+   -webkit-border-top-right-radius: @radius;
+}
+
+.rounded-bottom(@radius: 3px) {
+   -webkit-border-bottom-left-radius: @radius;
+   -webkit-border-bottom-right-radius: @radius;
+}
+
+.box-shadow(@outset) {
+   -webkit-box-shadow: @outset;
+   -moz-box-shadow: @outset;
+   -ms-box-shadow: @outset;
+   box-shadow: @outset;
+}
+
+.opacity(@opacity) {
+   opacity: @opacity / 100;
+   filter: ~"alpha(opacity=@{opacity})";
+}
+
+.linear-gradient(@direction, @gradient1, @gradient2) {
+   background: -webkit-linear-gradient(@direction, @gradient1, @gradient2);
+   background: -moz-linear-gradient(@direction, @gradient1, @gradient2);
+   background: -o-linear-gradient(@direction, @gradient1, @gradient2);
+   background: linear-gradient(@direction, @gradient1, @gradient2);
+}
+
+.transition(@timing) {
+   -webkit-transition: @timing;
+   -moz-transition: @timing;
+   -o-transition: @timing;
+   -ms-transition: @timing;
+   transition: @timing;
+}
+
+.transition-transform(@timing) {
+   -webkit-transition: -webkit-transform @timing;
+   -moz-transition:    -moz-transform @timing;
+   -o-transition:      -o-transform @timing;
+   -ms-transition:     -ms-transform @timing;
+   transition:         transform @timing;
+}
+
+.backface-visibility-hidden {
+   -webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+   backface-visibility: hidden;
+}

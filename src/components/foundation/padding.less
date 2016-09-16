@@ -1,0 +1,24 @@
+//======================================================================
+// Padding
+//======================================================================
+
+:global {
+   .generate-padding(30);
+   
+   .pn   { padding: 0 !important; }
+   .pbn  { padding-bottom: 0 !important; }
+   .ptn  { padding-top: 0 !important; }
+   .ptbn { padding-top: 0 !important; padding-bottom: 0 !important; }
+   .prn  { padding-right: 0 !important; }
+   .pln  { padding-left: 0 !important; }
+   .plrn { padding-left: 0 !important; padding-right: 0 !important; }
+}
+
+.generate-padding(@n, @i: 1) when (@i =< @n) {
+   @name: @i * 6;
+   .p@{name},
+   {
+      padding: @name * 1px !important;
+   }
+   .generate-padding(@n, (@i + 1));
+}

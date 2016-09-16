@@ -1,0 +1,152 @@
+@import '../../../components/mui/mixins';
+
+.tabs {
+   float: left;
+
+   a {
+      float: left;
+      height: 48px;
+      padding: 0 24px;
+      .uiTextSize2;
+      line-height: 48px;
+      color: #777;
+      .transition(300ms);
+
+      &:hover {
+         background: #f8f8f8;
+         color: #444;
+      }
+   }
+
+   .active {
+      background: #fff;
+      color: #444;
+      font-weight: 600;
+
+      &:hover {
+         background: #fff;
+      }
+   }
+
+   .badge {
+      background: #ddd;
+      color: #888;
+      .uiTextSize1;
+      line-height: 10px;
+      font-weight: bold;
+      padding: 0px 6px 1px 6px;
+      .rounded(3px);
+      margin-left: 3px;
+   }
+}
+
+.line-tabs {
+   float: left;
+   width: 100%;
+   border-bottom: 1px solid #e5e5e5;
+   margin-bottom: 30px;
+   height: 30px;
+
+   a {
+      float: left;
+      position: relative;
+      height: 30px;
+      margin-right: 24px;
+      color: #888;
+      .uiTextSize2;
+      font-weight: 600;
+      line-height: 12px;
+
+      &:hover {
+         color: #666;
+         border-bottom: 1px solid #777;
+      }
+   }
+
+   .active {
+      color: @uiColorSwatch1;
+      border-bottom: 1px solid @uiColorSwatch1;
+
+      &:hover {
+         border-bottom: 1px solid #444;
+      }
+   }
+}
+
+.directory {
+   float: left;
+   width: 100%;
+
+   .category {
+      float: left;
+      width: 100%;
+      margin-bottom: 30px;
+   }
+
+   .label {
+      float: left;
+      width: 100%;
+      .uiTextSize1;
+      line-height: 11px;
+      font-weight: bold;
+      color: #aaa;
+      text-transform: uppercase;
+      padding: 0px 3px 12px 6px;
+      letter-spacing: 1px;
+
+      // span {
+      //    position: relative;
+      //    top: -6px;
+      //    background: #fff;
+      //    padding-right: 12px;
+      // }
+   }
+
+   a {
+      float: left;
+      width: 100%;
+      padding: 0 18px;
+      height: @uiBaseComponentHeightMedium;
+      margin-bottom: 2px;
+      color: #888;
+      .uiTextSize2;
+      font-weight: 600;
+      line-height: @uiBaseComponentHeightMedium;
+      .rounded(@uiBaseComponentRadius);
+
+      &:hover {
+         background: #eee;
+         color: #666;
+      }
+   }
+
+   .disabled {
+      .opacity(40);
+      cursor: default;
+   }
+
+   .badge {
+      float: right;
+      margin: 12px 0;
+      background: #ddd;
+      color: #666;
+      .uiTextSize1;
+      line-height: 10px;
+      font-weight: bold;
+      padding: 3px 9px;
+      .rounded(9px);
+      margin-left: 3px;
+   }
+
+   .active {
+      background: #e5e5e5;
+      color: #444;
+
+      background: @uiColorSwatch1;
+      color: #fff;
+
+      &:hover {
+         background: #e5e5e5;
+      }
+   }
+}

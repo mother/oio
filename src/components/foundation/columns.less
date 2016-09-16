@@ -1,0 +1,56 @@
+
+//======================================================================
+// Columns
+//======================================================================
+
+:global {
+   .generate-columns(20);
+}
+
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+   @name: @i * 5;
+   .c@{name},
+   .xs .c@{name}-a1,
+   .xs .c@{name}-a2,
+   .xs .c@{name}-a3,
+
+   .sm .c@{name}-a2,
+   .sm .c@{name}-a3,
+   .sm .c@{name}-b1,
+
+   .md .c@{name}-a3,
+   .md .c@{name}-c1,
+   .md .c@{name}-c2,
+   .md .c@{name}-c3,
+
+   .lg .c@{name}-c2,
+   .lg .c@{name}-c3,
+   .lg .c@{name}-d1,
+   .lg .c@{name}-d2,
+
+   .xl .c@{name}-c3,
+   .xl .c@{name}-d2,
+   .xl .c@{name}-e1,
+   {
+      float: left;
+      position: relative;
+      width: @name * 1%;
+   }
+   .generate-columns(@n, (@i + 1));
+}
+
+//======================================================================
+// Automatic Responsive Columns
+//======================================================================
+
+:global {
+   .c5, .c10, .c15, .c20, .c25, .c30, .c35, .c40, .c45, .c49, .c50, .c55, .c59, .c60, .c65, .c69, .c70, .c74, .c75, .c80, .c90, .c95, .c100 {
+   	float: left;
+   	position: relative;
+   	display: block;
+
+   	.xs &, .sm & {
+   		width: 100% !important;
+   	}
+   }
+}

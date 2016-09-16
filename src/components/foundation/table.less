@@ -1,0 +1,35 @@
+//============================================================================
+// Table
+//============================================================================
+
+:global {
+   .uiTable {
+      width: 100%;
+
+      &.bordered {
+         border: 1px solid @uiBaseBorderColor;
+         border-bottom: none;
+      }
+
+      &.enableHover {
+         tr:hover {
+            td { background: #eee; }
+         }
+      }
+
+      th {
+         background: #e5e5e5;
+         border-bottom: 2px solid @uiBaseBorderColor;
+         padding: 12px 18px;
+         .uiTextSize2;
+         font-weight: bold;
+      }
+
+      td {
+         border-bottom: 1px solid @uiBaseBorderColor;
+         padding: 12px 18px;
+         position: relative;
+         .uiTextSize2;
+      }
+   }
+}

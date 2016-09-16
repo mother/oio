@@ -1,0 +1,20 @@
+//============================================================================
+// 12-Column Responsive Grid System
+//============================================================================
+
+.generate-grid-system(@uiGridNumberColumns);
+.generate-grid-system(@n, @i: 1) when (@i =< @n) {
+   @width :  @i / @n * 100%;
+
+   .f@{i}
+   {
+      float: left;
+      width: @width;
+      padding: 0 @uiGridGutterWidth;
+
+      .xs &, .sm & {
+         width: 100%;
+      }
+   }
+   .generate-grid-system(@n, (@i + 1));
+}

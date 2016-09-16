@@ -1,0 +1,114 @@
+:global {
+   input[type=text], input[type="tel"], input[type=password] {
+      display: block;
+      width: 100%;
+      height: @uiBaseComponentHeightMedium;
+      .rounded(@uiBaseComponentRadius);
+      .uiTextSize3;
+      line-height: @uiBaseComponentHeightMedium - 1px;
+      padding: 0px 12px 0px 12px;
+      .transition(300ms);
+      margin-bottom: 12px;
+      border: 2px solid @uiBaseBorderColor;
+
+      &:focus {
+         border: 2px solid #aaa;
+      }
+   }
+
+   input[type=password] {
+      padding: 9px 12px;
+      line-height: @uiBaseComponentHeightMedium;
+   }
+
+   textarea {
+      display: block;
+      width: 100%;
+      .rounded(@uiBaseComponentRadius);
+      .uiTextSize3;
+      line-height: @uiBaseComponentHeightMedium - 1px;
+      padding: 12px;
+      .transition(300ms);
+      margin-bottom: 12px;
+      border: 2px solid @uiBaseBorderColor;
+
+      &:focus { border: 2px solid #aaa; }
+   }
+
+   select {
+      display: inline-block;
+      height: @uiBaseComponentHeightMedium;
+      color: #666;
+      width: 100%;
+      .uiTextSize3;
+      line-height: 18px;
+      padding: 8px 12px;
+      -webkit-appearance: none;
+      outline: none;
+      cursor: pointer;
+      background-color: #e5e5e5;
+      background-image: url(/libraries/mui/images/down-arrow.png);
+      background-position: 98% 50%;
+      background-repeat: no-repeat;
+      .rounded(@uiBaseComponentRadius);
+      border : none;
+      margin-bottom: 12px;
+
+      &:hover { background-color: #eee; }
+   }
+
+   input[type=radio], input[type=checkbox] { margin-right: 12px; }
+
+   label {
+      display: block;
+      width: 100%;
+      margin-bottom: 6px;
+      font-weight: bold;
+      .uiTextSize2;
+      color: #888;
+
+      span {
+         color: #aaa;
+         font-weight: normal;
+      }
+   }
+
+   .form-title {
+      padding: 6px 0;
+      font-weight: bold;
+      .uiTextSize4;
+   }
+
+   .form-description {
+      padding: 6px 0 18px 0;
+      .uiTextSize3;
+      color: #666;
+   }
+
+   .form-label-description {
+      display: block;
+      width: 100%;
+      margin-bottom: 6px;
+      .uiTextSize2;
+      color: #999;
+   }
+
+   .form-radio-block, .form-checkbox-block {
+      display: block;
+      padding-left: 30px;
+      margin-bottom: 6px;
+      position: relative;
+      .uiTextSize2;
+      color: #999;
+
+      label {
+         margin-bottom: 0px;
+      }
+
+      input[type=radio], input[type=checkbox] {
+         position: absolute;
+         top: 1px;
+         left: 0px;
+      }
+   }
+}

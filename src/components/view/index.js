@@ -1,0 +1,153 @@
+import React from 'react'
+import classNames from 'classnames'
+import styles from './index.less'
+
+export default class UIView extends React.Component {
+
+   static propTypes = {
+      aspectRatio: React.PropTypes.string,
+      children: React.PropTypes.node,
+      className: React.PropTypes.string,
+      width: React.PropTypes.string,
+      height: React.PropTypes.string,
+      scroll: React.PropTypes.string,
+      format: React.PropTypes.string
+   }
+
+   constructor(props, context) {
+      super(props, context)
+
+      this.state = {
+         size: this.getWindowSize(),
+         width: 'auto',
+         height: 'auto'
+      }
+
+      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
+   }
+
+   componentDidMount() {
+      if (this.props.aspectRatio) {
+         this.setComponentAspectRatio()
+      }
+
+      window.addEventListener('resize', this.windowSizeUpdated, false)
+   }
+
+   componentDidUpdate() {
+      if (this.props.aspectRatio) {
+         this.setComponentAspectRatio()
+      }
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
+   }
+
+   getAttributeForCurrentSize(attributeValue) {
+      const currentSize = this.state.size
+      const fragments = attributeValue.split(' ')
+
+      for (const fragment of fragments) {
+         const charSet = fragment.match(/\[([abcdef,-]+)\]/i)
+         if (Array.isArray(charSet) && charSet.length === 2) {
+            const charRegexp = new RegExp(`[${charSet[1]}]`, 'i')
+            const match = currentSize.match(charRegexp)
+            if (Array.isArray(match)) {
+               return fragment.replace(charSet[0], '')
+            }
+         } else {
+            return fragment
+         }
+      }
+
+      return null
+   }
+
+   getWindowSize() {
+      const windowWidth = document.documentElement.clientWidth
+
+      if (windowWidth >= 1650) {
+         return 'e'
+      } else if (windowWidth >= 1300) {
+         return 'd'
+      } else if (windowWidth >= 992) {
+         return 'c'
+      } else if (windowWidth >= 768) {
+         return 'b'
+      } else if (windowWidth >= 0) {
+         return 'a'
+      }
+
+      return null
+   }
+
+   setComponentAspectRatio() {
+      const aspectRatio = this.getAttributeForCurrentSize(this.props.aspectRatio)
+      const aspectRatioDimensions = aspectRatio.split(':')
+      const aspectRatioWidth = aspectRatioDimensions[0]
+      const aspectRatioHeight = aspectRatioDimensions[1]
+      const viewWidth = this.node.offsetWidth
+      const viewHeight = `${Math.round((viewWidth / aspectRatioWidth) * aspectRatioHeight)}px`
+
+      if (this.state.height !== viewHeight) {
+         this.setState({ height: viewHeight })
+      }
+   }
+
+   windowSizeUpdated() {
+      const windowSize = this.getWindowSize()
+      this.setState({ size: windowSize })
+   }
+
+   render() {
+      const viewClasses = [styles.uiView]
+
+      if (this.props.width) {
+         const width = this.getAttributeForCurrentSize(this.props.width)
+         if (width) {
+            const unit = width.indexOf('px') === -1 ? '%' : 'px'
+            this.state.width = parseFloat(width) + unit
+         }
+      }
+
+      if (this.props.height) {
+         const height = this.getAttributeForCurrentSize(this.props.height)
+         if (height) {
+            const unit = height.indexOf('px') === -1 ? '%' : 'px'
+            this.state.height = parseFloat(height) + unit
+         }
+      }
+
+      if (this.props.scroll) {
+         const scroll = this.getAttributeForCurrentSize(this.props.scroll)
+         if (scroll && scroll === 'on') {
+            viewClasses.push(styles.scroll)
+         }
+      }
+
+      if (this.props.format) {
+         const format = this.getAttributeForCurrentSize(this.props.format)
+         if (format === 'float') {
+            viewClasses.push(styles.floatFormat)
+         } else {
+            viewClasses.push(styles.autoFormat)
+         }
+      } else {
+         viewClasses.push(styles.autoFormat)
+      }
+
+      viewClasses.push(this.props.className)
+
+      const style = {
+         width: this.state.width,
+         height: this.state.height
+      }
+
+      return (
+         <div ref={(node) => (this.node = node)} style={style} className={classNames(viewClasses)}>
+            {this.props.children}
+         </div>
+      )
+   }
+}

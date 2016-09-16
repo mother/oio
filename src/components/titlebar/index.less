@@ -1,0 +1,50 @@
+@import '../../../components/mui/mixins';
+
+.uiTitlebar {
+   float: left;
+   width: 100%;
+   border-bottom: 1px solid @uiBaseBorderColor;
+   padding: 0 18px 0 30px;
+
+   .title {
+      float: left;
+      color: #444;
+   }
+}
+
+.large {
+   composes: uiTitlebar;
+   height: 90px;
+   line-height: 90px;
+
+   .title {
+      .uiTextSize4;
+      line-height: 90px;
+      .medium;
+   }
+}
+
+.medium {
+   composes: uiTitlebar;
+   height: 72px;
+   line-height: 72px;
+
+   .title {
+      .uiTextSize4;
+      line-height: 72px;
+      .medium;
+   }
+}
+
+.small {
+   composes: uiTitlebar;
+   height: 60px;
+   line-height: 60px;
+   padding: 0 18px 0 24px;
+
+   .title {
+      .uiTextSize3;
+      line-height: 60px;
+      .medium;
+   }
+}
