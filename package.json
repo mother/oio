@@ -1,54 +1,64 @@
 {
-  "name": "react-kit",
-  "version": "0.0.1",
-  "main": "dist/index.js",
-  "description": "A UI component kit for React",
-  "scripts": {
-    "build": "rm -rf dist && webpack",
-    "dev": "node server.js",
-    "test": "mocha --compilers js:babel-core/register --recursive test/test.js",
-    "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
-    "lint": "node ./node_modules/eslint/bin/eslint.js .; exit 0"
-  },
-  "files": ["dist/index.js"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mother/react-kit.git"
-  },
-  "keywords": [
-    "react",
-    "reactjs",
-    "component",
-    "components",
-    "kit",
-    "UI",
-    "material"
-  ],
-  "author": "Jared Reich",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mother/react-kit/issues"
-  },
-  "homepage": "https://github.com/mother/react-kit",
-  "peerDependencies": {
-    "react": ">=0.14.6"
-  },
-  "devDependencies": {
-    "babel-core": "6.0.20",
-    "babel-loader": "6.0.1",
-    "babel-preset-es2015": "6.0.15",
-    "babel-preset-react": "6.0.15",
-    "babel-preset-stage-0": "6.0.15",
-    "chai": "3.5.0",
-    "enzyme": "2.4.1",
-    "eslint-config-mother": "latest",
-    "jsdom": "9.4.2",
-    "mocha": "3.0.2",
-    "react-addons-test-utils": "15.3.1",
-    "react-dom": "0.14.8",
-    "react-hot-loader": "1.3.0",
-    "sinon": "1.17.5",
-    "webpack": "1.12.2",
-    "webpack-dev-server": "1.12.1"
-  }
+   "name": "rkit",
+   "version": "0.0.2",
+   "main": "dist/index.js",
+   "description": "A UI component kit for React",
+   "scripts": {
+      "build": "rm -rf dist && webpack",
+      "dev": "node server.js",
+      "test": "mocha --compilers js:babel-core/register --recursive test/test.js",
+      "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
+      "lint": "node ./node_modules/eslint/bin/eslint.js .; exit 0"
+   },
+   "files": [
+      "dist/index.js"
+   ],
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/mother/rkit.git"
+   },
+   "keywords": [
+      "react",
+      "reactjs",
+      "component",
+      "components",
+      "kit",
+      "UI",
+      "material"
+   ],
+   "author": "Jared Reich",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/mother/rkit/issues"
+   },
+   "homepage": "https://github.com/mother/rkit",
+   "dependencies": {
+      "classnames": "2.2.5"
+   },
+   "peerDependencies": {
+      "react": ">=0.14.6"
+   },
+   "devDependencies": {
+      "babel-core": "6.0.20",
+      "babel-loader": "6.0.1",
+      "babel-preset-es2015": "6.0.15",
+      "babel-preset-react": "6.0.15",
+      "babel-preset-stage-0": "6.0.15",
+      "chai": "3.5.0",
+      "css-loader": "0.25.0",
+      "enzyme": "2.4.1",
+      "eslint-config-mother": "latest",
+      "jsdom": "9.4.2",
+      "less": "2.7.1",
+      "less-loader": "2.2.3",
+      "mocha": "3.0.2",
+      "react-addons-test-utils": "15.3.1",
+      "react-dom": "0.14.8",
+      "react-hot-loader": "1.3.0",
+      "resolve-url-loader": "1.6.0",
+      "sinon": "1.17.5",
+      "style-loader": "0.13.1",
+      "webpack": "1.12.2",
+      "webpack-dev-server": "1.12.1"
+   }
 }

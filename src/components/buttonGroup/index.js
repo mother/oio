@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class UIBtnGroup extends React.Component {
+export default class UIButtonGroup extends React.Component {
    static propTypes = {
       align: React.PropTypes.string,
       children: React.PropTypes.node,
@@ -14,16 +14,16 @@ export default class UIBtnGroup extends React.Component {
    }
 
    static childContextTypes = {
-      btnGroupStyle: React.PropTypes.object
+      buttonGroupStyle: React.PropTypes.object
    }
 
    getChildContext() {
-      const btnGroupStyle = {
+      const buttonGroupStyle = {
          align: this.props.align,
          spacing: `${this.props.spacing}px`
       }
 
-      return { btnGroupStyle }
+      return { buttonGroupStyle }
    }
 
    render() {

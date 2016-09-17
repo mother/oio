@@ -1,4 +1,4 @@
-react-kit
+rkit
 =======================
 
 > A UI component kit for React
@@ -7,14 +7,14 @@ react-kit
 
 ## Demo
 
-[https://mother.github.io/react-kit](https://mother.github.io/react-kit)
+[https://mother.github.io/rkit](https://mother.github.io/rkit)
 
 ## Installation
 
 Install from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
 
 ```bash
-npm install react-kit --save
+npm install rkit --save
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install react-kit --save
 ```js
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Kit from 'react-kit'
+import Kit from 'rkit'
 
 var Demo = React.createClass({
   render: function() {
@@ -38,7 +38,7 @@ ReactDOM.render(<Demo />, document.getElementById('container'))
 ## Tinker
 
 ```
-git clone https://github.com/mother/react-kit
+git clone https://github.com/mother/rkit
 npm install
 ```
 And since React is just a peer dependency:

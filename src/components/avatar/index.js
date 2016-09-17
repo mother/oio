@@ -1,10 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './index.less'
 
-const UIAvatar = ({ src, className }) => {
-   const classes = ['uiAvatar', this.props.className]
-   const style = {}
+import styles from './styles.less'
+
+const UIAvatar = ({ className, src, style }) => {
+   const classes = ['uiAvatar', className]
 
    if (!src) {
       classes.push(styles.defaultAvatar)
@@ -18,8 +18,9 @@ const UIAvatar = ({ src, className }) => {
 }
 
 UIAvatar.propTypes = {
-   src: React.PropTypes.string.isRequired,
-   className: React.PropTypes.string
+   className: React.PropTypes.string,
+   src: React.PropTypes.string,
+   style: React.PropTypes.objectOf(React.PropTypes.string)
 }
 
 export default UIAvatar

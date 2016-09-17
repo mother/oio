@@ -1,9 +1,13 @@
-import React from 'react'
+import UIActionBar from './components/ActionBar'
+import UIAvatar from './components/Avatar'
+import UIButton from './components/Button'
+import UIButtonGroup from './components/ButtonGroup'
+import UICollectionCard from './components/CollectionCard'
 
-class Files extends React.Component {}
-
-Files.propTypes = {}
-
-Files.defaultProps = {}
-
-export default Files
+export {
+   UIActionBar,
+   UIAvatar,
+   UIButton,
+   UIButtonGroup,
+   UICollectionCard
+}

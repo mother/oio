@@ -13,14 +13,31 @@ module.exports = {
       filename: 'bundle.js',
       publicPath: '/dist/'
    },
-   plugins: [
-      new webpack.HotModuleReplacementPlugin()
-   ],
    module: {
       loaders: [{
          test: /\.js$/,
-         loaders: ['react-hot', 'babel'],
-         include: path.join(__dirname, 'src')
+         exclude: /node_modules/,
+         loader: 'babel-loader',
+         query: {
+            presets: ['react', 'es2015', 'stage-0']
+         }
+      },
+      {
+         test: /\.less$/,
+         loaders: [
+            'style',
+            'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+            'resolve-url',
+            'less'
+         ]
       }]
-   }
+   },
+   resolve: {
+      extensions: ['', '.js']
+   },
+   plugins: [
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin()
+   ]
 }
