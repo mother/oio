@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './index.less'
+
+import styles from './styles.less'
 
 // TODO: This needs to be smarter
 // will probably have state to determine active state?

@@ -1,5 +1,6 @@
 import React from 'react'
-import styles from './index.less'
+
+import styles from './styles.less'
 
 const UISpacer = ({ size }) => {
    const spacerSizeClass = `size${size}`

@@ -1,9 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './index.less'
+
+import styles from './styles.less'
 
 export default class UIView extends React.Component {
-
    static propTypes = {
       aspectRatio: React.PropTypes.string,
       children: React.PropTypes.node,
@@ -145,7 +145,7 @@ export default class UIView extends React.Component {
       }
 
       return (
-         <div ref={(node) => (this.node = node)} style={style} className={classNames(viewClasses)}>
+         <div ref={node => (this.node = node)} style={style} className={classNames(viewClasses)}>
             {this.props.children}
          </div>
       )

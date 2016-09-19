@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './index.less'
+
+import styles from './styles.less'
 
 export default class UIGrid extends React.Component {
    static propTypes = {

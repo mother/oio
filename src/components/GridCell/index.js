@@ -1,8 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './index.less'
 
-export default class UICell extends React.Component {
+import styles from './styles.less'
+
+export default class UIGridCell extends React.Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
@@ -26,7 +27,6 @@ export default class UICell extends React.Component {
    componentDidMount() {
       window.addEventListener('resize', this.windowResizeListener, false)
    }
-
 
    componentWillUnmount() {
       window.removeEventListener('resize', this.windowResizeListener)
@@ -78,7 +78,7 @@ export default class UICell extends React.Component {
    render() {
       let gutter = 0
       let colspanMultiplier = 1
-      const classes = classNames(styles.uiCell, this.props.className)
+      const classes = classNames(styles.uiGridCell, this.props.className)
 
       // Width is set by UIGrid (for now)
       if (this.props.width) {
@@ -108,7 +108,7 @@ export default class UICell extends React.Component {
 
       return (
          <div className={classes} style={cellStyle} >
-            <div className={styles.uiCellInner}>
+            <div className={styles.uiGridCellInner}>
                {this.props.children}
             </div>
          </div>

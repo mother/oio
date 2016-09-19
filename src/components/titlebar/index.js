@@ -1,7 +1,8 @@
 import React from 'react'
-import styles from './index.less'
 
-// This component will have more functionality
+import styles from './styles.less'
+
+// TODO: This component will have more functionality
 export default class UITitlebar extends React.Component {
    static propTypes = {
       size: React.PropTypes.string,
