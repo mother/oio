@@ -1,6 +1,6 @@
 {
   "name": "rkit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "description": "A UI component kit for React",
   "scripts": {
