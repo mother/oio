@@ -1,0 +1,606 @@
+:global {
+   .left         { float: left !important; }
+   .right        { float: right !important; }
+
+   .centerAlign { text-align: center; }
+   .leftAlign   { text-align: left; }
+   .rightAlign  { text-align: right; }
+}
+
+//======================================================================
+// Responsive Alignment
+//======================================================================
+
+.generate-alignment(center);
+.generate-alignment(@name) {
+  .@{name}-align,
+  .sm .@{name}-align-a1,
+
+  .xs .@{name}-align-a1,
+  .xs .@{name}-align-a2,
+  .xs .@{name}-align-a3,
+
+  .sm .@{name}-align-a2,
+  .sm .@{name}-align-a3,
+  .sm .@{name}-align-b1,
+  .sm .@{name}-align-b4,
+
+  .md .@{name}-align-a3,
+  .md .@{name}-align-b4,
+  .md .@{name}-align-c1,
+  .md .@{name}-align-c2,
+  .md .@{name}-align-c3,
+
+  .lg .@{name}-align-b4,
+  .lg .@{name}-align-c2,
+  .lg .@{name}-align-c3,
+  .lg .@{name}-align-d1,
+  .lg .@{name}-align-d2,
+
+  .xl .@{name}-align-b4,
+  .xl .@{name}-align-c3,
+  .xl .@{name}-align-d2,
+  .xl .@{name}-align-e1,
+  {
+     text-align: @name;
+  }
+}
+
+:global {
+   .bgWhite  { background: #ffffff !important; }
+   .bgGray10 { background: #F5F5F5 !important; }
+   .bgGray20 { background: #EEEEEE !important; }
+   .bgGray30 { background: #E0E0E0 !important; }
+   .bgGray40 { background: #BDBDBD !important; }
+   .bgGray50 { background: #9E9E9E !important; }
+   .bgGray60 { background: #757575 !important; }
+   .bgGray70 { background: #616161 !important; }
+   .bgGray80 { background: #424242 !important; }
+   .bgGray90 { background: #212121 !important; }
+   .bgBlack  { background: #000000 !important; }
+}
+
+.white  { color: #ffffff; }
+.gray10 { color: #F5F5F5; }
+.gray20 { color: #EEEEEE; }
+.gray30 { color: #E0E0E0; }
+.gray40 { color: #BDBDBD; }
+.gray50 { color: #9E9E9E; }
+.gray60 { color: #757575; }
+.gray70 { color: #616161; }
+.gray80 { color: #424242; }
+.gray90 { color: #212121; }
+.black  { color: #000000; }
+
+
+//======================================================================
+// Columns
+//======================================================================
+
+:global {
+   .generate-columns(20);
+}
+
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+   @name: @i * 5;
+   .c@{name},
+   .xs .c@{name}-a1,
+   .xs .c@{name}-a2,
+   .xs .c@{name}-a3,
+
+   .sm .c@{name}-a2,
+   .sm .c@{name}-a3,
+   .sm .c@{name}-b1,
+
+   .md .c@{name}-a3,
+   .md .c@{name}-c1,
+   .md .c@{name}-c2,
+   .md .c@{name}-c3,
+
+   .lg .c@{name}-c2,
+   .lg .c@{name}-c3,
+   .lg .c@{name}-d1,
+   .lg .c@{name}-d2,
+
+   .xl .c@{name}-c3,
+   .xl .c@{name}-d2,
+   .xl .c@{name}-e1,
+   {
+      float: left;
+      position: relative;
+      width: @name * 1%;
+   }
+   .generate-columns(@n, (@i + 1));
+}
+
+//======================================================================
+// Automatic Responsive Columns
+//======================================================================
+
+:global {
+   .c5, .c10, .c15, .c20, .c25, .c30, .c35, .c40, .c45, .c49, .c50, .c55, .c59, .c60, .c65, .c69, .c70, .c74, .c75, .c80, .c90, .c95, .c100 {
+   	float: left;
+   	position: relative;
+   	display: block;
+
+   	.xs &, .sm & {
+   		width: 100% !important;
+   	}
+   }
+}
+
+@bodyFontColor               : #555;
+@uiColorSwatch1              : #ff5252;
+@uiBaseBorderColor           : #ddd;
+@uiBaseComponentRadius       : 4px;
+
+@uiBaseComponentHeightLarge  : 48px;
+@uiBaseComponentHeightMedium : 36px;
+@uiBaseComponentHeightSmall  : 30px;
+@uiBaseComponentHeightTiny   : 24px;
+
+@uiGridNumberColumns         : 12;
+@uiGridGutterWidth           : 3px;
+
+.uiBodyText(acumin-pro);
+
+:global {
+   input[type=text], input[type="tel"], input[type=password] {
+      display: block;
+      width: 100%;
+      height: @uiBaseComponentHeightMedium;
+      .rounded(@uiBaseComponentRadius);
+      .uiTextSize3;
+      line-height: @uiBaseComponentHeightMedium - 1px;
+      padding: 0px 12px 0px 12px;
+      .transition(300ms);
+      margin-bottom: 12px;
+      border: 2px solid @uiBaseBorderColor;
+
+      &:focus {
+         border: 2px solid #aaa;
+      }
+   }
+
+   input[type=password] {
+      padding: 9px 12px;
+      line-height: @uiBaseComponentHeightMedium;
+   }
+
+   textarea {
+      display: block;
+      width: 100%;
+      .rounded(@uiBaseComponentRadius);
+      .uiTextSize3;
+      line-height: @uiBaseComponentHeightMedium - 1px;
+      padding: 12px;
+      .transition(300ms);
+      margin-bottom: 12px;
+      border: 2px solid @uiBaseBorderColor;
+
+      &:focus { border: 2px solid #aaa; }
+   }
+
+   select {
+      display: inline-block;
+      height: @uiBaseComponentHeightMedium;
+      color: #666;
+      width: 100%;
+      .uiTextSize3;
+      line-height: 18px;
+      padding: 8px 12px;
+      -webkit-appearance: none;
+      outline: none;
+      cursor: pointer;
+      background-color: #e5e5e5;
+      background-image: url(/libraries/mui/images/down-arrow.png);
+      background-position: 98% 50%;
+      background-repeat: no-repeat;
+      .rounded(@uiBaseComponentRadius);
+      border : none;
+      margin-bottom: 12px;
+
+      &:hover { background-color: #eee; }
+   }
+
+   input[type=radio], input[type=checkbox] { margin-right: 12px; }
+
+   label {
+      display: block;
+      width: 100%;
+      margin-bottom: 6px;
+      font-weight: bold;
+      .uiTextSize2;
+      color: #888;
+
+      span {
+         color: #aaa;
+         font-weight: normal;
+      }
+   }
+
+   .form-title {
+      padding: 6px 0;
+      font-weight: bold;
+      .uiTextSize4;
+   }
+
+   .form-description {
+      padding: 6px 0 18px 0;
+      .uiTextSize3;
+      color: #666;
+   }
+
+   .form-label-description {
+      display: block;
+      width: 100%;
+      margin-bottom: 6px;
+      .uiTextSize2;
+      color: #999;
+   }
+
+   .form-radio-block, .form-checkbox-block {
+      display: block;
+      padding-left: 30px;
+      margin-bottom: 6px;
+      position: relative;
+      .uiTextSize2;
+      color: #999;
+
+      label {
+         margin-bottom: 0px;
+      }
+
+      input[type=radio], input[type=checkbox] {
+         position: absolute;
+         top: 1px;
+         left: 0px;
+      }
+   }
+}
+
+//============================================================================
+// 12-Column Responsive Grid System
+//============================================================================
+
+.generate-grid-system(@uiGridNumberColumns);
+.generate-grid-system(@n, @i: 1) when (@i =< @n) {
+   @width :  @i / @n * 100%;
+
+   .f@{i}
+   {
+      float: left;
+      width: @width;
+      padding: 0 @uiGridGutterWidth;
+
+      .xs &, .sm & {
+         width: 100%;
+      }
+   }
+   .generate-grid-system(@n, (@i + 1));
+}
+
+// This is a little dumb right now
+// Need to add more depth still
+
+:global {
+   body {
+      color: @bodyFontColor;
+      .uiTextSize3;
+      -webkit-font-smoothing: antialiased;
+   }
+
+   h1 {
+      margin-bottom: 6px;
+   }
+
+   h2 {
+      margin-bottom: 6px;
+   }
+
+   h3 {
+      margin-bottom: 6px;
+   }
+
+   h4 {
+      margin-bottom: 6px;
+   }
+
+   h5 {
+      margin-bottom: 6px;
+   }
+
+   .uiBodyText(acumin-pro);
+}
+
+// Mixins used by styles and other components independently
+// Needs to be cleaned and reorganized
+
+@import '../assets/fonts/ionicons/src';
+@import '../assets/fonts/acumin-pro/index';
+@import 'constants';
+
+//---------------------------------------------------------------------------
+// Typography Mixins
+//---------------------------------------------------------------------------
+
+.uiBodyText(@font-family-name) {
+  .uiTextSize1 { .bodyText(@font-family-name, 1); }
+  .uiTextSize2 { .bodyText(@font-family-name, 2); }
+  .uiTextSize3 { .bodyText(@font-family-name, 3); }
+  .uiTextSize4 { .bodyText(@font-family-name, 4); }
+  .uiTextSize5 { .bodyText(@font-family-name, 5); }
+  .uiTextSize6 { .bodyText(@font-family-name, 6); }
+  .uiTextSize7 { .bodyText(@font-family-name, 7); }
+  .uiTextSize8 { .bodyText(@font-family-name, 8); }
+  .uiTextSize9 { .bodyText(@font-family-name, 9); }
+  .uiTextSize10 { .bodyText(@font-family-name, 10); }
+}
+
+.uiBodyText-b(@font-family-name) {
+  .uiTextSize1b { .bodyText(@font-family-name, 1); }
+  .uiTextSize2b { .bodyText(@font-family-name, 2); }
+  .uiTextSize3b { .bodyText(@font-family-name, 3); }
+  .uiTextSize4b { .bodyText(@font-family-name, 4); }
+  .uiTextSize5b { .bodyText(@font-family-name, 5); }
+  .uiTextSize6b { .bodyText(@font-family-name, 6); }
+}
+
+.uiBodyText-c(@font-family-name) {
+  .uiTextSize1c { .bodyText(@font-family-name, 1); }
+  .uiTextSize2c { .bodyText(@font-family-name, 2); }
+  .uiTextSize3c { .bodyText(@font-family-name, 3); }
+  .uiTextSize4c { .bodyText(@font-family-name, 4); }
+  .uiTextSize5c { .bodyText(@font-family-name, 5); }
+  .uiTextSize6c { .bodyText(@font-family-name, 6); }
+}
+
+//---------------------------------------------------------------------------
+// Core Mixins
+//---------------------------------------------------------------------------
+
+.color(@hexcolor, @alpha: 1) {
+  @color: rgba( red(@hexcolor), green(@hexcolor), blue(@hexcolor), @alpha);
+}
+
+.overflow-hidden { overflow: hidden !important; }
+
+.rounded(@radius: 2px) {
+   -webkit-border-radius: @radius;
+   -moz-border-radius: @radius;
+   border-radius: @radius;
+}
+
+.rounded-top(@radius: 3px) {
+   -webkit-border-top-left-radius: @radius;
+   -webkit-border-top-right-radius: @radius;
+}
+
+.rounded-left(@radius: 3px) {
+   -webkit-border-top-left-radius: @radius;
+   -webkit-border-bottom-left-radius: @radius;
+}
+
+.rounded-right(@radius: 3px) {
+   -webkit-border-bottom-right-radius: @radius;
+   -webkit-border-top-right-radius: @radius;
+}
+
+.rounded-bottom(@radius: 3px) {
+   -webkit-border-bottom-left-radius: @radius;
+   -webkit-border-bottom-right-radius: @radius;
+}
+
+.box-shadow(@outset) {
+   -webkit-box-shadow: @outset;
+   -moz-box-shadow: @outset;
+   -ms-box-shadow: @outset;
+   box-shadow: @outset;
+}
+
+.opacity(@opacity) {
+   opacity: @opacity / 100;
+   filter: ~"alpha(opacity=@{opacity})";
+}
+
+.linear-gradient(@direction, @gradient1, @gradient2) {
+   background: -webkit-linear-gradient(@direction, @gradient1, @gradient2);
+   background: -moz-linear-gradient(@direction, @gradient1, @gradient2);
+   background: -o-linear-gradient(@direction, @gradient1, @gradient2);
+   background: linear-gradient(@direction, @gradient1, @gradient2);
+}
+
+.transition(@timing) {
+   -webkit-transition: @timing;
+   -moz-transition: @timing;
+   -o-transition: @timing;
+   -ms-transition: @timing;
+   transition: @timing;
+}
+
+.transition-transform(@timing) {
+   -webkit-transition: -webkit-transform @timing;
+   -moz-transition:    -moz-transform @timing;
+   -o-transition:      -o-transform @timing;
+   -ms-transition:     -ms-transform @timing;
+   transition:         transform @timing;
+}
+
+.backface-visibility-hidden {
+   -webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+   backface-visibility: hidden;
+}
+
+:global {
+   .uppercase { text-transform: uppercase; }
+}
+
+//======================================================================
+// Standard DOM Objects
+//======================================================================
+
+   html, body { margin: 0; padding: 0; }
+
+   h1, h2, h3, h4, h5 {
+      margin: 0;
+   }
+
+   a {
+      text-decoration: none;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color:rgba(0,0,0,0);
+   }
+
+   a:active { outline: none; }
+   a:focus { -moz-outline-style: none; outline:0;  }
+
+   img { border: none; margin: 0; padding: 0; display: block; }
+
+   *{
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: transparent; // "turn off" link highlight
+   }
+
+   html {
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+   }
+
+   *, *:before, *:after {
+      -webkit-box-sizing: inherit;
+      -moz-box-sizing: inherit;
+      box-sizing: inherit;
+  }
+
+//======================================================================
+// Tables
+//======================================================================
+
+
+   table {
+      border-collapse: collapse;
+      border: none;
+   }
+
+   th, td { text-align: left; padding: 0; }
+
+   td { vertical-align: top; }
+
+
+//======================================================================
+// Clearfix
+//======================================================================
+
+   .clearfix:after {
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: " ";
+      clear: both;
+      height: 0;
+   }
+   * html .clearfix {
+      zoom: 1;
+   }
+   /* IE6 */
+   *:first-child + html .clearfix {
+      zoom: 1;
+   }
+
+   p {
+      margin: 0;
+   }
+
+//======================================================================
+// Input
+//======================================================================
+
+   input[type=text], input[type=tel], input[type=password], input[type=submit], input[type=button], textarea {
+      -webkit-appearance: none;
+      //.rounded(0);
+      margin: 0;
+      background: none;
+      outline: none;
+      border: none;
+   }
+
+//======================================================================
+// Padding
+//======================================================================
+
+:global {
+   .generate-padding(30);
+   
+   .pn   { padding: 0 !important; }
+   .pbn  { padding-bottom: 0 !important; }
+   .ptn  { padding-top: 0 !important; }
+   .ptbn { padding-top: 0 !important; padding-bottom: 0 !important; }
+   .prn  { padding-right: 0 !important; }
+   .pln  { padding-left: 0 !important; }
+   .plrn { padding-left: 0 !important; padding-right: 0 !important; }
+}
+
+.generate-padding(@n, @i: 1) when (@i =< @n) {
+   @name: @i * 6;
+   .p@{name},
+   {
+      padding: @name * 1px !important;
+   }
+   .generate-padding(@n, (@i + 1));
+}
+
+// GLobally Available foundation
+
+@import 'normalize';
+@import 'columns';
+@import 'grid';
+@import 'mixins';
+@import 'constants';
+@import 'master';
+
+@import 'color';
+@import 'form';
+@import 'table';
+@import 'alignment';
+@import 'padding';
+@import 'modifiers';
+
+//============================================================================
+// Table
+//============================================================================
+
+:global {
+   .uiTable {
+      width: 100%;
+
+      &.bordered {
+         border: 1px solid @uiBaseBorderColor;
+         border-bottom: none;
+      }
+
+      &.enableHover {
+         tr:hover {
+            td { background: #eee; }
+         }
+      }
+
+      th {
+         background: #e5e5e5;
+         border-bottom: 2px solid @uiBaseBorderColor;
+         padding: 12px 18px;
+         .uiTextSize2;
+         font-weight: bold;
+      }
+
+      td {
+         border-bottom: 1px solid @uiBaseBorderColor;
+         padding: 12px 18px;
+         position: relative;
+         .uiTextSize2;
+      }
+   }
+}
