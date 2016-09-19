@@ -1,9 +1,9 @@
 const gulp = require('gulp')
-const concat = require('gulp-concat')
+const less = require('gulp-less')
 
 gulp.task('styles', () => {
-   gulp.src('./src/foundation/*.less')
-      .pipe(concat('styles.less'))
+   gulp.src('./src/foundation/styles.less')
+      .pipe(less())
       .pipe(gulp.dest('./dist/'))
 })
 

@@ -1,6 +1,6 @@
 {
   "name": "rkit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "description": "A UI component kit for React",
   "scripts": {
@@ -50,7 +50,7 @@
     "enzyme": "2.4.1",
     "eslint-config-mother": "latest",
     "gulp": "3.9.1",
-    "gulp-concat": "2.6.0",
+    "gulp-less": "3.1.0",
     "jsdom": "9.4.2",
     "less": "2.7.1",
     "less-loader": "2.2.3",
