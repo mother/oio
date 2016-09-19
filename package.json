@@ -12,7 +12,7 @@
   },
   "files": [
     "dist/index.js",
-    "dist/styles.less"
+    "dist/styles.css"
   ],
   "repository": {
     "type": "git",
