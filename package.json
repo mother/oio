@@ -1,10 +1,10 @@
 {
   "name": "rkit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "description": "A UI component kit for React",
   "scripts": {
-    "build": "rm -rf dist && webpack && gulp styles",
+    "build": "rm -rf dist && webpack && gulp",
     "dev": "node server.js",
     "test": "mocha --compilers js:babel-core/register --recursive test/test.js",
     "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
@@ -50,6 +50,7 @@
     "enzyme": "2.4.1",
     "eslint-config-mother": "latest",
     "gulp": "3.9.1",
+    "gulp-concat": "2.6.0",
     "gulp-less": "3.1.0",
     "jsdom": "9.4.2",
     "less": "2.7.1",
