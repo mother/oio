@@ -1,8 +1,7 @@
 import React from 'react'
-
 import styles from './styles.less'
 
-const UISpacer = ({ size }) => {
+const Spacer = ({ size }) => {
    const spacerSizeClass = `size${size}`
 
    return (
@@ -10,8 +9,8 @@ const UISpacer = ({ size }) => {
    )
 }
 
-UISpacer.propTypes = {
+Spacer.propTypes = {
    size: React.PropTypes.string.isRequired
 }
 
-export default UISpacer
+export default Spacer

@@ -1,13 +1,12 @@
 import React from 'react'
-
 import styles from './styles.less'
 
-const UIActionBar = ({ children }) => (
-   <div className={styles.uiActionBar}>{children}</div>
+const ActionBar = ({ children }) => (
+   <div className={styles.actionBar}>{children}</div>
 )
 
-UIActionBar.propTypes = {
+ActionBar.propTypes = {
    children: React.PropTypes.node
 }
 
-export default UIActionBar
+export default ActionBar

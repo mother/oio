@@ -23,7 +23,7 @@ npm install oio --save
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
-   UIActionBar, UIButton, UIButtonGroup, UIGrid, UIGridCell, UICover, UINav,
+   ActionBar, Button, ButtonGroup, UIGrid, UIGridCell, UICover, UINav,
    UISpacer, UIText, UITitle, UITitleBar, UIToolBar, UIView
 } from 'oio'
 

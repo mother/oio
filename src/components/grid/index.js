@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import styles from './styles.less'
 
-export default class UIGrid extends React.Component {
+export default class Grid extends React.Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
@@ -77,7 +77,7 @@ export default class UIGrid extends React.Component {
    render() {
       let columns = 12
       let gutter = 6
-      const classes = classNames(styles.uiGridContainer, this.props.className)
+      const classes = classNames(styles.gridContainer, this.props.className)
 
       if (this.props.width) {
          const width = this.getAttributeForCurrentSize(this.props.width)

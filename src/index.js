@@ -1,33 +1,37 @@
-import UIActionBar from './components/ActionBar'
-import UIAvatar from './components/Avatar'
-import UIButton from './components/Button'
-import UIButtonGroup from './components/ButtonGroup'
-import UICover from './components/Cover'
-import UIGrid from './components/Grid'
-import UIGridCell from './components/GridCell'
-import UIIcon from './components/Icon'
-import UINav from './components/Nav'
-import UISpacer from './components/Spacer'
-import UIText from './components/Text'
-import UITitle from './components/Title'
-import UITitleBar from './components/TitleBar'
-import UIToolBar from './components/ToolBar'
-import UIView from './components/View'
+import ActionBar from './components/ActionBar'
+import Avatar from './components/Avatar'
+import Button from './components/Button'
+import ButtonGroup from './components/ButtonGroup'
+import Cover from './components/Cover'
+import Grid from './components/Grid'
+import GridCell from './components/GridCell'
+import Icon from './components/Icon'
+import Input from './components/Form/Input'
+import Nav from './components/Nav'
+import Spacer from './components/Spacer'
+import Text from './components/Text'
+import Textarea from './components/Form/Textarea'
+import Title from './components/Title'
+import TitleBar from './components/TitleBar'
+import ToolBar from './components/ToolBar'
+import View from './components/View'
 
 export {
-   UIActionBar,
-   UIAvatar,
-   UIButton,
-   UIButtonGroup,
-   UICover,
-   UIGrid,
-   UIGridCell,
-   UIIcon,
-   UINav,
-   UISpacer,
-   UIText,
-   UITitle,
-   UITitleBar,
-   UIToolBar,
-   UIView
+   ActionBar,
+   Avatar,
+   Button,
+   ButtonGroup,
+   Cover,
+   Grid,
+   GridCell,
+   Icon,
+   Input,
+   Nav,
+   Spacer,
+   Text,
+   Textarea,
+   Title,
+   TitleBar,
+   ToolBar,
+   View
 }

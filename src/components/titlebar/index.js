@@ -1,9 +1,8 @@
 import React from 'react'
-
 import styles from './styles.less'
 
 // TODO: This component will have more functionality
-export default class UITitlebar extends React.Component {
+export default class Titlebar extends React.Component {
    static propTypes = {
       size: React.PropTypes.string,
       title: React.PropTypes.string

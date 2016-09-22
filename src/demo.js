@@ -1,21 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
-   UIActionBar,
-   UIAvatar,
-   UIButton,
-   UIButtonGroup,
-   UICover,
-   UIGrid,
-   UIGridCell,
-   // UIIcon,
-   UINav,
-   UISpacer,
-   UIText,
-   UITitle,
-   UITitleBar,
-   UIToolBar,
-   UIView
+   ActionBar,
+   Avatar,
+   Button,
+   ButtonGroup,
+   Cover,
+   Grid,
+   GridCell,
+   // Icon,
+   Input,
+   Nav,
+   Spacer,
+   Text,
+   Textarea,
+   Title,
+   TitleBar,
+   ToolBar,
+   View
 } from './'
 
 import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
@@ -26,12 +28,12 @@ class Demo extends React.Component {
       const titleSize = '4'
 
       return (
-         <UIView>
-            <UIView width="20%" height="100%" format="float">
-               <UITitle heading={titleHeading} weight="light" size="9">OIO</UITitle>
-               <UIText weight="bold" color="gray40">A Happy Style Framework</UIText>
-               <UISpacer size="4" />
-               <UINav type="directory">
+         <View>
+            <View width="20%" height="100%" padding="36px" format="float">
+               <Title heading={titleHeading} weight="light" size="9">OIO</Title>
+               <Text weight="bold" color="gray40">A Happy Style Framework</Text>
+               <Spacer size="4" />
+               <Nav type="directory">
                   <a href="">Example</a>
                   <a href="">Actionbar</a>
                   <a href="">Avatar</a>
@@ -46,38 +48,41 @@ class Demo extends React.Component {
                   <a href="">Titlebar</a>
                   <a href="">Toolbar</a>
                   <a href="">View</a>
-               </UINav>
-            </UIView>
-            <UIView width="80%" height="100%" format="float">
-               <UITitleBar title="Example" />
-               <UIActionBar>
-                  <UINav type="tabs">
+               </Nav>
+            </View>
+            <View width="80%" height="100%" padding="36px" format="float">
+               <TitleBar title="Example" />
+               <ActionBar>
+                  <Nav type="tabs">
                      <a href="" className="active">Tab 1</a>
                      <a href="">Tab 2</a>
                      <a href="">Tab 3</a>
-                  </UINav>
-               </UIActionBar>
-               <UIView width="100%" height="75%" format="float" scroll="on">
-                  <UIGrid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="6">
-                     <UIGridCell colspan="4">
-                        <UICover src="http://placekitten.com/g/1000/500" position="top center">
+                  </Nav>
+               </ActionBar>
+               <View width="100%" height="75%" format="float" scroll="on">
+                  <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
+                     <GridCell colspan="4">
+                        <Cover src="https://hd.unsplash.com/photo-1416879595882-3373a0480b5b" position="top center">
                            <div
                               style={{
                                  height: '480px'
                               }}>this is the cover content!</div>
-                        </UICover>
-                     </UIGridCell>
-                     <UIGridCell>
+                        </Cover>
+                     </GridCell>
+                     <GridCell>
                         Grid Cell 1
-                     </UIGridCell>
-                     <UIGridCell>
+                        <Input />
+                        <Input type="password" />
+                        <Textarea />
+                     </GridCell>
+                     <GridCell>
                         Grid Cell 2
-                     </UIGridCell>
-                     <UIGridCell>
-                        <UITitle heading={titleHeading} size={titleSize}>UIAvatar</UITitle>
-                        <UIAvatar src="http://placekitten.com/g/500/500" style={{ width: '100px', height: '100px' }} />
-                     </UIGridCell>
-                  </UIGrid>
+                     </GridCell>
+                     <GridCell>
+                        <Title heading={titleHeading} size={titleSize}>Avatar</Title>
+                        <Avatar src="http://placekitten.com/g/500/500" style={{ width: '100px', height: '100px' }} />
+                     </GridCell>
+                  </Grid>
 
                   <p>
                      Offal tilde blog venmo sartorial, crucifix leggings
@@ -119,15 +124,15 @@ class Demo extends React.Component {
                      Put a bird on it intelligentsia lomo gluten-free bitters marfa.
                      Meh literally try-hard ugh everyday carry.
                   </p>
-               </UIView>
-               <UIToolBar>
-                  <UIButtonGroup align="right">
-                     <UIButton name="Previous" />
-                     <UIButton name="Next" />
-                  </UIButtonGroup>
-               </UIToolBar>
-            </UIView>
-         </UIView>
+               </View>
+               <ToolBar>
+                  <ButtonGroup align="right">
+                     <Button name="Previous" />
+                     <Button name="Next" />
+                  </ButtonGroup>
+               </ToolBar>
+            </View>
+         </View>
       )
    }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class UIButtonGroup extends React.Component {
+export default class ButtonGroup extends React.Component {
    static propTypes = {
       align: React.PropTypes.string,
       children: React.PropTypes.node,

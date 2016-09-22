@@ -1,13 +1,12 @@
 import React from 'react'
-
 import styles from './styles.less'
 
-const UIToolbar = ({ children }) => (
-   <div className={styles.uiToolbar}>{children}</div>
+const Toolbar = ({ children }) => (
+   <div className={styles.toolbar}>{children}</div>
 )
 
-UIToolbar.propTypes = {
+Toolbar.propTypes = {
    children: React.PropTypes.node
 }
 
-export default UIToolbar
+export default Toolbar

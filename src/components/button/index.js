@@ -5,7 +5,7 @@ import UIIcon from '../Icon'
 
 import styles from './styles.less'
 
-const UIButton = ({ className, icon, name, outline, rounded, size }, context) => {
+const Button = ({ className, icon, name, onClick, outline, rounded, size }, context) => {
    const buttonClasses = [className]
    const buttonName = name
    const style = {}
@@ -40,28 +40,29 @@ const UIButton = ({ className, icon, name, outline, rounded, size }, context) =>
    }
 
    return (
-      <span className={classNames(buttonClasses)} style={style}>
+      <span className={classNames(buttonClasses)} onClick={onClick} style={style}>
          <UIIcon className={styles.icon} name={icon} />
          <span className={styles.text}>{buttonName}</span>
       </span>
    )
 }
 
-UIButton.propTypes = {
+Button.propTypes = {
    className: React.PropTypes.string,
    icon: React.PropTypes.string,
    name: React.PropTypes.string,
+   onClick: React.PropTypes.func,
    outline: React.PropTypes.bool,
    rounded: React.PropTypes.bool,
    size: React.PropTypes.string
 }
 
-UIButton.defaultProps = {
+Button.defaultProps = {
    size: 'medium'
 }
 
-UIButton.contextTypes = {
+Button.contextTypes = {
    buttonGroupStyle: React.PropTypes.object
 }
 
-export default UIButton
+export default Button

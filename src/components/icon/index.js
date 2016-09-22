@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 // This is going to be smarter evntually
-const UIIcon = ({ name, className }) => {
+const Icon = ({ name, className }) => {
    let icon = null
 
    if (name) {
@@ -13,9 +13,9 @@ const UIIcon = ({ name, className }) => {
    return icon
 }
 
-UIIcon.propTypes = {
+Icon.propTypes = {
    className: React.PropTypes.string,
    name: React.PropTypes.string
 }
 
-export default UIIcon
+export default Icon

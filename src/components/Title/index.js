@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import colors from '../../foundation/colors.less'
 
-const UITitle = ({ children, className, color, heading, size, weight }) => {
+const Title = ({ children, className, color, heading, size, weight }) => {
    // By default, titles are bigger and have
    // heavier weight than UI Text
 
@@ -26,7 +26,7 @@ const UITitle = ({ children, className, color, heading, size, weight }) => {
    )
 }
 
-UITitle.propTypes = {
+Title.propTypes = {
    children: React.PropTypes.node,
    className: React.PropTypes.string,
    color: React.PropTypes.string,
@@ -35,8 +35,8 @@ UITitle.propTypes = {
    weight: React.PropTypes.string
 }
 
-UITitle.defaultProps = {
+Title.defaultProps = {
    weight: 'medium'
 }
 
-export default UITitle
+export default Title

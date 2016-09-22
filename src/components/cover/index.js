@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UICover = ({
+const Cover = ({
    src,
    size = 'cover',
    position,
@@ -22,7 +22,7 @@ const UICover = ({
    )
 }
 
-UICover.propTypes = {
+Cover.propTypes = {
    children: React.PropTypes.node,
    className: React.PropTypes.string,
    position: React.PropTypes.string,
@@ -30,8 +30,8 @@ UICover.propTypes = {
    src: React.PropTypes.string.isRequired
 }
 
-UICover.defaultProps = {
+Cover.defaultProps = {
    position: 'center center'
 }
 
-export default UICover
+export default Cover

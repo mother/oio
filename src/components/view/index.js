@@ -3,13 +3,14 @@ import classNames from 'classnames'
 
 import styles from './styles.less'
 
-export default class UIView extends React.Component {
+export default class View extends React.Component {
    static propTypes = {
       aspectRatio: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       width: React.PropTypes.string,
       height: React.PropTypes.string,
+      padding: React.PropTypes.string,
       scroll: React.PropTypes.string,
       format: React.PropTypes.string
    }
@@ -20,7 +21,8 @@ export default class UIView extends React.Component {
       this.state = {
          size: this.getWindowSize(),
          width: 'auto',
-         height: 'auto'
+         height: 'auto',
+         padding: '0'
       }
 
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
@@ -119,6 +121,14 @@ export default class UIView extends React.Component {
          }
       }
 
+      if (this.props.padding) {
+         const padding = this.getAttributeForCurrentSize(this.props.padding)
+         if (padding) {
+            const unit = padding.indexOf('px') === -1 ? '%' : 'px'
+            this.state.padding = parseFloat(padding) + unit
+         }
+      }
+
       if (this.props.scroll) {
          const scroll = this.getAttributeForCurrentSize(this.props.scroll)
          if (scroll && scroll === 'on') {
@@ -141,7 +151,8 @@ export default class UIView extends React.Component {
 
       const style = {
          width: this.state.width,
-         height: this.state.height
+         height: this.state.height,
+         padding: this.state.padding
       }
 
       return (

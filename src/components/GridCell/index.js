@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import styles from './styles.less'
 
-export default class UIGridCell extends React.Component {
+export default class GridCell extends React.Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
@@ -78,7 +78,7 @@ export default class UIGridCell extends React.Component {
    render() {
       let gutter = 0
       let colspanMultiplier = 1
-      const classes = classNames(styles.uiGridCell, this.props.className)
+      const classes = classNames(styles.gridCell, this.props.className)
 
       // Width is set by UIGrid (for now)
       if (this.props.width) {
@@ -108,7 +108,7 @@ export default class UIGridCell extends React.Component {
 
       return (
          <div className={classes} style={cellStyle} >
-            <div className={styles.uiGridCellInner}>
+            <div className={styles.gridCellInner}>
                {this.props.children}
             </div>
          </div>

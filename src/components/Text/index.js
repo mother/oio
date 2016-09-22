@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import colors from '../../foundation/colors.less'
 
-const UIText = ({ children, className, color, size, weight }) => {
+const Text = ({ children, className, color, size, weight }) => {
    let fontSize = 'uiTextSize3'
 
    if (size) {
@@ -24,7 +24,7 @@ const UIText = ({ children, className, color, size, weight }) => {
    )
 }
 
-UIText.propTypes = {
+Text.propTypes = {
    children: React.PropTypes.node,
    className: React.PropTypes.string,
    color: React.PropTypes.string,
@@ -32,8 +32,8 @@ UIText.propTypes = {
    weight: React.PropTypes.string
 }
 
-UIText.defaultProps = {
+Text.defaultProps = {
    weight: 'normal'
 }
 
-export default UIText
+export default Text
