@@ -1,0 +1,25 @@
+.popover {
+   position: absolute;
+   top: 0;
+   z-index: 999;
+   display: none;
+
+   &.isVisible {
+      display: block;
+      animation: showPopover 200ms;
+   }
+
+   .popoverContainer {
+      float: left;
+      position: relative;
+      background: #fff;
+      overflow: hidden;
+      border-radius: 3px;
+      box-shadow: 1px 3px 30px rgba(0,0,0,0.15);
+   }
+}
+
+@keyframes showPopover {
+   from { opacity: 0; transform: scale(0.9); }
+     to { opacity: 100; transform: scale(1); }
+}

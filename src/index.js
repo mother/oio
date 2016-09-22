@@ -8,6 +8,7 @@ import GridCell from './components/GridCell'
 import Icon from './components/Icon'
 import Input from './components/Form/Input'
 import Nav from './components/Nav'
+import Popover from './components/Popover'
 import Spacer from './components/Spacer'
 import Text from './components/Text'
 import Textarea from './components/Form/Textarea'
@@ -27,6 +28,7 @@ export {
    Icon,
    Input,
    Nav,
+   Popover,
    Spacer,
    Text,
    Textarea,
