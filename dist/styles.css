@@ -77,18 +77,6 @@ td {
 p {
   margin: 0;
 }
-input[type=text],
-input[type=tel],
-input[type=password],
-input[type=submit],
-input[type=button],
-textarea {
-  -webkit-appearance: none;
-  margin: 0;
-  background: none;
-  outline: none;
-  border: none;
-}
 :global .c5,
 :global .xs .c5-a1,
 :global .xs .c5-a2,
@@ -4105,91 +4093,6 @@ textarea {
 }
 :global .bgBlack {
   background: #000000 !important;
-}
-:global input[type=text],
-:global input[type="tel"],
-:global input[type=password] {
-  display: block;
-  width: 100%;
-  height: 36px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  font-size: 15px;
-  line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-  line-height: 35px;
-  padding: 0px 12px 0px 12px;
-  -webkit-transition: 300ms;
-  -moz-transition: 300ms;
-  -o-transition: 300ms;
-  -ms-transition: 300ms;
-  transition: 300ms;
-  margin-bottom: 12px;
-  border: 2px solid #ddd;
-}
-:global input[type=text].light,
-:global input[type="tel"].light,
-:global input[type=password].light {
-  font-weight: 300;
-}
-:global input[type=text].normal,
-:global input[type="tel"].normal,
-:global input[type=password].normal {
-  font-weight: 400;
-}
-:global input[type=text].medium,
-:global input[type="tel"].medium,
-:global input[type=password].medium {
-  font-weight: 600;
-}
-:global input[type=text].bold,
-:global input[type="tel"].bold,
-:global input[type=password].bold {
-  font-weight: 700;
-}
-:global input[type=text]:focus,
-:global input[type="tel"]:focus,
-:global input[type=password]:focus {
-  border: 2px solid #aaa;
-}
-:global input[type=password] {
-  padding: 9px 12px;
-  line-height: 36px;
-}
-:global textarea {
-  display: block;
-  width: 100%;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  font-size: 15px;
-  line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-  line-height: 35px;
-  padding: 12px;
-  -webkit-transition: 300ms;
-  -moz-transition: 300ms;
-  -o-transition: 300ms;
-  -ms-transition: 300ms;
-  transition: 300ms;
-  margin-bottom: 12px;
-  border: 2px solid #ddd;
-}
-:global textarea.light {
-  font-weight: 300;
-}
-:global textarea.normal {
-  font-weight: 400;
-}
-:global textarea.medium {
-  font-weight: 600;
-}
-:global textarea.bold {
-  font-weight: 700;
-}
-:global textarea:focus {
-  border: 2px solid #aaa;
 }
 :global select {
   display: inline-block;

@@ -1,8 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-
-import UIIcon from '../Icon'
-
+import Icon from '../Icon'
 import styles from './styles.less'
 
 const Button = ({ className, icon, name, onClick, outline, rounded, size }, context) => {
@@ -41,7 +39,7 @@ const Button = ({ className, icon, name, onClick, outline, rounded, size }, cont
 
    return (
       <span className={classNames(buttonClasses)} onClick={onClick} style={style}>
-         <UIIcon className={styles.icon} name={icon} />
+         <Icon className={styles.icon} name={icon} />
          <span className={styles.text}>{buttonName}</span>
       </span>
    )

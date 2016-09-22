@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-
 import styles from './styles.less'
 
 export default class View extends React.Component {
