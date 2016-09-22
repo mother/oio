@@ -3,7 +3,7 @@ import React from 'react'
 const UICover = ({
    src,
    size = 'cover',
-   position = 'center center',
+   position,
    children,
    className }) => {
    const style = {
@@ -28,6 +28,10 @@ UICover.propTypes = {
    position: React.PropTypes.string,
    size: React.PropTypes.string,
    src: React.PropTypes.string.isRequired
+}
+
+UICover.defaultProps = {
+   position: 'center center'
 }
 
 export default UICover
