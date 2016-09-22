@@ -22,6 +22,10 @@ import {
 import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
 
 class Demo extends React.Component {
+   something() {
+      console.log('wow')
+   }
+
    render() {
       const spacerSize = '5'
       const titleHeading = '1'
@@ -43,7 +47,7 @@ class Demo extends React.Component {
 
             <UISpacer size={spacerSize} />
             <UITitle heading={titleHeading} size={titleSize}>UIButton</UITitle>
-            <UIButton name="Click me!" />
+            <UIButton name="Click me!" onClick={this.something} />
 
             <UISpacer size={spacerSize} />
             <UITitle heading={titleHeading} size={titleSize}>UIButtonGroup</UITitle>
@@ -68,6 +72,7 @@ class Demo extends React.Component {
                body="Users will have access to Global Pay per View
                and Live Streaming and will be able to converse with
                the world’s top historians and Living Legends."
+               onClick={this.something}
             />
 
             <UISpacer size={spacerSize} />
