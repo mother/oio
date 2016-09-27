@@ -2,11 +2,11 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 
-const Input = ({ className, input, type, value }) => {
+const Input = ({ className, input, placeholder, type, value }) => {
    const classes = [styles.input, className]
 
    return (
-      <input type={type} value={value} className={classNames(classes)} {...input} />
+      <input type={type} value={value} placeholder={placeholder} className={classNames(classes)} {...input} />
    )
 }
 
