@@ -6,7 +6,13 @@ const Input = ({ className, input, placeholder, type, value }) => {
    const classes = [styles.input, className]
 
    return (
-      <input type={type} value={value} placeholder={placeholder} className={classNames(classes)} {...input} />
+      <input
+         type={type}
+         placeholder={placeholder}
+         value={value}
+         className={classNames(classes)}
+         {...input}
+      />
    )
 }
 

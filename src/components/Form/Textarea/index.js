@@ -2,16 +2,24 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 
-const Textarea = ({ className, rows, value }) => {
+const Textarea = ({ className, input, placeholder, rows, value }) => {
    const classes = [styles.textarea, className]
 
    return (
-      <textarea value={value} rows={rows} className={classNames(classes)} />
+      <textarea
+         placeholder={placeholder}
+         value={value}
+         rows={rows}
+         className={classNames(classes)}
+         {...input}
+      />
    )
 }
 
 Textarea.propTypes = {
    className: React.PropTypes.string,
+   input: React.PropTypes.object,
+   placeholder: React.PropTypes.string,
    rows: React.PropTypes.string,
    value: React.PropTypes.string
 }
