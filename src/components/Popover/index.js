@@ -16,7 +16,8 @@ export default class Popover extends React.Component {
          hitAreaMargin: 24,
          top: 0,
          left: 0,
-         visible: false
+         visible: false,
+         position: 'below left'
       }
    }
 

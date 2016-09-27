@@ -38,10 +38,10 @@ const Button = ({ className, icon, name, onClick, outline, rounded, size }, cont
    }
 
    return (
-      <span className={classNames(buttonClasses)} onClick={onClick} style={style}>
+      <div className={classNames(buttonClasses)} onClick={onClick} style={style}>
          <Icon className={styles.icon} name={icon} />
          <span className={styles.text}>{buttonName}</span>
-      </span>
+      </div>
    )
 }
 
