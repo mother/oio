@@ -13,6 +13,7 @@ const Input = ({ className, input, placeholder, type, value }) => {
 Input.propTypes = {
    className: React.PropTypes.string,
    input: React.PropTypes.object,
+   placeholder: React.PropTypes.string,
    type: React.PropTypes.string,
    value: React.PropTypes.string
 }
