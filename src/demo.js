@@ -28,8 +28,8 @@ class Demo extends React.Component {
       const titleSize = '4'
 
       return (
-         <View>
-            <View width="20%" height="100%" padding="36px" format="float">
+         <View format="auto">
+            <View width="20%" height="100%" padding="36px">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>
                <Text weight="bold" color="gray40">A Happy Style Framework</Text>
                <Spacer size="4" />
@@ -50,7 +50,7 @@ class Demo extends React.Component {
                   <a href="">View</a>
                </Nav>
             </View>
-            <View width="80%" height="100%" padding="36px" format="float">
+            <View width="80%" height="100%" padding="36px">
                <TitleBar title="Example" />
                <ActionBar>
                   <Nav type="tabs">
