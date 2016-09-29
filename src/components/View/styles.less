@@ -1,5 +1,6 @@
 .uiView {
    background: #fff;
+   perspective: 1000;
 
    &.autoFormat {
       position: absolute;
@@ -19,5 +20,9 @@
    &.scroll {
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+   }
+
+   &.hidden {
+      display: none;
    }
 }

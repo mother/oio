@@ -7,11 +7,17 @@ export default class View extends React.Component {
       aspectRatio: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
-      width: React.PropTypes.string,
+      format: React.PropTypes.string,
       height: React.PropTypes.string,
       padding: React.PropTypes.string,
       scroll: React.PropTypes.string,
-      format: React.PropTypes.string
+      width: React.PropTypes.string,
+      visible: React.PropTypes.string
+   }
+
+   static defaultProps = {
+      format: 'float',
+      visible: 'on'
    }
 
    constructor(props, context) {
@@ -135,15 +141,22 @@ export default class View extends React.Component {
          }
       }
 
+      if (this.props.visible) {
+         const visible = this.getAttributeForCurrentSize(this.props.visible)
+         if (visible && visible === 'on') {
+            viewClasses.push(styles.visible)
+         } else {
+            viewClasses.push(styles.hidden)
+         }
+      }
+
       if (this.props.format) {
          const format = this.getAttributeForCurrentSize(this.props.format)
          if (format === 'float') {
             viewClasses.push(styles.floatFormat)
-         } else {
+         } else if (format === 'auto') {
             viewClasses.push(styles.autoFormat)
          }
-      } else {
-         viewClasses.push(styles.floatFormat)
       }
 
       viewClasses.push(this.props.className)

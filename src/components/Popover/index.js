@@ -6,18 +6,24 @@ export default class Popover extends React.Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
+      offset: React.PropTypes.string,
+      position: React.PropTypes.string,
       width: React.PropTypes.string.isRequired
+   }
+
+   static defaultProps = {
+      offset: '24'
    }
 
    constructor(props, context) {
       super(props, context)
 
+      // Eventually allow smart positioning and below/above
       this.state = {
-         hitAreaMargin: 24,
          top: 0,
          left: 0,
          visible: false,
-         position: 'below left'
+         buttonWidth: 0
       }
    }
 
@@ -35,7 +41,8 @@ export default class Popover extends React.Component {
       this.setState({
          top: event.currentTarget.offsetTop,
          left: event.currentTarget.offsetLeft,
-         visible: true
+         visible: true,
+         buttonWidth: event.currentTarget.offsetWidth
       })
    }
 
@@ -44,18 +51,25 @@ export default class Popover extends React.Component {
    }
 
    render() {
-      let visibilityClass = ''
-      const popoverStyle = {
-         top: `${this.state.top + this.state.hitAreaMargin}px`,
-         left: `${this.state.left - this.state.hitAreaMargin}px`,
-         width: this.props.width
+      const visibilityClass = this.state.visible ? 'isVisible' : ''
+      const popoverStyle = {}
+      const popoverOffset = parseFloat(this.props.offset)
+      const popoverWidth = parseFloat(this.props.width)
+
+      // Set Popover Position
+      if (this.props.position === 'right') {
+         popoverStyle.top = `${this.state.top + popoverOffset}px`
+         popoverStyle.left = `${this.state.left - popoverOffset - (popoverWidth - this.state.buttonWidth)}px`
+      } else {
+         popoverStyle.top = `${this.state.top + popoverOffset}px`
+         popoverStyle.left = `${this.state.left - popoverOffset}px`
       }
 
+      // Set Popover Margins and Container
       const popoverContainerStyle = {
-         margin: this.state.hitAreaMargin
+         margin: `${popoverOffset}px`,
+         width: popoverWidth
       }
-
-      if (this.state.visible) visibilityClass = 'isVisible'
 
       return (
          <div

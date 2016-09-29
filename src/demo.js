@@ -11,6 +11,7 @@ import {
    // Icon,
    Input,
    Nav,
+   Popover,
    Spacer,
    Text,
    Textarea,
@@ -58,6 +59,17 @@ class Demo extends React.Component {
                      <a href="">Tab 2</a>
                      <a href="">Tab 3</a>
                   </Nav>
+                  <ButtonGroup align="right">
+                     <Button name="Popover Button" onClick={event => this.popover.show(event)} />
+                     <Popover
+                        ref={(popover) => { this.popover = popover }}
+                        width="300px"
+                        offset="18px"
+                        position="right"
+                        className="p18">
+                        I am a popover!
+                     </Popover>
+                  </ButtonGroup>
                </ActionBar>
                <View width="100%" height="75%" format="float" scroll="on">
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
