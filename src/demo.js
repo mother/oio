@@ -82,10 +82,9 @@ class Demo extends React.Component {
                         </Cover>
                      </GridCell>
                      <GridCell>
-                        Grid Cell 1
-                        <Input />
-                        <Input type="password" />
-                        <Textarea />
+                        <Input label="Input Numero Uno" placeholder="Placeholder text" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
+                        <Input label="Password" placeholder="Enter password" type="password" meta={{ touched: true, error: 'Your password is too weak' }} />
+                        <Textarea label="Textarea Dos Equis" placeholder="Enter text here" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                      </GridCell>
                      <GridCell>
                         Grid Cell 2
@@ -122,7 +121,7 @@ class Demo extends React.Component {
                   <p>
                      Narwhal selvage mixtape humblebrag messenger bag.
                      Meditation hella thundercats kitsch intelligentsia yr.
-                     Umami ennui pug mlkshk you probably haven't heard of
+                     Umami ennui pug mlkshk you probably havent heard of
                      them, butcher gochujang four dollar toast kickstarter
                      single-origin coffee pabst brooklyn meditation waistcoat
                      kinfolk. Hashtag four dollar toast street art wolf

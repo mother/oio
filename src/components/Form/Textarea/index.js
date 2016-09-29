@@ -1,24 +1,37 @@
 import React from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
+import formStyles from '../styles.less'
 
-const Textarea = ({ className, input, placeholder, rows, value }) => {
+const Textarea = ({ className, id, input, label, meta, placeholder, rows, value }) => {
    const classes = [styles.textarea, className]
 
    return (
-      <textarea
-         placeholder={placeholder}
-         value={value}
-         rows={rows}
-         className={classNames(classes)}
-         {...input}
-      />
+      <div className={formStyles.container}>
+         {label && <label htmlFor={id}>{label}</label>}
+         <textarea
+            className={classNames(classes)}
+            id={id}
+            placeholder={placeholder}
+            value={value}
+            rows={rows}
+            {...input}
+         />
+         {meta && meta.touched && meta.error &&
+            <div className={formStyles.error}>
+               {meta.error}
+            </div>
+         }
+      </div>
    )
 }
 
 Textarea.propTypes = {
    className: React.PropTypes.string,
+   id: React.PropTypes.string,
    input: React.PropTypes.object,
+   label: React.PropTypes.string,
+   meta: React.PropTypes.object,
    placeholder: React.PropTypes.string,
    rows: React.PropTypes.string,
    value: React.PropTypes.string
