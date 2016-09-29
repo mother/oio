@@ -7,6 +7,7 @@ const Button = ({
    className, icon, name, onClick, outline, rounded, size, textClassName, type
 }, context) => {
    const buttonClasses = [className]
+   const buttonTextClasses = [styles.text]
    const buttonName = name
    const style = {}
 
@@ -28,6 +29,10 @@ const Button = ({
       buttonClasses.push(styles.outline)
    }
 
+   if (textClassName) {
+      buttonTextClasses.push(textClassName)
+   }
+
    // If Buttons are part of a Button Group
    if (context.buttonGroupStyle) {
       const buttonGroup = context.buttonGroupStyle
@@ -42,7 +47,7 @@ const Button = ({
    return (
       <button className={classNames(buttonClasses)} onClick={onClick} style={style} type={type}>
          <Icon className={styles.icon} name={icon} />
-         <span className={classNames(styles.text, this.props.textClassName)}>{buttonName}</span>
+         <span className={classNames(styles.text, buttonTextClasses)}>{buttonName}</span>
       </button>
    )
 }
