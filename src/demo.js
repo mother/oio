@@ -82,6 +82,18 @@ class Demo extends React.Component {
                         <Title heading={titleHeading} size={titleSize}>Avatar</Title>
                         <Avatar src="http://placekitten.com/g/500/500" style={{ width: '100px', height: '100px' }} />
                      </GridCell>
+                     <GridCell colspan="4">
+                        <Text size="10">This is some text</Text>
+                        <Text size="9">This is some text</Text>
+                        <Text size="8">This is some text</Text>
+                        <Text size="7">This is some text</Text>
+                        <Text size="6">This is some text</Text>
+                        <Text size="5">This is some text</Text>
+                        <Text size="4">This is some text</Text>
+                        <Text size="3">This is some text</Text>
+                        <Text size="2">This is some text</Text>
+                        <Text size="1">This is some text</Text>
+                     </GridCell>
                   </Grid>
 
                   <p>
