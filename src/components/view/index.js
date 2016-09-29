@@ -143,7 +143,7 @@ export default class View extends React.Component {
             viewClasses.push(styles.autoFormat)
          }
       } else {
-         viewClasses.push(styles.autoFormat)
+         viewClasses.push(styles.floatFormat)
       }
 
       viewClasses.push(this.props.className)

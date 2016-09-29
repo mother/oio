@@ -28,8 +28,8 @@ class Demo extends React.Component {
       const titleSize = '4'
 
       return (
-         <View>
-            <View width="20%" height="100%" padding="36px" format="float">
+         <View format="auto">
+            <View width="20%" height="100%" padding="36px">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>
                <Text weight="bold" color="gray40">A Happy Style Framework</Text>
                <Spacer size="4" />
@@ -50,7 +50,7 @@ class Demo extends React.Component {
                   <a href="">View</a>
                </Nav>
             </View>
-            <View width="80%" height="100%" padding="36px" format="float">
+            <View width="80%" height="100%" padding="36px">
                <TitleBar title="Example" />
                <ActionBar>
                   <Nav type="tabs">
@@ -80,6 +80,18 @@ class Demo extends React.Component {
                      <GridCell>
                         <Title heading={titleHeading} size={titleSize}>Avatar</Title>
                         <Avatar src="http://placekitten.com/g/500/500" style={{ width: '100px', height: '100px' }} />
+                     </GridCell>
+                     <GridCell colspan="4">
+                        <Text size="10">This is some text</Text>
+                        <Text size="9">This is some text</Text>
+                        <Text size="8">This is some text</Text>
+                        <Text size="7">This is some text</Text>
+                        <Text size="6">This is some text</Text>
+                        <Text size="5">This is some text</Text>
+                        <Text size="4">This is some text</Text>
+                        <Text size="3">This is some text</Text>
+                        <Text size="2">This is some text</Text>
+                        <Text size="1">This is some text</Text>
                      </GridCell>
                   </Grid>
 

@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './styles.less'
 
 const Avatar = ({ className, src, style }) => {
-   const classes = ['avatar', className]
+   const classes = [styles.avatar, className]
 
    if (!src) {
       classes.push(styles.defaultAvatar)
@@ -12,7 +12,7 @@ const Avatar = ({ className, src, style }) => {
    }
 
    return (
-      <div className={classNames(styles.uiAvatar)} style={style} />
+      <div className={classNames(classes)} style={style} />
    )
 }
 

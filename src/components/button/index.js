@@ -3,8 +3,11 @@ import classNames from 'classnames'
 import Icon from '../Icon'
 import styles from './styles.less'
 
-const Button = ({ className, icon, name, onClick, outline, rounded, size, type }, context) => {
+const Button = ({
+   className, icon, name, onClick, outline, rounded, size, textClassName, type
+}, context) => {
    const buttonClasses = [className]
+   const buttonTextClasses = [styles.text]
    const buttonName = name
    const style = {}
 
@@ -26,6 +29,10 @@ const Button = ({ className, icon, name, onClick, outline, rounded, size, type }
       buttonClasses.push(styles.outline)
    }
 
+   if (textClassName) {
+      buttonTextClasses.push(textClassName)
+   }
+
    // If Buttons are part of a Button Group
    if (context.buttonGroupStyle) {
       const buttonGroup = context.buttonGroupStyle
@@ -40,7 +47,7 @@ const Button = ({ className, icon, name, onClick, outline, rounded, size, type }
    return (
       <button className={classNames(buttonClasses)} onClick={onClick} style={style} type={type}>
          <Icon className={styles.icon} name={icon} />
-         <span className={styles.text}>{buttonName}</span>
+         <span className={classNames(styles.text, buttonTextClasses)}>{buttonName}</span>
       </button>
    )
 }
@@ -53,6 +60,7 @@ Button.propTypes = {
    outline: React.PropTypes.bool,
    rounded: React.PropTypes.bool,
    size: React.PropTypes.string,
+   textClassName: React.PropTypes.string,
    type: React.PropTypes.string
 }
 
