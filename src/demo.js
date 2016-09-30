@@ -104,6 +104,11 @@ class Demo extends React.Component {
                         <Text size="3">This is some text</Text>
                         <Text size="2">This is some text</Text>
                         <Text size="1">This is some text</Text>
+
+                        <ButtonGroup>
+                           <Button size="large" name="Big Button" icon="ion-ios-monitor-outline" />
+                           <Button size="large" name="Big Button" icon="ion-ios-monitor-outline" />
+                        </ButtonGroup>
                      </GridCell>
                   </Grid>
 
@@ -146,8 +151,6 @@ class Demo extends React.Component {
                      mumblecore tote bag mustache venmo meditation lumbersexual.
                      Put a bird on it intelligentsia lomo gluten-free bitters marfa.
                      Meh literally try-hard ugh everyday carry.
-
-                     <Button size="large" name="Big Button" icon="ion-plus" />
                   </p>
                </View>
                <ToolBar>
