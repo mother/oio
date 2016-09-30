@@ -146,6 +146,8 @@ class Demo extends React.Component {
                      mumblecore tote bag mustache venmo meditation lumbersexual.
                      Put a bird on it intelligentsia lomo gluten-free bitters marfa.
                      Meh literally try-hard ugh everyday carry.
+
+                     <Button size="large" name="Big Button" icon="ion-plus" />
                   </p>
                </View>
                <ToolBar>
