@@ -9,6 +9,7 @@ import Icon from './components/Icon'
 import Input from './components/Form/Input'
 import Nav from './components/Nav'
 import Popover from './components/Popover'
+import Select from './components/Form/Select'
 import Spacer from './components/Spacer'
 import Text from './components/Text'
 import Textarea from './components/Form/Textarea'
@@ -29,6 +30,7 @@ export {
    Input,
    Nav,
    Popover,
+   Select,
    Spacer,
    Text,
    Textarea,
