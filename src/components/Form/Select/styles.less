@@ -1,17 +1,21 @@
 @import '../../../foundation/mixins';
 
-.textarea {
+.select {
    -webkit-appearance: none;
    margin: 0;
    background: none;
    outline: none;
    display: block;
    width: 100%;
+   height: @uiBaseComponentHeightMedium;
    .rounded(@uiBaseComponentRadius);
    .uiTextSize3;
-   padding: 5px 10px;
+   line-height: @uiBaseComponentHeightMedium - 13px;
+   padding: 5px 10px 5px 10px;
    .transition(300ms);
    border: 2px solid @uiBaseBorderColor;
 
-   &:focus { border: 2px solid #aaa; }
+   &:focus {
+      border: 2px solid #aaa;
+   }
 }

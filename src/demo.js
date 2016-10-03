@@ -12,6 +12,7 @@ import {
    Input,
    Nav,
    Popover,
+   Select,
    Spacer,
    Text,
    Textarea,
@@ -85,6 +86,11 @@ class Demo extends React.Component {
                         <Input label="Input Numero Uno" placeholder="Placeholder text" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                         <Input label="Password" placeholder="Enter password" type="password" meta={{ touched: true, error: 'Your password is too weak' }} />
                         <Textarea label="Textarea Dos Equis" placeholder="Enter text here" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
+                        <Select label="A Label" meta={{ touched: true, error: 'Must choose an option!' }}>
+                           <option value="">Please choose an option</option>
+                           <option value="one">One</option>
+                           <option value="two">Two</option>
+                        </Select>
                      </GridCell>
                      <GridCell>
                         Grid Cell 2
