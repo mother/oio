@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Input = ({ children, className, id, input, label, meta, value }) => {
+const Select = ({ children, className, id, input, label, meta, value }) => {
    const classes = [styles.select, className]
 
    return (
@@ -23,7 +23,7 @@ const Input = ({ children, className, id, input, label, meta, value }) => {
    )
 }
 
-Input.propTypes = {
+Select.propTypes = {
    children: React.PropTypes.node,
    className: React.PropTypes.string,
    id: React.PropTypes.string,
@@ -33,8 +33,8 @@ Input.propTypes = {
    value: React.PropTypes.string
 }
 
-Input.defaultProps = {
+Select.defaultProps = {
    type: 'text'
 }
 
-export default Input
+export default Select
