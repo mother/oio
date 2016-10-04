@@ -37,6 +37,8 @@ const Button = ({
    if (context.buttonGroupStyle) {
       const buttonGroup = context.buttonGroupStyle
       style.float = 'left'
+      style.marginBottom = buttonGroup.spacing
+
       if (buttonGroup.align === 'left') {
          style.marginRight = buttonGroup.spacing
       } else if (buttonGroup.align === 'right') {
