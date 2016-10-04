@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-
+import style from './style.less'
 import colors from '../../foundation/colors.less'
 
 const Text = ({ children, className, color, size, weight }) => {
@@ -11,8 +11,8 @@ const Text = ({ children, className, color, size, weight }) => {
    }
 
    const classes = classNames(
-      fontSize,
-      weight,
+      style[fontSize],
+      style[weight],
       colors[color],
       className
    )
