@@ -9,6 +9,7 @@ export default class View extends React.Component {
       className: React.PropTypes.string,
       format: React.PropTypes.string,
       height: React.PropTypes.string,
+      onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
       scroll: React.PropTypes.string,
       width: React.PropTypes.string,
@@ -178,7 +179,11 @@ export default class View extends React.Component {
       }
 
       return (
-         <div ref={node => (this.node = node)} style={style} className={classNames(viewClasses)}>
+         <div
+            ref={node => (this.node = node)}
+            style={style}
+            onScroll={this.props.onScroll}
+            className={classNames(viewClasses)}>
             {this.props.children}
          </div>
       )
