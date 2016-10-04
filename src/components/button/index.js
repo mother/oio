@@ -40,8 +40,8 @@ const Button = ({
    // If Buttons are part of a Button Group
    if (context.buttonGroupStyle) {
       const buttonGroup = context.buttonGroupStyle
-      style.float = 'left'
       style.marginBottom = buttonGroup.spacing
+      style.verticalAlign = 'middle'
 
       if (buttonGroup.align === 'left') {
          style.marginRight = buttonGroup.spacing

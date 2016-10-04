@@ -28,8 +28,15 @@ export default class ButtonGroup extends React.Component {
 
    render() {
       const style = {
-         float: this.props.align,
          position: 'relative'
+      }
+
+      if (this.props.align === 'center') {
+         style.float = 'left'
+         style.width = '100%'
+         style.textAlign = 'center'
+      } else {
+         style.float = this.props.align
       }
 
       return (

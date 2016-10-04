@@ -111,10 +111,10 @@ class Demo extends React.Component {
                         <Text size="2">This is some text</Text>
                         <Text size="1">This is some text</Text>
 
-                        <ButtonGroup>
+                        <ButtonGroup align="right">
                            <Button size="large" name="Big Button" icon="ion-ios-monitor-outline" />
                            <Button size="large" name="Big Button" />
-                           <Button size="large" name="Big Button" outline />
+                           <Button name="Big Button" outline />
                         </ButtonGroup>
                      </GridCell>
                   </Grid>
