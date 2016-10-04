@@ -113,7 +113,8 @@ class Demo extends React.Component {
 
                         <ButtonGroup>
                            <Button size="large" name="Big Button" icon="ion-ios-monitor-outline" />
-                           <Button size="large" name="Big Button" icon="ion-ios-monitor-outline" />
+                           <Button size="large" name="Big Button" />
+                           <Button size="large" name="Big Button" outline />
                         </ButtonGroup>
                      </GridCell>
                   </Grid>

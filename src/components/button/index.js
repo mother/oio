@@ -4,7 +4,7 @@ import Icon from '../Icon'
 import styles from './styles.less'
 
 const Button = ({
-   className, icon, name, onClick, outline, rounded, size, textClassName, type
+   className, icon, name, onClick, outline, outlineNegative, rounded, size, textClassName, type
 }, context) => {
    const buttonClasses = [className]
    const buttonTextClasses = [styles.text]
@@ -27,6 +27,10 @@ const Button = ({
 
    if (outline) {
       buttonClasses.push(styles.outline)
+   }
+
+   if (outlineNegative) {
+      buttonClasses.push(styles.outlineNegative)
    }
 
    if (textClassName) {
@@ -60,6 +64,7 @@ Button.propTypes = {
    name: React.PropTypes.string,
    onClick: React.PropTypes.func,
    outline: React.PropTypes.bool,
+   outlineNegative: React.PropTypes.bool,
    rounded: React.PropTypes.bool,
    size: React.PropTypes.string,
    textClassName: React.PropTypes.string,
