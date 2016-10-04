@@ -34,7 +34,7 @@ export default class View extends React.Component {
    }
 
    componentDidMount() {
-      if (this.props.aspectRatio) {
+      if (this.props.aspectRatio && !this.props.height) {
          this.setComponentAspectRatio()
       }
 
@@ -42,7 +42,7 @@ export default class View extends React.Component {
    }
 
    componentDidUpdate() {
-      if (this.props.aspectRatio) {
+      if (this.props.aspectRatio && !this.props.height) {
          this.setComponentAspectRatio()
       }
    }
@@ -91,14 +91,17 @@ export default class View extends React.Component {
 
    setComponentAspectRatio() {
       const aspectRatio = this.getAttributeForCurrentSize(this.props.aspectRatio)
-      const aspectRatioDimensions = aspectRatio.split(':')
-      const aspectRatioWidth = aspectRatioDimensions[0]
-      const aspectRatioHeight = aspectRatioDimensions[1]
-      const viewWidth = this.node.offsetWidth
-      const viewHeight = `${Math.round((viewWidth / aspectRatioWidth) * aspectRatioHeight)}px`
 
-      if (this.state.height !== viewHeight) {
-         this.setState({ height: viewHeight })
+      if (aspectRatio) {
+         const aspectRatioDimensions = aspectRatio.split(':')
+         const aspectRatioWidth = aspectRatioDimensions[0]
+         const aspectRatioHeight = aspectRatioDimensions[1]
+         const viewWidth = this.node.offsetWidth
+         const viewHeight = `${Math.round((viewWidth / aspectRatioWidth) * aspectRatioHeight)}px`
+
+         if (this.state.height !== viewHeight) {
+            this.setState({ height: viewHeight })
+         }
       }
    }
 
