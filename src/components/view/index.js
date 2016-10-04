@@ -34,17 +34,13 @@ export default class View extends React.Component {
    }
 
    componentDidMount() {
-      if (this.props.aspectRatio && !this.props.height) {
-         this.setComponentAspectRatio()
-      }
+      this.setComponentAspectRatio()
 
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
    componentDidUpdate() {
-      if (this.props.aspectRatio && !this.props.height) {
-         this.setComponentAspectRatio()
-      }
+      this.setComponentAspectRatio()
    }
 
    componentWillUnmount() {
@@ -90,9 +86,20 @@ export default class View extends React.Component {
    }
 
    setComponentAspectRatio() {
-      const aspectRatio = this.getAttributeForCurrentSize(this.props.aspectRatio)
+      let aspectRatio
+      let height
 
-      if (aspectRatio) {
+      if (this.props.aspectRatio) {
+         aspectRatio = this.getAttributeForCurrentSize(this.props.aspectRatio)
+      }
+
+      if (this.props.height) {
+         height = this.getAttributeForCurrentSize(this.props.height)
+      }
+
+      // Will only execute aspect ratio if no height exists
+      // Height takes precedence in setting View size
+      if (aspectRatio && !height) {
          const aspectRatioDimensions = aspectRatio.split(':')
          const aspectRatioWidth = aspectRatioDimensions[0]
          const aspectRatioHeight = aspectRatioDimensions[1]
