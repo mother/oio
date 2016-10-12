@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Spacer, Text } from '../../'
+import Spacer from '../Spacer'
+import Text from '../Text'
 import styles from './styles.less'
 
 const Notification = ({
