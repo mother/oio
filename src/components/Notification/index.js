@@ -3,101 +3,105 @@ import classNames from 'classnames'
 import { Spacer, Text } from '../../'
 import styles from './styles.less'
 
-export default class Notifications extends React.Component {
-   static propTypes = {
-      buttonFull: React.PropTypes.string,
-      buttonOne: React.PropTypes.string,
-      buttonTwo: React.PropTypes.string,
-      buttonAllAction: React.PropTypes.func,
-      buttonActionFull: React.PropTypes.func,
-      buttonOneAction: React.PropTypes.func,
-      buttonTwoAction: React.PropTypes.func,
-      message: React.PropTypes.string,
-      mode: React.PropTypes.string,
-      showing: React.PropTypes.bool,
-      title: React.PropTypes.string
+const Notification = ({
+   buttonFull,
+   buttonOne,
+   buttonTwo,
+   buttonAllAction,
+   buttonActionFull,
+   buttonOneAction,
+   buttonTwoAction,
+   message,
+   mode,
+   showing,
+   title
+}) => {
+   const buttonClickFull = () => {
+      if (buttonAllAction) buttonAllAction()
+      if (buttonActionFull) buttonActionFull()
+   }
+   const buttonClickOne = () => {
+      if (buttonAllAction) buttonAllAction()
+      if (buttonOneAction) buttonOneAction()
+   }
+   const buttonClickTwo = () => {
+      if (buttonAllAction) buttonAllAction()
+      if (buttonTwoAction) buttonTwoAction()
    }
 
-   constructor(props) {
-      super(props)
-
-      this.buttonClickFull = this.buttonClickFull.bind(this)
-      this.buttonClickOne = this.buttonClickOne.bind(this)
-      this.buttonClickTwo = this.buttonClickTwo.bind(this)
+   let loader = <div className={classNames(styles.loader, styles.iconAnim)} />
+   if (mode === 'success') {
+      const successIcon = `icon ion-ios-checkmark ${styles.icon}`
+      loader = <div className={classNames(successIcon, styles.iconSuccess, styles.iconAnim)} />
+   } else if (mode === 'error') {
+      const errorIcon = `icon ion-ios-close ${styles.icon}`
+      loader = <div className={classNames(errorIcon, styles.iconError, styles.iconAnim)} />
+   } else if (mode === 'alert') {
+      const alertIcon = `icon ion-ios-information ${styles.icon}`
+      loader = <div className={classNames(alertIcon, styles.iconAlert, styles.iconAnim)} />
    }
 
-   buttonClickFull() {
-      if (this.props.buttonAllAction) this.props.buttonAllAction()
-      if (this.props.buttonActionFull) this.props.buttonActionFull()
-   }
-   buttonClickOne() {
-      if (this.props.buttonAllAction) this.props.buttonAllAction()
-      if (this.props.buttonOneAction) this.props.buttonOneAction()
-   }
-   buttonClickTwo() {
-      if (this.props.buttonAllAction) this.props.buttonAllAction()
-      if (this.props.buttonTwoAction) this.props.buttonTwoAction()
-   }
+   const buttonFullJSX = buttonFull
+      ? (<button
+         className={classNames(styles.button, styles.buttonFull)}
+         onClick={buttonClickFull}>
+         <Text size="1" weight="bold" color="white" className={styles.title}>{buttonFull}</Text>
+      </button>)
+      : null
 
-   render() {
-      let loader = <div className={classNames(styles.loader, styles.iconAnim)} />
-      if (this.props.mode === 'success') {
-         const successIcon = `icon ion-ios-checkmark ${styles.icon}`
-         loader = <div className={classNames(successIcon, styles.iconSuccess, styles.iconAnim)} />
-      } else if (this.props.mode === 'error') {
-         const errorIcon = `icon ion-ios-close ${styles.icon}`
-         loader = <div className={classNames(errorIcon, styles.iconError, styles.iconAnim)} />
-      } else if (this.props.mode === 'alert') {
-         const alertIcon = `icon ion-ios-information ${styles.icon}`
-         loader = <div className={classNames(alertIcon, styles.iconAlert, styles.iconAnim)} />
+   const buttonOneJSX = buttonOne
+      ? (<button
+         className={classNames(styles.button, styles.buttonOne)}
+         onClick={buttonClickOne}>
+         <Text size="1" weight="bold" color="white" className={styles.title}>{buttonOne}</Text>
+      </button>)
+      : null
+
+   const buttonTwoJSX = buttonTwo
+      ? (<button
+         className={classNames(styles.button, styles.buttonTwo)}
+         onClick={buttonClickTwo}>
+         <Text size="1" weight="bold" color="white" className={styles.title}>{buttonTwo}</Text>
+      </button>)
+      : null
+
+   const styleDisplay = showing
+      ? {
+         right: '10px'
+      }
+      : {
+         right: '-400px'
       }
 
-      const buttonFull = this.props.buttonFull
-         ? (<button
-            className={classNames(styles.button, styles.buttonFull)}
-            onClick={this.buttonClickFull}>
-            <Text size="1" weight="bold" color="white" className={styles.title}>{this.props.buttonFull}</Text>
-         </button>)
-         : null
-
-      const buttonOne = this.props.buttonOne
-         ? (<button
-            className={classNames(styles.button, styles.buttonOne)}
-            onClick={this.buttonClickOne}>
-            <Text size="1" weight="bold" color="white" className={styles.title}>{this.props.buttonOne}</Text>
-         </button>)
-         : null
-
-      const buttonTwo = this.props.buttonTwo
-         ? (<button
-            className={classNames(styles.button, styles.buttonTwo)}
-            onClick={this.buttonClickTwo}>
-            <Text size="1" weight="bold" color="white" className={styles.title}>{this.props.buttonTwo}</Text>
-         </button>)
-         : null
-
-      const styleDisplay = this.props.showing
-         ? {
-            right: '10px'
-         }
-         : {
-            right: '-400px'
-         }
-
-      return (
-         <div className={classNames(styles.container)} style={styleDisplay}>
-            <div className={styles.notification}>
-               {loader}
-               <div className={styles.message}>
-                  <Text size="1" weight="bold" color="white" className={styles.title}>{this.props.title}</Text>
-                  <Spacer size="1" />
-                  <Text size="2" color="gray40">{this.props.message}</Text>
-               </div>
+   return (
+      <div className={classNames(styles.container)} style={styleDisplay}>
+         <div className={styles.notification}>
+            {loader}
+            <div className={styles.message}>
+               <Text size="1" weight="bold" color="white" className={styles.title}>{title}</Text>
+               <Spacer size="1" />
+               <Text size="2" color="gray40">{message}</Text>
             </div>
-            {buttonFull}
-            {buttonOne}
-            {buttonTwo}
          </div>
-      )
-   }
+         {buttonFullJSX}
+         {buttonOneJSX}
+         {buttonTwoJSX}
+      </div>
+   )
 }
+
+Notification.propTypes = {
+   buttonFull: React.PropTypes.string,
+   buttonOne: React.PropTypes.string,
+   buttonTwo: React.PropTypes.string,
+   buttonAllAction: React.PropTypes.func,
+   buttonActionFull: React.PropTypes.func,
+   buttonOneAction: React.PropTypes.func,
+   buttonTwoAction: React.PropTypes.func,
+   message: React.PropTypes.string,
+   mode: React.PropTypes.string,
+   showing: React.PropTypes.bool,
+   title: React.PropTypes.string
+}
+
+export default Notification
