@@ -31,10 +31,14 @@ class Demo extends React.Component {
 
       this.state = {
          notification: {
-            message: '',
-            mode: 'none',
-            showing: false,
-            title: ''
+            buttonAllAction: () => {
+               this.setState({
+                  notification: {
+                     ...this.state.notification,
+                     showing: false
+                  }
+               })
+            }
          }
       }
    }
@@ -57,7 +61,11 @@ class Demo extends React.Component {
                ...this.state.notification,
                message: 'That was awesome!',
                mode: 'success',
-               title: 'Success'
+               title: 'Success',
+               buttonOne: 'Confirm',
+               buttonOneAction: () => console.log('one'),
+               buttonTwo: 'Cancel',
+               buttonTwoAction: () => console.log('two')
             }
          })
       }, 2000)
@@ -77,17 +85,10 @@ class Demo extends React.Component {
                buttonFull={this.state.notification.buttonFull}
                buttonOne={this.state.notification.buttonOne}
                buttonTwo={this.state.notification.buttonTwo}
-               buttonActionFull={() => console.log('full')}
-               buttonActionOne={() => console.log('one')}
-               buttonActionTwo={() => console.log('two')}
-               buttonActionAll={() => {
-                  this.setState({
-                     notification: {
-                        ...this.state.notification,
-                        showing: false
-                     }
-                  })
-               }}
+               buttonFullAction={this.state.notification.buttonFullAction}
+               buttonOneAction={this.state.notification.buttonOneAction}
+               buttonTwoAction={this.state.notification.buttonTwoAction}
+               buttonAllAction={this.state.notification.buttonAllAction}
             />
             <View width="20%" height="100%" padding="36px">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>

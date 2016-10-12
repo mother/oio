@@ -8,10 +8,10 @@ export default class Notifications extends React.Component {
       buttonFull: React.PropTypes.string,
       buttonOne: React.PropTypes.string,
       buttonTwo: React.PropTypes.string,
-      buttonActionAll: React.PropTypes.func,
+      buttonAllAction: React.PropTypes.func,
       buttonActionFull: React.PropTypes.func,
-      buttonActionOne: React.PropTypes.func,
-      buttonActionTwo: React.PropTypes.func,
+      buttonOneAction: React.PropTypes.func,
+      buttonTwoAction: React.PropTypes.func,
       message: React.PropTypes.string,
       mode: React.PropTypes.string,
       showing: React.PropTypes.bool,
@@ -26,23 +26,17 @@ export default class Notifications extends React.Component {
       this.buttonClickTwo = this.buttonClickTwo.bind(this)
    }
 
-   componentDidMount() {
-      // if (this.props.autoDismiss) {
-      //    setTimeout()
-      // }
-   }
-
    buttonClickFull() {
-      if (this.props.buttonActionAll) this.props.buttonActionAll()
+      if (this.props.buttonAllAction) this.props.buttonAllAction()
       if (this.props.buttonActionFull) this.props.buttonActionFull()
    }
    buttonClickOne() {
-      if (this.props.buttonActionAll) this.props.buttonActionAll()
-      if (this.props.buttonActionOne) this.props.buttonActionOne()
+      if (this.props.buttonAllAction) this.props.buttonAllAction()
+      if (this.props.buttonOneAction) this.props.buttonOneAction()
    }
    buttonClickTwo() {
-      if (this.props.buttonActionAll) this.props.buttonActionAll()
-      if (this.props.buttonActionTwo) this.props.buttonActionTwo()
+      if (this.props.buttonAllAction) this.props.buttonAllAction()
+      if (this.props.buttonTwoAction) this.props.buttonTwoAction()
    }
 
    render() {
@@ -76,7 +70,7 @@ export default class Notifications extends React.Component {
 
       const buttonTwo = this.props.buttonTwo
          ? (<button
-            className={classNames(styles.button, styles.buttonOne)}
+            className={classNames(styles.button, styles.buttonTwo)}
             onClick={this.buttonClickTwo}>
             <Text size="1" weight="bold" color="white" className={styles.title}>{this.props.buttonTwo}</Text>
          </button>)
