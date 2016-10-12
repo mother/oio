@@ -63,9 +63,9 @@ class Demo extends React.Component {
                mode: 'success',
                title: 'Success',
                buttonOne: 'Confirm',
-               buttonOneAction: () => console.log('one'),
+               buttonOneAction: () => 'one',
                buttonTwo: 'Cancel',
-               buttonTwoAction: () => console.log('two')
+               buttonTwoAction: () => 'two'
             }
          })
       }, 2000)
@@ -74,21 +74,22 @@ class Demo extends React.Component {
    render() {
       const titleHeading = '1'
       const titleSize = '4'
+      const notification = (this.state && this.state.notification) || {}
 
       return (
          <View format="auto">
             <Notification
-               message={this.state.notification.message}
-               mode={this.state.notification.mode}
-               showing={this.state.notification.showing}
-               title={this.state.notification.title}
-               buttonFull={this.state.notification.buttonFull}
-               buttonOne={this.state.notification.buttonOne}
-               buttonTwo={this.state.notification.buttonTwo}
-               buttonFullAction={this.state.notification.buttonFullAction}
-               buttonOneAction={this.state.notification.buttonOneAction}
-               buttonTwoAction={this.state.notification.buttonTwoAction}
-               buttonAllAction={this.state.notification.buttonAllAction}
+               message={notification.message}
+               mode={notification.mode}
+               showing={notification.showing}
+               title={notification.title}
+               buttonFull={notification.buttonFull}
+               buttonOne={notification.buttonOne}
+               buttonTwo={notification.buttonTwo}
+               buttonFullAction={notification.buttonFullAction}
+               buttonOneAction={notification.buttonOneAction}
+               buttonTwoAction={notification.buttonTwoAction}
+               buttonAllAction={notification.buttonAllAction}
             />
             <View width="20%" height="100%" padding="36px">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>

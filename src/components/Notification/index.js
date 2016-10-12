@@ -36,9 +36,9 @@ const Notification = ({
    } else if (mode === 'error') {
       const errorIcon = `icon ion-ios-close ${styles.icon}`
       loader = <div className={classNames(errorIcon, styles.iconError, styles.iconAnim)} />
-   } else if (mode === 'alert') {
-      const alertIcon = `icon ion-ios-information ${styles.icon}`
-      loader = <div className={classNames(alertIcon, styles.iconAlert, styles.iconAnim)} />
+   } else if (mode === 'warning') {
+      const warningIcon = `icon ion-ios-information ${styles.icon}`
+      loader = <div className={classNames(warningIcon, styles.iconWarning, styles.iconAnim)} />
    }
 
    const buttonFullJSX = buttonFull
