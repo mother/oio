@@ -1,0 +1,126 @@
+.container {
+   position: fixed;
+   //top: 120px;
+   bottom: 30px;
+   right: 30px;
+   z-index: 99;
+   width: 360px;
+}
+
+.iconAnim {
+   animation: showNotificationIcon 500ms;
+}
+
+@keyframes showNotification {
+   from { opacity: 0; transform: translateX(100%) scale(0.9); }
+     to { opacity: 100; transform: translateX(0%) scale(1); }
+}
+
+@keyframes showNotificationIcon {
+   from { opacity: 0; transform: scale(0.7); }
+     to { opacity: 100; transform: scale(1); }
+}
+
+.notification {
+   float: left;
+   position: relative;
+   width: 100%;
+   margin-bottom: 12px;
+   background: rgba(60,65,65,0.8);
+   background: rgba(15,15,20,1);
+   // background: #27282a;
+   padding: 30px 30px 30px 90px;
+   border-radius: 9px;
+   animation-duration: 600ms;
+   animation-name: showNotification;
+   // display: none;
+
+   .icon {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 36px;
+      text-align: center;
+      line-height: 30px;
+      color: #59e9b5;
+   }
+
+   .title {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+   }
+
+   a {
+      color: #fff;
+   }
+}
+
+.loader {
+   position: absolute;
+   top: 30px;
+   left: 30px;
+   font-size: 10px;
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   background: #ffffff;
+   background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+   background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+   background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+   background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+   background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+   -webkit-animation: load3 900ms infinite linear;
+   animation: load3 900ms infinite linear;
+   -webkit-transform: translateZ(0);
+   -ms-transform: translateZ(0);
+   transform: translateZ(0);
+}
+
+.loader:before {
+  width: 50%;
+  height: 50%;
+  background: #ffffff;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+.loader:after {
+  background: #0dc5c1;
+  background: #27282a;
+  background: rgba(15,15,20,1);
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

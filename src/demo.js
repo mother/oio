@@ -11,6 +11,7 @@ import {
    // Icon,
    Input,
    Nav,
+   Notification,
    Popover,
    Select,
    Spacer,
@@ -167,6 +168,7 @@ class Demo extends React.Component {
                   </ButtonGroup>
                </ToolBar>
             </View>
+            <Notification />
          </View>
       )
    }
