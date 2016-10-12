@@ -163,7 +163,7 @@ class Demo extends React.Component {
                <ToolBar>
                   <ButtonGroup align="right">
                      <Button name="Previous" />
-                     <Button name="Next" />
+                     <Button name="Next" mode="loading" />
                   </ButtonGroup>
                </ToolBar>
             </View>

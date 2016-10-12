@@ -4,12 +4,13 @@ import Icon from '../Icon'
 import styles from './styles.less'
 
 const Button = ({
-   className, icon, name, onClick, outline, outlineNegative, rounded, size, textClassName, type
+   className, icon, mode, name, onClick, outline, outlineNegative, rounded, size, textClassName, type
 }, context) => {
    const buttonClasses = [className]
    const buttonTextClasses = [styles.text]
    const buttonName = name
    const style = {}
+   let modeIcon
 
    buttonClasses.push(styles[size])
 
@@ -19,6 +20,11 @@ const Button = ({
 
    if (icon && !name) {
       buttonClasses.push(styles[`${size}IconOnly`])
+   }
+
+   if (mode) {
+      buttonClasses.push(styles[`${mode}Mode`])
+      modeIcon = <span className={styles.loader} />
    }
 
    if (rounded) {
@@ -54,6 +60,7 @@ const Button = ({
       <button className={classNames(buttonClasses)} onClick={onClick} style={style} type={type}>
          <Icon className={styles.icon} name={icon} />
          <span className={classNames(styles.text, buttonTextClasses)}>{buttonName}</span>
+         {modeIcon}
       </button>
    )
 }
@@ -61,6 +68,7 @@ const Button = ({
 Button.propTypes = {
    className: React.PropTypes.string,
    icon: React.PropTypes.string,
+   mode: React.PropTypes.string,
    name: React.PropTypes.string,
    onClick: React.PropTypes.func,
    outline: React.PropTypes.bool,
