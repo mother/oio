@@ -9,7 +9,7 @@ const Notification = ({
    buttonOne,
    buttonTwo,
    buttonAllAction,
-   buttonActionFull,
+   buttonFullAction,
    buttonOneAction,
    buttonTwoAction,
    message,
@@ -19,7 +19,7 @@ const Notification = ({
 }) => {
    const buttonClickFull = () => {
       if (buttonAllAction) buttonAllAction()
-      if (buttonActionFull) buttonActionFull()
+      if (buttonFullAction) buttonFullAction()
    }
    const buttonClickOne = () => {
       if (buttonAllAction) buttonAllAction()
@@ -96,7 +96,7 @@ Notification.propTypes = {
    buttonOne: React.PropTypes.string,
    buttonTwo: React.PropTypes.string,
    buttonAllAction: React.PropTypes.func,
-   buttonActionFull: React.PropTypes.func,
+   buttonFullAction: React.PropTypes.func,
    buttonOneAction: React.PropTypes.func,
    buttonTwoAction: React.PropTypes.func,
    message: React.PropTypes.string,
