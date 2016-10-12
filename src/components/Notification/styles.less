@@ -1,10 +1,18 @@
+@radius: 9px;
+
 .container {
    position: fixed;
-   //top: 120px;
-   bottom: 30px;
-   right: 30px;
+   bottom: 10px;
+   // right: -400px;
    z-index: 99;
-   width: 360px;
+   width: 90%;
+   max-width: 400px;
+   box-sizing: border-box;
+   background: #0F0F14;
+   border-radius: @radius;
+   transition: all 0.3s ease-in-out;
+   // animation-duration: 600ms;
+   // animation-name: showNotification;
 }
 
 .iconAnim {
@@ -22,18 +30,7 @@
 }
 
 .notification {
-   float: left;
-   position: relative;
-   width: 100%;
-   margin-bottom: 12px;
-   background: rgba(60,65,65,0.8);
-   background: rgba(15,15,20,1);
-   // background: #27282a;
    padding: 30px 30px 30px 90px;
-   border-radius: 9px;
-   animation-duration: 600ms;
-   animation-name: showNotification;
-   // display: none;
 
    .icon {
       position: absolute;
@@ -45,7 +42,15 @@
       font-size: 36px;
       text-align: center;
       line-height: 30px;
+   }
+   .iconSuccess {
       color: #59e9b5;
+   }
+   .iconError {
+      color: #E60000;
+   }
+   .iconAlert {
+      color: #E6BA00;
    }
 
    .title {
@@ -53,9 +58,53 @@
       letter-spacing: 3px;
    }
 
+   .message {
+      word-wrap: break-word;
+   }
+
    a {
       color: #fff;
    }
+}
+
+.button {
+   display: block;
+   border: 0;
+   outline: 0;
+   height: 40px;
+   text-align: center;
+   border-top: 1px solid #525252;
+   background-color: transparent;
+   color: #D3D3D3;
+   text-transform: uppercase;
+   letter-spacing: 3px;
+   cursor: pointer;
+}
+
+.button:hover {
+   background-color: #2A2A2A;
+}
+
+.button:active {
+   background-color: #3B3B3B;
+}
+
+.buttonFull {
+   width: 100%;
+   border-bottom-left-radius: @radius;
+   border-bottom-right-radius: @radius;
+}
+
+.buttonOne {
+   display: inline;
+   width: 50%;
+   border-bottom-left-radius: @radius;
+   border-right: 1px solid #525252;
+}
+.buttonTwo {
+   display: inline;
+   width: 50%;
+   border-bottom-right-radius: @radius;
 }
 
 .loader {

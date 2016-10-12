@@ -26,12 +26,69 @@ import {
 import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
 
 class Demo extends React.Component {
+   constructor(props, context) {
+      super(props, context)
+
+      this.state = {
+         notification: {
+            message: '',
+            mode: 'none',
+            showing: false,
+            title: ''
+         }
+      }
+   }
+
+   componentDidMount() {
+      setTimeout(() => {
+         this.setState({
+            notification: {
+               ...this.state.notification,
+               message: 'Please wait...',
+               mode: 'loading',
+               showing: true,
+               title: 'Loading'
+            }
+         })
+      }, 1000)
+      setTimeout(() => {
+         this.setState({
+            notification: {
+               ...this.state.notification,
+               message: 'That was awesome!',
+               mode: 'success',
+               title: 'Success'
+            }
+         })
+      }, 2000)
+   }
+
    render() {
       const titleHeading = '1'
       const titleSize = '4'
 
       return (
          <View format="auto">
+            <Notification
+               message={this.state.notification.message}
+               mode={this.state.notification.mode}
+               showing={this.state.notification.showing}
+               title={this.state.notification.title}
+               buttonFull={this.state.notification.buttonFull}
+               buttonOne={this.state.notification.buttonOne}
+               buttonTwo={this.state.notification.buttonTwo}
+               buttonActionFull={() => console.log('full')}
+               buttonActionOne={() => console.log('one')}
+               buttonActionTwo={() => console.log('two')}
+               buttonActionAll={() => {
+                  this.setState({
+                     notification: {
+                        ...this.state.notification,
+                        showing: false
+                     }
+                  })
+               }}
+            />
             <View width="20%" height="100%" padding="36px">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>
                <Text weight="bold" color="gray40">A Happy Style Framework</Text>
@@ -168,10 +225,6 @@ class Demo extends React.Component {
                   </ButtonGroup>
                </ToolBar>
             </View>
-            <Notification
-               title="Saved Changes"
-               text="You are such a pinneaple!"
-            />
          </View>
       )
    }
