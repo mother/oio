@@ -119,7 +119,7 @@ export default class View extends React.Component {
    }
 
    render() {
-      const viewClasses = [styles.uiView]
+      const viewClasses = [styles.view]
 
       if (this.props.width) {
          const width = this.getAttributeForCurrentSize(this.props.width)
