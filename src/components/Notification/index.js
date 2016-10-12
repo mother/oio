@@ -1,9 +1,14 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Text } from '../../'
+import { Spacer, Text } from '../../'
 import styles from './styles.less'
 
 export default class Notifications extends React.Component {
+   static propTypes = {
+      title: React.PropTypes.string,
+      text: React.PropTypes.string
+   }
+
    constructor(props, context) {
       super(props, context)
 
@@ -32,8 +37,9 @@ export default class Notifications extends React.Component {
             <div className={styles.notification}>
                {loader}
                <div className={styles.message}>
-                  <Text size="1" weight="bold" color="white" className={styles.title}>Saved Changes</Text>
-                  <Text size="2" color="gray40">You are such a pinneaple</Text>
+                  <Text size="1" weight="bold" color="white" className={styles.title}>{this.props.title}</Text>
+                  <Spacer size="1" />
+                  <Text size="2" color="gray40">{this.props.text}</Text>
                </div>
             </div>
          </div>

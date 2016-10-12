@@ -168,7 +168,10 @@ class Demo extends React.Component {
                   </ButtonGroup>
                </ToolBar>
             </View>
-            <Notification />
+            <Notification
+               title="Saved Changes"
+               text="You are such a pinneaple!"
+            />
          </View>
       )
    }
