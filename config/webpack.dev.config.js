@@ -9,7 +9,7 @@ module.exports = {
       './src/playground'
    ],
    output: {
-      path: path.join(__dirname, 'dist'),
+      path: path.join(__dirname, '..', 'dist'),
       filename: 'bundle.js',
       publicPath: '/dist/'
    },
