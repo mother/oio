@@ -31,7 +31,7 @@ class Demo extends React.Component {
 
       return (
          <View format="auto">
-            <View width="20%" height="100%" padding="36px">
+            <View width="20%" height="100%" padding="24px[c] 38px[d]">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>
                <Text weight="bold" color="gray40">A Happy Style Framework</Text>
                <Spacer size="4" />

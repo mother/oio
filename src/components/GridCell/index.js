@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-
 import styles from './styles.less'
 
 export default class GridCell extends React.Component {
@@ -10,6 +9,10 @@ export default class GridCell extends React.Component {
       colspan: React.PropTypes.string,
       gutter: React.PropTypes.string,
       width: React.PropTypes.string
+   }
+
+   static contextTypes = {
+      GridCellStyle: React.PropTypes.object
    }
 
    constructor(props, context) {
@@ -80,21 +83,28 @@ export default class GridCell extends React.Component {
       let colspanMultiplier = 1
       const classes = classNames(styles.gridCell, this.props.className)
 
-      // Width is set by UIGrid (for now)
-      if (this.props.width) {
-         const width = this.props.width
+      if (this.context.GridCellStyle) {
+         //console.log('context', this.context.GridCellStyle)
 
-         if (this.props.colspan) {
-            colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
-         }
-
-         if (width) {
-            const unit = width.indexOf('px') === -1 ? '%' : 'px'
-            this.state.width = (parseFloat(width) * colspanMultiplier) + unit
-         }
+         this.state.width = `${this.context.GridCellStyle.width}px`
+         this.state.gutter = `${this.context.GridCellStyle.gutter}px`
       }
 
-      // Gutter is set by UIGrid (for now)
+      // Width is set by Grid (for now)
+      // if (this.props.width) {
+      //    const width = this.props.width
+      //
+      //    if (this.props.colspan) {
+      //       colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
+      //    }
+      //
+      //    if (width) {
+      //       const unit = width.indexOf('px') === -1 ? '%' : 'px'
+      //       this.state.width = (parseFloat(width) * colspanMultiplier) + unit
+      //    }
+      // }
+
+      // Gutter is set by Grid (for now)
       if (this.props.gutter) {
          const unit = this.props.gutter.indexOf('px') === -1 ? '%' : 'px'
          gutter = parseFloat(this.props.gutter) + unit
@@ -102,8 +112,8 @@ export default class GridCell extends React.Component {
 
       const cellStyle = {
          width: this.state.width,
-         paddingRight: gutter,
-         marginBottom: gutter
+         paddingLeft: this.state.gutter,
+         marginBottom: this.state.gutter
       }
 
       return (
