@@ -14,6 +14,8 @@ const Notification = ({
    buttonTwoAction,
    message,
    mode,
+   onHide,
+   onShow,
    showing,
    title
 }) => {
@@ -74,6 +76,9 @@ const Notification = ({
          right: '-400px'
       }
 
+   if (onHide && !showing) onHide()
+   if (onShow && showing) onShow()
+
    return (
       <div className={classNames(styles.container)} style={styleDisplay}>
          <div className={styles.notification}>
@@ -101,6 +106,8 @@ Notification.propTypes = {
    buttonTwoAction: React.PropTypes.func,
    message: React.PropTypes.string,
    mode: React.PropTypes.string,
+   onHide: React.PropTypes.func,
+   onShow: React.PropTypes.func,
    showing: React.PropTypes.bool,
    title: React.PropTypes.string
 }

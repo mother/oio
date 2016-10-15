@@ -51,7 +51,9 @@ class Demo extends React.Component {
                message: 'Please wait...',
                mode: 'loading',
                showing: true,
-               title: 'Loading'
+               title: 'Loading',
+               onHide: () => console.log('hide'), // eslint-disable-line
+               onShow: () => console.log('show') // eslint-disable-line
             }
          })
       }, 1000)
@@ -59,16 +61,10 @@ class Demo extends React.Component {
          this.setState({
             notification: {
                ...this.state.notification,
-               message: 'That was awesome!',
-               mode: 'success',
-               title: 'Success',
-               buttonOne: 'Confirm',
-               buttonOneAction: () => 'one',
-               buttonTwo: 'Cancel',
-               buttonTwoAction: () => 'two'
+               showing: false
             }
          })
-      }, 2000)
+      }, 3000)
    }
 
    render() {
@@ -79,17 +75,19 @@ class Demo extends React.Component {
       return (
          <View format="auto">
             <Notification
+               buttonAllAction={notification.buttonAllAction}
+               buttonFull={notification.buttonFull}
+               buttonFullAction={notification.buttonFullAction}
+               buttonOne={notification.buttonOne}
+               buttonOneAction={notification.buttonOneAction}
+               buttonTwo={notification.buttonTwo}
+               buttonTwoAction={notification.buttonTwoAction}
                message={notification.message}
                mode={notification.mode}
+               onHide={notification.onHide}
+               onShow={notification.onShow}
                showing={notification.showing}
                title={notification.title}
-               buttonFull={notification.buttonFull}
-               buttonOne={notification.buttonOne}
-               buttonTwo={notification.buttonTwo}
-               buttonFullAction={notification.buttonFullAction}
-               buttonOneAction={notification.buttonOneAction}
-               buttonTwoAction={notification.buttonTwoAction}
-               buttonAllAction={notification.buttonAllAction}
             />
             <View width="20%" height="100%" padding="36px">
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>
