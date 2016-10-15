@@ -8,6 +8,8 @@ import GridCell from './components/GridCell'
 import Icon from './components/Icon'
 import Input from './components/Form/Input'
 import Nav from './components/Nav'
+import Notification from './components/Notification'
+import OIO from './components/OIO'
 import Popover from './components/Popover'
 import Select from './components/Form/Select'
 import Spacer from './components/Spacer'
@@ -29,6 +31,8 @@ export {
    Icon,
    Input,
    Nav,
+   Notification,
+   OIO,
    Popover,
    Select,
    Spacer,

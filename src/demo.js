@@ -11,6 +11,7 @@ import {
    // Icon,
    Input,
    Nav,
+   Notification,
    Popover,
    Select,
    Spacer,
@@ -25,13 +26,70 @@ import {
 import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
 
 class Demo extends React.Component {
+   constructor(props, context) {
+      super(props, context)
+
+      this.state = {
+         notification: {
+            buttonAllAction: () => {
+               this.setState({
+                  notification: {
+                     ...this.state.notification,
+                     showing: false
+                  }
+               })
+            }
+         }
+      }
+   }
+
+   componentDidMount() {
+      setTimeout(() => {
+         this.setState({
+            notification: {
+               ...this.state.notification,
+               message: 'Please wait...',
+               mode: 'loading',
+               showing: true,
+               title: 'Loading',
+               onHide: () => console.log('hide'), // eslint-disable-line
+               onShow: () => console.log('show') // eslint-disable-line
+            }
+         })
+      }, 1000)
+      setTimeout(() => {
+         this.setState({
+            notification: {
+               ...this.state.notification,
+               showing: false
+            }
+         })
+      }, 3000)
+   }
+
    render() {
       const titleHeading = '1'
       const titleSize = '4'
+      const notification = (this.state && this.state.notification) || {}
 
       return (
          <View format="auto">
             <View width="20%" height="100%" padding="24px[c] 38px[d]">
+               <Notification
+                  buttonAllAction={notification.buttonAllAction}
+                  buttonFull={notification.buttonFull}
+                  buttonFullAction={notification.buttonFullAction}
+                  buttonOne={notification.buttonOne}
+                  buttonOneAction={notification.buttonOneAction}
+                  buttonTwo={notification.buttonTwo}
+                  buttonTwoAction={notification.buttonTwoAction}
+                  message={notification.message}
+                  mode={notification.mode}
+                  onHide={notification.onHide}
+                  onShow={notification.onShow}
+                  showing={notification.showing}
+                  title={notification.title}
+               />
                <Title heading={titleHeading} weight="light" size="9">OIO</Title>
                <Text weight="bold" color="gray40">A Happy Style Framework</Text>
                <Spacer size="4" />
