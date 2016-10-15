@@ -79,6 +79,7 @@ export default class GridCell extends React.Component {
    }
 
    render() {
+      let colspanMultiplier = 1
       const classes = classNames(styles.gridCell, this.props.className)
 
       if (this.context.GridCellStyle) {
@@ -86,8 +87,12 @@ export default class GridCell extends React.Component {
          this.state.gutter = `${this.context.GridCellStyle.gutter}`
       }
 
+      if (this.props.colspan) {
+         colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
+      }
+
       const gutter = parseFloat(this.state.gutter)
-      const width = parseFloat(this.state.width)
+      const width = parseFloat(this.state.width) * colspanMultiplier
 
       const cellStyle = {
          width: `${width}px`,
