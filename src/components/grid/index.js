@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import styles from './styles.less'
+import style from './style.less'
 
 export default class Grid extends React.Component {
    static propTypes = {
@@ -10,6 +10,11 @@ export default class Grid extends React.Component {
       columns: React.PropTypes.string,
       gutter: React.PropTypes.string,
       width: React.PropTypes.string
+   }
+
+   static defaultProps = {
+      columns: '12',
+      gutter: '6px'
    }
 
    static childContextTypes = {
@@ -22,6 +27,7 @@ export default class Grid extends React.Component {
       this.state = {
          size: this.getWindowSize(),
          width: 'auto',
+         innerWidth: '100%',
          cellWidth: 'auto',
          cellGutter: 'auto'
       }
@@ -39,13 +45,12 @@ export default class Grid extends React.Component {
    }
 
    componentDidMount() {
-      this.setGridCellWidth()
+      this.updateGrid()
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
    componentDidUpdate() {
-      console.log('updated')
-      this.setGridCellWidth()
+      this.updateGrid()
    }
 
    componentWillUnmount() {
@@ -95,37 +100,17 @@ export default class Grid extends React.Component {
       this.setState({ size: windowSize })
    }
 
-   setGridCellWidth() {
-      let columns = 12
-      let gutter = 6
+   updateGrid() {
+      const columns = this.getAttributeForCurrentSize(this.props.columns)
+      const gutter = this.getAttributeForCurrentSize(this.props.gutter)
 
-      console.log(typeof this.state.width)
+      const calculatedGridWidth = this.node.clientWidth
+      const adjustedGridWidth = parseFloat(calculatedGridWidth) + parseFloat(gutter)
+      const cellWidth = (adjustedGridWidth) / columns
 
-      if (typeof this.state.width !== 'number' && (this.props.width !== this.state.width || typeof this.state.width === 'string')) {
-         console.log('set', this.props.width, this.state.width)
-         const width = this.getAttributeForCurrentSize(this.props.width)
-         const unit = width.indexOf('px') === -1 ? '%' : 'px'
-         this.state.width = parseFloat(width) + unit
-      }
-
-      if (this.props.columns) {
-         columns = this.getAttributeForCurrentSize(this.props.columns)
-      }
-
-      if (this.props.gutter) {
-         gutter = this.getAttributeForCurrentSize(this.props.gutter)
-      }
-
-      const gridWidth = this.node.clientWidth
-      const gridWidthAdjusted = parseFloat(gridWidth) + parseFloat(gutter)
-      const netWidthRemaining = (columns - 1) * gutter
-      console.log(gridWidth, gridWidthAdjusted, this.state.width)
-      const cellWidth = (gridWidth - parseFloat(gutter)) / columns
-
-      if(this.state.width !== gridWidth) {
-         console.log('ADJUST- I am different', gridWidthAdjusted)
+      if(this.state.innerWidth !== adjustedGridWidth) {
          this.setState({
-            width: gridWidthAdjusted
+            innerWidth: adjustedGridWidth
          })
       }
 
@@ -137,42 +122,30 @@ export default class Grid extends React.Component {
       }
    }
 
-
    render() {
-      let columns = 12
-      let gutter = 6
-      const classes = classNames(styles.gridContainer, this.props.className)
+      const classes = classNames(style.gridContainer, this.props.className)
+      const gutter = parseFloat(this.getAttributeForCurrentSize(this.props.gutter))
 
-      // if (this.props.width) {
-      //    const width = this.getAttributeForCurrentSize(this.props.width)
-      //    const unit = width.indexOf('px') === -1 ? '%' : 'px'
-      //    this.state.width = parseFloat(width) + unit
-      // }
-
-      if (this.props.columns) {
-         columns = this.getAttributeForCurrentSize(this.props.columns)
+      if (this.props.width) {
+         const width = this.getAttributeForCurrentSize(this.props.width)
+         const unit = width.indexOf('px') === -1 ? '%' : 'px'
+         this.state.width = parseFloat(width) + unit
       }
 
-      if (this.props.gutter) {
-         gutter = this.getAttributeForCurrentSize(this.props.gutter)
-      }
-
-      // const cellWidth = 100 / columns
-      // const modifyGridCell = function (child) {
-      //    return React.cloneElement(child, {
-      //       width: `${cellWidth}%`,
-      //       gutter: `${gutter}px`
-      //    })
-      // }
-      // const gridCells = React.Children.map(this.props.children, modifyGridCell)
       const gridStyle = {
-         width: `${this.state.width}px`,
+         width: this.state.width
+      }
+
+      const gridInnerStyle = {
+         width: this.state.innerWidth,
          marginLeft: `-${gutter}px`
       }
 
       return (
          <div ref={node => (this.node = node)} className={classes} style={gridStyle}>
-            {this.props.children}
+            <div className={style.gridInnerContainer} style={gridInnerStyle}>
+               {this.props.children}
+            </div>
          </div>
       )
    }

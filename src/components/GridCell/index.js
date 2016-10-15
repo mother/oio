@@ -20,8 +20,8 @@ export default class GridCell extends React.Component {
 
       this.state = {
          size: this.getWindowSize(),
-         width: 'auto',
-         gutter: 'auto'
+         width: '0',
+         gutter: '0'
       }
 
       this.windowResizeListener = this.windowSizeUpdated.bind(this)
@@ -79,41 +79,20 @@ export default class GridCell extends React.Component {
    }
 
    render() {
-      let gutter = 0
-      let colspanMultiplier = 1
       const classes = classNames(styles.gridCell, this.props.className)
 
       if (this.context.GridCellStyle) {
-         //console.log('context', this.context.GridCellStyle)
-
          this.state.width = `${this.context.GridCellStyle.width}px`
-         this.state.gutter = `${this.context.GridCellStyle.gutter}px`
+         this.state.gutter = `${this.context.GridCellStyle.gutter}`
       }
 
-      // Width is set by Grid (for now)
-      // if (this.props.width) {
-      //    const width = this.props.width
-      //
-      //    if (this.props.colspan) {
-      //       colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
-      //    }
-      //
-      //    if (width) {
-      //       const unit = width.indexOf('px') === -1 ? '%' : 'px'
-      //       this.state.width = (parseFloat(width) * colspanMultiplier) + unit
-      //    }
-      // }
-
-      // Gutter is set by Grid (for now)
-      if (this.props.gutter) {
-         const unit = this.props.gutter.indexOf('px') === -1 ? '%' : 'px'
-         gutter = parseFloat(this.props.gutter) + unit
-      }
+      const gutter = parseFloat(this.state.gutter)
+      const width = parseFloat(this.state.width)
 
       const cellStyle = {
-         width: this.state.width,
-         paddingLeft: this.state.gutter,
-         marginBottom: this.state.gutter
+         width: `${width}px`,
+         paddingLeft: `${gutter}px`,
+         marginBottom: `${gutter}px`
       }
 
       return (
