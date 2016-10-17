@@ -27,7 +27,7 @@ Cover.propTypes = {
    className: React.PropTypes.string,
    position: React.PropTypes.string,
    size: React.PropTypes.string,
-   src: React.PropTypes.string.isRequired
+   src: React.PropTypes.string
 }
 
 Cover.defaultProps = {

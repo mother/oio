@@ -138,7 +138,8 @@ export default class View extends React.Component {
       }
 
       if (this.props.padding) {
-         const padding = this.getAttributeForCurrentSize(this.props.padding)
+         const padding = this.getAttributeForCurrentSize(this.props.padding, true)
+         
          if (padding) {
             const unit = padding.indexOf('px') === -1 ? '%' : 'px'
             this.state.padding = parseFloat(padding) + unit

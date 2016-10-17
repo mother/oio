@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-
 import styles from './styles.less'
 
 export default class GridCell extends React.Component {
@@ -12,13 +11,17 @@ export default class GridCell extends React.Component {
       width: React.PropTypes.string
    }
 
+   static contextTypes = {
+      GridCellStyle: React.PropTypes.object
+   }
+
    constructor(props, context) {
       super(props, context)
 
       this.state = {
          size: this.getWindowSize(),
-         width: 'auto',
-         gutter: 'auto'
+         width: '0',
+         gutter: '0'
       }
 
       this.windowResizeListener = this.windowSizeUpdated.bind(this)
@@ -76,34 +79,25 @@ export default class GridCell extends React.Component {
    }
 
    render() {
-      let gutter = 0
       let colspanMultiplier = 1
       const classes = classNames(styles.gridCell, this.props.className)
 
-      // Width is set by UIGrid (for now)
-      if (this.props.width) {
-         const width = this.props.width
-
-         if (this.props.colspan) {
-            colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
-         }
-
-         if (width) {
-            const unit = width.indexOf('px') === -1 ? '%' : 'px'
-            this.state.width = (parseFloat(width) * colspanMultiplier) + unit
-         }
+      if (this.context.GridCellStyle) {
+         this.state.width = `${this.context.GridCellStyle.width}px`
+         this.state.gutter = `${this.context.GridCellStyle.gutter}`
       }
 
-      // Gutter is set by UIGrid (for now)
-      if (this.props.gutter) {
-         const unit = this.props.gutter.indexOf('px') === -1 ? '%' : 'px'
-         gutter = parseFloat(this.props.gutter) + unit
+      if (this.props.colspan) {
+         colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
       }
+
+      const gutter = parseFloat(this.state.gutter)
+      const width = parseFloat(this.state.width) * colspanMultiplier
 
       const cellStyle = {
-         width: this.state.width,
-         paddingRight: gutter,
-         marginBottom: gutter
+         width: `${width}px`,
+         paddingLeft: `${gutter}px`,
+         marginBottom: `${gutter}px`
       }
 
       return (
