@@ -4094,6 +4094,9 @@ p {
 :global .bgBlack {
   background: #000000 !important;
 }
+:global .bgNone {
+  background: none !important;
+}
 :global select {
   display: inline-block;
   height: 36px;
