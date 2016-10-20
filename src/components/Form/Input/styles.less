@@ -8,14 +8,15 @@
    display: block;
    width: 100%;
    height: @uiBaseComponentHeightMedium;
-   .rounded(@uiBaseComponentRadius);
+   //.rounded(@uiBaseComponentRadius);
    .uiTextSize3;
    line-height: @uiBaseComponentHeightMedium - 13px;
-   padding: 5px 10px 5px 10px;
+   padding: 5px 0px 5px 0px;
    .transition(300ms);
-   border: 2px solid @uiBaseBorderColor;
+   //border: none;
+   border-bottom: 2px solid @uiBaseBorderColor;
 
    &:focus {
-      border: 2px solid #aaa;
+      border-bottom: 2px solid #aaa;
    }
 }
