@@ -13,6 +13,7 @@ import OIO from './components/OIO'
 import Popover from './components/Popover'
 import Select from './components/Form/Select'
 import Spacer from './components/Spacer'
+import Table from './components/Table'
 import Text from './components/Text'
 import Textarea from './components/Form/Textarea'
 import Title from './components/Title'
@@ -36,6 +37,7 @@ export {
    Popover,
    Select,
    Spacer,
+   Table,
    Text,
    Textarea,
    Title,

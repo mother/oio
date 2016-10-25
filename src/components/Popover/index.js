@@ -25,14 +25,16 @@ export default class Popover extends React.Component {
          visible: false,
          buttonWidth: 0
       }
+
+      this.hide = this.hide.bind(this)
    }
 
    componentDidMount() {
-      window.addEventListener('click', this.hide.bind(this), false)
+      window.addEventListener('click', this.hide, false)
    }
 
    componentWillUnmount() {
-      window.removeEventListener('click', this.hide.bind(this), false)
+      window.removeEventListener('click', this.hide)
    }
 
    show(event) {
