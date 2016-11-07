@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Select = ({ children, className, id, input, label, meta, value }) => {
+const Select = ({ children, className, id, input, label, meta, onChangeAction }) => {
    const classes = [styles.select, className]
 
    return (
@@ -12,8 +12,11 @@ const Select = ({ children, className, id, input, label, meta, value }) => {
          <select
             className={classNames(classes)}
             id={id}
-            value={value}
-            {...input}>{children}</select>
+            {...input}
+            onChange={(event) => {
+               input.onChange(event)
+               if (onChangeAction) onChangeAction(event)
+            }}>{children}</select>
          {meta && meta.touched && meta.error &&
             <div className={formStyles.error}>
                {meta.error}
@@ -30,7 +33,7 @@ Select.propTypes = {
    input: React.PropTypes.object,
    label: React.PropTypes.string,
    meta: React.PropTypes.object,
-   value: React.PropTypes.string
+   onChangeAction: React.PropTypes.func
 }
 
 Select.defaultProps = {
