@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/sizeUtils'
 import styles from './styles.less'
 
 export default class GridCell extends React.Component {
@@ -19,7 +20,7 @@ export default class GridCell extends React.Component {
       super(props, context)
 
       this.state = {
-         size: this.getWindowSize(),
+         size: getWindowSize(),
          width: '0',
          gutter: '0'
       }
@@ -35,46 +36,8 @@ export default class GridCell extends React.Component {
       window.removeEventListener('resize', this.windowResizeListener)
    }
 
-   getAttributeForCurrentSize(attributeValue) {
-      const currentSize = this.state.size
-      const fragments = attributeValue.split(' ')
-
-      for (const fragment of fragments) {
-         const charSet = fragment.match(/\[([abcdef,-]+)\]/i)
-         if (Array.isArray(charSet) && charSet.length === 2) {
-            const charRegexp = new RegExp(`[${charSet[1]}]`, 'i')
-            const match = currentSize.match(charRegexp)
-            if (Array.isArray(match)) {
-               return fragment.replace(charSet[0], '')
-            }
-         } else {
-            return fragment
-         }
-      }
-
-      return null
-   }
-
-   getWindowSize() {
-      const windowWidth = document.documentElement.clientWidth
-
-      if (windowWidth >= 1650) {
-         return 'e'
-      } else if (windowWidth >= 1300) {
-         return 'd'
-      } else if (windowWidth >= 992) {
-         return 'c'
-      } else if (windowWidth >= 768) {
-         return 'b'
-      } else if (windowWidth >= 0) {
-         return 'a'
-      }
-
-      return null
-   }
-
    windowSizeUpdated() {
-      const windowSize = this.getWindowSize()
+      const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }
 
@@ -88,7 +51,7 @@ export default class GridCell extends React.Component {
       }
 
       if (this.props.colspan) {
-         colspanMultiplier = this.getAttributeForCurrentSize(this.props.colspan)
+         colspanMultiplier = getAttributeForCurrentSize(this.state.size, this.props.colspan)
       }
 
       const gutter = parseFloat(this.state.gutter)

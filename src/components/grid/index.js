@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/sizeUtils'
 import style from './style.less'
 
 export default class Grid extends React.Component {
@@ -25,7 +25,7 @@ export default class Grid extends React.Component {
       super(props, context)
 
       this.state = {
-         size: this.getWindowSize(),
+         size: getWindowSize(),
          width: 'auto',
          innerWidth: '100%',
          cellWidth: 'auto',
@@ -57,52 +57,14 @@ export default class Grid extends React.Component {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   getAttributeForCurrentSize(attributeValue) {
-      const currentSize = this.state.size
-      const fragments = attributeValue.split(' ')
-
-      for (const fragment of fragments) {
-         const charSet = fragment.match(/\[([abcdef,-]+)\]/i)
-         if (Array.isArray(charSet) && charSet.length === 2) {
-            const charRegexp = new RegExp(`[${charSet[1]}]`, 'i')
-            const match = currentSize.match(charRegexp)
-            if (Array.isArray(match)) {
-               return fragment.replace(charSet[0], '')
-            }
-         } else {
-            return fragment
-         }
-      }
-
-      return null
-   }
-
-   getWindowSize() {
-      const windowWidth = document.documentElement.clientWidth
-
-      if (windowWidth >= 1650) {
-         return 'e'
-      } else if (windowWidth >= 1300) {
-         return 'd'
-      } else if (windowWidth >= 992) {
-         return 'c'
-      } else if (windowWidth >= 768) {
-         return 'b'
-      } else if (windowWidth >= 0) {
-         return 'a'
-      }
-
-      return null
-   }
-
    windowSizeUpdated() {
-      const windowSize = this.getWindowSize()
+      const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }
 
    updateGrid() {
-      const columns = this.getAttributeForCurrentSize(this.props.columns)
-      const gutter = this.getAttributeForCurrentSize(this.props.gutter)
+      const columns = getAttributeForCurrentSize(this.state.size, this.props.columns)
+      const gutter = getAttributeForCurrentSize(this.state.size, this.props.gutter)
 
       const calculatedGridWidth = this.node.clientWidth
       const adjustedGridWidth = parseFloat(calculatedGridWidth) + parseFloat(gutter)
@@ -124,10 +86,10 @@ export default class Grid extends React.Component {
 
    render() {
       const classes = classNames(style.gridContainer, this.props.className)
-      const gutter = parseFloat(this.getAttributeForCurrentSize(this.props.gutter))
+      const gutter = parseFloat(getAttributeForCurrentSize(this.state.size, this.props.gutter))
 
       if (this.props.width) {
-         const width = this.getAttributeForCurrentSize(this.props.width)
+         const width = getAttributeForCurrentSize(this.state.size, this.props.width)
          const unit = width.indexOf('px') === -1 ? '%' : 'px'
          this.state.width = parseFloat(width) + unit
       }
