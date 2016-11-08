@@ -17,18 +17,22 @@ export const getWindowSize = () => {
 }
 
 export const getAttributeForCurrentSize = (currentSize, attributeValue) => {
-   const fragments = attributeValue.split(' ')
+   let fragments = attributeValue.match(/(.+?)\[([abcdef,-]+)\]/ig)
+   if (fragments === null) {
+      fragments = [attributeValue]
+   }
 
-   for (const fragment of fragments) {
+   for (let fragment of fragments) {
+      fragment = fragment.trim()
       const charSet = fragment.match(/\[([abcdef,-]+)\]/i)
       if (Array.isArray(charSet) && charSet.length === 2) {
          const charRegexp = new RegExp(`[${charSet[1]}]`, 'i')
          const match = currentSize.match(charRegexp)
          if (Array.isArray(match)) {
-            return fragment.replace(charSet[0], '')
+            return fragment.replace(charSet[0], '').trim()
          }
       } else {
-         return fragment
+         return fragment.trim()
       }
    }
 
