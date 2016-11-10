@@ -32,7 +32,7 @@ const Notification = ({
       if (buttonTwoAction) buttonTwoAction()
    }
 
-   let loader = <div className={classNames(styles.loader, styles.iconAnim)} />
+   let loader = <div className={classNames(styles.loader)} />
    if (mode === 'success') {
       const successIcon = `icon ion-ios-checkmark ${styles.icon}`
       loader = <div className={classNames(successIcon, styles.iconSuccess, styles.iconAnim)} />
@@ -68,25 +68,21 @@ const Notification = ({
       </button>)
       : null
 
-   const styleDisplay = showing
-      ? {
-         right: '10px'
-      }
-      : {
-         right: '-400px'
-      }
+   const displayClass = showing
+      ? 'showNotification'
+      : 'hideNotification'
 
    if (onHide && !showing) onHide()
    if (onShow && showing) onShow()
 
    return (
-      <div className={classNames(styles.container)} style={styleDisplay}>
+      <div className={classNames(styles.container, styles[displayClass])}>
          <div className={styles.notification}>
             {loader}
             <div className={styles.message}>
-               <Text size="1" weight="bold" color="white" className={styles.title}>{title}</Text>
+               <Text size="3" weight="semibold" color="white" className={styles.title}>{title}</Text>
                <Spacer size="1" />
-               <Text size="2" color="gray40">{message}</Text>
+               <Text size="2" color="gray60">{message}</Text>
             </div>
          </div>
          {buttonFullJSX}

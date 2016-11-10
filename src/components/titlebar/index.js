@@ -19,11 +19,10 @@ export default class Titlebar extends React.Component {
 
    render() {
       const titlebarStyles = [this.props.className]
-      //const titlebarClass = this.props.size ? styles[this.props.size] : styles.medium
       titlebarStyles.push(styles[this.props.size])
 
       if (this.props.flush) {
-         titlebarStyles.push(styles['flush'])
+         titlebarStyles.push(styles.flush)
       }
 
       return (

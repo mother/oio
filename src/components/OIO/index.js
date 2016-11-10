@@ -5,7 +5,10 @@ import style from './style.less'
 export default class OIO extends React.Component {
    static propTypes = {
       children: React.PropTypes.node,
-      fontFamily: React.PropTypes.string
+      className: React.PropTypes.string,
+      fontFamily: React.PropTypes.string,
+      secondaryFontFamily: React.PropTypes.string,
+      titleFontFamily: React.PropTypes.string
    }
 
    static childContextTypes = {
@@ -14,7 +17,9 @@ export default class OIO extends React.Component {
 
    getChildContext() {
       const OIOStyles = {
-         fontFamily: this.props.fontFamily
+         fontFamily: this.props.fontFamily,
+         secondaryFontFamily: this.props.secondaryFontFamily,
+         titleFontFamily: this.props.titleFontFamily
       }
 
       return { OIOStyles }
@@ -28,7 +33,7 @@ export default class OIO extends React.Component {
       }
 
       return (
-         <div className={classNames(style.OIO)} style={OIOStyles}>
+         <div className={classNames(style.OIO, this.props.className)} style={OIOStyles}>
             {this.props.children}
          </div>
       )

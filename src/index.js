@@ -19,6 +19,7 @@ import Textarea from './components/Form/Textarea'
 import Title from './components/Title'
 import TitleBar from './components/TitleBar'
 import ToolBar from './components/ToolBar'
+import Video from './components/Video'
 import View from './components/View'
 
 export {
@@ -43,5 +44,6 @@ export {
    Title,
    TitleBar,
    ToolBar,
+   Video,
    View
 }
