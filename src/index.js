@@ -3,6 +3,7 @@ import Avatar from './components/Avatar'
 import Button from './components/Button'
 import ButtonGroup from './components/ButtonGroup'
 import Cover from './components/Cover'
+import Form from './components/Form'
 import Grid from './components/Grid'
 import GridCell from './components/GridCell'
 import Icon from './components/Icon'
@@ -26,6 +27,7 @@ export {
    Button,
    ButtonGroup,
    Cover,
+   Form,
    Grid,
    GridCell,
    Icon,

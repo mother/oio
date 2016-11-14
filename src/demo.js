@@ -6,6 +6,7 @@ import {
    Button,
    ButtonGroup,
    Cover,
+   Form,
    Grid,
    GridCell,
    // Icon,
@@ -141,6 +142,10 @@ class Demo extends React.Component {
                         </Cover>
                      </GridCell>
                      <GridCell>
+                        <Form>
+                           <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
+                           <Button name="Save Changes" type="submit" />
+                        </Form>
                         <Input label="Input Numero Uno" placeholder="Placeholder text" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                         <Input label="Password" placeholder="Enter password" type="password" meta={{ touched: true, error: 'Your password is too weak' }} />
                         <Textarea label="Textarea Dos Equis" placeholder="Enter text here" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
