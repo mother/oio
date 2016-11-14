@@ -87,7 +87,7 @@ export default class Video extends Component {
 
       return (
          <div className={this.props.className} style={style}>
-            <video>
+            <video autoPlay="true">
                Your browser does not support the video tag. I suggest you upgrade your browser.
                <source src={`${this.props.src}.webm`} type="video/webm" />
                <source src={`${this.props.src}.ogv`} type="video/ogv" />

@@ -7,7 +7,6 @@ export default class OIO extends React.Component {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       fontFamily: React.PropTypes.string,
-      secondaryFontFamily: React.PropTypes.string,
       titleFontFamily: React.PropTypes.string
    }
 
@@ -18,7 +17,6 @@ export default class OIO extends React.Component {
    getChildContext() {
       const OIOStyles = {
          fontFamily: this.props.fontFamily,
-         secondaryFontFamily: this.props.secondaryFontFamily,
          titleFontFamily: this.props.titleFontFamily
       }
 
