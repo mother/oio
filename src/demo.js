@@ -68,6 +68,10 @@ class Demo extends React.Component {
       }, 3000)
    }
 
+   onSubmit(data) {
+      console.log(data)
+   }
+
    render() {
       const titleHeading = '1'
       const titleSize = '4'
@@ -142,7 +146,8 @@ class Demo extends React.Component {
                         </Cover>
                      </GridCell>
                      <GridCell>
-                        <Form>
+                        <Form initialValues={{ title: 'A Title' }} onSubmit={data => this.onSubmit(data)}>
+                           <Input name="title" label="Title" placeholder="Please enter the title" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                            <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                            <Button name="Save Changes" type="submit" />
                         </Form>

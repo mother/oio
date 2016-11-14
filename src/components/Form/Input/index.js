@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Input = ({ className, id, input, label, meta, placeholder, type, value }) => {
+const Input = ({ className, id, input, label, meta, onChange, placeholder, type, value }) => {
    const classes = [styles.input, className]
 
    return (
@@ -12,10 +12,10 @@ const Input = ({ className, id, input, label, meta, placeholder, type, value }) 
          <input
             className={classNames(classes)}
             id={id}
+            onChange={onChange}
             placeholder={placeholder}
             type={type}
             value={value}
-            {...input}
          />
          {meta && meta.touched && meta.error &&
             <div className={formStyles.error}>
@@ -26,12 +26,15 @@ const Input = ({ className, id, input, label, meta, placeholder, type, value }) 
    )
 }
 
+Input.type = 'input'
+
 Input.propTypes = {
    className: React.PropTypes.string,
    id: React.PropTypes.string,
    input: React.PropTypes.object,
    label: React.PropTypes.string,
    meta: React.PropTypes.object,
+   onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
    type: React.PropTypes.string,
    value: React.PropTypes.string
