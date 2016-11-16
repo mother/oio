@@ -13,12 +13,14 @@ export default class View extends React.Component {
       onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
       scroll: React.PropTypes.string,
+      style: React.PropTypes.object,
       width: React.PropTypes.string,
       visible: React.PropTypes.string
    }
 
    static defaultProps = {
       format: 'float',
+      style: {},
       visible: 'on'
    }
 
@@ -132,11 +134,11 @@ export default class View extends React.Component {
 
       viewClasses.push(this.props.className)
 
-      const style = {
+      const style = Object.assign(this.props.style, {
          width: this.state.width,
          height: this.state.height,
          padding: this.state.padding
-      }
+      })
 
       return (
          <div

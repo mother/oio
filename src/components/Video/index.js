@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
+import View from '../View'
 import { getWindowSize } from '../../utils/sizeUtils'
 
 export default class Video extends Component {
    static propTypes = {
+      autoPlay: React.PropTypes.bool,
       className: React.PropTypes.string,
-      src: React.PropTypes.string
+      height: React.PropTypes.string,
+      src: React.PropTypes.string,
+      width: React.PropTypes.string
+   }
+
+   static defaultProps = {
+      autoPlay: true,
+      height: '100%',
+      width: '100%'
    }
 
    constructor(props, context) {
       super(props, context)
 
       this.state = {
-         size: this.getWindowSize()
+         size: getWindowSize()
       }
 
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
@@ -40,23 +50,19 @@ export default class Video extends Component {
    }
 
    render() {
-      const style = {
-         float: 'left',
-         position: 'relative',
-         width: '100%',
-         height: '100%',
-         overflow: 'hidden'
-      }
+      // Common/Important Props picked out so we can set defaults
+      const { autoPlay, className, width, height, src, ...videoProps } = this.props
+      const style = { overflow: 'hidden' }
 
       return (
-         <div className={this.props.className} style={style}>
-            <video autoPlay="true">
-               Your browser does not support the video tag. I suggest you upgrade your browser.
-               <source src={`${this.props.src}.webm`} type="video/webm" />
-               <source src={`${this.props.src}.ogv`} type="video/ogv" />
-               <source src={`${this.props.src}.mp4`} type="video/mp4" />
+         <View width={width} height={height} className={className} style={style}>
+            <video autoPlay={autoPlay} height="100%" {...videoProps}>
+               Your browser does not support the video tag. Please upgrade your browser.
+               <source src={`${src}.webm`} type="video/webm" />
+               <source src={`${src}.ogv`} type="video/ogv" />
+               <source src={`${src}.mp4`} type="video/mp4" />
             </video>
-         </div>
+         </View>
       )
    }
 }
