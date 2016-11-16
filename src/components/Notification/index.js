@@ -44,29 +44,29 @@ const Notification = ({
       loader = <div className={classNames(warningIcon, styles.iconWarning, styles.iconAnim)} />
    }
 
-   const buttonFullJSX = buttonFull
-      ? (<button
+   const buttonFullElement = buttonFull && (
+      <button
          className={classNames(styles.button, styles.buttonFull)}
          onClick={buttonClickFull}>
          <Text size="1" weight="bold" color="white" className={styles.title}>{buttonFull}</Text>
-      </button>)
-      : null
+      </button>
+   )
 
-   const buttonOneJSX = buttonOne
-      ? (<button
+   const buttonOneElement = buttonOne && (
+      <button
          className={classNames(styles.button, styles.buttonOne)}
          onClick={buttonClickOne}>
          <Text size="1" weight="bold" color="white" className={styles.title}>{buttonOne}</Text>
-      </button>)
-      : null
+      </button>
+   )
 
-   const buttonTwoJSX = buttonTwo
-      ? (<button
+   const buttonTwoElement = buttonTwo && (
+      <button
          className={classNames(styles.button, styles.buttonTwo)}
          onClick={buttonClickTwo}>
          <Text size="1" weight="bold" color="white" className={styles.title}>{buttonTwo}</Text>
-      </button>)
-      : null
+      </button>
+   )
 
    const displayClass = showing
       ? 'showNotification'
@@ -85,9 +85,9 @@ const Notification = ({
                <Text size="2" color="gray60">{message}</Text>
             </div>
          </div>
-         {buttonFullJSX}
-         {buttonOneJSX}
-         {buttonTwoJSX}
+         {buttonFullElement}
+         {buttonOneElement}
+         {buttonTwoElement}
       </div>
    )
 }
