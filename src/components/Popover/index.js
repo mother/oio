@@ -18,6 +18,8 @@ export default class Popover extends React.Component {
    constructor(props, context) {
       super(props, context)
 
+      this.hide = this.hide.bind(this)
+
       // Eventually allow smart positioning and below/above
       this.state = {
          top: 0,
@@ -25,8 +27,6 @@ export default class Popover extends React.Component {
          visible: false,
          buttonWidth: 0
       }
-
-      this.hide = this.hide.bind(this)
    }
 
    componentDidMount() {
@@ -34,7 +34,7 @@ export default class Popover extends React.Component {
    }
 
    componentWillUnmount() {
-      window.removeEventListener('click', this.hide)
+      window.removeEventListener('click', this.hide, false)
    }
 
    show(event) {
