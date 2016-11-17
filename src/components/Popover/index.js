@@ -38,7 +38,7 @@ export default class Popover extends React.Component {
    }
 
    show(event) {
-      if (event) event.stopPropagation()
+      event.stopPropagation()
 
       this.setState({
          top: event.currentTarget.offsetTop,
