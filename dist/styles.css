@@ -3664,9 +3664,6 @@ p {
 .ion-xbox:before {
   content: "\f30c";
 }
-.acumin-pro-defaults {
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-}
 .acumin-pro-defaults.light {
   font-weight: 300;
 }
@@ -3690,7 +3687,6 @@ p {
 .uiTextSize1 {
   font-size: 11px;
   line-height: 16px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize1.light {
   font-weight: 300;
@@ -3707,7 +3703,6 @@ p {
 .uiTextSize2 {
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize2.light {
   font-weight: 300;
@@ -3724,7 +3719,6 @@ p {
 .uiTextSize3 {
   font-size: 15px;
   line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize3.light {
   font-weight: 300;
@@ -3741,7 +3735,6 @@ p {
 .uiTextSize4 {
   font-size: 17px;
   line-height: 22px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize4.light {
   font-weight: 300;
@@ -3758,7 +3751,6 @@ p {
 .uiTextSize5 {
   font-size: 19px;
   line-height: 23px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize5.light {
   font-weight: 300;
@@ -3775,7 +3767,6 @@ p {
 .uiTextSize6 {
   font-size: 25px;
   line-height: 30px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize6.light {
   font-weight: 300;
@@ -3792,7 +3783,6 @@ p {
 .uiTextSize7 {
   font-size: 34px;
   line-height: 1.2em;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize7.light {
   font-weight: 300;
@@ -3809,7 +3799,6 @@ p {
 .uiTextSize8 {
   font-size: 45px;
   line-height: 1.2em;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize8.light {
   font-weight: 300;
@@ -3826,7 +3815,6 @@ p {
 .uiTextSize9 {
   font-size: 56px;
   line-height: 1.1em;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize9.light {
   font-weight: 300;
@@ -3843,7 +3831,6 @@ p {
 .uiTextSize10 {
   font-size: 78px;
   line-height: 78px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 .uiTextSize10.light {
   font-weight: 300;
@@ -3859,22 +3846,7 @@ p {
 }
 :global body {
   color: #555;
-  font-size: 15px;
-  line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   -webkit-font-smoothing: antialiased;
-}
-:global body.light {
-  font-weight: 300;
-}
-:global body.normal {
-  font-weight: 400;
-}
-:global body.medium {
-  font-weight: 600;
-}
-:global body.bold {
-  font-weight: 700;
 }
 :global h1 {
   margin-bottom: 6px;
@@ -3894,7 +3866,6 @@ p {
 :global .uiTextSize1 {
   font-size: 11px;
   line-height: 16px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize1.light {
   font-weight: 300;
@@ -3911,7 +3882,6 @@ p {
 :global .uiTextSize2 {
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize2.light {
   font-weight: 300;
@@ -3928,7 +3898,6 @@ p {
 :global .uiTextSize3 {
   font-size: 15px;
   line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize3.light {
   font-weight: 300;
@@ -3945,7 +3914,6 @@ p {
 :global .uiTextSize4 {
   font-size: 17px;
   line-height: 22px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize4.light {
   font-weight: 300;
@@ -3962,7 +3930,6 @@ p {
 :global .uiTextSize5 {
   font-size: 19px;
   line-height: 23px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize5.light {
   font-weight: 300;
@@ -3979,7 +3946,6 @@ p {
 :global .uiTextSize6 {
   font-size: 25px;
   line-height: 30px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize6.light {
   font-weight: 300;
@@ -3996,7 +3962,6 @@ p {
 :global .uiTextSize7 {
   font-size: 34px;
   line-height: 1.2em;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize7.light {
   font-weight: 300;
@@ -4013,7 +3978,6 @@ p {
 :global .uiTextSize8 {
   font-size: 45px;
   line-height: 1.2em;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize8.light {
   font-weight: 300;
@@ -4030,7 +3994,6 @@ p {
 :global .uiTextSize9 {
   font-size: 56px;
   line-height: 1.1em;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize9.light {
   font-weight: 300;
@@ -4047,7 +4010,6 @@ p {
 :global .uiTextSize10 {
   font-size: 78px;
   line-height: 78px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTextSize10.light {
   font-weight: 300;
@@ -4104,7 +4066,6 @@ p {
   width: 100%;
   font-size: 15px;
   line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   line-height: 18px;
   padding: 8px 12px;
   -webkit-appearance: none;
@@ -4146,7 +4107,6 @@ p {
   font-weight: bold;
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   color: #888;
 }
 :global label.light {
@@ -4170,7 +4130,6 @@ p {
   font-weight: bold;
   font-size: 17px;
   line-height: 22px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .form-title.light {
   font-weight: 300;
@@ -4188,7 +4147,6 @@ p {
   padding: 6px 0 18px 0;
   font-size: 15px;
   line-height: 21px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   color: #666;
 }
 :global .form-description.light {
@@ -4209,7 +4167,6 @@ p {
   margin-bottom: 6px;
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   color: #999;
 }
 :global .form-label-description.light {
@@ -4232,7 +4189,6 @@ p {
   position: relative;
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   color: #999;
 }
 :global .form-radio-block.light,
@@ -4279,7 +4235,6 @@ p {
   padding: 12px 18px;
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   font-weight: bold;
 }
 :global .uiTable th.light {
@@ -4300,7 +4255,6 @@ p {
   position: relative;
   font-size: 13px;
   line-height: 17px;
-  font-family: 'acumin-pro', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
 :global .uiTable td.light {
   font-weight: 300;
