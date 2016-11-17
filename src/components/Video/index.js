@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import View from '../View'
 import { getWindowSize } from '../../utils/sizeUtils'
 
@@ -21,27 +22,60 @@ export default class Video extends Component {
       super(props, context)
 
       this.state = {
-         size: getWindowSize()
+         size: getWindowSize(),
+         videoLeft: '0px',
+         videoTop: '0px',
+         videoWidth: 'auto',
+         videoHeight: 'auto'
       }
 
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    componentDidMount() {
-      this.setVideoContainer()
+      this.videoNode.addEventListener('loadedmetadata', event =>
+         this.setVideoPositionAndSize()
+      )
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
    componentDidUpdate() {
-      this.setVideoContainer()
+      this.setVideoPositionAndSize()
    }
 
    componentWillUnmount() {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   setVideoContainer() {
+   setVideoPositionAndSize() {
+      const containerNode = this.containerNode
+      const videoNode = this.videoNode
 
+      const containerWidth = containerNode.offsetWidth
+      const containerHeight = containerNode.offsetHeight
+      const containerAspectRatio = containerWidth / containerHeight
+
+      const videoWidth = videoNode.videoWidth
+      const videoHeight = videoNode.videoHeight
+      const videoAspectRatio = videoWidth / videoHeight
+
+      if (containerAspectRatio >= videoAspectRatio) {
+         if (videoNode.offsetWidth !== containerWidth) {
+            this.setState({
+               videoTop: (containerHeight / 2) - (containerWidth / videoAspectRatio / 2),
+               videoLeft: '0px',
+               videoHeight: 'auto',
+               videoWidth: containerWidth
+            })
+         }
+      } else if (videoNode.offsetHeight !== containerHeight) {
+         this.setState({
+            videoTop: '0px',
+            videoLeft: (containerWidth / 2) - ((containerHeight * videoAspectRatio) / 2),
+            videoHeight: containerHeight,
+            videoWidth: 'auto'
+         })
+      }
    }
 
    windowSizeUpdated() {
@@ -50,18 +84,44 @@ export default class Video extends Component {
    }
 
    render() {
-      // Common/Important Props picked out so we can set defaults
-      const { autoPlay, className, width, height, src, ...videoProps } = this.props
-      const style = { overflow: 'hidden' }
+      const { className, width, height, src, ...videoProps } = this.props
+      const viewStyle = {
+         overflow: 'hidden'
+      }
+      const containerStyle = {
+         position: 'absolute',
+         top: 0,
+         left: 0,
+         right: 0,
+         bottom: 0
+      }
+      const videoStyle = {
+         position: 'absolute',
+         top: this.state.videoTop,
+         left: this.state.videoLeft,
+         height: this.state.videoHeight,
+         width: this.state.videoWidth
+      }
 
       return (
-         <View width={width} height={height} className={className} style={style}>
-            <video autoPlay={autoPlay} height="100%" {...videoProps}>
-               Your browser does not support the video tag. Please upgrade your browser.
-               <source src={`${src}.webm`} type="video/webm" />
-               <source src={`${src}.ogv`} type="video/ogv" />
-               <source src={`${src}.mp4`} type="video/mp4" />
-            </video>
+         <View
+            width={width}
+            height={height}
+            className={classNames(className, 'bgBlack')}
+            style={viewStyle}>
+            <div
+               ref={containerNode => (this.containerNode = containerNode)}
+               style={containerStyle}>
+               <video
+                  ref={videoNode => (this.videoNode = videoNode)}
+                  style={videoStyle}
+                  {...videoProps}>
+                  Your browser does not support the video tag. Please upgrade your browser.
+                  <source src={`${src}.webm`} type="video/webm" />
+                  <source src={`${src}.ogv`} type="video/ogv" />
+                  <source src={`${src}.mp4`} type="video/mp4" />
+               </video>
+            </div>
          </View>
       )
    }

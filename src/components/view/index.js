@@ -134,11 +134,12 @@ export default class View extends React.Component {
 
       viewClasses.push(this.props.className)
 
-      const style = Object.assign(this.props.style, {
+      const style = {
+         ...this.props.style,
          width: this.state.width,
          height: this.state.height,
          padding: this.state.padding
-      })
+      }
 
       return (
          <div
