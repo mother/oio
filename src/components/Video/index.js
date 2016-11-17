@@ -84,7 +84,8 @@ export default class Video extends Component {
    }
 
    render() {
-      const { className, width, height, src, ...videoProps } = this.props
+      // Common/Specific/Important props set for specific reasons
+      const { autoPlay, className, width, height, src, ...videoProps } = this.props
       const viewStyle = {
          overflow: 'hidden'
       }
@@ -114,6 +115,7 @@ export default class Video extends Component {
                style={containerStyle}>
                <video
                   ref={videoNode => (this.videoNode = videoNode)}
+                  autoPlay={autoPlay}
                   style={videoStyle}
                   {...videoProps}>
                   Your browser does not support the video tag. Please upgrade your browser.
