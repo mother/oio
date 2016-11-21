@@ -3,7 +3,9 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Input = ({ className, id, label, meta, onBlur, onChange, placeholder, type, value }, context) => {
+const Input = ({
+   className, id, label, meta, onBlur, onChange, placeholder, type, value
+}, context) => {
    const classes = [styles.input, className]
    const inputStyles = {}
 

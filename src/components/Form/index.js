@@ -4,7 +4,8 @@ export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       initialValues: React.PropTypes.object,
-      onSubmit: React.PropTypes.func
+      onSubmit: React.PropTypes.func,
+      validation: React.PropTypes.object
    }
 
    constructor(props) {
@@ -32,24 +33,37 @@ export default class Form extends Component {
       return types.indexOf(child.type.type) !== -1
    }
 
+   checkErrors(child) {
+      return (
+         this.props.validation[child.props.name] &&
+         !this.props.validation[child.props.name].check(this.state[child.props.name].value)
+      )
+      ? this.props.validation[child.props.name].message
+      : ''
+   }
+
    handleBlur(event, child) {
       const newState = {}
+
       newState[child.props.name] = {
          ...this.state[child.props.name],
          meta: {
-            ...this.state[child.props.name].meta,
+            error: this.checkErrors(child),
             touched: true
          }
       }
+
       this.setState(newState)
    }
 
    handleChange(event, child) {
       const newState = {}
+
       newState[child.props.name] = {
          ...this.state[child.props.name],
          value: event.target.value
       }
+
       this.setState(newState)
    }
 
@@ -67,7 +81,7 @@ export default class Form extends Component {
          if (this.childIsRelevant(child)) {
             const childNew = React.cloneElement(child, {
                key: counter,
-               meta: {},
+               meta: this.state[child.props.name].meta || {},
                onBlur: (event) => { this.handleBlur(event, child) },
                onChange: (event) => { this.handleChange(event, child) },
                value: this.state[child.props.name].value || ''
