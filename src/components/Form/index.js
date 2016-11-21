@@ -10,19 +10,67 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
-      this.state = props.initialValues || {}
+      this.handleSubmit = this.handleSubmit.bind(this)
+
+      // Set initialValues
+      this.state = {}
+      props.children.forEach((child) => {
+         if (this.childIsRelevant(child)) {
+            this.state[child.props.name] = {
+               value: props.initialValues[child.props.name] || '',
+               meta: {
+                  touched: false,
+                  error: false
+               }
+            }
+         }
+      })
+   }
+
+   childIsRelevant(child) {
+      const types = ['input', 'textarea']
+      return types.indexOf(child.type.type) !== -1
+   }
+
+   handleBlur(event, child) {
+      const newState = {}
+      newState[child.props.name] = {
+         ...this.state[child.props.name],
+         meta: {
+            ...this.state[child.props.name].meta,
+            touched: true
+         }
+      }
+      this.setState(newState)
+   }
+
+   handleChange(event, child) {
+      const newState = {}
+      newState[child.props.name] = {
+         ...this.state[child.props.name],
+         value: event.target.value
+      }
+      this.setState(newState)
+   }
+
+   handleSubmit(event) {
+      event.preventDefault()
+      const data = {}
+      Object.keys(this.state).forEach((key) => { data[key] = this.state[key].value })
+      this.props.onSubmit(data)
    }
 
    render() {
       const childrenNew = []
-      const types = ['input', 'textarea']
       let counter = 1
       this.props.children.forEach((child) => {
-         if (types.indexOf(child.type.type) !== -1) {
+         if (this.childIsRelevant(child)) {
             const childNew = React.cloneElement(child, {
                key: counter,
-               onChange: event => this.setState({ [child.props.name]: event.target.value }),
-               value: this.state[child.props.name]
+               meta: {},
+               onBlur: (event) => { this.handleBlur(event, child) },
+               onChange: (event) => { this.handleChange(event, child) },
+               value: this.state[child.props.name].value || ''
             })
             childrenNew.push(childNew)
          } else {
@@ -33,10 +81,7 @@ export default class Form extends Component {
 
       return (
          <form
-            onSubmit={(event) => {
-               event.preventDefault()
-               this.props.onSubmit(this.state)
-            }}>
+            onSubmit={this.handleSubmit}>
             {childrenNew}
          </form>
       )

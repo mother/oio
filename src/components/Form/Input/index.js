@@ -3,8 +3,7 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Input = ({ className, id, input, label, meta, onChange, placeholder, type, value }) => {
-// const Input = ({ className, id, input, label, meta, placeholder, type, value }, context) => {
+const Input = ({ className, id, label, meta, onBlur, onChange, placeholder, type, value }, context) => {
    const classes = [styles.input, className]
    const inputStyles = {}
 
@@ -19,6 +18,7 @@ const Input = ({ className, id, input, label, meta, onChange, placeholder, type,
             style={inputStyles}
             className={classNames(classes)}
             id={id}
+            onBlur={onBlur}
             onChange={onChange}
             placeholder={placeholder}
             type={type}
@@ -33,14 +33,12 @@ const Input = ({ className, id, input, label, meta, onChange, placeholder, type,
    )
 }
 
-Input.type = 'input'
-
 Input.propTypes = {
    className: React.PropTypes.string,
    id: React.PropTypes.string,
-   input: React.PropTypes.object,
    label: React.PropTypes.string,
    meta: React.PropTypes.object,
+   onBlur: React.PropTypes.func,
    onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
    type: React.PropTypes.string,
@@ -54,5 +52,7 @@ Input.defaultProps = {
 Input.contextTypes = {
    OIOStyles: React.PropTypes.object
 }
+
+Input.type = 'input'
 
 export default Input
