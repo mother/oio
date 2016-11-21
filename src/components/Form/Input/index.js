@@ -4,12 +4,19 @@ import styles from './styles.less'
 import formStyles from '../styles.less'
 
 const Input = ({ className, id, input, label, meta, onChange, placeholder, type, value }) => {
+// const Input = ({ className, id, input, label, meta, placeholder, type, value }, context) => {
    const classes = [styles.input, className]
+   const inputStyles = {}
+
+   if (context.OIOStyles && context.OIOStyles.fontFamily) {
+      inputStyles.fontFamily = context.OIOStyles.fontFamily
+   }
 
    return (
       <div className={formStyles.container}>
          {label && <label htmlFor={id}>{label}</label>}
          <input
+            style={inputStyles}
             className={classNames(classes)}
             id={id}
             onChange={onChange}
@@ -42,6 +49,10 @@ Input.propTypes = {
 
 Input.defaultProps = {
    type: 'text'
+}
+
+Input.contextTypes = {
+   OIOStyles: React.PropTypes.object
 }
 
 export default Input

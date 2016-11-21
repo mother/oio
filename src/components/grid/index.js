@@ -70,7 +70,7 @@ export default class Grid extends React.Component {
       const adjustedGridWidth = parseFloat(calculatedGridWidth) + parseFloat(gutter)
       const cellWidth = (adjustedGridWidth) / columns
 
-      if(this.state.innerWidth !== adjustedGridWidth) {
+      if (this.state.innerWidth !== adjustedGridWidth) {
          this.setState({
             innerWidth: adjustedGridWidth
          })
@@ -78,7 +78,7 @@ export default class Grid extends React.Component {
 
       if (this.state.cellWidth !== cellWidth) {
          this.setState({
-            cellWidth: cellWidth,
+            cellWidth,
             cellGutter: gutter
          })
       }

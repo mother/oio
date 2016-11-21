@@ -13,12 +13,14 @@ export default class View extends React.Component {
       onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
       scroll: React.PropTypes.string,
+      style: React.PropTypes.object,
       width: React.PropTypes.string,
       visible: React.PropTypes.string
    }
 
    static defaultProps = {
       format: 'float',
+      style: {},
       visible: 'on'
    }
 
@@ -102,10 +104,7 @@ export default class View extends React.Component {
 
       if (this.props.padding) {
          const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
-         if (padding) {
-            const unit = padding.indexOf('px') === -1 ? '%' : 'px'
-            this.state.padding = parseFloat(padding) + unit
-         }
+         if (padding) this.state.padding = padding
       }
 
       if (this.props.scroll) {
@@ -136,6 +135,7 @@ export default class View extends React.Component {
       viewClasses.push(this.props.className)
 
       const style = {
+         ...this.props.style,
          width: this.state.width,
          height: this.state.height,
          padding: this.state.padding

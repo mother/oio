@@ -1,6 +1,6 @@
 {
   "name": "oio",
-  "version": "1.2.7",
+  "version": "1.2.10",
   "main": "dist/index.js",
   "description": "A UI component kit for React",
   "scripts": {
@@ -34,10 +34,11 @@
   },
   "homepage": "https://github.com/mother/oio",
   "dependencies": {
-    "classnames": "2.2.5"
+    "classnames": "2.2.5",
+    "react": "15.4.0"
   },
   "peerDependencies": {
-    "react": ">=0.14.6"
+    "react": ">=15.4.0"
   },
   "devDependencies": {
     "babel-core": "6.0.20",

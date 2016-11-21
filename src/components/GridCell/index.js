@@ -7,9 +7,7 @@ export default class GridCell extends React.Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
-      colspan: React.PropTypes.string,
-      gutter: React.PropTypes.string,
-      width: React.PropTypes.string
+      colspan: React.PropTypes.string
    }
 
    static contextTypes = {

@@ -1,0 +1,29 @@
+@import '../../foundation/mixins';
+
+.table {
+   width: 100%;
+
+   th {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 18px;
+      font-weight: bold;
+      .uiTextSize1;
+      text-transform: uppercase;
+      color: #aaa;
+
+      &:nth-child(n+2) {
+         text-align: right;
+      }
+   }
+
+   td {
+      border-bottom: 1px solid #ddd;
+      padding: 18px;
+      position: relative;
+      .uiTextSize3;
+
+      &:nth-child(n+2) {
+         text-align: right;
+      }
+   }
+}
