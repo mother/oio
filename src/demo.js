@@ -69,7 +69,13 @@ class Demo extends React.Component {
    }
 
    onSubmit(data) {
+      console.log('success:')
       console.log(data)
+   }
+
+   onError(errors) {
+      console.log('error:')
+      console.log(errors)
    }
 
    formValidation() {
@@ -162,7 +168,8 @@ class Demo extends React.Component {
                         <Form
                            initialValues={{ title: 'A Title' }}
                            validation={this.formValidation()}
-                           onSubmit={data => this.onSubmit(data)}>
+                           onSubmit={data => this.onSubmit(data)}
+                           onError={error => this.onError(error)}>
                            <Input name="title" label="Title" placeholder="Please enter the title" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                            <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
                            <Button name="Save Changes" type="submit" />

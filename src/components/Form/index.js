@@ -4,6 +4,7 @@ export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       initialValues: React.PropTypes.object,
+      onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func,
       validation: React.PropTypes.object
    }
@@ -21,11 +22,39 @@ export default class Form extends Component {
                value: props.initialValues[child.props.name] || '',
                meta: {
                   touched: false,
-                  error: false
+                  error: ''
                }
             }
          }
       })
+   }
+
+   setError(name, message) {
+      const errors = {}
+      errors[name] = message
+      this.setState({
+         errors: {
+            ...this.state.errors,
+            ...errors
+         }
+      })
+   }
+
+   clearError(name) {
+      const newState = this.state
+      delete newState.errors[name]
+      this.setState(newState)
+   }
+
+   checkErrors(child, value) {
+      const valueActual = value || this.state[child.props.name].value
+
+      return (
+         this.props.validation[child.props.name] &&
+         !this.props.validation[child.props.name].check(valueActual)
+      )
+         ? this.props.validation[child.props.name].message
+         : ''
    }
 
    childIsRelevant(child) {
@@ -33,18 +62,8 @@ export default class Form extends Component {
       return types.indexOf(child.type.type) !== -1
    }
 
-   checkErrors(child) {
-      return (
-         this.props.validation[child.props.name] &&
-         !this.props.validation[child.props.name].check(this.state[child.props.name].value)
-      )
-      ? this.props.validation[child.props.name].message
-      : ''
-   }
-
    handleBlur(event, child) {
       const newState = {}
-
       newState[child.props.name] = {
          ...this.state[child.props.name],
          meta: {
@@ -57,11 +76,16 @@ export default class Form extends Component {
    }
 
    handleChange(event, child) {
-      const newState = {}
+      const value = event.target.value
 
+      const newState = {}
       newState[child.props.name] = {
          ...this.state[child.props.name],
-         value: event.target.value
+         value,
+         meta: {
+            error: this.checkErrors(child, value),
+            touched: true
+         }
       }
 
       this.setState(newState)
@@ -69,9 +93,18 @@ export default class Form extends Component {
 
    handleSubmit(event) {
       event.preventDefault()
+
       const data = {}
       Object.keys(this.state).forEach((key) => { data[key] = this.state[key].value })
-      this.props.onSubmit(data)
+
+      const errors = {}
+      Object.keys(this.state).forEach((key) => {
+         if (this.state[key].meta.error) errors[key] = this.state[key].meta.error
+      })
+      const errorsExist = Object.keys(errors).length > 0
+
+      if (errorsExist) this.props.onError(errors)
+      else this.props.onSubmit(data)
    }
 
    render() {
