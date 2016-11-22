@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Textarea = ({ className, id, input, label, meta, placeholder, rows, value }) => {
+const Textarea = ({ className, id, label, meta, onBlur, onChange, placeholder, rows, value }) => {
    const classes = [styles.textarea, className]
 
    return (
@@ -12,10 +12,11 @@ const Textarea = ({ className, id, input, label, meta, placeholder, rows, value 
          <textarea
             className={classNames(classes)}
             id={id}
+            onBlur={onBlur}
+            onChange={onChange}
             placeholder={placeholder}
             value={value}
             rows={rows}
-            {...input}
          />
          {meta && meta.touched && meta.error &&
             <div className={formStyles.error}>
@@ -29,9 +30,10 @@ const Textarea = ({ className, id, input, label, meta, placeholder, rows, value 
 Textarea.propTypes = {
    className: React.PropTypes.string,
    id: React.PropTypes.string,
-   input: React.PropTypes.object,
    label: React.PropTypes.string,
    meta: React.PropTypes.object,
+   onBlur: React.PropTypes.func,
+   onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
    rows: React.PropTypes.string,
    value: React.PropTypes.string
@@ -40,5 +42,7 @@ Textarea.propTypes = {
 Textarea.defaultProps = {
    rows: '5'
 }
+
+Textarea.type = 'textarea'
 
 export default Textarea

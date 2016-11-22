@@ -5,8 +5,7 @@ export default class Form extends Component {
       children: React.PropTypes.node,
       initialValues: React.PropTypes.object,
       onError: React.PropTypes.func,
-      onSubmit: React.PropTypes.func,
-      validation: React.PropTypes.object
+      onSubmit: React.PropTypes.func
    }
 
    constructor(props) {
@@ -18,42 +17,32 @@ export default class Form extends Component {
       this.state = {}
       props.children.forEach((child) => {
          if (this.childIsRelevant(child)) {
+            const value = props.initialValues
+               ? props.initialValues[child.props.name] || ''
+               : ''
             this.state[child.props.name] = {
-               value: props.initialValues[child.props.name] || '',
+               value,
                meta: {
                   touched: false,
-                  error: ''
+                  error: this.checkError(child, value, props)
                }
             }
          }
       })
    }
 
-   setError(name, message) {
-      const errors = {}
-      errors[name] = message
-      this.setState({
-         errors: {
-            ...this.state.errors,
-            ...errors
-         }
-      })
-   }
-
-   clearError(name) {
-      const newState = this.state
-      delete newState.errors[name]
-      this.setState(newState)
-   }
-
-   checkErrors(child, value) {
-      const valueActual = value || this.state[child.props.name].value
+   checkError(child, initialValue, initialProps) {
+      const value = initialValue && typeof initialValue === 'string'
+         ? initialValue
+         : this.state[child.props.name] && this.state[child.props.name].value
+      const props = initialProps || this.props
 
       return (
-         this.props.validation[child.props.name] &&
-         !this.props.validation[child.props.name].check(valueActual)
+         props.validation &&
+         props.validation[child.props.name] &&
+         !props.validation[child.props.name].test(value)
       )
-         ? this.props.validation[child.props.name].message
+         ? props.validation[child.props.name].message
          : ''
    }
 
@@ -67,7 +56,7 @@ export default class Form extends Component {
       newState[child.props.name] = {
          ...this.state[child.props.name],
          meta: {
-            error: this.checkErrors(child),
+            error: this.checkError(child),
             touched: true
          }
       }
@@ -80,10 +69,9 @@ export default class Form extends Component {
 
       const newState = {}
       newState[child.props.name] = {
-         ...this.state[child.props.name],
          value,
          meta: {
-            error: this.checkErrors(child, value),
+            error: this.checkError(child, value),
             touched: true
          }
       }
@@ -95,16 +83,31 @@ export default class Form extends Component {
       event.preventDefault()
 
       const data = {}
-      Object.keys(this.state).forEach((key) => { data[key] = this.state[key].value })
-
       const errors = {}
       Object.keys(this.state).forEach((key) => {
+         data[key] = this.state[key].value
          if (this.state[key].meta.error) errors[key] = this.state[key].meta.error
       })
       const errorsExist = Object.keys(errors).length > 0
 
-      if (errorsExist) this.props.onError(errors)
-      else this.props.onSubmit(data)
+      if (errorsExist) {
+         // Blur all to show errors
+         const newState = {}
+         this.props.children.forEach((child) => {
+            if (this.childIsRelevant(child)) {
+               newState[child.props.name] = {
+                  ...this.state[child.props.name],
+                  meta: {
+                     ...this.state[child.props.name].meta,
+                     touched: true
+                  }
+               }
+            }
+         })
+         this.setState(newState)
+
+         this.props.onError(errors)
+      } else this.props.onSubmit(data)
    }
 
    render() {

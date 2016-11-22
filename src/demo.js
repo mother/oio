@@ -69,26 +69,11 @@ class Demo extends React.Component {
    }
 
    onSubmit(data) {
-      console.log('success:')
-      console.log(data)
+      console.log(data) // eslint-disable-line
    }
 
    onError(errors) {
-      console.log('error:')
-      console.log(errors)
-   }
-
-   formValidation() {
-      return {
-         title: {
-            check: value => value.length > 5,
-            message: 'Title is not long enough'
-         },
-         subtitle: {
-            check: value => value.length > 2,
-            message: 'Subtitle is not long enough'
-         }
-      }
+      console.log(errors) // eslint-disable-line
    }
 
    render() {
@@ -166,12 +151,26 @@ class Demo extends React.Component {
                      </GridCell>
                      <GridCell>
                         <Form
-                           initialValues={{ title: 'A Title' }}
-                           validation={this.formValidation()}
+                           initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description' }}
+                           validation={{
+                              title: {
+                                 test: value => value.length > 5,
+                                 message: 'Title is not long enough'
+                              },
+                              subtitle: {
+                                 test: value => value.length > 2,
+                                 message: 'Subtitle is not long enough'
+                              },
+                              description: {
+                                 test: value => value.length > 1,
+                                 message: 'Description is not long enough'
+                              }
+                           }}
                            onSubmit={data => this.onSubmit(data)}
                            onError={error => this.onError(error)}>
-                           <Input name="title" label="Title" placeholder="Please enter the title" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
-                           <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
+                           <Input name="title" label="Title" placeholder="Please enter the title" />
+                           <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" />
+                           <Textarea name="description" label="Description" placeholder="Please enter the subtitle" />
                            <Button name="Save Changes" type="submit" />
                         </Form>
                         <Input label="Input Numero Uno" placeholder="Placeholder text" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
