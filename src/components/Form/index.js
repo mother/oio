@@ -55,19 +55,40 @@ export default class Form extends Component {
       }
    }
 
+   getTestFromString(str) {
+      switch (str) {
+         case 'required':
+            return value => !!value
+         case 'email':
+            return (value) => {
+               const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ // eslint-disable-line
+               return regex.test(value)
+            }
+         default:
+            break
+      }
+   }
+
    checkError(child, initialValue, initialProps) {
       const value = initialValue && typeof initialValue === 'string'
          ? initialValue
          : (this.state[child.props.name] && this.state[child.props.name].value) || ''
       const props = initialProps || this.props
 
-      return (
-         props.validation &&
-         props.validation[child.props.name] &&
-         !props.validation[child.props.name].test(value)
-      )
-         ? props.validation[child.props.name].message
-         : ''
+      const validations = props.validations && props.validations[child.props.name]
+      if (!validations) return ''
+
+      for (let i = 0; i < validations.length; i += 1) {
+         const validation = validations[i]
+         const test = typeof validation.test === 'string'
+            ? this.getTestFromString(validation.test)
+            : validation.test
+         if (!test(value)) {
+            return validation.message
+         }
+      }
+
+      return ''
    }
 
    childIsRelevant(child) {
