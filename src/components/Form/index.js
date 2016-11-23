@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
+import dot from 'dot-object'
 
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      initialValues: React.PropTypes.object,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -13,28 +13,52 @@ export default class Form extends Component {
 
       this.handleSubmit = this.handleSubmit.bind(this)
 
-      // Set initialValues
+      this.initialValuesLoaded = false
+
+      // Setup state
       this.state = {}
       props.children.forEach((child) => {
          if (this.childIsRelevant(child)) {
-            const value = props.initialValues
-               ? props.initialValues[child.props.name] || ''
-               : ''
             this.state[child.props.name] = {
-               value,
-               meta: {
-                  touched: false,
-                  error: this.checkError(child, value, props)
-               }
+               value: '',
+               meta: {}
             }
          }
       })
    }
 
+   componentWillReceiveProps(props) {
+      let initialValues = props.initialValues
+
+      if (initialValues && !this.initialValuesLoaded) {
+         const newState = {}
+
+         initialValues = dot.dot(initialValues)
+
+         props.children.forEach((child) => {
+            if (this.childIsRelevant(child)) {
+               const value = initialValues
+                  ? initialValues[child.props.name] || ''
+                  : ''
+               newState[child.props.name] = {
+                  value,
+                  meta: {
+                     touched: false,
+                     error: this.checkError(child, value, props)
+                  }
+               }
+            }
+         })
+
+         this.initialValuesLoaded = true
+         this.setState(newState)
+      }
+   }
+
    checkError(child, initialValue, initialProps) {
       const value = initialValue && typeof initialValue === 'string'
          ? initialValue
-         : this.state[child.props.name] && this.state[child.props.name].value
+         : (this.state[child.props.name] && this.state[child.props.name].value) || ''
       const props = initialProps || this.props
 
       return (
@@ -106,8 +130,8 @@ export default class Form extends Component {
          })
          this.setState(newState)
 
-         this.props.onError(errors)
-      } else this.props.onSubmit(data)
+         if (this.props.onError) this.props.onError(dot.object(errors))
+      } else if (this.props.onSubmit) this.props.onSubmit(dot.object(data))
    }
 
    render() {

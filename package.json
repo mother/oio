@@ -34,7 +34,8 @@
   },
   "homepage": "https://github.com/mother/oio",
   "dependencies": {
-    "classnames": "2.2.5"
+    "classnames": "2.2.5",
+    "dot-object": "1.5.4"
   },
   "devDependencies": {
     "babel-core": "6.0.20",
