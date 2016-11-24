@@ -93,7 +93,7 @@ export default class Form extends Component {
 
    childIsRelevant(child) {
       const types = ['input', 'textarea']
-      return types.indexOf(child.type.type) !== -1
+      return types.includes(child.type.type)
    }
 
    handleBlur(event, child) {
