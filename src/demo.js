@@ -152,7 +152,7 @@ class Demo extends React.Component {
                      <GridCell>
                         <Form
                            initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description' }}
-                           validation={{
+                           validations={{
                               title: {
                                  test: value => value.length > 5,
                                  message: 'Title is not long enough'
