@@ -176,8 +176,7 @@ export default class Form extends Component {
       })
 
       return (
-         <form
-            onSubmit={this.handleSubmit}>
+         <form onSubmit={this.handleSubmit}>
             {childrenNew}
          </form>
       )
