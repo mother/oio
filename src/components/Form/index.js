@@ -4,6 +4,8 @@ import dot from 'dot-object'
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
+      handleBlur: React.PropTypes.func,
+      handleChange: React.PropTypes.func,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -164,8 +166,14 @@ export default class Form extends Component {
             const childNew = React.cloneElement(child, {
                key: counter,
                meta: this.state[child.props.name].meta || {},
-               onBlur: (event) => { this.handleBlur(event, child) },
-               onChange: (event) => { this.handleChange(event, child) },
+               onBlur: (event) => {
+                  this.handleBlur(event, child)
+                  if (this.props.handleBlur) this.props.handleBlur(event)
+               },
+               onChange: (event) => {
+                  this.handleChange(event, child)
+                  if (this.props.handleChange) this.props.handleChange(event)
+               },
                value: this.state[child.props.name].value || ''
             })
             childrenNew.push(childNew)
