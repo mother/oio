@@ -65,7 +65,7 @@ export default class Form extends Component {
                return regex.test(value)
             }
          default:
-            break
+            return () => true
       }
    }
 
