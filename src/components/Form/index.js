@@ -75,8 +75,9 @@ export default class Form extends Component {
          : (this.state[child.props.name] && this.state[child.props.name].value) || ''
       const props = initialProps || this.props
 
-      const validations = props.validations && props.validations[child.props.name]
+      let validations = props.validations && props.validations[child.props.name]
       if (!validations) return ''
+      if (!Array.isArray(validations)) validations = [validations]
 
       for (let i = 0; i < validations.length; i += 1) {
          const validation = validations[i]
