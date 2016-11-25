@@ -21,8 +21,9 @@ export default class Form extends Component {
       this.state = {}
       props.children.forEach((child) => {
          if (this.childIsRelevant(child)) {
+            console.log(child)
             this.state[child.props.name] = {
-               value: '',
+               value: child.props.value,
                meta: {}
             }
          }
@@ -95,7 +96,7 @@ export default class Form extends Component {
    }
 
    childIsRelevant(child) {
-      const types = ['input', 'textarea']
+      const types = ['input', 'textarea', 'select', 'radio', 'checkbox']
       return types.includes(child.type.type)
    }
 
@@ -164,7 +165,7 @@ export default class Form extends Component {
       this.props.children.forEach((child) => {
          if (this.childIsRelevant(child)) {
             const childNew = React.cloneElement(child, {
-               key: counter,
+               key: counter += 1,
                meta: this.state[child.props.name].meta || {},
                onBlur: (event) => {
                   this.handleBlur(event, child)
@@ -180,7 +181,6 @@ export default class Form extends Component {
          } else {
             childrenNew.push(child)
          }
-         counter += 1
       })
 
       return (

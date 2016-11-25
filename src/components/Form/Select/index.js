@@ -1,46 +1,68 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Select = ({ children, className, id, label, meta, onBlur, onChange, value }) => {
-   const classes = [styles.select, className]
+export default class Select extends Component {
+   static propTypes = {
+      className: React.PropTypes.string,
+      id: React.PropTypes.string,
+      label: React.PropTypes.string,
+      meta: React.PropTypes.object,
+      onBlur: React.PropTypes.func,
+      onChange: React.PropTypes.func,
+      options: React.PropTypes.array
+   }
 
-   return (
-      <div className={formStyles.container}>
-         {label && <label htmlFor={id}>{label}</label>}
-         <select
-            className={classNames(classes)}
-            id={id}
-            onBlur={onBlur}
-            onChange={onChange}
-            value={value}>
-            {children}
-         </select>
-         {meta && meta.touched && meta.error &&
-            <div className={formStyles.error}>
-               {meta.error}
-            </div>
-         }
-      </div>
-   )
-}
+   constructor(props, context) {
+      super(props, context)
 
-Select.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string,
-   id: React.PropTypes.string,
-   label: React.PropTypes.string,
-   meta: React.PropTypes.object,
-   onBlur: React.PropTypes.func,
-   onChange: React.PropTypes.func,
-   value: React.PropTypes.string
-}
+      let initialValue
+      this.props.options.forEach((option) => {
+         if (option.selected) initialValue = option.value
+      })
 
-Select.defaultProps = {
-   type: 'text'
+      this.state = { value: initialValue }
+
+      this.handleChange = this.handleChange.bind(this)
+   }
+
+   handleChange(event) {
+      this.setState({ value: event.target.value })
+   }
+
+   render() {
+      const classes = [styles.select, this.props.className]
+
+      const children = []
+      this.props.options.forEach((option) => {
+         children.push(
+            <option key={option.value} value={option.value}>{option.text}</option>
+         )
+      })
+
+      return (
+         <div className={formStyles.container}>
+            {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
+            <select
+               className={classNames(classes)}
+               id={this.props.id}
+               value={this.state.value}
+               onBlur={this.props.onBlur}
+               onChange={(event) => {
+                  this.handleChange(event)
+                  this.props.onChange(event)
+               }}>
+               {children}
+            </select>
+            {this.props.meta && this.props.meta.touched && this.props.meta.error &&
+               <div className={formStyles.error}>
+                  {this.props.meta.error}
+               </div>
+            }
+         </div>
+      )
+   }
 }
 
 Select.type = 'select'
-
-export default Select

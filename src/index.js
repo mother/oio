@@ -2,6 +2,7 @@ import ActionBar from './components/ActionBar'
 import Avatar from './components/Avatar'
 import Button from './components/Button'
 import ButtonGroup from './components/ButtonGroup'
+import Checkboxes from './components/Form/Checkboxes'
 import Cover from './components/Cover'
 import Form from './components/Form'
 import Grid from './components/Grid'
@@ -12,6 +13,7 @@ import Nav from './components/Nav'
 import Notification from './components/Notification'
 import OIO from './components/OIO'
 import Popover from './components/Popover'
+import Radios from './components/Form/Radios'
 import Select from './components/Form/Select'
 import Spacer from './components/Spacer'
 import Table from './components/Table'
@@ -28,6 +30,7 @@ export {
    Avatar,
    Button,
    ButtonGroup,
+   Checkboxes,
    Cover,
    Form,
    Grid,
@@ -38,6 +41,7 @@ export {
    Notification,
    OIO,
    Popover,
+   Radios,
    Select,
    Spacer,
    Table,

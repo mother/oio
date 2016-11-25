@@ -5,6 +5,7 @@ import {
    Avatar,
    Button,
    ButtonGroup,
+   // Checkboxes,
    Cover,
    Form,
    Grid,
@@ -14,6 +15,7 @@ import {
    Nav,
    Notification,
    Popover,
+   Radios,
    Select,
    Spacer,
    Text,
@@ -153,34 +155,33 @@ class Demo extends React.Component {
                         <Form
                            initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description' }}
                            validations={{
-                              title: {
-                                 test: value => value.length > 5,
-                                 message: 'Title is not long enough'
-                              },
-                              subtitle: {
-                                 test: value => value.length > 2,
-                                 message: 'Subtitle is not long enough'
-                              },
-                              description: {
-                                 test: value => value.length > 1,
-                                 message: 'Description is not long enough'
-                              }
+                              title: { test: 'required', message: 'First name is required!' },
+                              subtitle: { test: 'required', message: 'First name is required!' },
+                              description: { test: value => value.length > 10, message: 'Description must be at least 10 characters' }
                            }}
                            onSubmit={data => this.onSubmit(data)}
                            onError={error => this.onError(error)}>
                            <Input name="title" label="Title" placeholder="Please enter the title" />
                            <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" />
+                           <Select
+                              name="choice"
+                              label="A Choice"
+                              options={[
+                                 { value: 'one', text: 'One' },
+                                 { value: 'two', text: 'Two', selected: true }
+                              ]}
+                           />
+                           <Radios
+                              label="Gender"
+                              name="gender"
+                              options={[
+                                 { value: 'male', text: 'Male', checked: true },
+                                 { value: 'female', text: 'Female' }
+                              ]}
+                           />
                            <Textarea name="description" label="Description" placeholder="Please enter the subtitle" />
                            <Button name="Save Changes" type="submit" />
                         </Form>
-                        <Input label="Input Numero Uno" placeholder="Placeholder text" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
-                        <Input label="Password" placeholder="Enter password" type="password" meta={{ touched: true, error: 'Your password is too weak' }} />
-                        <Textarea label="Textarea Dos Equis" placeholder="Enter text here" meta={{ touched: true, error: 'Must be greater than 4 characters' }} />
-                        <Select label="A Label" meta={{ touched: true, error: 'Must choose an option!' }}>
-                           <option value="">Please choose an option</option>
-                           <option value="one">One</option>
-                           <option value="two">Two</option>
-                        </Select>
                      </GridCell>
                      <GridCell>
                         Grid Cell 2
