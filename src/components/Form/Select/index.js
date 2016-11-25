@@ -47,7 +47,7 @@ export default class Select extends Component {
             <select
                className={classNames(classes)}
                id={this.props.id}
-               value={this.state.value}
+               value={this.props.value}
                onBlur={this.props.onBlur}
                onChange={(event) => {
                   this.handleChange(event)
@@ -64,5 +64,3 @@ export default class Select extends Component {
       )
    }
 }
-
-Select.type = 'select'

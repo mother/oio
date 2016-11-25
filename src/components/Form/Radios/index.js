@@ -17,7 +17,7 @@ const Radios = ({
                value={option.value}
                onChange={onChange}
                onBlur={onBlur}
-               defaultChecked={option.checked}
+               defaultChecked={option.selected}
             />
             <label className={formStyles.labelRadio} htmlFor={option.value}>
                {option.text}
@@ -49,7 +49,5 @@ Radios.propTypes = {
    onChange: React.PropTypes.func,
    options: React.PropTypes.array
 }
-
-Radios.type = 'radio'
 
 export default Radios

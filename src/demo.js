@@ -153,7 +153,7 @@ class Demo extends React.Component {
                      </GridCell>
                      <GridCell>
                         <Form
-                           initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description' }}
+                           initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description', choice: 'two' }}
                            validations={{
                               title: { test: 'required', message: 'First name is required!' },
                               subtitle: { test: 'required', message: 'First name is required!' },
@@ -168,15 +168,16 @@ class Demo extends React.Component {
                               label="A Choice"
                               options={[
                                  { value: 'one', text: 'One' },
-                                 { value: 'two', text: 'Two', selected: true }
+                                 { value: 'two', text: 'Two' },
+                                 { value: 'three', text: 'Three', selected: true }
                               ]}
                            />
                            <Radios
-                              label="Gender"
                               name="gender"
+                              label="Gender"
                               options={[
-                                 { value: 'male', text: 'Male', checked: true },
-                                 { value: 'female', text: 'Female' }
+                                 { value: 'male', text: 'Male' },
+                                 { value: 'female', text: 'Female', selected: true }
                               ]}
                            />
                            <Textarea name="description" label="Description" placeholder="Please enter the subtitle" />

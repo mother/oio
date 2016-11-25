@@ -20,13 +20,7 @@ export default class Form extends Component {
       // Setup state
       this.state = {}
       props.children.forEach((child) => {
-         if (this.childIsRelevant(child)) {
-            console.log(child)
-            this.state[child.props.name] = {
-               value: child.props.value,
-               meta: {}
-            }
-         }
+         if (this.childIsRelevant(child)) this.state[child.props.name] = {}
       })
    }
 
@@ -39,6 +33,18 @@ export default class Form extends Component {
          initialValues = dot.dot(initialValues)
 
          props.children.forEach((child) => {
+            // Check if selected values exist for select, radios, and checkboxes
+            if (child.props.options && !initialValues[child.props.name]) {
+               child.props.options.forEach((option) => {
+                  if (option.selected) {
+                     initialValues[child.props.name] = option.value
+                  } else {
+                     initialValues[child.props.name] = child.props.options[0].value
+                  }
+               })
+            }
+
+            // Set initial values
             if (this.childIsRelevant(child)) {
                const value = initialValues
                   ? initialValues[child.props.name] || ''
@@ -96,8 +102,8 @@ export default class Form extends Component {
    }
 
    childIsRelevant(child) {
-      const types = ['input', 'textarea', 'select', 'radio', 'checkbox']
-      return types.includes(child.type.type)
+      const types = ['Input', 'Textarea', 'Select', 'Radios', 'Checkboxes']
+      return types.includes(child.type.name)
    }
 
    handleBlur(event, child) {
@@ -113,9 +119,7 @@ export default class Form extends Component {
       this.setState(newState)
    }
 
-   handleChange(event, child) {
-      const value = event.target.value
-
+   handleChange(value, child) {
       const newState = {}
       newState[child.props.name] = {
          value,
@@ -172,7 +176,7 @@ export default class Form extends Component {
                   if (this.props.handleBlur) this.props.handleBlur(event)
                },
                onChange: (event) => {
-                  this.handleChange(event, child)
+                  this.handleChange(event.target.value, child)
                   if (this.props.handleChange) this.props.handleChange(event)
                },
                value: this.state[child.props.name].value || ''

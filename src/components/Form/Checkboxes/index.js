@@ -49,6 +49,4 @@ Checkboxes.propTypes = {
    options: React.PropTypes.array
 }
 
-Checkboxes.type = 'checkbox'
-
 export default Checkboxes
