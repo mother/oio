@@ -12,6 +12,7 @@ export default class View extends React.Component {
       height: React.PropTypes.string,
       onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
+      position: React.PropTypes.string,
       scroll: React.PropTypes.string,
       style: React.PropTypes.object,
       width: React.PropTypes.string,
@@ -20,6 +21,7 @@ export default class View extends React.Component {
 
    static defaultProps = {
       format: 'float',
+      padding: '0',
       style: {},
       visible: 'on'
    }
@@ -28,10 +30,10 @@ export default class View extends React.Component {
       super(props, context)
 
       this.state = {
-         size: getWindowSize(),
          width: 'auto',
          height: 'auto',
-         padding: '0'
+         position: {},
+         size: getWindowSize()
       }
 
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
@@ -39,12 +41,14 @@ export default class View extends React.Component {
 
    componentDidMount() {
       this.setComponentAspectRatio()
+      this.setComponentPosition()
 
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
    componentDidUpdate() {
       this.setComponentAspectRatio()
+      this.setComponentPosition()
    }
 
    componentWillUnmount() {
@@ -78,6 +82,53 @@ export default class View extends React.Component {
       }
    }
 
+   setComponentPosition() {
+      const position = {}
+      if (this.props.position) {
+         const currentPosition = getAttributeForCurrentSize(this.state.size, this.props.position)
+
+         if (currentPosition.indexOf('top') >= 0) {
+            position.top = 0
+            position.bottom = 'auto'
+         }
+
+         if (currentPosition.indexOf('middle') >= 0) {
+            position.top = '50%'
+            if (this.state.height !== 'auto') {
+               position.marginTop = `-${this.node.offsetHeight / 2}px`
+            }
+         }
+
+         if (currentPosition.indexOf('bottom') >= 0) {
+            position.bottom = 0
+            position.top = 'auto'
+         }
+
+         if (currentPosition.indexOf('left') >= 0) {
+            position.left = '0'
+            position.right = 'auto'
+            position.marginLeft = 'auto'
+         }
+
+         if (currentPosition.indexOf('center') >= 0) {
+            position.left = '50%'
+            if (this.state.width !== 'auto') {
+               position.marginLeft = `-${this.node.offsetWidth / 2}px`
+            }
+         }
+
+         if (currentPosition.indexOf('right') >= 0) {
+            position.right = '0'
+            position.left = 'auto'
+         }
+
+         // Not sure if there is a better way to do this equality comparison
+         if (JSON.stringify(this.state.position) !== JSON.stringify(position)) {
+            this.setState({ position })
+         }
+      }
+   }
+
    windowSizeUpdated() {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize })
@@ -85,12 +136,18 @@ export default class View extends React.Component {
 
    render() {
       const viewClasses = [styles.view]
+      const statelessStyles = {}
 
+      // Stateless View Props
+      const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
+      if (padding !== 0) statelessStyles.padding = padding
+
+      // Stateful View Styles
       if (this.props.width) {
          const width = getAttributeForCurrentSize(this.state.size, this.props.width)
          if (width) {
-            const unit = width.indexOf('px') === -1 ? '%' : 'px'
-            this.state.width = parseFloat(width) + unit
+            // const unit = width.indexOf('px') === -1 ? '%' : 'px'
+            this.state.width = width
          }
       }
 
@@ -100,11 +157,6 @@ export default class View extends React.Component {
             const unit = height.indexOf('px') === -1 ? '%' : 'px'
             this.state.height = parseFloat(height) + unit
          }
-      }
-
-      if (this.props.padding) {
-         const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
-         if (padding) this.state.padding = padding
       }
 
       if (this.props.scroll) {
@@ -132,13 +184,12 @@ export default class View extends React.Component {
          }
       }
 
-      viewClasses.push(this.props.className)
-
       const style = {
          ...this.props.style,
+         ...statelessStyles,
+         ...this.state.position,
          width: this.state.width,
-         height: this.state.height,
-         padding: this.state.padding
+         height: this.state.height
       }
 
       return (
@@ -146,7 +197,7 @@ export default class View extends React.Component {
             ref={node => (this.node = node)}
             style={style}
             onScroll={this.props.onScroll}
-            className={classNames(viewClasses)}>
+            className={classNames(viewClasses, this.props.className)}>
             {this.props.children}
          </div>
       )
