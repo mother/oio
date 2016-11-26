@@ -33,19 +33,27 @@ export default class Form extends Component {
          initialValues = dot.dot(initialValues)
 
          props.children.forEach((child) => {
-            // Check if selected values exist for select, radios, and checkboxes
-            if (child.props.options && !initialValues[child.props.name]) {
-               child.props.options.forEach((option) => {
-                  if (option.selected) {
-                     initialValues[child.props.name] = option.value
-                  } else {
-                     initialValues[child.props.name] = child.props.options[0].value
-                  }
-               })
+            // Check if selected values exist
+            if (!initialValues[child.props.name]) {
+               // Select
+               if (child.type.type === 'select' && child.props.options) {
+                  child.props.options.forEach((option) => {
+                     if (option.selected) {
+                        initialValues[child.props.name] = option.value
+                     } else {
+                        initialValues[child.props.name] = child.props.options[0].value
+                     }
+                  })
+               }
+               // Radio
+               if (child.type.type === 'radio') {
+                  
+               }
             }
 
             // Set initial values
             if (this.childIsRelevant(child)) {
+               // Radio
                const value = initialValues
                   ? initialValues[child.props.name] || ''
                   : ''
@@ -102,8 +110,8 @@ export default class Form extends Component {
    }
 
    childIsRelevant(child) {
-      const types = ['Input', 'Textarea', 'Select', 'Radios', 'Checkboxes']
-      return types.includes(child.type.name)
+      const types = ['input', 'textarea', 'select', 'radio']
+      return types.includes(child.type.type)
    }
 
    handleBlur(event, child) {
@@ -168,7 +176,7 @@ export default class Form extends Component {
       let counter = 1
       this.props.children.forEach((child) => {
          if (this.childIsRelevant(child)) {
-            const childNew = React.cloneElement(child, {
+            childrenNew.push(React.cloneElement(child, {
                key: counter += 1,
                meta: this.state[child.props.name].meta || {},
                onBlur: (event) => {
@@ -180,8 +188,7 @@ export default class Form extends Component {
                   if (this.props.handleChange) this.props.handleChange(event)
                },
                value: this.state[child.props.name].value || ''
-            })
-            childrenNew.push(childNew)
+            }))
          } else {
             childrenNew.push(child)
          }

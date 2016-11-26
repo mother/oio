@@ -13,7 +13,8 @@ import Nav from './components/Nav'
 import Notification from './components/Notification'
 import OIO from './components/OIO'
 import Popover from './components/Popover'
-import Radios from './components/Form/Radios'
+import Radio from './components/Form/Radio'
+import RadioGroup from './components/Form/RadioGroup'
 import Select from './components/Form/Select'
 import Spacer from './components/Spacer'
 import Table from './components/Table'
@@ -41,7 +42,8 @@ export {
    Notification,
    OIO,
    Popover,
-   Radios,
+   Radio,
+   RadioGroup,
    Select,
    Spacer,
    Table,

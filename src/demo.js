@@ -15,7 +15,8 @@ import {
    Nav,
    Notification,
    Popover,
-   Radios,
+   Radio,
+   RadioGroup,
    Select,
    Spacer,
    Text,
@@ -153,7 +154,7 @@ class Demo extends React.Component {
                      </GridCell>
                      <GridCell>
                         <Form
-                           initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description', choice: 'two' }}
+                           initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description', gender: 'undecided' }}
                            validations={{
                               title: { test: 'required', message: 'First name is required!' },
                               subtitle: { test: 'required', message: 'First name is required!' },
@@ -169,17 +170,14 @@ class Demo extends React.Component {
                               options={[
                                  { value: 'one', text: 'One' },
                                  { value: 'two', text: 'Two' },
-                                 { value: 'three', text: 'Three', selected: true }
+                                 { value: 'three', text: 'Three' }
                               ]}
                            />
-                           <Radios
-                              name="gender"
-                              label="Gender"
-                              options={[
-                                 { value: 'male', text: 'Male' },
-                                 { value: 'female', text: 'Female', selected: true }
-                              ]}
-                           />
+                           <RadioGroup name="gender" label="Gender">
+                              <Radio value="male" label="Male" />
+                              <Radio value="female" label="Female" />
+                              <Radio value="undecided" label="Undecided" />
+                           </RadioGroup>
                            <Textarea name="description" label="Description" placeholder="Please enter the subtitle" />
                            <Button name="Save Changes" type="submit" />
                         </Form>

@@ -55,4 +55,6 @@ Input.contextTypes = {
    OIOStyles: React.PropTypes.object
 }
 
+Input.type = 'input'
+
 export default Input

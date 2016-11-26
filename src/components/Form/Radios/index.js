@@ -2,7 +2,7 @@ import React from 'react'
 import formStyles from '../styles.less'
 
 const Radios = ({
-   className, id, label, meta, name, onBlur, onChange, options
+   className, id, label, meta, name, onBlur, onChange, options, value
 }) => {
    const children = []
    let counter = 1
@@ -18,6 +18,7 @@ const Radios = ({
                onChange={onChange}
                onBlur={onBlur}
                defaultChecked={option.selected}
+               checked={value === option.value}
             />
             <label className={formStyles.labelRadio} htmlFor={option.value}>
                {option.text}
@@ -47,7 +48,8 @@ Radios.propTypes = {
    name: React.PropTypes.string,
    onBlur: React.PropTypes.func,
    onChange: React.PropTypes.func,
-   options: React.PropTypes.array
+   options: React.PropTypes.array,
+   value: React.PropTypes.string
 }
 
 export default Radios

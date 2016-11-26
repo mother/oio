@@ -11,8 +11,11 @@ export default class Select extends Component {
       meta: React.PropTypes.object,
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
-      options: React.PropTypes.array
+      options: React.PropTypes.array,
+      value: React.PropTypes.string
    }
+
+   static type = 'select'
 
    constructor(props, context) {
       super(props, context)
@@ -47,7 +50,7 @@ export default class Select extends Component {
             <select
                className={classNames(classes)}
                id={this.props.id}
-               value={this.props.value}
+               value={this.props.value || this.state.value}
                onBlur={this.props.onBlur}
                onChange={(event) => {
                   this.handleChange(event)
