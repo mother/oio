@@ -142,18 +142,27 @@ export default class View extends React.Component {
       // Stateless View Props
       const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
       if (padding !== 0) statelessStyles.padding = padding
-      const maxWidth = getAttributeForCurrentSize(this.state.size, this.props.maxWidth)
-      if (maxWidth) statelessStyles.maxWidth = maxWidth
+
+      if (this.props.maxWidth) {
+         const maxWidth = getAttributeForCurrentSize(this.state.size, this.props.maxWidth)
+         if (maxWidth) statelessStyles.maxWidth = maxWidth
+      }
 
       // Stateful View Styles
       if (this.props.width) {
          const width = getAttributeForCurrentSize(this.state.size, this.props.width)
-         if (width) this.state.width = parseFloat(width)
+         if (width) {
+            const unit = width.indexOf('px') === -1 ? '%' : 'px'
+            this.state.width = parseFloat(width) + unit
+         }
       }
 
       if (this.props.height) {
          const height = getAttributeForCurrentSize(this.state.size, this.props.height)
-         if (height) this.state.height = parseFloat(height)
+         if (height) {
+            const unit = height.indexOf('px') === -1 ? '%' : 'px'
+            this.state.height = parseFloat(height) + unit
+         }
       }
 
       if (this.props.scroll) {
