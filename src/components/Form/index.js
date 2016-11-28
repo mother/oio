@@ -15,8 +15,8 @@ export default class Form extends Component {
 
       // Setup state
       this.state = {
-         pristine: false,
-         data: {}
+         data: {},
+         pristine: true
       }
 
       props.children.forEach((child) => {
@@ -36,7 +36,25 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
       props.children.forEach((child) => {
          if (this.childIsRelevant(child)) {
-            const value = this.state.data[child.props.name].value || child.props.initialValue || ''
+            // Select
+            const selectValue = (
+               child.props.options &&
+               child.props.options.find(option => option.selected === true)
+            )
+
+            // Radio
+            const radioValue = (
+               child.props.children &&
+               child.props.children.find(innerChild => innerChild.props.checked === true)
+            )
+
+            const value = (
+               this.state.data[child.props.name].value ||
+               child.props.initialValue ||
+               (selectValue && selectValue.value) ||
+               (radioValue && radioValue.props.value) ||
+               ''
+            )
             newState.data[child.props.name] = {
                value,
                meta: {
@@ -110,7 +128,10 @@ export default class Form extends Component {
 
    handleBlur(event, child) {
       const value = event.target.value
-      const newState = { data: { ...this.state.data } }
+      const newState = {
+         data: { ...this.state.data },
+         pristine: false
+      }
       newState.data[child.props.name] = {
          ...this.state.data[child.props.name],
          meta: {
@@ -181,11 +202,11 @@ export default class Form extends Component {
                meta: this.state.data[child.props.name].meta || {},
                onBlur: (event) => {
                   this.handleBlur(event, child)
-                  if (child.props.handleBlur) child.props.handleBlur(event)
+                  if (child.props.onBlur) child.props.onBlur(event)
                },
                onChange: (event) => {
                   this.handleChange(event, child)
-                  if (child.props.handleChange) child.props.handleChange(event)
+                  if (child.props.onChange) child.props.onChange(event)
                },
                value: this.state.data[child.props.name].value
             }))

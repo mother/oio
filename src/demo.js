@@ -114,18 +114,23 @@ class Demo extends React.Component {
                            onSubmit={data => this.onSubmit(data)}
                            onError={error => this.onError(error)}>
                            <Input
-                              name="title"
-                              label="Title"
-                              placeholder="Please enter the title"
-                              initialValue="Title"
-                              rules={[
-                                 'required'
-                              ]}
+                              name="name.first"
+                              label="First Name"
+                              placeholder="Please enter your first name"
+                              initialValue="Jared"
+                              rules={['required']}
+                           />
+                           <Input
+                              name="name.last"
+                              label="Last Name"
+                              placeholder="Please enter your last name"
+                              initialValue="Reich"
                            />
                            <Input
                               name="email"
                               label="Email"
                               placeholder="Please enter your email"
+                              initialValue="jared@mother.co"
                               rules={[
                                  'required',
                                  { test: 'email', message: 'Enter a valid email' },
@@ -141,12 +146,18 @@ class Demo extends React.Component {
                               name="choice"
                               label="A Choice"
                               options={[
+                                 { value: '', text: 'Please select a choice' },
                                  { value: 'one', text: 'One' },
-                                 { value: 'two', text: 'Two' },
+                                 { value: 'two', text: 'Two', selected: true },
                                  { value: 'three', text: 'Three' }
                               ]}
+                              initialValue="three"
+                              rules={['required']}
                            />
-                           <RadioGroup name="gender" label="Gender">
+                           <RadioGroup
+                              name="gender"
+                              label="Gender"
+                              rules={['required']}>
                               <Radio value="male" label="Male" />
                               <Radio value="female" label="Female" />
                               <Radio value="undecided" label="Undecided" />
