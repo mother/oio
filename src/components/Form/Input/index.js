@@ -4,7 +4,7 @@ import styles from './styles.less'
 import formStyles from '../styles.less'
 
 const Input = ({
-   className, id, label, meta, onBlur, onChange, placeholder, type, value
+   className, id, label, meta, name, onBlur, onChange, placeholder, type, value
 }, context) => {
    const classes = [styles.input, className]
    const inputStyles = {}
@@ -22,6 +22,7 @@ const Input = ({
             id={id}
             onBlur={onBlur}
             onChange={onChange}
+            name={name}
             placeholder={placeholder}
             type={type}
             value={value}
@@ -40,6 +41,7 @@ Input.propTypes = {
    id: React.PropTypes.string,
    label: React.PropTypes.string,
    meta: React.PropTypes.object,
+   name: React.PropTypes.string,
    onBlur: React.PropTypes.func,
    onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
