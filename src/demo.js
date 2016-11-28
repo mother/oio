@@ -6,7 +6,7 @@ import {
    Button,
    ButtonGroup,
    // Checkboxes,
-   Cover,
+   // Cover,
    Form,
    Grid,
    GridCell,
@@ -33,42 +33,7 @@ class Demo extends React.Component {
    constructor(props, context) {
       super(props, context)
 
-      this.state = {
-         notification: {
-            buttonAllAction: () => {
-               this.setState({
-                  notification: {
-                     ...this.state.notification,
-                     showing: false
-                  }
-               })
-            }
-         }
-      }
-   }
-
-   componentDidMount() {
-      setTimeout(() => {
-         this.setState({
-            notification: {
-               ...this.state.notification,
-               message: 'Please wait...',
-               mode: 'loading',
-               showing: true,
-               title: 'Loading',
-               onHide: () => console.log('hide'), // eslint-disable-line
-               onShow: () => console.log('show') // eslint-disable-line
-            }
-         })
-      }, 1000)
-      setTimeout(() => {
-         this.setState({
-            notification: {
-               ...this.state.notification,
-               showing: false
-            }
-         })
-      }, 3000)
+      this.state = {}
    }
 
    onSubmit(data) {
@@ -144,26 +109,34 @@ class Demo extends React.Component {
                </ActionBar>
                <View width="100%" height="75%" format="float" scroll="on">
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
-                     <GridCell colspan="4">
-                        <Cover src="https://hd.unsplash.com/photo-1416879595882-3373a0480b5b" position="top center">
-                           <div
-                              style={{
-                                 height: '480px'
-                              }}>this is the cover content!</div>
-                        </Cover>
-                     </GridCell>
                      <GridCell>
                         <Form
-                           initialValues={{ title: 'A Title', subtitle: 'A Subtitle', description: 'A Description', gender: 'undecided' }}
-                           validations={{
-                              title: { test: 'required', message: 'First name is required!' },
-                              subtitle: { test: 'required', message: 'First name is required!' },
-                              description: { test: value => value.length > 10, message: 'Description must be at least 10 characters' }
-                           }}
                            onSubmit={data => this.onSubmit(data)}
                            onError={error => this.onError(error)}>
-                           <Input name="title" label="Title" placeholder="Please enter the title" />
-                           <Input name="subtitle" label="Subtitle" placeholder="Please enter the subtitle" />
+                           <Input
+                              name="title"
+                              label="Title"
+                              placeholder="Please enter the title"
+                              initialValue="Title"
+                              rules={[
+                                 'required'
+                              ]}
+                           />
+                           <Input
+                              name="email"
+                              label="Email"
+                              placeholder="Please enter your email"
+                              rules={[
+                                 'required',
+                                 { test: 'email', message: 'Enter a valid email' },
+                                 { test: value => value.length > 8, message: 'At least 8 characters' }
+                              ]}
+                           />
+                           <Textarea
+                              name="description"
+                              label="Description"
+                              placeholder="Please enter the subtitle"
+                           />
                            <Select
                               name="choice"
                               label="A Choice"
@@ -178,7 +151,6 @@ class Demo extends React.Component {
                               <Radio value="female" label="Female" />
                               <Radio value="undecided" label="Undecided" />
                            </RadioGroup>
-                           <Textarea name="description" label="Description" placeholder="Please enter the subtitle" />
                            <Button name="Save Changes" type="submit" />
                         </Form>
                      </GridCell>

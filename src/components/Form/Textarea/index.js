@@ -3,7 +3,9 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Textarea = ({ className, id, label, meta, onBlur, onChange, placeholder, rows, value }) => {
+const Textarea = ({
+   className, id, label, meta, name, onBlur, onChange, placeholder, rows, value
+}) => {
    const classes = [styles.textarea, className]
 
    return (
@@ -14,6 +16,7 @@ const Textarea = ({ className, id, label, meta, onBlur, onChange, placeholder, r
             id={id}
             onBlur={onBlur}
             onChange={onChange}
+            name={name}
             placeholder={placeholder}
             value={value}
             rows={rows}
@@ -32,6 +35,7 @@ Textarea.propTypes = {
    id: React.PropTypes.string,
    label: React.PropTypes.string,
    meta: React.PropTypes.object,
+   name: React.PropTypes.string,
    onBlur: React.PropTypes.func,
    onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
