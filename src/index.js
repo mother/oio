@@ -18,6 +18,7 @@ import Radio from './components/Form/Radio'
 import RadioGroup from './components/Form/RadioGroup'
 import Select from './components/Form/Select'
 import Spacer from './components/Spacer'
+import Switch from './components/Form/Switch'
 import Table from './components/Table'
 import Text from './components/Text'
 import Textarea from './components/Form/Textarea'
@@ -48,6 +49,7 @@ export {
    RadioGroup,
    Select,
    Spacer,
+   Switch,
    Table,
    Text,
    Textarea,

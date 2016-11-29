@@ -20,6 +20,7 @@ import {
    RadioGroup,
    Select,
    Spacer,
+   Switch,
    Text,
    Textarea,
    Title,
@@ -193,6 +194,7 @@ class Demo extends React.Component {
                                  <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                               </Grid>
                            </CheckboxGroup>
+                           <Switch name="notifications" value />
                            <Button name="Save Changes" type="submit" />
                         </Form>
                      </GridCell>
