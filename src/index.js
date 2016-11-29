@@ -2,7 +2,8 @@ import ActionBar from './components/ActionBar'
 import Avatar from './components/Avatar'
 import Button from './components/Button'
 import ButtonGroup from './components/ButtonGroup'
-import Checkboxes from './components/Form/Checkboxes'
+import Checkbox from './components/Form/Checkbox'
+import CheckboxGroup from './components/Form/CheckboxGroup'
 import Cover from './components/Cover'
 import Form from './components/Form'
 import Grid from './components/Grid'
@@ -31,7 +32,8 @@ export {
    Avatar,
    Button,
    ButtonGroup,
-   Checkboxes,
+   Checkbox,
+   CheckboxGroup,
    Cover,
    Form,
    Grid,

@@ -5,7 +5,8 @@ import {
    Avatar,
    Button,
    ButtonGroup,
-   // Checkboxes,
+   Checkbox,
+   CheckboxGroup,
    // Cover,
    Form,
    Grid,
@@ -36,11 +37,11 @@ class Demo extends React.Component {
       this.state = {}
    }
 
-   onSubmit(data) {
+   handleSubmit(data) {
       console.log(data) // eslint-disable-line
    }
 
-   onError(errors) {
+   handleError(errors) {
       console.log(errors) // eslint-disable-line
    }
 
@@ -111,26 +112,26 @@ class Demo extends React.Component {
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
                      <GridCell>
                         <Form
-                           onSubmit={data => this.onSubmit(data)}
-                           onError={error => this.onError(error)}>
+                           onSubmit={data => this.handleSubmit(data)}
+                           onError={error => this.handleError(error)}>
                            <Input
                               name="name.first"
                               label="First Name"
                               placeholder="Please enter your first name"
-                              initialValue="Jared"
+                              value="Jared"
                               rules={['required']}
                            />
                            <Input
                               name="name.last"
                               label="Last Name"
                               placeholder="Please enter your last name"
-                              initialValue="Reich"
+                              value="Reich"
                            />
                            <Input
                               name="email"
                               label="Email"
                               placeholder="Please enter your email"
-                              initialValue="jared@mother.co"
+                              value="jared@mother.co"
                               rules={[
                                  'required',
                                  { test: 'email', message: 'Enter a valid email' },
@@ -151,16 +152,16 @@ class Demo extends React.Component {
                                  { value: 'two', text: 'Two', selected: true },
                                  { value: 'three', text: 'Three' }
                               ]}
-                              initialValue="three"
-                              rules={['required']}
                            />
                            <RadioGroup
                               name="gender"
                               label="Gender"
                               rules={['required']}>
-                              <Radio value="male" label="Male" />
-                              <Radio value="female" label="Female" />
-                              <Radio value="undecided" label="Undecided" />
+                              <Grid>
+                                 <GridCell><Radio value="male" label="Male" /></GridCell>
+                                 <GridCell><Radio value="female" label="Female" checked /></GridCell>
+                                 <GridCell><Radio value="undecided" label="Undecided" /></GridCell>
+                              </Grid>
                            </RadioGroup>
                            <Button name="Save Changes" type="submit" />
                         </Form>

@@ -2,13 +2,13 @@ import React from 'react'
 import formStyles from '../styles.less'
 
 const Radio = ({
-   children, defaultChecked, id, label, name, onBlur, onChange, value
+   checked, children, id, label, name, onBlur, onChange, value
 }) => (
    <span className={formStyles.container}>
       <input
          id={id}
          className={formStyles.inputRadio}
-         defaultChecked={defaultChecked}
+         checked={checked}
          type="radio"
          name={name}
          value={value}
@@ -21,8 +21,8 @@ const Radio = ({
 )
 
 Radio.propTypes = {
+   checked: React.PropTypes.bool,
    children: React.PropTypes.node,
-   defaultChecked: React.PropTypes.bool,
    id: React.PropTypes.number,
    label: React.PropTypes.string,
    name: React.PropTypes.string,
@@ -31,6 +31,6 @@ Radio.propTypes = {
    value: React.PropTypes.string
 }
 
-Radio.type = 'radio'
+Radio.type = 'Radio'
 
 export default Radio

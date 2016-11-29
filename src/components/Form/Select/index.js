@@ -16,17 +16,16 @@ export default class Select extends Component {
       value: React.PropTypes.string
    }
 
-   static type = 'select'
+   static type = 'Select'
 
    constructor(props, context) {
       super(props, context)
 
-      let initialValue
+      let value
       this.props.options.forEach((option) => {
-         if (option.selected) initialValue = option.value
+         if (option.selected) value = option.value
       })
-
-      this.state = { value: initialValue }
+      this.state = { value }
 
       this.handleChange = this.handleChange.bind(this)
    }

@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import dot from 'dot-object'
 
+import { mapRelevantChildren } from '../../utils'
+
+const names = ['Input', 'Textarea', 'Select', 'RadioGroup']
+
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
@@ -13,20 +17,17 @@ export default class Form extends Component {
 
       this.handleSubmit = this.handleSubmit.bind(this)
 
-      // Setup state
       this.state = {
          data: {},
          pristine: true
       }
 
-      props.children.forEach((child) => {
-         if (this.childIsRelevant(child)) {
-            this.state.data[child.props.name] = {
-               value: '',
-               meta: {
-                  error: null,
-                  touched: false
-               }
+      mapRelevantChildren(props.children, names, (child) => {
+         this.state.data[child.props.name] = {
+            value: child.props.value,
+            meta: {
+               error: null,
+               touched: false
             }
          }
       })
@@ -34,33 +35,28 @@ export default class Form extends Component {
 
    componentWillReceiveProps(props) {
       const newState = { data: { ...this.state.data } }
-      props.children.forEach((child) => {
-         if (this.childIsRelevant(child)) {
-            // Select
-            const selectValue = (
-               child.props.options &&
-               child.props.options.find(option => option.selected === true)
-            )
 
-            // Radio
-            const radioValue = (
-               child.props.children &&
-               child.props.children.find(innerChild => innerChild.props.checked === true)
-            )
+      mapRelevantChildren(props.children, names, (child) => {
+         // Radio
+         let radioValue
+         if (child.type.type === 'RadioGroup') {
+            radioValue = child.props.checked
+               ? child.props.value
+               : null
+         }
 
-            const value = (
-               this.state.data[child.props.name].value ||
-               child.props.initialValue ||
-               (selectValue && selectValue.value) ||
-               (radioValue && radioValue.props.value) ||
-               ''
-            )
-            newState.data[child.props.name] = {
-               value,
-               meta: {
-                  ...this.state.data[child.props.name].meta,
-                  error: this.getError(child, value)
-               }
+         const value = (
+            this.state.data[child.props.name].value ||
+            child.props.value ||
+            radioValue ||
+            ''
+         )
+
+         newState.data[child.props.name] = {
+            value,
+            meta: {
+               ...this.state.data[child.props.name].meta,
+               error: this.getError(child, value)
             }
          }
       })
@@ -172,14 +168,12 @@ export default class Form extends Component {
       if (Object.keys(errors).length > 0) {
          // Blur all to show errors
          const newState = { data: { ...this.state.data } }
-         this.props.children.forEach((child) => {
-            if (this.childIsRelevant(child)) {
-               newState.data[child.props.name] = {
-                  ...this.state.data[child.props.name],
-                  meta: {
-                     ...this.state.data[child.props.name].meta,
-                     touched: true
-                  }
+         mapRelevantChildren(this.props.children, names, (child) => {
+            newState.data[child.props.name] = {
+               ...this.state.data[child.props.name],
+               meta: {
+                  ...this.state.data[child.props.name].meta,
+                  touched: true
                }
             }
          })
@@ -187,36 +181,42 @@ export default class Form extends Component {
 
          if (this.props.onError) this.props.onError(dot.object(errors))
       } else if (this.props.onSubmit) {
-         this.props.onSubmit(dot.object(data))
+         const promise = this.props.onSubmit(dot.object(data))
+         if (promise instanceof Promise) {
+            this.setState({ submitting: true }, () => {
+               promise
+               .then(() => this.setState({ submitting: false }))
+               .catch(() => this.setState({ submitting: false }))
+            })
+         }
       }
    }
 
    render() {
-      const childrenNew = []
       let counter = 1
-
-      this.props.children.forEach((child) => {
-         if (this.childIsRelevant(child)) {
-            childrenNew.push(React.cloneElement(child, {
-               key: counter += 1,
-               meta: this.state.data[child.props.name].meta || {},
-               onBlur: (event) => {
-                  this.handleBlur(event, child)
-                  if (child.props.onBlur) child.props.onBlur(event)
-               },
-               onChange: (event) => {
-                  this.handleChange(event, child)
-                  if (child.props.onChange) child.props.onChange(event)
-               },
-               value: this.state.data[child.props.name].value
-            }))
-         } else {
-            childrenNew.push(child)
-         }
+      const childrenNew = mapRelevantChildren(this.props.children, names, (child) => {
+         const childNew = React.cloneElement(child, {
+            form: this,
+            key: counter += 1,
+            meta: this.state.data[child.props.name].meta || {},
+            onBlur: (event) => {
+               this.handleBlur(event, child)
+               if (child.props.onBlur) child.props.onBlur(event)
+            },
+            onChange: (event) => {
+               this.handleChange(event, child)
+               if (child.props.onChange) child.props.onChange(event)
+            },
+            value: this.state.data[child.props.name].value
+         })
+         return childNew
       })
 
       return (
-         <form onSubmit={this.handleSubmit}>
+         <form
+            onSubmit={(event) => {
+               this.handleSubmit(event)
+            }}>
             {childrenNew}
          </form>
       )
