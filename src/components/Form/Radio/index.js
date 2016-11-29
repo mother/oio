@@ -23,7 +23,7 @@ const Radio = ({
 Radio.propTypes = {
    checked: React.PropTypes.bool,
    children: React.PropTypes.node,
-   id: React.PropTypes.number,
+   id: React.PropTypes.string,
    label: React.PropTypes.string,
    name: React.PropTypes.string,
    onBlur: React.PropTypes.func,

@@ -114,13 +114,17 @@ class Demo extends React.Component {
                         <Form
                            onSubmit={data => this.handleSubmit(data)}
                            onError={error => this.handleError(error)}>
-                           <Input
-                              name="name.first"
-                              label="First Name"
-                              placeholder="Please enter your first name"
-                              value="Jared"
-                              rules={['required']}
-                           />
+                           <div>
+                              <div>
+                                 <Input
+                                    name="name.first"
+                                    label="First Name"
+                                    placeholder="Please enter your first name"
+                                    value="Jared"
+                                    rules={['required']}
+                                 />
+                              </div>
+                           </div>
                            <Input
                               name="name.last"
                               label="Last Name"
@@ -149,20 +153,46 @@ class Demo extends React.Component {
                               options={[
                                  { value: '', text: 'Please select a choice' },
                                  { value: 'one', text: 'One' },
-                                 { value: 'two', text: 'Two', selected: true },
+                                 { value: 'two', text: 'Two' },
                                  { value: 'three', text: 'Three' }
                               ]}
+                              value={null || 'two'}
+                              rules={['required']}
                            />
                            <RadioGroup
                               name="gender"
                               label="Gender"
-                              rules={['required']}>
+                              rules={['required']}
+                              value={null || 'female'}>
                               <Grid>
                                  <GridCell><Radio value="male" label="Male" /></GridCell>
-                                 <GridCell><Radio value="female" label="Female" checked /></GridCell>
+                                 <GridCell>
+                                    <div>
+                                       <div>
+                                          <Radio value="female" label="Female" />
+                                       </div>
+                                    </div>
+                                 </GridCell>
                                  <GridCell><Radio value="undecided" label="Undecided" /></GridCell>
                               </Grid>
                            </RadioGroup>
+                           <CheckboxGroup
+                              name="sports"
+                              label="Sports"
+                              rules={['required']}
+                              value={null || ['golf', 'hockey']}>
+                              <Grid>
+                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
+                                 <GridCell>
+                                    <div>
+                                       <div>
+                                          <Checkbox value="golf" label="Golf" />
+                                       </div>
+                                    </div>
+                                 </GridCell>
+                                 <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
+                              </Grid>
+                           </CheckboxGroup>
                            <Button name="Save Changes" type="submit" />
                         </Form>
                      </GridCell>

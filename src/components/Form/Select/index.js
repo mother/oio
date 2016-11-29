@@ -50,7 +50,7 @@ export default class Select extends Component {
             <select
                className={classNames(classes)}
                id={this.props.id}
-               value={this.props.value || this.state.value}
+               value={this.props.value}
                name={this.props.name}
                onBlur={this.props.onBlur}
                onChange={(event) => {

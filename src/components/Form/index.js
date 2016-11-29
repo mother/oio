@@ -3,7 +3,7 @@ import dot from 'dot-object'
 
 import { mapRelevantChildren } from '../../utils'
 
-const names = ['Input', 'Textarea', 'Select', 'RadioGroup']
+const names = ['Input', 'Textarea', 'Select', 'RadioGroup', 'CheckboxGroup']
 
 export default class Form extends Component {
    static propTypes = {
@@ -24,7 +24,7 @@ export default class Form extends Component {
 
       mapRelevantChildren(props.children, names, (child) => {
          this.state.data[child.props.name] = {
-            value: child.props.value,
+            value: '',
             meta: {
                error: null,
                touched: false
@@ -37,18 +37,9 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
 
       mapRelevantChildren(props.children, names, (child) => {
-         // Radio
-         let radioValue
-         if (child.type.type === 'RadioGroup') {
-            radioValue = child.props.checked
-               ? child.props.value
-               : null
-         }
-
          const value = (
             this.state.data[child.props.name].value ||
             child.props.value ||
-            radioValue ||
             ''
          )
 
@@ -122,8 +113,8 @@ export default class Form extends Component {
       return types.includes(child.type.type)
    }
 
-   handleBlur(event, child) {
-      const value = event.target.value
+   handleBlur(value, child) {
+      // const value = event.target.value
       const newState = {
          data: { ...this.state.data },
          pristine: false
@@ -138,8 +129,8 @@ export default class Form extends Component {
       this.setState(newState)
    }
 
-   handleChange(event, child) {
-      const value = event.target.value
+   handleChange(value, child) {
+      // const value = event.target.value
       const newState = { data: { ...this.state.data } }
       newState.data[child.props.name] = {
          value,
@@ -200,12 +191,11 @@ export default class Form extends Component {
             key: counter += 1,
             meta: this.state.data[child.props.name].meta || {},
             onBlur: (event) => {
-               this.handleBlur(event, child)
-               if (child.props.onBlur) child.props.onBlur(event)
+               this.handleBlur(event.target.value, child)
             },
-            onChange: (event) => {
-               this.handleChange(event, child)
-               if (child.props.onChange) child.props.onChange(event)
+            onChange: (event, value) => {
+               if (value) this.handleChange(value, child)
+               else this.handleChange(event.target.value, child)
             },
             value: this.state.data[child.props.name].value
          })

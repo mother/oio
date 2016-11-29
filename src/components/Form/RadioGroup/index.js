@@ -27,16 +27,15 @@ export default class Select extends Component {
    }
 
    componentWillReceiveProps(props) {
-      if (props.value) this.setState({ value: props.value })
+      this.setState({ value: props.value })
    }
 
    render() {
-      console.log(this.state)
       let counter = 1
       const childrenNew = mapRelevantChildren(this.props.children, ['Radio'], (child) => {
          const childNew = React.cloneElement(child, {
-            key: counter,
-            id: counter,
+            key: `${this.props.name}-${counter}`,
+            id: `${this.props.name}-${counter}`,
             name: this.props.name,
             checked: this.state.value === child.props.value,
             onBlur: this.props.onBlur,
