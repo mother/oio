@@ -8,6 +8,8 @@ const names = ['Input', 'Textarea', 'Select', 'RadioGroup', 'CheckboxGroup', 'Sw
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
+      handleBlur: React.PropTypes.func,
+      handleChange: React.PropTypes.func,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -193,10 +195,12 @@ export default class Form extends Component {
             meta: this.state.data[child.props.name].meta || {},
             onBlur: (event) => {
                this.handleBlur(event.target.value, child)
+               if (this.props.handleBlur) this.props.handleBlur(event)
             },
             onChange: (event, value) => {
                if (value || value === false) this.handleChange(value, child)
                else this.handleChange(event.target.value, child)
+               if (this.props.handleChange) this.props.handleChange(event)
             },
             value: this.state.data[child.props.name].value
          })
