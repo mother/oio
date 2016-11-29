@@ -19,7 +19,8 @@ export default class Form extends Component {
 
       this.state = {
          data: {},
-         pristine: true
+         pristine: true,
+         submitting: false
       }
 
       mapRelevantChildren(props.children, names, (child) => {
@@ -116,7 +117,6 @@ export default class Form extends Component {
    }
 
    handleBlur(value, child) {
-      // const value = event.target.value
       const newState = {
          data: { ...this.state.data },
          pristine: false
@@ -132,7 +132,6 @@ export default class Form extends Component {
    }
 
    handleChange(value, child) {
-      // const value = event.target.value
       const newState = { data: { ...this.state.data } }
       newState.data[child.props.name] = {
          value,

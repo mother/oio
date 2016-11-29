@@ -40,6 +40,12 @@ class Demo extends React.Component {
 
    handleSubmit(data) {
       console.log(data) // eslint-disable-line
+      // Simulate delayed promise
+      return new Promise((resolve, reject) => {
+         setTimeout(() => {
+            resolve()
+         }, 2000)
+      })
    }
 
    handleError(errors) {
@@ -195,7 +201,7 @@ class Demo extends React.Component {
                               </Grid>
                            </CheckboxGroup>
                            <Switch name="notifications" label="Notifications" />
-                           <Button name="Save Changes" type="submit" />
+                           <Button name="Save Changes" type="submit" disabled={this.state.submitting} />
                         </Form>
                      </GridCell>
                      <GridCell>
