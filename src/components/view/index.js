@@ -7,17 +7,21 @@ export default class View extends React.Component {
    static propTypes = {
       align: React.PropTypes.string,
       aspectRatio: React.PropTypes.string,
+      bottom: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       format: React.PropTypes.string,
       height: React.PropTypes.string,
+      left: React.PropTypes.string,
       maxWidth: React.PropTypes.string,
       onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
       position: React.PropTypes.string,
+      right: React.PropTypes.string,
       scroll: React.PropTypes.string,
       style: React.PropTypes.object,
       textAlign: React.PropTypes.string,
+      top: React.PropTypes.string,
       width: React.PropTypes.string,
       visible: React.PropTypes.string
    }
@@ -158,6 +162,39 @@ export default class View extends React.Component {
       if (this.props.textAlign) {
          const textAlign = getAttributeForCurrentSize(this.state.size, this.props.textAlign)
          if (textAlign) statelessStyles.textAlign = textAlign
+      }
+
+      // Stateless Position View props
+      if (this.props.top) {
+         const top = getAttributeForCurrentSize(this.state.size, this.props.top)
+         if (top) {
+            const unit = top.indexOf('px') === -1 ? '%' : 'px'
+            statelessStyles.top = parseFloat(top) + unit
+         }
+      }
+
+      if (this.props.left) {
+         const left = getAttributeForCurrentSize(this.state.size, this.props.left)
+         if (left) {
+            const unit = left.indexOf('px') === -1 ? '%' : 'px'
+            statelessStyles.left = parseFloat(left) + unit
+         }
+      }
+
+      if (this.props.right) {
+         const right = getAttributeForCurrentSize(this.state.size, this.props.right)
+         if (right) {
+            const unit = right.indexOf('px') === -1 ? '%' : 'px'
+            statelessStyles.right = parseFloat(right) + unit
+         }
+      }
+
+      if (this.props.bottom) {
+         const bottom = getAttributeForCurrentSize(this.state.size, this.props.bottom)
+         if (bottom) {
+            const unit = bottom.indexOf('px') === -1 ? '%' : 'px'
+            statelessStyles.bottom = parseFloat(bottom) + unit
+         }
       }
 
       // Stateful View Styles
