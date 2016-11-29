@@ -5,6 +5,7 @@ import styles from './styles.less'
 
 export default class View extends React.Component {
    static propTypes = {
+      align: React.PropTypes.string,
       aspectRatio: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
@@ -141,6 +142,11 @@ export default class View extends React.Component {
       const statelessStyles = {}
 
       // Stateless View Props
+      if (this.props.align) {
+         const align = getAttributeForCurrentSize(this.state.size, this.props.align)
+         if (align) statelessStyles.float = align
+      }
+
       const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
       if (padding !== 0) statelessStyles.padding = padding
 
