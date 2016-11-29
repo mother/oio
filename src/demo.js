@@ -201,7 +201,7 @@ class Demo extends React.Component {
                               </Grid>
                            </CheckboxGroup>
                            <Switch name="notifications" label="Notifications" />
-                           <Button name="Save Changes" type="submit" disabled={this.state.submitting} />
+                           <Button name="Save Changes" type="submit" />
                         </Form>
                      </GridCell>
                      <GridCell>
