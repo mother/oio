@@ -16,6 +16,7 @@ export default class View extends React.Component {
       position: React.PropTypes.string,
       scroll: React.PropTypes.string,
       style: React.PropTypes.object,
+      textAlign: React.PropTypes.string,
       width: React.PropTypes.string,
       visible: React.PropTypes.string
    }
@@ -146,6 +147,11 @@ export default class View extends React.Component {
       if (this.props.maxWidth) {
          const maxWidth = getAttributeForCurrentSize(this.state.size, this.props.maxWidth)
          if (maxWidth) statelessStyles.maxWidth = maxWidth
+      }
+
+      if (this.props.textAlign) {
+         const textAlign = getAttributeForCurrentSize(this.state.size, this.props.textAlign)
+         if (textAlign) statelessStyles.textAlign = textAlign
       }
 
       // Stateful View Styles
