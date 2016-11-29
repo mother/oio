@@ -194,7 +194,7 @@ class Demo extends React.Component {
                                  <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                               </Grid>
                            </CheckboxGroup>
-                           <Switch name="notifications" value />
+                           <Switch name="notifications" label="Notifications" />
                            <Button name="Save Changes" type="submit" />
                         </Form>
                      </GridCell>

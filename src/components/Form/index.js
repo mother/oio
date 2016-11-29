@@ -3,7 +3,7 @@ import dot from 'dot-object'
 
 import { mapRelevantChildren } from '../../utils'
 
-const names = ['Input', 'Textarea', 'Select', 'RadioGroup', 'CheckboxGroup']
+const names = ['Input', 'Textarea', 'Select', 'RadioGroup', 'CheckboxGroup', 'Switch']
 
 export default class Form extends Component {
    static propTypes = {
@@ -37,11 +37,13 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
 
       mapRelevantChildren(props.children, names, (child) => {
-         const value = (
+         let value = (
             this.state.data[child.props.name].value ||
             child.props.value ||
             ''
          )
+         // Custom fix for Switch (desired false but not falsey)
+         if (child.type.type === 'Switch' && value === '') value = false
 
          newState.data[child.props.name] = {
             value,
@@ -194,7 +196,7 @@ export default class Form extends Component {
                this.handleBlur(event.target.value, child)
             },
             onChange: (event, value) => {
-               if (value) this.handleChange(value, child)
+               if (value || value === false) this.handleChange(value, child)
                else this.handleChange(event.target.value, child)
             },
             value: this.state.data[child.props.name].value

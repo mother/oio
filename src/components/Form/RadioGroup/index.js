@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { mapRelevantChildren } from '../../../utils'
 import formStyles from '../styles.less'
 
-export default class Select extends Component {
+export default class RadioGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       id: React.PropTypes.string,
