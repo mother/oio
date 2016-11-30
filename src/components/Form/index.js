@@ -17,8 +17,6 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
-      this.handleSubmit = this.handleSubmit.bind(this)
-
       this.state = {
          data: {},
          pristine: true,
@@ -209,9 +207,7 @@ export default class Form extends Component {
 
       return (
          <form
-            onSubmit={(event) => {
-               this.handleSubmit(event)
-            }}>
+            onSubmit={event => this.handleSubmit(event)}>
             {childrenNew}
          </form>
       )

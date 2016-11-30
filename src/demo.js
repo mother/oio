@@ -169,8 +169,7 @@ class Demo extends React.Component {
                            <RadioGroup
                               name="gender"
                               label="Gender"
-                              rules={['required']}
-                              value={null || 'female'}>
+                              rules={['required']}>
                               <Grid>
                                  <GridCell><Radio value="male" label="Male" /></GridCell>
                                  <GridCell>

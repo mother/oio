@@ -19,8 +19,6 @@ export default class Select extends Component {
    constructor(props, context) {
       super(props, context)
 
-      this.handleChange = this.handleChange.bind(this)
-
       let value
       mapRelevantChildren(props.children, ['Checkbox'], (child) => {
          if (child.props.checked) value = child.props.value
@@ -52,7 +50,7 @@ export default class Select extends Component {
             name: this.props.name,
             checked: this.state.value.indexOf(child.props.value) !== -1,
             onBlur: this.props.onBlur,
-            onChange: this.handleChange
+            onChange: event => this.handleChange(event)
          })
          counter += 1
          return childNew

@@ -26,8 +26,6 @@ export default class Select extends Component {
          if (option.selected) value = option.value
       })
       this.state = { value }
-
-      this.handleChange = this.handleChange.bind(this)
    }
 
    handleChange(event) {

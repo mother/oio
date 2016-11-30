@@ -21,8 +21,6 @@ export default class Switch extends Component {
    constructor(props, context) {
       super(props, context)
 
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = { value: !!props.value }
    }
 
@@ -46,7 +44,7 @@ export default class Switch extends Component {
                   checked={this.state.value}
                   type="checkbox"
                   name={this.props.name}
-                  onChange={this.handleChange}
+                  onChange={event => this.handleChange(event)}
                   onBlur={this.props.onBlur}
                />
                <div className={formStyles.switchSlider} />
