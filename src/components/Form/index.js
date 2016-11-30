@@ -17,6 +17,8 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
+      this.get = this.get.bind(this)
+
       this.state = {
          data: {},
          pristine: true,
@@ -105,10 +107,14 @@ export default class Form extends Component {
             }
          }
 
-         if (!test(value)) return message
+         if (!test(value, this.get)) return message
       }
 
       return null
+   }
+
+   get(key) {
+      return this.state.data[key].value
    }
 
    childIsRelevant(child) {
@@ -149,39 +155,41 @@ export default class Form extends Component {
       const data = {}
       const errors = {}
 
-      // Find data and errors
-      Object.keys(this.state.data).forEach((key) => {
-         data[key] = this.state.data[key].value
-         if (this.state.data[key].meta.error) {
-            errors[key] = this.state.data[key].meta.error
+      // Blur and check all relevant children for errors
+      const newState = { data: { ...this.state.data } }
+      mapRelevantChildren(this.props.children, names, (child) => {
+         newState.data[child.props.name] = {
+            ...this.state.data[child.props.name],
+            meta: {
+               error: this.getError(child, this.state.data[child.props.name].value),
+               touched: true
+            }
          }
       })
 
-      if (Object.keys(errors).length > 0) {
-         // Blur all to show errors
-         const newState = { data: { ...this.state.data } }
-         mapRelevantChildren(this.props.children, names, (child) => {
-            newState.data[child.props.name] = {
-               ...this.state.data[child.props.name],
-               meta: {
-                  ...this.state.data[child.props.name].meta,
-                  touched: true
-               }
+      this.setState(newState, () => {
+         // Find data and errors
+         Object.keys(this.state.data).forEach((key) => {
+            data[key] = this.state.data[key].value
+            if (this.state.data[key].meta.error) {
+               errors[key] = this.state.data[key].meta.error
             }
          })
-         this.setState(newState)
 
-         if (this.props.onError) this.props.onError(dot.object(errors))
-      } else if (this.props.onSubmit) {
-         const promise = this.props.onSubmit(dot.object(data))
-         if (promise instanceof Promise) {
-            this.setState({ submitting: true }, () => {
-               promise
-               .then(() => this.setState({ submitting: false }))
-               .catch(() => this.setState({ submitting: false }))
-            })
+         // Return either data or errors
+         if (Object.keys(errors).length > 0) {
+            if (this.props.onError) this.props.onError(dot.object(errors))
+         } else if (this.props.onSubmit) {
+            const promise = this.props.onSubmit(dot.object(data))
+            if (promise instanceof Promise) {
+               this.setState({ submitting: true }, () => {
+                  promise
+                  .then(() => this.setState({ submitting: false }))
+                  .catch(() => this.setState({ submitting: false }))
+               })
+            }
          }
-      }
+      })
    }
 
    render() {
