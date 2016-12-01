@@ -5,7 +5,7 @@ import ButtonGroup from './components/ButtonGroup'
 import Checkbox from './components/Form/Checkbox'
 import CheckboxGroup from './components/Form/CheckboxGroup'
 import Cover from './components/Cover'
-import Files from './components/Form/Files'
+import FileImage from './components/Form/FileImage'
 import Form from './components/Form'
 import Grid from './components/Grid'
 import GridCell from './components/GridCell'
@@ -37,7 +37,7 @@ export {
    Checkbox,
    CheckboxGroup,
    Cover,
-   Files,
+   FileImage,
    Form,
    Grid,
    GridCell,

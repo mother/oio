@@ -3,7 +3,15 @@ import dot from 'dot-object'
 
 import { mapRelevantChildren } from '../../utils'
 
-const names = ['Input', 'Textarea', 'Select', 'RadioGroup', 'CheckboxGroup', 'Switch']
+const names = [
+   'Input',
+   'Textarea',
+   'Select',
+   'RadioGroup',
+   'CheckboxGroup',
+   'Switch',
+   'FileImage'
+]
 
 export default class Form extends Component {
    static propTypes = {
@@ -116,7 +124,7 @@ export default class Form extends Component {
    get(key) {
       try {
          return this.state.data[key].value
-      } catch(e) {
+      } catch (e) {
          return undefined
       }
    }
@@ -200,7 +208,6 @@ export default class Form extends Component {
       let counter = 1
       const childrenNew = mapRelevantChildren(this.props.children, names, (child) => {
          const childNew = React.cloneElement(child, {
-            form: this,
             key: counter += 1,
             meta: this.state.data[child.props.name].meta || {},
             onBlur: (event) => {
