@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import Blob from 'blob'
 import dot from 'dot-object'
+import flatten from 'flatten'
+import FormData from 'form-data'
 
 import { mapRelevantChildren } from '../../utils'
 
@@ -129,11 +132,6 @@ export default class Form extends Component {
       }
    }
 
-   childIsRelevant(child) {
-      const types = ['input', 'textarea', 'select', 'radio', 'checkbox']
-      return types.includes(child.type.name)
-   }
-
    handleBlur(value, child) {
       const newState = {
          data: { ...this.state.data },
@@ -164,11 +162,10 @@ export default class Form extends Component {
    handleSubmit(event) {
       event.preventDefault()
 
-      const data = {}
-      const errors = {}
-
       // Blur and check all relevant children for errors
+      // Compile formData
       const newState = { data: { ...this.state.data } }
+      const formData = new FormData()
       mapRelevantChildren(this.props.children, names, (child) => {
          newState.data[child.props.name] = {
             ...this.state.data[child.props.name],
@@ -177,9 +174,25 @@ export default class Form extends Component {
                touched: true
             }
          }
+
+         // Generate formData if necessary
+         // THIS SHOULD BE DONE IN A DIFFERENT PROCESS AND THE REST OUTSIDE
+         if (['FileImage'].includes(child.type.name)) {
+            const files = this.state.data[child.props.name].value
+            files.forEach((file) => {
+               formData.append('files', new Blob([file], { type: file.type }), file.name)
+            })
+            Object.keys(flatten(this.state.data)).forEach((flatKey) => {
+               const value = flatKey.split('.').reduce((v, k) => v[k], this.state.data)
+               formData.append(flatKey, value)
+            })
+         }
       })
 
       this.setState(newState, () => {
+         const data = {}
+         const errors = {}
+
          // Find data and errors
          Object.keys(this.state.data).forEach((key) => {
             data[key] = this.state.data[key].value

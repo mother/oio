@@ -58,7 +58,6 @@ export default class FileImage extends Component {
                onError={(error, file) => this.handleError(error, file)}
                name={this.props.name}
                accepts={['image/*']}
-               multiple={false}
                maxFileSize={this.props.maxFileSize}
                dropActiveClassName={formStyles.filesActive}>
                {dropzone}
