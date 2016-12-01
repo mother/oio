@@ -14,8 +14,6 @@ export default class RadioGroup extends Component {
       onChange: React.PropTypes.func
    }
 
-   static type = 'RadioGroup'
-
    constructor(props, context) {
       super(props, context)
 

@@ -16,8 +16,6 @@ export default class Switch extends Component {
       ])
    }
 
-   static type = 'Switch'
-
    constructor(props, context) {
       super(props, context)
 

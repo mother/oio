@@ -46,7 +46,7 @@ export default class Form extends Component {
             ''
          )
          // Custom fix for Switch (desired false but not falsey)
-         if (child.type.type === 'Switch' && value === '') value = false
+         if (child.type.name === 'Switch' && value === '') value = false
 
          newState.data[child.props.name] = {
             value,
@@ -114,12 +114,16 @@ export default class Form extends Component {
    }
 
    get(key) {
-      return this.state.data[key].value
+      try {
+         return this.state.data[key].value
+      } catch(e) {
+         return undefined
+      }
    }
 
    childIsRelevant(child) {
       const types = ['input', 'textarea', 'select', 'radio', 'checkbox']
-      return types.includes(child.type.type)
+      return types.includes(child.type.name)
    }
 
    handleBlur(value, child) {

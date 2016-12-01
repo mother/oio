@@ -16,8 +16,6 @@ export default class Select extends Component {
       value: React.PropTypes.string
    }
 
-   static type = 'Select'
-
    constructor(props, context) {
       super(props, context)
 

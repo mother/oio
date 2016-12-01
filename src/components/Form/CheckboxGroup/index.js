@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-import { mapRelevantChildren } from '../../../utils'
+import { mapRelevantChildren, replaceNodesInDOM } from '../../../utils'
 import formStyles from '../styles.less'
 
-export default class Select extends Component {
+export default class CheckboxGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       id: React.PropTypes.string,
@@ -14,16 +14,9 @@ export default class Select extends Component {
       onChange: React.PropTypes.func
    }
 
-   static type = 'CheckboxGroup'
-
    constructor(props, context) {
       super(props, context)
-
-      let value
-      mapRelevantChildren(props.children, ['Checkbox'], (child) => {
-         if (child.props.checked) value = child.props.value
-      })
-      this.state = { value: value ? [value] : [] }
+      this.state = { value: props.value || [] }
    }
 
    componentWillReceiveProps(props) {
@@ -42,24 +35,23 @@ export default class Select extends Component {
    }
 
    render() {
-      let counter = 1
-      const childrenNew = mapRelevantChildren(this.props.children, ['Checkbox'], (child) => {
-         const childNew = React.cloneElement(child, {
-            key: `${this.props.name}-${counter}`,
-            id: `${this.props.name}-${counter}`,
+      let counter = 0
+      const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node) => {
+         const key = `${this.props.name}-${counter++}`
+         return React.cloneElement(node, {
+            key,
+            id: key,
             name: this.props.name,
-            checked: this.state.value.indexOf(child.props.value) !== -1,
+            checked: this.state.value.includes(node.props.value),
             onBlur: this.props.onBlur,
-            onChange: event => this.handleChange(event)
+            onChange: event => this.handleChange(event),
          })
-         counter += 1
-         return childNew
       })
 
       return (
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
-            {childrenNew}
+            {domWithNewCheckboxes}
             {this.props.meta && this.props.meta.touched && this.props.meta.error &&
                <div className={formStyles.error}>
                   {this.props.meta.error}

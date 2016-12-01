@@ -188,6 +188,7 @@ class Demo extends React.Component {
                                  <GridCell><Radio value="undecided" label="Undecided" /></GridCell>
                               </Grid>
                            </RadioGroup>
+                           <Spacer size="6" />
                            <CheckboxGroup
                               name="sports"
                               label="Sports"
