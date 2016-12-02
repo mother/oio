@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Blob from 'blob'
 import dot from 'dot-object'
-import flatten from 'flatten'
 import FormData from 'form-data'
 
 import { mapRelevantChildren } from '../../utils'
@@ -165,7 +164,7 @@ export default class Form extends Component {
       // Blur and check all relevant children for errors
       // Compile formData
       const newState = { data: { ...this.state.data } }
-      const formData = new FormData()
+      const namesForFiles = []
       mapRelevantChildren(this.props.children, names, (child) => {
          newState.data[child.props.name] = {
             ...this.state.data[child.props.name],
@@ -175,19 +174,21 @@ export default class Form extends Component {
             }
          }
 
-         // Generate formData if necessary
-         // THIS SHOULD BE DONE IN A DIFFERENT PROCESS AND THE REST OUTSIDE
+         // Keep track of files on state.data
          if (['FileImage'].includes(child.type.name)) {
-            const files = this.state.data[child.props.name].value
-            files.forEach((file) => {
-               formData.append('files', new Blob([file], { type: file.type }), file.name)
-            })
-            Object.keys(flatten(this.state.data)).forEach((flatKey) => {
-               const value = flatKey.split('.').reduce((v, k) => v[k], this.state.data)
-               formData.append(flatKey, value)
-            })
+            namesForFiles.push(child.props.name)
          }
       })
+
+      // Generate formData
+      const formData = new FormData()
+      namesForFiles.forEach((name) => {
+         const files = newState.data[name].value || []
+         files.forEach((file) => {
+            formData.append('files', new Blob([file], { type: file.type }), file.name)
+         })
+      })
+      Object.keys(newState.data).forEach(key => formData.append(key, this.state.data[key].value))
 
       this.setState(newState, () => {
          const data = {}
@@ -205,7 +206,7 @@ export default class Form extends Component {
          if (Object.keys(errors).length > 0) {
             if (this.props.onError) this.props.onError(dot.object(errors))
          } else if (this.props.onSubmit) {
-            const promise = this.props.onSubmit(dot.object(data))
+            const promise = this.props.onSubmit(dot.object(data), formData)
             if (promise instanceof Promise) {
                this.setState({ submitting: true }, () => {
                   promise

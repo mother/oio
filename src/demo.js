@@ -39,8 +39,9 @@ class Demo extends React.Component {
       this.state = {}
    }
 
-   handleSubmit(data) {
+   handleSubmit(data, formData) {
       console.log(data) // eslint-disable-line
+      console.log(formData) // eslint-disable-line
       // Simulate delayed promise
       return new Promise((resolve, reject) => {
          setTimeout(() => {
@@ -120,7 +121,7 @@ class Demo extends React.Component {
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
                      <GridCell>
                         <Form
-                           onSubmit={data => this.handleSubmit(data)}
+                           onSubmit={(data, formData) => this.handleSubmit(data, formData)}
                            onError={error => this.handleError(error)}>
                            <FileImage
                               maxFileSize={5000000}

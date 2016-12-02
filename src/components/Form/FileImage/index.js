@@ -19,7 +19,7 @@ export default class FileImage extends Component {
       super(props, context)
 
       this.state = {
-         file: null
+         files: null
       }
    }
 
@@ -28,8 +28,8 @@ export default class FileImage extends Component {
    }
 
    handleChange(files) {
-      this.setState({ file: files[0] }, () => {
-         this.props.onChange(null, this.state.file)
+      this.setState({ files: [files[0]] }, () => {
+         this.props.onChange(null, this.state.files)
       })
    }
 
@@ -38,9 +38,10 @@ export default class FileImage extends Component {
    }
 
    render() {
-      const dropzone = this.state.file
+      const file = this.state.files && this.state.files[0]
+      const dropzone = file
          ? (
-         <img className={formStyles.filesImage} src={this.state.file.preview.url} alt="Avatar" />
+         <img className={formStyles.filesImage} src={file.preview.url} alt="Avatar" />
          )
          : (
          <img
