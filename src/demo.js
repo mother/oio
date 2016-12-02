@@ -127,6 +127,7 @@ class Demo extends React.Component {
                               maxFileSize={5000000}
                               name="avatar"
                               label="Avatar"
+                              value="http://placehold.it/500x500"
                            />
                            <div>
                               <div>

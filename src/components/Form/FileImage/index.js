@@ -19,12 +19,13 @@ export default class FileImage extends Component {
       super(props, context)
 
       this.state = {
-         files: null
+         files: null,
+         src: ''
       }
    }
 
    componentWillReceiveProps(props) {
-      // code
+      this.setState({ src: props.value })
    }
 
    handleChange(files) {
@@ -38,27 +39,26 @@ export default class FileImage extends Component {
    }
 
    render() {
-      const file = this.state.files && this.state.files[0]
-      const dropzone = file
-         ? (
-         <img className={formStyles.filesImage} src={file.preview.url} alt="Avatar" />
-         )
-         : (
-         <img
-            className={formStyles.filesImage}
-            src={placeholder}
-            alt="placeholder"
-         />
-         )
+      let dropzone = <img className={formStyles.filesImage} src={placeholder} alt="placeholder" />
+      if (this.state.src) {
+         dropzone = <img className={formStyles.filesImage} src={this.state.src} alt="Avatar" />
+      }
+      const addedFile = this.state.files && this.state.files[0]
+      if (addedFile) {
+         dropzone = <img className={formStyles.filesImage} src={addedFile.preview.url} alt="Avatar" />
+      }
+
       return (
          <div>
             {this.props.label && <label htmlFor="files">{this.props.label}</label>}
             <ReactFiles
+               ref={(files) => { this.files = files }}
                className={formStyles.files}
                onChange={files => this.handleChange(files)}
                onError={(error, file) => this.handleError(error, file)}
                name={this.props.name}
                accepts={['image/*']}
+               multiple={false}
                maxFileSize={this.props.maxFileSize}
                dropActiveClassName={formStyles.filesActive}>
                {dropzone}
