@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import ReactFiles from 'react-files'
 
 import formStyles from '../styles.less'
@@ -7,19 +8,17 @@ const placeholder = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZ
 
 export default class FileImage extends Component {
    static propTypes = {
-      height: React.PropTypes.number,
       label: React.PropTypes.string,
       maxFileSize: React.PropTypes.number,
       name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      width: React.PropTypes.number
+      onChange: React.PropTypes.func
    }
 
    constructor(props, context) {
       super(props, context)
 
       this.state = {
-         files: null,
+         file: null,
          src: ''
       }
    }
@@ -29,8 +28,8 @@ export default class FileImage extends Component {
    }
 
    handleChange(files) {
-      this.setState({ files: [files[0]] }, () => {
-         this.props.onChange(null, this.state.files)
+      this.setState({ file: files[0] }, () => {
+         this.props.onChange(null, this.state.file)
       })
    }
 
@@ -43,9 +42,8 @@ export default class FileImage extends Component {
       if (this.state.src) {
          dropzone = <img className={formStyles.filesImage} src={this.state.src} alt="Avatar" />
       }
-      const addedFile = this.state.files && this.state.files[0]
-      if (addedFile) {
-         dropzone = <img className={formStyles.filesImage} src={addedFile.preview.url} alt="Avatar" />
+      if (this.state.file) {
+         dropzone = <img className={formStyles.filesImage} src={this.state.file.preview.url} alt="Avatar" />
       }
 
       return (

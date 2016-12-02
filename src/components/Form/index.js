@@ -183,10 +183,8 @@ export default class Form extends Component {
       // Generate formData
       const formData = new FormData()
       namesForFiles.forEach((name) => {
-         const files = newState.data[name].value || []
-         files.forEach((file) => {
-            formData.append('files', new Blob([file], { type: file.type }), file.name)
-         })
+         const file = newState.data[name].value || ''
+         formData.append('files', new Blob([file], { type: file.type }), file.name)
       })
       Object.keys(newState.data).forEach(key => formData.append(key, this.state.data[key].value))
 
