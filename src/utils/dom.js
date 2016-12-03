@@ -25,19 +25,3 @@ export const findNodesinDOM = (rootNodes, ...targetNodeNames) => {
    deepTraverse(rootNodes, targetNodeNames, child => results.push(child))
    return results
 }
-
-// TODO: Deprecate
-export const mapRelevantChildren = replaceNodesInDOM
-
-// export const mapRelevantChildren = (children, names, modifier) => {
-//    let childrenNew = children
-//    if (!Array.isArray(children)) childrenNew = [childrenNew]
-//    return childrenNew.map((child) => {
-//       if (names.indexOf(child.type.name) !== -1) {
-//          return modifier(child)
-//       } else if (child.props.children) {
-//          return mapRelevantChildren(child.props.children, names, modifier)
-//       }
-//       return child
-//    })
-// }

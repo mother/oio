@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import dot from 'dot-object'
 
-import { mapRelevantChildren } from '../../utils'
+import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
-const names = ['Input', 'Textarea', 'Select', 'RadioGroup', 'CheckboxGroup', 'Switch']
+const formComponentNames = [
+   'CheckboxGroup',
+   'Input',
+   'RadioGroup',
+   'Select',
+   'Switch',
+   'Textarea'
+]
 
 export default class Form extends Component {
    static propTypes = {
@@ -25,8 +32,9 @@ export default class Form extends Component {
          submitting: false
       }
 
-      mapRelevantChildren(props.children, names, (child) => {
-         this.state.data[child.props.name] = {
+      findNodesinDOM(props.children, ...formComponentNames)
+      .forEach(node => {
+         this.state.data[node.props.name] = {
             value: '',
             meta: {
                error: null,
@@ -39,23 +47,27 @@ export default class Form extends Component {
    componentWillReceiveProps(props) {
       const newState = { data: { ...this.state.data } }
 
-      mapRelevantChildren(props.children, names, (child) => {
+      findNodesinDOM(props.children, ...formComponentNames)
+      .forEach(node => {
          let value = (
-            this.state.data[child.props.name].value ||
-            child.props.value ||
+            this.state.data[node.props.name].value ||
+            node.props.value ||
             ''
          )
-         // Custom fix for Switch (desired false but not falsey)
-         if (child.type.name === 'Switch' && value === '') value = false
 
-         newState.data[child.props.name] = {
+         // TODO: This logic should be in the Switch component
+         // Custom fix for Switch (desired false but not falsey)
+         if (node.type.name === 'Switch' && value === '') value = false
+
+         newState.data[node.props.name] = {
             value,
             meta: {
-               ...this.state.data[child.props.name].meta,
-               error: this.getError(child, value)
+               ...this.state.data[node.props.name].meta,
+               error: this.getError(node, value)
             }
          }
       })
+
       this.setState(newState)
    }
 
@@ -161,11 +173,12 @@ export default class Form extends Component {
 
       // Blur and check all relevant children for errors
       const newState = { data: { ...this.state.data } }
-      mapRelevantChildren(this.props.children, names, (child) => {
-         newState.data[child.props.name] = {
-            ...this.state.data[child.props.name],
+      findNodesinDOM(this.props.children, ...formComponentNames)
+      .forEach((node) => {
+         newState.data[node.props.name] = {
+            ...this.state.data[node.props.name],
             meta: {
-               error: this.getError(child, this.state.data[child.props.name].value),
+               error: this.getError(node, this.state.data[node.props.name].value),
                touched: true
             }
          }
@@ -197,8 +210,8 @@ export default class Form extends Component {
    }
 
    render() {
-      const childrenNew = mapRelevantChildren(this.props.children, names, (child, i, j) => {
-         const childNew = React.cloneElement(child, {
+      const domWithNewFormElements = replaceNodesInDOM(this.props.children, formComponentNames, (child, i, j) => (
+         React.cloneElement(child, {
             form: this,
             key: `${i},${j}`,
             meta: this.state.data[child.props.name].meta || {},
@@ -213,13 +226,12 @@ export default class Form extends Component {
             },
             value: this.state.data[child.props.name].value
          })
-         return childNew
-      })
+      ))
 
       return (
          <form
             onSubmit={event => this.handleSubmit(event)}>
-            {childrenNew}
+            {domWithNewFormElements}
          </form>
       )
    }

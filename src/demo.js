@@ -34,7 +34,6 @@ import styles from './foundation/styles.less' // eslint-disable-line no-unused-v
 class Demo extends React.Component {
    constructor(props, context) {
       super(props, context)
-
       this.state = {}
    }
 
@@ -175,7 +174,8 @@ class Demo extends React.Component {
                            <RadioGroup
                               name="gender"
                               label="Gender"
-                              rules={['required']}>
+                              rules={['required']}
+                              value="female">
                               <Grid>
                                  <GridCell><Radio value="male" label="Male" /></GridCell>
                                  <GridCell>
@@ -203,7 +203,7 @@ class Demo extends React.Component {
                                        </div>
                                     </div>
                                  </GridCell>
-                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>                                 
+                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
                               </Grid>
                            </CheckboxGroup>
                            <Switch name="notifications" label="Notifications" />
