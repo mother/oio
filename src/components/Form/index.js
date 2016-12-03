@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import dot from 'dot-object'
 
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
@@ -173,9 +172,9 @@ export default class Form extends Component {
 
          // Return either data or errors
          if (Object.keys(errors).length > 0) {
-            if (this.props.onError) this.props.onError(dot.object(errors))
+            if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
-            const promise = this.props.onSubmit(dot.object(data))
+            const promise = this.props.onSubmit(data)
             if (promise instanceof Promise) {
                this.setState({ submitting: true }, () => {
                   promise
