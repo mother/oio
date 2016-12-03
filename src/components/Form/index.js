@@ -37,7 +37,9 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
-      this.get = this.get.bind(this)
+      this.testContext = {
+         get: this.get.bind(this)
+      }
 
       this.state = {
          data: {},
@@ -99,7 +101,7 @@ export default class Form extends Component {
             message = rule.message
          }
 
-         if (test && !test(value, this.get)) {
+         if (test && !test.call(this.testContext, value, this.testContext)) {
             return message
          }
       }
