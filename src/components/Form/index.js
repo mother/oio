@@ -172,7 +172,7 @@ export default class Form extends Component {
             }
          })
 
-         // Return either data or errors
+         // Pass data or errors in to appropriate event handler prop
          if (Object.keys(errors).length > 0) {
             if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
