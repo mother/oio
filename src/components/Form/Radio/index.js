@@ -29,6 +29,4 @@ Radio.propTypes = {
    value: React.PropTypes.string
 }
 
-Radio.type = 'Radio'
-
 export default Radio

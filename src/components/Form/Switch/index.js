@@ -18,7 +18,7 @@ export default class Switch extends Component {
 
    constructor(props, context) {
       super(props, context)
-
+      
       this.state = { value: !!props.value }
    }
 

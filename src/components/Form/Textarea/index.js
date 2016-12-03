@@ -47,6 +47,4 @@ Textarea.defaultProps = {
    rows: '5'
 }
 
-Textarea.type = 'Textarea'
-
 export default Textarea

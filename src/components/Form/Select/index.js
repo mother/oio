@@ -18,12 +18,7 @@ export default class Select extends Component {
 
    constructor(props, context) {
       super(props, context)
-
-      let value
-      this.props.options.forEach((option) => {
-         if (option.selected) value = option.value
-      })
-      this.state = { value }
+      this.state = { value: undefined }
    }
 
    handleChange(event) {
