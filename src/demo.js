@@ -150,7 +150,7 @@ class Demo extends React.Component {
                               value="jared@mother.co"
                               rules={[
                                  'required',
-                                 { test: 'email', message: 'Enter a valid email' },
+                                 { test: 'email', message: 'Enter a valid email!' },
                                  { test: value => value.length > 8, message: 'At least 8 characters' }
                               ]}
                            />

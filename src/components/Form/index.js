@@ -12,6 +12,20 @@ const formComponentNames = [
    'Textarea'
 ]
 
+const predefinedRules = {
+   required: {
+      test: value => !!value,
+      message: 'Required'
+   },
+   email: {
+      test: (value) => (
+         new RegExp('^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
+         .test(value)
+      ),
+      message: 'Must be a valid email.'
+   }
+}
+
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
@@ -63,7 +77,7 @@ export default class Form extends Component {
             value,
             meta: {
                ...this.state.data[node.props.name].meta,
-               error: this.getError(node, value)
+               error: this.applyRulesToValue(node.props.rules, value)
             }
          }
       })
@@ -71,55 +85,33 @@ export default class Form extends Component {
       this.setState(newState)
    }
 
-   getRuleTestFromString(str) {
-      switch (str) {
-         case 'required':
-            return value => !!value
-         case 'email':
-            return (value) => {
-               const regex = /^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ // eslint-disable-line max-len
-               return regex.test(value)
-            }
-         default:
-            return () => true
-      }
-   }
-
-   getRuleMessageFromString(str) {
-      switch (str) {
-         case 'required':
-            return 'Required.'
-         case 'email':
-            return 'Must be a valid email.'
-         default:
-            return 'Error.'
-      }
-   }
-
-   getError(child, value) {
-      const rules = child.props.rules
-      if (!rules) return null
-
-      for (let i = 0; i < rules.length; i += 1) {
-         const rule = rules[i]
-
+   applyRulesToValue(rules=[], value) {
+      for (let rule of rules) {
          let test
          let message
 
          if (typeof rule === 'string') {
-            test = this.getRuleTestFromString(rule)
-            message = this.getRuleMessageFromString(rule)
-         } else if (typeof rule === 'object') {
-            if (typeof rule.test === 'string') {
-               test = this.getRuleTestFromString(rule.test)
-               message = rule.message || this.getRuleMessageFromString(rule.test)
-            } else {
-               test = rule.test
-               message = rule.message
+            const ruleDefinition = predefinedRules[rule]
+            if (ruleDefinition) {
+               test = ruleDefinition.test
+               message = ruleDefinition.message
             }
+         } else if (typeof rule === 'object' && typeof rule.test === 'string') {
+            const ruleDefinition = predefinedRules[rule.test]
+            if (ruleDefinition) {
+               test = ruleDefinition.test
+               message = rule.message || ruleDefinition.message
+            }
+         } else if (typeof rule === 'object' &&
+            typeof rule.test === 'function' &&
+            typeof rule.message === 'string') {
+            test = rule.test
+            message = rule.message
          }
 
-         if (!test(value, this.get)) return message
+         if (test && !test(value, this.get)) {
+            return message
+         }
       }
 
       return null
@@ -146,7 +138,7 @@ export default class Form extends Component {
       newState.data[child.props.name] = {
          ...this.state.data[child.props.name],
          meta: {
-            error: this.getError(child, value),
+            error: this.applyRulesToValue(child.props.rules, value),
             touched: true
          }
       }
@@ -158,7 +150,7 @@ export default class Form extends Component {
       newState.data[child.props.name] = {
          value,
          meta: {
-            error: this.getError(child, value),
+            error: this.applyRulesToValue(child.props.rules, value),
             touched: true
          }
       }
@@ -178,7 +170,7 @@ export default class Form extends Component {
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
             meta: {
-               error: this.getError(node, this.state.data[node.props.name].value),
+               error: this.applyRulesToValue(node.props.rules, this.state.data[node.props.name].value),
                touched: true
             }
          }
