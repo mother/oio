@@ -10,15 +10,16 @@ export default class Switch extends Component {
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
-      value: React.PropTypes.oneOfType([
-         React.PropTypes.string,
-         React.PropTypes.bool
-      ])
+      value: React.PropTypes.bool
+   }
+
+   static defaultProps = {
+      value: false
    }
 
    constructor(props, context) {
       super(props, context)
-      
+
       this.state = { value: !!props.value }
    }
 

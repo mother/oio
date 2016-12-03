@@ -135,7 +135,6 @@ class Demo extends React.Component {
                               name="name.last"
                               label="Last Name"
                               placeholder="Please enter your last name"
-                              value="Reich"
                               rules={['required', {
                                  test: (value, get) => (
                                     value !== get('name.first')

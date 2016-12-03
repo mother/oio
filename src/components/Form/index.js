@@ -49,7 +49,7 @@ export default class Form extends Component {
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach(node => {
          this.state.data[node.props.name] = {
-            value: '',
+            value: node.props.value,
             meta: {
                error: null,
                touched: false
@@ -63,16 +63,7 @@ export default class Form extends Component {
 
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach(node => {
-         let value = (
-            this.state.data[node.props.name].value ||
-            node.props.value ||
-            ''
-         )
-
-         // TODO: This logic should be in the Switch component
-         // Custom fix for Switch (desired false but not falsey)
-         if (node.type.name === 'Switch' && value === '') value = false
-
+         const value = this.state.data[node.props.name].value
          newState.data[node.props.name] = {
             value,
             meta: {
@@ -216,8 +207,7 @@ export default class Form extends Component {
       ))
 
       return (
-         <form
-            onSubmit={event => this.handleSubmit(event)}>
+         <form onSubmit={event => this.handleSubmit(event)}>
             {domWithNewFormElements}
          </form>
       )

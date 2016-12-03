@@ -44,7 +44,8 @@ Textarea.propTypes = {
 }
 
 Textarea.defaultProps = {
-   rows: '5'
+   rows: '5',
+   value: ''
 }
 
 export default Textarea
