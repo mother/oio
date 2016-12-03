@@ -135,6 +135,7 @@ class Demo extends React.Component {
                               name="name.last"
                               label="Last Name"
                               placeholder="Please enter your last name"
+                              value="Reich"
                               rules={['required', {
                                  test: (value, get) => (
                                     value !== get('name.first')
@@ -172,9 +173,7 @@ class Demo extends React.Component {
                            />
                            <RadioGroup
                               name="gender"
-                              label="Gender"
-                              rules={['required']}
-                              value="female">
+                              label="Gender">
                               <Grid>
                                  <GridCell><Radio value="male" label="Male" /></GridCell>
                                  <GridCell>

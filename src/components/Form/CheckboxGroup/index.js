@@ -11,7 +11,12 @@ export default class CheckboxGroup extends Component {
       meta: React.PropTypes.object,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func
+      onChange: React.PropTypes.func,
+      value: React.PropTypes.array
+   }
+
+   static defaultProps = {
+      value: []
    }
 
    constructor(props, context) {
