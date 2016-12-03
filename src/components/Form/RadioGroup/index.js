@@ -30,7 +30,7 @@ export default class RadioGroup extends Component {
 
    render() {
       let counter = 1
-      const childrenNew = mapRelevantChildren(this.props.children, ['Radio'], (child) => {
+      const childrenNew = mapRelevantChildren(this.props.children, ['Radio'], (child, i) => {
          const childNew = React.cloneElement(child, {
             key: `${this.props.name}-${counter}`,
             id: `${this.props.name}-${counter}`,

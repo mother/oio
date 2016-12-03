@@ -36,11 +36,12 @@ export default class CheckboxGroup extends Component {
 
    render() {
       let counter = 0
-      const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node) => {
-         const key = `${this.props.name}-${counter++}`
+      const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node, i, j) => {
+         const key = node.props.value
+         const id = node.props.id || counter++
          return React.cloneElement(node, {
             key,
-            id: key,
+            id,
             name: this.props.name,
             checked: this.state.value.includes(node.props.value),
             onBlur: this.props.onBlur,

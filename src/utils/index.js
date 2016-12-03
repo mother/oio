@@ -1,13 +1,15 @@
 import React from 'react'
 
-const deepTraverse = (nodes, targetNodeNames, iteratorFn) => {
+const deepTraverse = (nodes, targetNodeNames, iteratorFn, level=0) => {
    if (!Array.isArray(nodes)) nodes = [nodes]
-   return nodes.map((node) => {
-      if (node.type && targetNodeNames.includes(node.type.name)) {
-         return iteratorFn(node)
-      } else if (node.props && node.props.children) {
-         const traversedChildren = deepTraverse(node.props.children, targetNodeNames, iteratorFn)
-         return React.cloneElement(node, {}, traversedChildren)
+   return nodes.map((node, i) => {
+      if (React.isValidElement(node)) {
+         if (node.type && targetNodeNames.includes(node.type.name)) {
+            return iteratorFn(node, level, i)
+         } else if (node.props && node.props.children) {
+            const traversedChildren = deepTraverse(node.props.children, targetNodeNames, iteratorFn, level + 1)
+            return React.cloneElement(node, { key: `${level},${i}` }, traversedChildren)
+         }
       }
       return node
    })

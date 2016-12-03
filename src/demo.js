@@ -195,7 +195,7 @@ class Demo extends React.Component {
                               rules={['required']}
                               value={null || ['golf', 'hockey']}>
                               <Grid>
-                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
+                                 <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                                  <GridCell>
                                     <div>
                                        <div>
@@ -203,7 +203,7 @@ class Demo extends React.Component {
                                        </div>
                                     </div>
                                  </GridCell>
-                                 <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
+                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>                                 
                               </Grid>
                            </CheckboxGroup>
                            <Switch name="notifications" label="Notifications" />

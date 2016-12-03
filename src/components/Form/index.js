@@ -197,11 +197,10 @@ export default class Form extends Component {
    }
 
    render() {
-      let counter = 1
-      const childrenNew = mapRelevantChildren(this.props.children, names, (child) => {
+      const childrenNew = mapRelevantChildren(this.props.children, names, (child, i, j) => {
          const childNew = React.cloneElement(child, {
             form: this,
-            key: counter += 1,
+            key: `${i},${j}`,
             meta: this.state.data[child.props.name].meta || {},
             onBlur: (event) => {
                this.handleBlur(event.target.value, child)
