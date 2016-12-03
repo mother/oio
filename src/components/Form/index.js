@@ -125,11 +125,6 @@ export default class Form extends Component {
       }
    }
 
-   childIsRelevant(child) {
-      const types = ['input', 'textarea', 'select', 'radio', 'checkbox']
-      return types.includes(child.type.name)
-   }
-
    handleBlur(value, child) {
       const newState = {
          data: { ...this.state.data },
