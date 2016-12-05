@@ -116,7 +116,7 @@ class Demo extends React.Component {
                </ActionBar>
                <View width="100%" height="75%" format="float" scroll="on">
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
-                     <GridCell>
+                     <GridCell colspan="2">
                         <Form
                            onSubmit={data => this.handleSubmit(data)}
                            onError={error => this.handleError(error)}>
@@ -172,7 +172,7 @@ class Demo extends React.Component {
                            <RadioGroup
                               name="gender"
                               label="Gender">
-                              <Grid>
+                              <Grid columns="3">
                                  <GridCell><Radio value="male" label="Male" /></GridCell>
                                  <GridCell>
                                     <div>
@@ -190,7 +190,7 @@ class Demo extends React.Component {
                               label="Sports"
                               rules={['required']}
                               value={null || ['golf', 'hockey']}>
-                              <Grid>
+                              <Grid Grid columns="3">
                                  <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                                  <GridCell>
                                     <div>
