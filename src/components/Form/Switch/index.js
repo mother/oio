@@ -4,12 +4,13 @@ import formStyles from '../styles.less'
 
 export default class Switch extends Component {
    static propTypes = {
+      error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
-      meta: React.PropTypes.object,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
+      touched: React.PropTypes.bool,
       value: React.PropTypes.bool
    }
 
@@ -48,9 +49,9 @@ export default class Switch extends Component {
                />
                <div className={formStyles.switchSlider} />
             </label>
-            {this.props.meta && this.props.meta.touched && this.props.meta.error &&
+            {this.props.touched && this.props.error &&
                <div className={formStyles.error}>
-                  {this.props.meta.error}
+                  {this.props.error}
                </div>
             }
          </span>
