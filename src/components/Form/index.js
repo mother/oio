@@ -15,6 +15,10 @@ const formComponentNames = [
    'FileImage'
 ]
 
+const formFileComponentNames = [
+   'FileImage'
+]
+
 const predefinedRules = {
    required: {
       test: value => !!value,
@@ -168,18 +172,28 @@ export default class Form extends Component {
          }
 
          // Keep track of files on state.data
-         if (['FileImage'].includes(node.type.name)) {
+         if (
+            formFileComponentNames.includes(node.type.name) &&
+            newState.data[node.props.name].value
+         ) {
             namesForFiles.push(node.props.name)
          }
       })
 
-      // Generate formData
       const formData = new FormData()
+      // Apply "files" to formData
       namesForFiles.forEach((name) => {
          const file = newState.data[name].value || ''
          formData.append('files', new Blob([file], { type: file.type }), file.name)
       })
-      Object.keys(newState.data).forEach(key => formData.append(key, this.state.data[key].value))
+      // Apply rest of data to formData
+      Object.keys(newState.data).forEach((key) => {
+         // Only apply if other data
+         if (!namesForFiles.includes(key)) {
+            // Append key to formData
+            formData.append(key, newState.data[key].value)
+         }
+      })
 
       this.setState(newState, () => {
          const data = {}
@@ -187,9 +201,14 @@ export default class Form extends Component {
 
          // Find data and errors
          Object.keys(this.state.data).forEach((key) => {
-            data[key] = this.state.data[key].value
-            if (this.state.data[key].meta.error) {
-               errors[key] = this.state.data[key].meta.error
+            // Don't add data keys that relate to files
+            if (!namesForFiles.includes(key)) {
+               // Add the key/value to data
+               data[key] = this.state.data[key].value
+               // Add the error if applicable
+               if (this.state.data[key].meta.error) {
+                  errors[key] = this.state.data[key].meta.error
+               }
             }
          })
 
@@ -215,7 +234,6 @@ export default class Form extends Component {
          formComponentNames,
          (child, i, j) => (
             React.cloneElement(child, {
-               form: this,
                key: `${i},${j}`,
                meta: this.state.data[child.props.name].meta || {},
                onBlur: (event) => {
