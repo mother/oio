@@ -6,13 +6,14 @@ import formStyles from '../styles.less'
 export default class Select extends Component {
    static propTypes = {
       className: React.PropTypes.string,
+      error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
-      meta: React.PropTypes.object,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
       options: React.PropTypes.array,
+      touched: React.PropTypes.bool,
       value: React.PropTypes.string
    }
 
@@ -50,9 +51,9 @@ export default class Select extends Component {
                }}>
                {children}
             </select>
-            {this.props.meta && this.props.meta.touched && this.props.meta.error &&
+            {this.props.touched && this.props.error &&
                <div className={formStyles.error}>
-                  {this.props.meta.error}
+                  {this.props.error}
                </div>
             }
          </div>

@@ -4,7 +4,7 @@ import styles from './styles.less'
 import formStyles from '../styles.less'
 
 const Textarea = ({
-   className, id, label, meta, name, onBlur, onChange, placeholder, rows, value
+   className, error, id, label, name, onBlur, onChange, placeholder, rows, touched, value
 }) => {
    const classes = [styles.textarea, className]
 
@@ -21,9 +21,9 @@ const Textarea = ({
             value={value}
             rows={rows}
          />
-         {meta && meta.touched && meta.error &&
+         {touched && error &&
             <div className={formStyles.error}>
-               {meta.error}
+               {error}
             </div>
          }
       </div>
@@ -32,14 +32,15 @@ const Textarea = ({
 
 Textarea.propTypes = {
    className: React.PropTypes.string,
+   error: React.PropTypes.string,
    id: React.PropTypes.string,
    label: React.PropTypes.string,
-   meta: React.PropTypes.object,
    name: React.PropTypes.string,
    onBlur: React.PropTypes.func,
    onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
    rows: React.PropTypes.string,
+   touched: React.PropTypes.bool,
    value: React.PropTypes.string
 }
 

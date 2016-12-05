@@ -59,10 +59,8 @@ export default class Form extends Component {
       .forEach((node) => {
          this.state.data[node.props.name] = {
             value: node.props.value || '',
-            meta: {
-               error: null,
-               touched: false
-            }
+            error: null,
+            touched: false
          }
       })
    }
@@ -74,11 +72,9 @@ export default class Form extends Component {
       .forEach((node) => {
          const value = node.props.value || this.state.data[node.props.name].value
          newState.data[node.props.name] = {
+            ...this.state.data[node.props.name],
             value,
-            meta: {
-               ...this.state.data[node.props.name].meta,
-               error: this.applyRulesToValue(node.props.rules, value)
-            }
+            error: this.applyRulesToValue(node.props.rules, value)
          }
       })
 
@@ -132,10 +128,8 @@ export default class Form extends Component {
       }
       newState.data[child.props.name] = {
          ...this.state.data[child.props.name],
-         meta: {
-            error: this.applyRulesToValue(child.props.rules, value),
-            touched: true
-         }
+         error: this.applyRulesToValue(child.props.rules, value),
+         touched: true
       }
       this.setState(newState)
    }
@@ -144,10 +138,8 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
       newState.data[child.props.name] = {
          value,
-         meta: {
-            error: this.applyRulesToValue(child.props.rules, value),
-            touched: true
-         }
+         error: this.applyRulesToValue(child.props.rules, value),
+         touched: true
       }
       this.setState(newState)
    }
@@ -162,13 +154,11 @@ export default class Form extends Component {
       .forEach((node) => {
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
-            meta: {
-               error: this.applyRulesToValue(
-                  node.props.rules,
-                  this.state.data[node.props.name].value
-               ),
-               touched: true
-            }
+            error: this.applyRulesToValue(
+               node.props.rules,
+               this.state.data[node.props.name].value
+            ),
+            touched: true
          }
 
          // Keep track of files on state.data
@@ -206,15 +196,15 @@ export default class Form extends Component {
                // Add the key/value to data
                data[key] = this.state.data[key].value
                // Add the error if applicable
-               if (this.state.data[key].meta.error) {
-                  errors[key] = this.state.data[key].meta.error
+               if (this.state.data[key].error) {
+                  errors[key] = this.state.data[key].error
                }
             }
          })
 
          // Pass data or errors in to appropriate event handler prop
          if (Object.keys(errors).length > 0) {
-            if (this.props.onError) this.props.onError(errors)
+            if (this.props.onError) this.props.onError(dot.object(errors))
          } else if (this.props.onSubmit) {
             const promise = this.props.onSubmit(dot.object(data), formData)
             if (promise instanceof Promise) {
@@ -235,7 +225,8 @@ export default class Form extends Component {
          (child, i, j) => (
             React.cloneElement(child, {
                key: `${i},${j}`,
-               meta: this.state.data[child.props.name].meta || {},
+               error: this.state.data[child.props.name].error || '',
+               touched: this.state.data[child.props.name].touched || false,
                onBlur: (event) => {
                   this.handleBlur(event.target.value, child)
                   if (this.props.onBlur) this.props.onBlur(event)

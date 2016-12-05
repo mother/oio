@@ -6,12 +6,13 @@ import formStyles from '../styles.less'
 export default class RadioGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
+      error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
-      meta: React.PropTypes.object,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func
+      onChange: React.PropTypes.func,
+      touched: React.PropTypes.bool
    }
 
    constructor(props, context) {
@@ -27,7 +28,7 @@ export default class RadioGroup extends Component {
       let counter = 0
       const domWithNewRadios = replaceNodesInDOM(this.props.children, 'Radio', (node, i, j) => {
          const key = node.props.value
-         const id = node.props.id || `${this.props.name}-${counter++}`
+         const id = node.props.id || `${this.props.name}-${counter += 1}`
          return React.cloneElement(node, {
             key,
             id,
@@ -42,9 +43,9 @@ export default class RadioGroup extends Component {
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
             {domWithNewRadios}
-            {this.props.meta && this.props.meta.touched && this.props.meta.error &&
+            {this.props.touched && this.props.error &&
                <div className={formStyles.error}>
-                  {this.props.meta.error}
+                  {this.props.error}
                </div>
             }
          </div>
