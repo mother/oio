@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { mapRelevantChildren, replaceNodesInDOM } from '../../../utils'
+import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
 export default class CheckboxGroup extends Component {
@@ -11,7 +11,12 @@ export default class CheckboxGroup extends Component {
       meta: React.PropTypes.object,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func
+      onChange: React.PropTypes.func,
+      value: React.PropTypes.array
+   }
+
+   static defaultProps = {
+      value: []
    }
 
    constructor(props, context) {
@@ -36,15 +41,16 @@ export default class CheckboxGroup extends Component {
 
    render() {
       let counter = 0
-      const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node) => {
-         const key = `${this.props.name}-${counter++}`
+      const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node, i, j) => {
+         const key = node.props.value
+         const id = node.props.id || `${this.props.name}-${counter++}`
          return React.cloneElement(node, {
             key,
-            id: key,
+            id,
             name: this.props.name,
             checked: this.state.value.includes(node.props.value),
             onBlur: this.props.onBlur,
-            onChange: event => this.handleChange(event),
+            onChange: event => this.handleChange(event)
          })
       })
 

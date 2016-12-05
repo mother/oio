@@ -50,13 +50,12 @@ Input.propTypes = {
 }
 
 Input.defaultProps = {
-   type: 'text'
+   type: 'text',
+   value: ''
 }
 
 Input.contextTypes = {
    OIOStyles: React.PropTypes.object
 }
-
-Input.type = 'Input'
 
 export default Input

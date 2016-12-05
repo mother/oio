@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { mapRelevantChildren } from '../../../utils'
+import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
 export default class RadioGroup extends Component {
@@ -16,12 +16,7 @@ export default class RadioGroup extends Component {
 
    constructor(props, context) {
       super(props, context)
-
-      let value
-      mapRelevantChildren(props.children, ['Radio'], (child) => {
-         if (child.props.checked) value = child.props.value
-      })
-      this.state = { value }
+      this.state = { value: undefined }
    }
 
    componentWillReceiveProps(props) {
@@ -29,24 +24,24 @@ export default class RadioGroup extends Component {
    }
 
    render() {
-      let counter = 1
-      const childrenNew = mapRelevantChildren(this.props.children, ['Radio'], (child) => {
-         const childNew = React.cloneElement(child, {
-            key: `${this.props.name}-${counter}`,
-            id: `${this.props.name}-${counter}`,
+      let counter = 0
+      const domWithNewRadios = replaceNodesInDOM(this.props.children, 'Radio', (node, i, j) => {
+         const key = node.props.value
+         const id = node.props.id || `${this.props.name}-${counter++}`
+         return React.cloneElement(node, {
+            key,
+            id,
             name: this.props.name,
-            checked: this.state.value === child.props.value,
+            checked: this.state.value === node.props.value,
             onBlur: this.props.onBlur,
             onChange: this.props.onChange
          })
-         counter += 1
-         return childNew
       })
 
       return (
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
-            {childrenNew}
+            {domWithNewRadios}
             {this.props.meta && this.props.meta.touched && this.props.meta.error &&
                <div className={formStyles.error}>
                   {this.props.meta.error}

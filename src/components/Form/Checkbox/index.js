@@ -31,6 +31,4 @@ Checkbox.propTypes = {
    value: React.PropTypes.string
 }
 
-Checkbox.type = 'Checkbox'
-
 export default Checkbox

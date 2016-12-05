@@ -35,7 +35,6 @@ import styles from './foundation/styles.less' // eslint-disable-line no-unused-v
 class Demo extends React.Component {
    constructor(props, context) {
       super(props, context)
-
       this.state = {}
    }
 
@@ -146,9 +145,7 @@ class Demo extends React.Component {
                               placeholder="Please enter your last name"
                               value="Reich"
                               rules={['required', {
-                                 test: (value, get) => (
-                                    value !== get('name.first')
-                                 ),
+                                 test: (value, ctx) => value !== ctx.get('name.first'),
                                  message: 'Must be different than your first name.'
                               }]}
                            />
@@ -159,7 +156,7 @@ class Demo extends React.Component {
                               value="jared@mother.co"
                               rules={[
                                  'required',
-                                 { test: 'email', message: 'Enter a valid email' },
+                                 { test: 'email', message: 'Enter a valid email!' },
                                  { test: value => value.length > 8, message: 'At least 8 characters' }
                               ]}
                            />
@@ -182,8 +179,7 @@ class Demo extends React.Component {
                            />
                            <RadioGroup
                               name="gender"
-                              label="Gender"
-                              rules={['required']}>
+                              label="Gender">
                               <Grid>
                                  <GridCell><Radio value="male" label="Male" /></GridCell>
                                  <GridCell>
@@ -203,7 +199,7 @@ class Demo extends React.Component {
                               rules={['required']}
                               value={null || ['golf', 'hockey']}>
                               <Grid>
-                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
+                                 <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                                  <GridCell>
                                     <div>
                                        <div>
@@ -211,7 +207,7 @@ class Demo extends React.Component {
                                        </div>
                                     </div>
                                  </GridCell>
-                                 <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
+                                 <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
                               </Grid>
                            </CheckboxGroup>
                            <Switch name="notifications" label="Notifications" />

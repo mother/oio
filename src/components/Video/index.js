@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import View from '../View'
-import { getWindowSize } from '../../utils/sizeUtils'
+import { getWindowSize } from '../../utils/size'
 
 export default class Video extends Component {
    static propTypes = {

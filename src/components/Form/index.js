@@ -3,9 +3,9 @@ import Blob from 'blob'
 import dot from 'dot-object'
 import FormData from 'form-data'
 
-import { mapRelevantChildren } from '../../utils'
+import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
-const names = [
+const formComponentNames = [
    'Input',
    'Textarea',
    'Select',
@@ -15,11 +15,25 @@ const names = [
    'FileImage'
 ]
 
+const predefinedRules = {
+   required: {
+      test: value => !!value,
+      message: 'Required'
+   },
+   email: {
+      test: value => (
+         new RegExp('^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$')
+         .test(value)
+      ),
+      message: 'Must be a valid email.'
+   }
+}
+
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      handleBlur: React.PropTypes.func,
-      handleChange: React.PropTypes.func,
+      onBlur: React.PropTypes.func,
+      onChange: React.PropTypes.func,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -27,7 +41,9 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
-      this.get = this.get.bind(this)
+      this.testContext = {
+         get: this.get.bind(this)
+      }
 
       this.state = {
          data: {},
@@ -35,9 +51,10 @@ export default class Form extends Component {
          submitting: false
       }
 
-      mapRelevantChildren(props.children, names, (child) => {
-         this.state.data[child.props.name] = {
-            value: '',
+      findNodesinDOM(props.children, ...formComponentNames)
+      .forEach((node) => {
+         this.state.data[node.props.name] = {
+            value: node.props.value,
             meta: {
                error: null,
                touched: false
@@ -49,75 +66,48 @@ export default class Form extends Component {
    componentWillReceiveProps(props) {
       const newState = { data: { ...this.state.data } }
 
-      mapRelevantChildren(props.children, names, (child) => {
-         let value = (
-            this.state.data[child.props.name].value ||
-            child.props.value ||
-            ''
-         )
-         // Custom fix for Switch (desired false but not falsey)
-         if (child.type.name === 'Switch' && value === '') value = false
-
-         newState.data[child.props.name] = {
+      findNodesinDOM(props.children, ...formComponentNames)
+      .forEach((node) => {
+         const value = this.state.data[node.props.name].value
+         newState.data[node.props.name] = {
             value,
             meta: {
-               ...this.state.data[child.props.name].meta,
-               error: this.getError(child, value)
+               ...this.state.data[node.props.name].meta,
+               error: this.applyRulesToValue(node.props.rules, value)
             }
          }
       })
+
       this.setState(newState)
    }
 
-   getRuleTestFromString(str) {
-      switch (str) {
-         case 'required':
-            return value => !!value
-         case 'email':
-            return (value) => {
-               const regex = /^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ // eslint-disable-line max-len
-               return regex.test(value)
-            }
-         default:
-            return () => true
-      }
-   }
-
-   getRuleMessageFromString(str) {
-      switch (str) {
-         case 'required':
-            return 'Required.'
-         case 'email':
-            return 'Must be a valid email.'
-         default:
-            return 'Error.'
-      }
-   }
-
-   getError(child, value) {
-      const rules = child.props.rules
-      if (!rules) return null
-
-      for (let i = 0; i < rules.length; i += 1) {
-         const rule = rules[i]
-
+   applyRulesToValue(rules = [], value) {
+      for (const rule of rules) {
          let test
          let message
 
          if (typeof rule === 'string') {
-            test = this.getRuleTestFromString(rule)
-            message = this.getRuleMessageFromString(rule)
-         } else if (typeof rule === 'object') {
-            if (typeof rule.test === 'string') {
-               test = this.getRuleTestFromString(rule.test)
-               message = rule.message || this.getRuleMessageFromString(rule.test)
-            } else {
-               test = rule.test
-               message = rule.message
+            const ruleDefinition = predefinedRules[rule]
+            if (ruleDefinition) {
+               test = ruleDefinition.test
+               message = ruleDefinition.message
             }
+         } else if (typeof rule === 'object' && typeof rule.test === 'string') {
+            const ruleDefinition = predefinedRules[rule.test]
+            if (ruleDefinition) {
+               test = ruleDefinition.test
+               message = rule.message || ruleDefinition.message
+            }
+         } else if (typeof rule === 'object' &&
+            typeof rule.test === 'function' &&
+            typeof rule.message === 'string') {
+            test = rule.test
+            message = rule.message
          }
 
-         if (!test(value, this.get)) return message
+         if (test && !test.call(this.testContext, value, this.testContext)) {
+            return message
+         }
       }
 
       return null
@@ -139,7 +129,7 @@ export default class Form extends Component {
       newState.data[child.props.name] = {
          ...this.state.data[child.props.name],
          meta: {
-            error: this.getError(child, value),
+            error: this.applyRulesToValue(child.props.rules, value),
             touched: true
          }
       }
@@ -151,7 +141,7 @@ export default class Form extends Component {
       newState.data[child.props.name] = {
          value,
          meta: {
-            error: this.getError(child, value),
+            error: this.applyRulesToValue(child.props.rules, value),
             touched: true
          }
       }
@@ -162,21 +152,24 @@ export default class Form extends Component {
       event.preventDefault()
 
       // Blur and check all relevant children for errors
-      // Compile formData
       const newState = { data: { ...this.state.data } }
       const namesForFiles = []
-      mapRelevantChildren(this.props.children, names, (child) => {
-         newState.data[child.props.name] = {
-            ...this.state.data[child.props.name],
+      findNodesinDOM(this.props.children, ...formComponentNames)
+      .forEach((node) => {
+         newState.data[node.props.name] = {
+            ...this.state.data[node.props.name],
             meta: {
-               error: this.getError(child, this.state.data[child.props.name].value),
+               error: this.applyRulesToValue(
+                  node.props.rules,
+                  this.state.data[node.props.name].value
+               ),
                touched: true
             }
          }
 
          // Keep track of files on state.data
-         if (['FileImage'].includes(child.type.name)) {
-            namesForFiles.push(child.props.name)
+         if (['FileImage'].includes(node.type.name)) {
+            namesForFiles.push(node.props.name)
          }
       })
 
@@ -200,9 +193,9 @@ export default class Form extends Component {
             }
          })
 
-         // Return either data or errors
+         // Pass data or errors in to appropriate event handler prop
          if (Object.keys(errors).length > 0) {
-            if (this.props.onError) this.props.onError(dot.object(errors))
+            if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
             const promise = this.props.onSubmit(dot.object(data), formData)
             if (promise instanceof Promise) {
@@ -217,29 +210,31 @@ export default class Form extends Component {
    }
 
    render() {
-      let counter = 1
-      const childrenNew = mapRelevantChildren(this.props.children, names, (child) => {
-         const childNew = React.cloneElement(child, {
-            key: counter += 1,
-            meta: this.state.data[child.props.name].meta || {},
-            onBlur: (event) => {
-               this.handleBlur(event.target.value, child)
-               if (this.props.handleBlur) this.props.handleBlur(event)
-            },
-            onChange: (event, value) => {
-               if (value || value === false) this.handleChange(value, child)
-               else this.handleChange(event.target.value, child)
-               if (this.props.handleChange) this.props.handleChange(event)
-            },
-            value: this.state.data[child.props.name].value
-         })
-         return childNew
-      })
+      const domWithNewFormElements = replaceNodesInDOM(
+         this.props.children,
+         formComponentNames,
+         (child, i, j) => (
+            React.cloneElement(child, {
+               form: this,
+               key: `${i},${j}`,
+               meta: this.state.data[child.props.name].meta || {},
+               onBlur: (event) => {
+                  this.handleBlur(event.target.value, child)
+                  if (this.props.onBlur) this.props.onBlur(event)
+               },
+               onChange: (event, value) => {
+                  if (value || value === false) this.handleChange(value, child)
+                  else this.handleChange(event.target.value, child)
+                  if (this.props.onChange) this.props.onChange(event)
+               },
+               value: this.state.data[child.props.name].value
+            })
+         )
+      )
 
       return (
-         <form
-            onSubmit={event => this.handleSubmit(event)}>
-            {childrenNew}
+         <form onSubmit={event => this.handleSubmit(event)}>
+            {domWithNewFormElements}
          </form>
       )
    }
