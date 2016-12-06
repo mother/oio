@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { getWindowSize, getAttributeForCurrentSize } from '../../utils/sizeUtils'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import styles from './styles.less'
 
 export default class GridCell extends React.Component {

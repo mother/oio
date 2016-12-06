@@ -8,7 +8,8 @@
     "dev": "node server.js",
     "test": "mocha --compilers js:babel-core/register --recursive test/test.js",
     "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
-    "lint": "node ./node_modules/eslint/bin/eslint.js .; exit 0"
+    "lint": "git diff HEAD --name-only --diff-filter=ACM | grep '.js$' | xargs node ./node_modules/eslint/bin/eslint.js --quiet; exit 0",
+    "lint-full": "node ./node_modules/eslint/bin/eslint.js .; exit 0"
   },
   "files": [
     "dist/index.js",
@@ -34,11 +35,7 @@
   },
   "homepage": "https://github.com/mother/oio",
   "dependencies": {
-    "classnames": "2.2.5",
-    "react": "15.4.0"
-  },
-  "peerDependencies": {
-    "react": ">=15.4.0"
+    "classnames": "2.2.5"
   },
   "devDependencies": {
     "babel-core": "6.0.20",
@@ -58,6 +55,7 @@
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "mocha": "3.0.2",
+    "react": "15.4.0",
     "react-addons-test-utils": "15.3.1",
     "react-dom": "15.4.0",
     "react-hot-loader": "1.3.0",

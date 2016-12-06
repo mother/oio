@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { getWindowSize, getAttributeForCurrentSize } from '../../utils/sizeUtils'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import style from './style.less'
 
 export default class Grid extends React.Component {

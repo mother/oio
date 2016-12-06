@@ -3,7 +3,9 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Input = ({ className, id, input, label, meta, placeholder, type, value }, context) => {
+const Input = ({
+   className, error, id, label, name, onBlur, onChange, placeholder, touched, type, value
+}, context) => {
    const classes = [styles.input, className]
    const inputStyles = {}
 
@@ -18,14 +20,16 @@ const Input = ({ className, id, input, label, meta, placeholder, type, value }, 
             style={inputStyles}
             className={classNames(classes)}
             id={id}
+            onBlur={onBlur}
+            onChange={onChange}
+            name={name}
             placeholder={placeholder}
             type={type}
             value={value}
-            {...input}
          />
-         {meta && meta.touched && meta.error &&
+         {touched && error &&
             <div className={formStyles.error}>
-               {meta.error}
+               {error}
             </div>
          }
       </div>
@@ -34,17 +38,21 @@ const Input = ({ className, id, input, label, meta, placeholder, type, value }, 
 
 Input.propTypes = {
    className: React.PropTypes.string,
+   error: React.PropTypes.string,
    id: React.PropTypes.string,
-   input: React.PropTypes.object,
    label: React.PropTypes.string,
-   meta: React.PropTypes.object,
+   name: React.PropTypes.string,
+   onBlur: React.PropTypes.func,
+   onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
+   touched: React.PropTypes.bool,
    type: React.PropTypes.string,
    value: React.PropTypes.string
 }
 
 Input.defaultProps = {
-   type: 'text'
+   type: 'text',
+   value: ''
 }
 
 Input.contextTypes = {
