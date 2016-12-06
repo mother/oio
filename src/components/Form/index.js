@@ -64,10 +64,10 @@ export default class Form extends Component {
       })
    }
 
-   componentWillReceiveProps(props) {
+   componentWillReceiveProps(newProps) {
       const newState = { data: { ...this.state.data } }
 
-      findNodesinDOM(props.children, ...formComponentNames)
+      findNodesinDOM(newProps.children, ...formComponentNames)
       .forEach((node) => {
          const value = node.props.value || this.state.data[node.props.name].value
          newState.data[node.props.name] = {
