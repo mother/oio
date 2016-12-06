@@ -4,7 +4,18 @@ import Icon from '../Icon'
 import styles from './styles.less'
 
 const Button = ({
-   className, icon, mode, name, onClick, outline, outlineNegative, plain, rounded, size, textClassName, type
+   className,
+   icon,
+   mode,
+   name,
+   onClick,
+   outline,
+   outlineNegative,
+   plain,
+   rounded,
+   size,
+   textClassName,
+   type
 }, context) => {
    const buttonClasses = [className]
    const buttonTextClasses = [styles.text]

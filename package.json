@@ -8,7 +8,8 @@
     "dev": "node server.js",
     "test": "mocha --compilers js:babel-core/register --recursive test/test.js",
     "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
-    "lint": "node ./node_modules/eslint/bin/eslint.js .; exit 0"
+    "lint": "git diff HEAD --name-only --diff-filter=ACM | grep '.js$' | xargs node ./node_modules/eslint/bin/eslint.js --quiet; exit 0",
+    "lint-full": "node ./node_modules/eslint/bin/eslint.js .; exit 0"
   },
   "files": [
     "dist/index.js",

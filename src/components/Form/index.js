@@ -6,13 +6,13 @@ import FormData from 'form-data'
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
-   'Input',
-   'Textarea',
-   'Select',
-   'RadioGroup',
    'CheckboxGroup',
+   'FileImage',
+   'Input',
+   'RadioGroup',
+   'Select',
    'Switch',
-   'FileImage'
+   'Textarea'
 ]
 
 const formFileComponentNames = [
@@ -58,7 +58,7 @@ export default class Form extends Component {
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach((node) => {
          this.state.data[node.props.name] = {
-            value: node.props.value || '',
+            value: node.props.value,
             error: null,
             touched: false
          }

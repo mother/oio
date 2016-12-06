@@ -1,14 +1,23 @@
 import React from 'react'
 
-const deepTraverse = (nodes, targetNodeNames, iteratorFn, level=0) => {
-   if (!Array.isArray(nodes)) nodes = [nodes]
-   return nodes.map((node, i) => {
+const deepTraverse = (nodes, targetNodeNames, iteratorFn, level = 0) => {
+   const nodesArray = Array.isArray(nodes) ? nodes : [nodes]
+   return nodesArray.map((node, i) => {
       if (React.isValidElement(node)) {
          if (node.type && targetNodeNames.includes(node.type.name)) {
             return iteratorFn(node, level, i)
          } else if (node.props && node.props.children) {
-            const traversedChildren = deepTraverse(node.props.children, targetNodeNames, iteratorFn, level + 1)
-            return React.cloneElement(node, { key: `${level},${i}` }, traversedChildren)
+            const traversedChildren = deepTraverse(
+               node.props.children,
+               targetNodeNames,
+               iteratorFn,
+               level + 1
+            )
+            return React.cloneElement(
+               node,
+               { key: `${level},${i}` },
+               traversedChildren
+            )
          }
       }
       return node
@@ -16,8 +25,8 @@ const deepTraverse = (nodes, targetNodeNames, iteratorFn, level=0) => {
 }
 
 export const replaceNodesInDOM = (nodes, targetNodeNames, iteratorFn) => {
-   if (!Array.isArray(targetNodeNames)) targetNodeNames = [targetNodeNames]
-   return deepTraverse(nodes, targetNodeNames, iteratorFn)
+   const targetNodeNamesArr = Array.isArray(targetNodeNames) ? targetNodeNames : [targetNodeNames]
+   return deepTraverse(nodes, targetNodeNamesArr, iteratorFn)
 }
 
 export const findNodesinDOM = (rootNodes, ...targetNodeNames) => {
