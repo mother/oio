@@ -50,7 +50,7 @@ export default class Form extends Component {
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach((node) => {
          this.state.data[node.props.name] = {
-            value: node.props.value || '',
+            value: node.props.value,
             error: null,
             touched: false
          }
@@ -190,7 +190,7 @@ export default class Form extends Component {
          (child, i, j) => (
             React.cloneElement(child, {
                key: `${i},${j}`,
-               error: this.state.data[child.props.name].error || '',
+               error: this.state.data[child.props.name].error,
                touched: this.state.data[child.props.name].touched || false,
                onBlur: (event) => {
                   this.handleBlur(event.target.value, child)
