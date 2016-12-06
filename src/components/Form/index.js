@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Blob from 'blob'
-import dot from 'dot-object'
 import FormData from 'form-data'
 
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
@@ -204,9 +203,9 @@ export default class Form extends Component {
 
          // Pass data or errors in to appropriate event handler prop
          if (Object.keys(errors).length > 0) {
-            if (this.props.onError) this.props.onError(dot.object(errors))
+            if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
-            const promise = this.props.onSubmit(dot.object(data), formData)
+            const promise = this.props.onSubmit(data, formData)
             if (promise instanceof Promise) {
                this.setState({ submitting: true }, () => {
                   promise
