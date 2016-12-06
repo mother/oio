@@ -17,8 +17,8 @@ const predefinedRules = {
       message: 'Required'
    },
    email: {
-      test: (value) => (
-         new RegExp('^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')
+      test: value => (
+         new RegExp('^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$')
          .test(value)
       ),
       message: 'Must be a valid email.'
@@ -48,19 +48,11 @@ export default class Form extends Component {
       }
 
       findNodesinDOM(props.children, ...formComponentNames)
-      .forEach(node => {
+      .forEach((node) => {
          this.state.data[node.props.name] = {
-<<<<<<< Updated upstream
-            value: node.props.value,
-            meta: {
-               error: null,
-               touched: false
-            }
-=======
             value: node.props.value || '',
             error: null,
             touched: false
->>>>>>> Stashed changes
          }
       })
    }
@@ -69,7 +61,7 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
 
       findNodesinDOM(props.children, ...formComponentNames)
-      .forEach(node => {
+      .forEach((node) => {
          const value = this.state.data[node.props.name].value
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
@@ -81,8 +73,8 @@ export default class Form extends Component {
       this.setState(newState)
    }
 
-   applyRulesToValue(rules=[], value) {
-      for (let rule of rules) {
+   applyRulesToValue(rules = [], value) {
+      for (const rule of rules) {
          let test
          let message
 
@@ -116,7 +108,7 @@ export default class Form extends Component {
    get(key) {
       try {
          return this.state.data[key].value
-      } catch(e) {
+      } catch (e) {
          return undefined
       }
    }
@@ -156,44 +148,28 @@ export default class Form extends Component {
       .forEach((node) => {
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
-<<<<<<< Updated upstream
-            meta: {
-               error: this.applyRulesToValue(node.props.rules, this.state.data[node.props.name].value),
-               touched: true
-            }
-=======
             error: this.applyRulesToValue(
                node.props.rules,
                this.state.data[node.props.name].value
             ),
             touched: true
->>>>>>> Stashed changes
          }
       })
 
       this.setState(newState, () => {
          // Find data and errors
          Object.keys(this.state.data).forEach((key) => {
-<<<<<<< Updated upstream
+            // Add the key/value to data
             data[key] = this.state.data[key].value
-            if (this.state.data[key].meta.error) {
-               errors[key] = this.state.data[key].meta.error
-=======
-            // Don't add data keys that relate to files
-            if (!namesForFiles.includes(key)) {
-               // Add the key/value to data
-               data[key] = this.state.data[key].value
-               // Add the error if applicable
-               if (this.state.data[key].error) {
-                  errors[key] = this.state.data[key].error
-               }
->>>>>>> Stashed changes
+            // Add the error if applicable
+            if (this.state.data[key].error) {
+               errors[key] = this.state.data[key].error
             }
          })
 
          // Pass data or errors in to appropriate event handler prop
          if (Object.keys(errors).length > 0) {
-            if (this.props.onError) this.props.onError(dot.object(errors))
+            if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
             const promise = this.props.onSubmit(data)
             if (promise instanceof Promise) {
@@ -208,25 +184,6 @@ export default class Form extends Component {
    }
 
    render() {
-<<<<<<< Updated upstream
-      const domWithNewFormElements = replaceNodesInDOM(this.props.children, formComponentNames, (child, i, j) => (
-         React.cloneElement(child, {
-            form: this,
-            key: `${i},${j}`,
-            meta: this.state.data[child.props.name].meta || {},
-            onBlur: (event) => {
-               this.handleBlur(event.target.value, child)
-               if (this.props.onBlur) this.props.onBlur(event)
-            },
-            onChange: (event, value) => {
-               if (value || value === false) this.handleChange(value, child)
-               else this.handleChange(event.target.value, child)
-               if (this.props.onChange) this.props.onChange(event)
-            },
-            value: this.state.data[child.props.name].value
-         })
-      ))
-=======
       const domWithNewFormElements = replaceNodesInDOM(
          this.props.children,
          formComponentNames,
@@ -248,7 +205,6 @@ export default class Form extends Component {
             })
          )
       )
->>>>>>> Stashed changes
 
       return (
          <form onSubmit={event => this.handleSubmit(event)}>
