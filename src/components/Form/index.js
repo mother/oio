@@ -69,7 +69,9 @@ export default class Form extends Component {
 
       findNodesinDOM(newProps.children, ...formComponentNames)
       .forEach((node) => {
-         const value = node.props.value || this.state.data[node.props.name].value
+         const value = typeof node.props.value !== 'undefined'
+            ? node.props.value
+            : this.state.data[node.props.name].value
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
             value,
