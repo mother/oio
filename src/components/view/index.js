@@ -30,53 +30,73 @@ export default class View extends React.Component {
       format: 'float',
       padding: '0',
       style: {},
-      visible: 'on'
+      visible: 'on',
+      width: 'auto'
    }
 
    constructor(props, context) {
       super(props, context)
 
       this.state = {
-         width: 'auto',
-         height: 'auto',
-         position: {},
-         size: getWindowSize()
+         aspectRatio: props.aspectRatio,
+         width: props.width,
+         height: props.height,
+         position: props.position,
+         size: getWindowSize(),
+         positionStyles: {}
       }
 
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    componentDidMount() {
-      this.setComponentAspectRatio()
-      this.setComponentPosition()
-
+      this.updateComponentSize()
+      this.updatePositionStyles()
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
-   componentDidUpdate() {
-      this.setComponentAspectRatio()
-      this.setComponentPosition()
+   componentWillReceiveProps(newProps) {
+      const updateRequired = ['aspectRatio', 'position', 'height', 'width'].some(key => (
+         newProps[key] !== this.state[key]
+      ))
+
+      if (updateRequired) {
+         this.updateComponentSize()
+         this.updatePositionStyles()
+      }
    }
 
    componentWillUnmount() {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   setComponentAspectRatio() {
+   updateComponentSize() {
+      const stateModifier = {}
       let aspectRatio
       let height
+      let width
 
-      if (this.props.aspectRatio) {
-         aspectRatio = getAttributeForCurrentSize(this.state.size, this.props.aspectRatio)
+      if (this.state.aspectRatio) {
+         aspectRatio = getAttributeForCurrentSize(this.state.size, this.state.aspectRatio)
       }
 
-      if (this.props.height) {
-         height = getAttributeForCurrentSize(this.state.size, this.props.height)
+      if (this.state.width) {
+         width = getAttributeForCurrentSize(this.state.size, this.state.width)
+         if (width) {
+            const unit = width.endsWith('px') ? 'px' : '%'
+            stateModifier.width = parseFloat(width) + unit
+         }
       }
 
+      if (this.state.height) {
+         height = getAttributeForCurrentSize(this.state.size, this.state.height)
+         if (height) {
+            const unit = height.endsWith('px') ? 'px' : '%'
+            stateModifier.height = parseFloat(height) + unit
+         }
       // Will only execute aspect ratio if no height exists
       // Height takes precedence in setting View size
-      if (aspectRatio && !height) {
+      } else if (aspectRatio && !height) {
          const aspectRatioDimensions = aspectRatio.split(':')
          const aspectRatioWidth = aspectRatioDimensions[0]
          const aspectRatioHeight = aspectRatioDimensions[1]
@@ -84,56 +104,58 @@ export default class View extends React.Component {
          const viewHeight = `${Math.round((viewWidth / aspectRatioWidth) * aspectRatioHeight)}px`
 
          if (this.state.height !== viewHeight) {
-            this.setState({ height: viewHeight })
+            stateModifier.height = viewHeight
          }
+      }
+
+      if (Object.keys(stateModifier).length > 0) {
+         this.setState(stateModifier)
       }
    }
 
-   setComponentPosition() {
-      const position = {}
-      if (this.props.position) {
-         const currentPosition = getAttributeForCurrentSize(this.state.size, this.props.position)
+   updatePositionStyles() {
+      const positionStyles = {}
 
-         if (currentPosition.indexOf('top') >= 0) {
-            position.top = 0
-            position.bottom = 'auto'
+      if (this.state.position) {
+         const currentPosition = getAttributeForCurrentSize(this.state.size, this.state.position)
+
+         if (currentPosition.includes('top')) {
+            positionStyles.top = 0
+            positionStyles.bottom = 'auto'
          }
 
-         if (currentPosition.indexOf('middle') >= 0) {
-            position.top = '50%'
+         if (currentPosition.includes('middle')) {
+            positionStyles.top = '50%'
             if (this.state.height !== 'auto') {
-               position.marginTop = `-${this.node.offsetHeight / 2}px`
+               positionStyles.marginTop = `-${this.node.offsetHeight / 2}px`
             }
          }
 
-         if (currentPosition.indexOf('bottom') >= 0) {
-            position.bottom = 0
-            position.top = 'auto'
+         if (currentPosition.includes('bottom')) {
+            positionStyles.bottom = 0
+            positionStyles.top = 'auto'
          }
 
-         if (currentPosition.indexOf('left') >= 0) {
-            position.left = '0'
-            position.right = 'auto'
-            position.marginLeft = 'auto'
+         if (currentPosition.includes('left')) {
+            positionStyles.left = '0'
+            positionStyles.right = 'auto'
+            positionStyles.marginLeft = 'auto'
          }
 
-         if (currentPosition.indexOf('center') >= 0) {
-            position.left = '50%'
+         if (currentPosition.includes('center')) {
+            positionStyles.left = '50%'
             if (this.state.width !== 'auto') {
-               position.marginLeft = `-${this.node.offsetWidth / 2}px`
+               positionStyles.marginLeft = `-${this.node.offsetWidth / 2}px`
             }
          }
 
-         if (currentPosition.indexOf('right') >= 0) {
-            position.right = '0'
-            position.left = 'auto'
-         }
-
-         // Not sure if there is a better way to do this equality comparison
-         if (JSON.stringify(this.state.position) !== JSON.stringify(position)) {
-            this.setState({ position })
+         if (currentPosition.includes('right')) {
+            positionStyles.right = '0'
+            positionStyles.left = 'auto'
          }
       }
+
+      this.setState({ positionStyles })
    }
 
    windowSizeUpdated() {
@@ -143,76 +165,9 @@ export default class View extends React.Component {
 
    render() {
       const viewClasses = [styles.view]
-      const statelessStyles = {}
+      const currentSizeStyles = {}
 
-      // Stateless View Props
-      if (this.props.align) {
-         const align = getAttributeForCurrentSize(this.state.size, this.props.align)
-         if (align) statelessStyles.float = align
-      }
-
-      const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
-      if (padding !== 0) statelessStyles.padding = padding
-
-      if (this.props.maxWidth) {
-         const maxWidth = getAttributeForCurrentSize(this.state.size, this.props.maxWidth)
-         if (maxWidth) statelessStyles.maxWidth = maxWidth
-      }
-
-      if (this.props.textAlign) {
-         const textAlign = getAttributeForCurrentSize(this.state.size, this.props.textAlign)
-         if (textAlign) statelessStyles.textAlign = textAlign
-      }
-
-      // Stateless Position View props
-      if (this.props.top) {
-         const top = getAttributeForCurrentSize(this.state.size, this.props.top)
-         if (top) {
-            const unit = top.indexOf('px') === -1 ? '%' : 'px'
-            statelessStyles.top = parseFloat(top) + unit
-         }
-      }
-
-      if (this.props.left) {
-         const left = getAttributeForCurrentSize(this.state.size, this.props.left)
-         if (left) {
-            const unit = left.indexOf('px') === -1 ? '%' : 'px'
-            statelessStyles.left = parseFloat(left) + unit
-         }
-      }
-
-      if (this.props.right) {
-         const right = getAttributeForCurrentSize(this.state.size, this.props.right)
-         if (right) {
-            const unit = right.indexOf('px') === -1 ? '%' : 'px'
-            statelessStyles.right = parseFloat(right) + unit
-         }
-      }
-
-      if (this.props.bottom) {
-         const bottom = getAttributeForCurrentSize(this.state.size, this.props.bottom)
-         if (bottom) {
-            const unit = bottom.indexOf('px') === -1 ? '%' : 'px'
-            statelessStyles.bottom = parseFloat(bottom) + unit
-         }
-      }
-
-      // Stateful View Styles
-      if (this.props.width) {
-         const width = getAttributeForCurrentSize(this.state.size, this.props.width)
-         if (width) {
-            const unit = width.indexOf('px') === -1 ? '%' : 'px'
-            this.state.width = parseFloat(width) + unit
-         }
-      }
-
-      if (this.props.height) {
-         const height = getAttributeForCurrentSize(this.state.size, this.props.height)
-         if (height) {
-            const unit = height.indexOf('px') === -1 ? '%' : 'px'
-            this.state.height = parseFloat(height) + unit
-         }
-      }
+      // Add Pre-Defined Classes
 
       if (this.props.scroll) {
          const scroll = getAttributeForCurrentSize(this.state.size, this.props.scroll)
@@ -239,10 +194,66 @@ export default class View extends React.Component {
          }
       }
 
+      // Add Inline Styles
+
+      if (this.props.align) {
+         const align = getAttributeForCurrentSize(this.state.size, this.props.align)
+         if (align) currentSizeStyles.float = align
+      }
+
+      if (this.props.padding) {
+         const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
+         if (padding !== 0) currentSizeStyles.padding = padding
+      }
+
+      if (this.props.maxWidth) {
+         const maxWidth = getAttributeForCurrentSize(this.state.size, this.props.maxWidth)
+         if (maxWidth) currentSizeStyles.maxWidth = maxWidth
+      }
+
+      if (this.props.textAlign) {
+         const textAlign = getAttributeForCurrentSize(this.state.size, this.props.textAlign)
+         if (textAlign) currentSizeStyles.textAlign = textAlign
+      }
+
+      if (this.props.top) {
+         const top = getAttributeForCurrentSize(this.state.size, this.props.top)
+         if (top) {
+            const unit = top.endsWith('px') ? 'px' : '%'
+            currentSizeStyles.top = parseFloat(top) + unit
+         }
+      }
+
+      if (this.props.left) {
+         const left = getAttributeForCurrentSize(this.state.size, this.props.left)
+         if (left) {
+            const unit = left.endsWith('px') ? 'px' : '%'
+            currentSizeStyles.left = parseFloat(left) + unit
+         }
+      }
+
+      if (this.props.right) {
+         const right = getAttributeForCurrentSize(this.state.size, this.props.right)
+         if (right) {
+            const unit = right.endsWith('px') ? 'px' : '%'
+            currentSizeStyles.right = parseFloat(right) + unit
+         }
+      }
+
+      if (this.props.bottom) {
+         const bottom = getAttributeForCurrentSize(this.state.size, this.props.bottom)
+         if (bottom) {
+            const unit = bottom.endsWith('px') ? 'px' : '%'
+            currentSizeStyles.bottom = parseFloat(bottom) + unit
+         }
+      }
+
+      // Aggregate inline styles
+
       const style = {
          ...this.props.style,
-         ...statelessStyles,
-         ...this.state.position,
+         ...currentSizeStyles,
+         ...this.state.positionStyles,
          width: this.state.width,
          height: this.state.height
       }
