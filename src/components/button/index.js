@@ -4,12 +4,25 @@ import Icon from '../Icon'
 import styles from './styles.less'
 
 const Button = ({
-   className, icon, mode, name, onClick, outline, outlineNegative, plain, rounded, size, textClassName, type
+   className,
+   icon,
+   mode,
+   name,
+   onClick,
+   outline,
+   outlineNegative,
+   plain,
+   rounded,
+   size,
+   textClassName,
+   type
 }, context) => {
    const buttonClasses = [className]
    const buttonTextClasses = [styles.text]
    const buttonName = name
-   const style = {}
+   const style = {
+      backgroundColor: context.OIOStyles.primaryColor
+   }
    let modeIcon
 
    buttonClasses.push(styles[size])
@@ -33,14 +46,17 @@ const Button = ({
 
    if (outline) {
       buttonClasses.push(styles.outline)
+      delete style.backgroundColor
    }
 
    if (outlineNegative) {
       buttonClasses.push(styles.outlineNegative)
+      delete style.backgroundColor
    }
 
    if (plain) {
       buttonClasses.push(styles.plain)
+      delete style.backgroundColor
    }
 
    if (textClassName) {
@@ -90,7 +106,8 @@ Button.defaultProps = {
 }
 
 Button.contextTypes = {
-   buttonGroupStyle: React.PropTypes.object
+   buttonGroupStyle: React.PropTypes.object,
+   OIOStyles: React.PropTypes.object
 }
 
 export default Button
