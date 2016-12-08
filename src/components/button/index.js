@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import converColor from '../../utils/convertColor'
 import Icon from '../Icon'
 import styles from './styles.less'
 
@@ -26,6 +27,9 @@ const Button = ({
    let modeIcon
 
    buttonClasses.push(styles[size])
+
+   const color = converColor('#ff0000')
+   console.log(color)
 
    if (icon && name) {
       buttonClasses.push(styles[`${size}IconAndText`])
@@ -56,6 +60,7 @@ const Button = ({
 
    if (plain) {
       buttonClasses.push(styles.plain)
+      style.color = context.OIOStyles.primaryColor
       delete style.backgroundColor
    }
 
