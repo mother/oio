@@ -38,10 +38,6 @@ export default class File extends Component {
       })
    }
 
-   handleError(error, file) {
-      // console.log(error, file)
-   }
-
    render() {
       let dropzone
       if (this.props.type === 'image') {
