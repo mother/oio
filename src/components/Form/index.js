@@ -6,7 +6,7 @@ import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
    'CheckboxGroup',
-   'FileImage',
+   'File',
    'Input',
    'RadioGroup',
    'Select',
@@ -15,7 +15,7 @@ const formComponentNames = [
 ]
 
 const formFileComponentNames = [
-   'FileImage'
+   'File'
 ]
 
 const predefinedRules = {
@@ -163,10 +163,7 @@ export default class Form extends Component {
          }
 
          // Keep track of files on state.data
-         if (
-            formFileComponentNames.includes(node.type.name) &&
-            newState.data[node.props.name].value
-         ) {
+         if (formFileComponentNames.includes(node.type.name)) {
             namesForFiles.push(node.props.name)
          }
       })
@@ -174,8 +171,8 @@ export default class Form extends Component {
       const formData = new FormData()
       // Apply "files" to formData
       namesForFiles.forEach((name) => {
-         const file = newState.data[name].value || ''
-         formData.append('files', new Blob([file], { type: file.type }), file.name)
+         const file = newState.data[name].value
+         if (file) (formData.append(name, new Blob([file], { type: file.type }), file.name))
       })
       // Apply rest of data to formData
       Object.keys(newState.data).forEach((key) => {

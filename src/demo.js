@@ -8,7 +8,7 @@ import {
    Checkbox,
    CheckboxGroup,
    // Cover,
-   FileImage,
+   File,
    Form,
    Grid,
    GridCell,
@@ -122,11 +122,19 @@ class Demo extends React.Component {
                         <Form
                            onSubmit={(data, formData) => this.handleSubmit(data, formData)}
                            onError={error => this.handleError(error)}>
-                           <FileImage
+                           <File
                               maxFileSize={5000000}
+                              type="image"
                               name="avatar"
                               label="Avatar"
-                              value="http://placehold.it/500x500"
+                              src="http://placehold.it/500x500"
+                           />
+                           <Spacer size="2" />
+                           <File
+                              maxFileSize={5000000}
+                              type="file"
+                              name="document"
+                              label="Document"
                            />
                            <div>
                               <div>

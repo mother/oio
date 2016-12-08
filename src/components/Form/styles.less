@@ -122,9 +122,22 @@
 
 .files {
    position: relative;
+   height: @uiBaseComponentHeightMedium;
+   line-height: @uiBaseComponentHeightMedium - 15px;
+   padding: 5px;
+   border: 2px dashed #D3D3D3;
+   box-sizing: border-box;
+   cursor: copy;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+
+.filesImageContainer {
+   position: relative;
    height: 150px;
    width: 150px;
-   border: 2px solid #D3D3D3;
+   border: 2px dashed #D3D3D3;
    cursor: copy;
 }
 
@@ -142,6 +155,6 @@
 }
 
 .filesActive {
-   border: 2px solid lightgreen;
+   border-color: lightgreen;
    color: lightgreen;
 }
