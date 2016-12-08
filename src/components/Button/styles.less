@@ -7,7 +7,6 @@
 .button {
    display: inline-block;
    position: relative;
-   color: #fff;
    border-radius: @uiBaseComponentRadius;
    transition: 300ms;
    cursor: pointer;
@@ -90,7 +89,7 @@
 
 .medium {
    composes: button;
-   padding: 0 18px;
+   padding: 0 12px;
    height: @uiBaseComponentHeightMedium;
    .uiTextSize2;
    .medium;
@@ -156,8 +155,6 @@
 .plain {
    background: none;
    border: none;
-   padding-left: 0;
-   padding-right: 0;
    text-transform: uppercase;
 
    &:hover {

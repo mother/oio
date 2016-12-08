@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/sizeUtils'
 import styles from './styles.less'
 
-export default class View extends React.Component {
+export default class View extends Component {
    static propTypes = {
       align: React.PropTypes.string,
       aspectRatio: React.PropTypes.string,
