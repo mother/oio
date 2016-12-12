@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import style from './style.less'
 
-export default class Grid extends React.Component {
+export default class Grid extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
