@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import convertColor from '../../utils/convertColor'
 import Icon from '../Icon'
-import styles from './styles.less'
+import style from './style.less'
 
 export default class Button extends Component {
    static propTypes = {
@@ -58,15 +58,15 @@ export default class Button extends Component {
       let buttonColorRGB = convertColor(buttonColor)
 
       const buttonClasses = [this.props.className]
-      const buttonTextClasses = [styles.text]
+      const buttonTextClasses = [style.text]
       const buttonName = this.props.name
 
-      const style = {
+      const buttonStyle = {
          backgroundColor: buttonColor,
          color: '#fff'
       }
 
-      buttonClasses.push(styles[this.props.size])
+      buttonClasses.push(style[this.props.size])
 
       // Button Color by default will use the OIO primary color
       // Otherwise, it will use the color passed directly to the button
@@ -76,41 +76,44 @@ export default class Button extends Component {
       }
 
       if (this.props.icon && this.props.name) {
-         buttonClasses.push(styles[`${this.props.size}IconAndText`])
+         buttonClasses.push(style[`${this.props.size}IconAndText`])
       }
 
       if (this.props.icon && !this.props.name) {
-         buttonClasses.push(styles[`${this.props.size}IconOnly`])
+         buttonClasses.push(style[`${this.props.size}IconOnly`])
       }
 
       if (this.props.mode) {
-         buttonClasses.push(styles[`${this.props.mode}Mode`])
-         modeIcon = <span className={styles.loader} />
+         buttonClasses.push(style[`${this.props.mode}Mode`])
+         modeIcon = <span className={style.loader} />
       }
 
       if (this.props.rounded) {
-         buttonClasses.push(styles[`${this.props.size}Rounded`])
+         buttonClasses.push(style[`${this.props.size}Rounded`])
       }
 
       if (this.props.outline) {
-         buttonClasses.push(styles.outline)
-         style.color = buttonColor
-         style.borderColor = buttonColor
-         delete style.backgroundColor
+         buttonClasses.push(style.outline)
+         buttonStyle.color = buttonColor
+         buttonStyle.borderColor = buttonColor
+         delete buttonStyle.backgroundColor
       }
 
       if (this.props.outlineNegative) {
-         buttonClasses.push(styles.outlineNegative)
-         delete style.backgroundColor
+         buttonClasses.push(style.outlineNegative)
+         delete buttonStyle.backgroundColor
       }
 
       if (this.props.plain) {
-         buttonClasses.push(styles.plain)
-         style.color = buttonColor
-         delete style.backgroundColor
+         buttonClasses.push(style.plain)
+         buttonStyle.color = buttonColor
+         delete buttonStyle.backgroundColor
 
          if (this.state.hover) {
-            style.backgroundColor = `rgba(${buttonColorRGB.r}, ${buttonColorRGB.g}, ${buttonColorRGB.b}, 0.15)`
+            buttonStyle.backgroundColor =
+               `rgba(${buttonColorRGB.r},
+               ${buttonColorRGB.g},
+               ${buttonColorRGB.b}, 0.15)`
          }
       }
 
@@ -121,13 +124,13 @@ export default class Button extends Component {
       // If Buttons are part of a Button Group
       if (this.context.buttonGroupStyle) {
          const buttonGroup = this.context.buttonGroupStyle
-         style.marginBottom = buttonGroup.spacing
-         style.verticalAlign = 'middle'
+         buttonStyle.marginBottom = buttonGroup.spacing
+         buttonStyle.verticalAlign = 'middle'
 
          if (buttonGroup.align === 'left') {
-            style.marginRight = buttonGroup.spacing
+            buttonStyle.marginRight = buttonGroup.spacing
          } else if (buttonGroup.align === 'right') {
-            style.marginLeft = buttonGroup.spacing
+            buttonStyle.marginLeft = buttonGroup.spacing
          }
       }
 
@@ -137,10 +140,10 @@ export default class Button extends Component {
             onClick={this.props.onClick}
             onMouseOver={this.onMouseOver}
             onMouseOut={this.onMouseOut}
-            style={style}
+            style={buttonStyle}
             type={this.props.type}>
-            <Icon className={styles.icon} name={this.props.icon} />
-            <span className={classNames(styles.text, buttonTextClasses)}>{buttonName}</span>
+            <Icon className={style.icon} name={this.props.icon} />
+            <span className={classNames(style.text, buttonTextClasses)}>{buttonName}</span>
             {modeIcon}
          </button>
       )
