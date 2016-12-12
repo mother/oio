@@ -18,7 +18,7 @@ const Textarea = ({
             onChange={onChange}
             name={name}
             placeholder={placeholder}
-            value={value}
+            value={value || ''}
             rows={rows}
          />
          {touched && error &&

@@ -25,7 +25,7 @@ const Input = ({
             name={name}
             placeholder={placeholder}
             type={type}
-            value={value}
+            value={value || ''}
          />
          {touched && error &&
             <div className={formStyles.error}>
