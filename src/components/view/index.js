@@ -5,6 +5,7 @@ import styles from './styles.less'
 
 export default class View extends React.Component {
    static propTypes = {
+      id: React.PropTypes.string,
       align: React.PropTypes.string,
       aspectRatio: React.PropTypes.string,
       bottom: React.PropTypes.string,
@@ -30,39 +31,62 @@ export default class View extends React.Component {
       format: 'float',
       padding: '0',
       style: {},
-      visible: 'on',
-      width: 'auto'
+      visible: 'on'
    }
 
    constructor(props, context) {
       super(props, context)
 
       this.state = {
-         aspectRatio: props.aspectRatio,
-         width: props.width,
-         height: props.height,
-         position: props.position,
          size: getWindowSize(),
-         positionStyles: {}
+         positionStyles: {},
+
+         // currentWidth and currentHeight represent the width and height
+         // of this component at the current size, whereas width and height
+         // represent the actual prop strings that were passed in (with
+         // responsive instructions)
+         currentWidth: 'auto',
+         currentHeight: 'auto',
+
+         // Passed in props
+         aspectRatio: props.aspectRatio,
+         position: props.position,
+         width: props.width,
+         height: props.height
       }
 
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
+   componentWillMount() {
+      if (this.state.width) {
+         let width = getAttributeForCurrentSize(this.state.size, this.state.width)
+         if (width) {
+            const unit = width.endsWith('px') ? 'px' : '%'
+            width = parseFloat(width) + unit
+            this.setState({ currentWidth: width })
+         }
+      }
+   }
+
    componentDidMount() {
-      this.updateComponentSize()
-      this.updatePositionStyles()
+      this.updateComponentSizeAndPosition()
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
+   // TODO: Untested
    componentWillReceiveProps(newProps) {
-      const updateRequired = ['aspectRatio', 'position', 'height', 'width'].some(key => (
-         newProps[key] !== this.state[key]
-      ))
+      const stateModifier = {};
+      ['aspectRatio', 'position', 'height', 'width'].forEach((key) => {
+         if (newProps[key] && newProps[key] !== this.state[key]) {
+            stateModifier[key] = newProps[key]
+         }
+      })
 
-      if (updateRequired) {
-         this.updateComponentSize()
-         this.updatePositionStyles()
+      if (Object.keys(stateModifier).length > 0) {
+         this.setState(stateModifier, () => {
+            this.updateComponentSizeAndPosition()
+         })
       }
    }
 
@@ -70,7 +94,7 @@ export default class View extends React.Component {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   updateComponentSize() {
+   updateComponentSizeAndPosition() {
       const stateModifier = {}
       let aspectRatio
       let height
@@ -80,36 +104,38 @@ export default class View extends React.Component {
          aspectRatio = getAttributeForCurrentSize(this.state.size, this.state.aspectRatio)
       }
 
+      if (this.state.height) {
+         height = getAttributeForCurrentSize(this.state.size, this.state.height)
+      }
+
       if (this.state.width) {
          width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
             const unit = width.endsWith('px') ? 'px' : '%'
-            stateModifier.width = parseFloat(width) + unit
+            stateModifier.currentWidth = parseFloat(width) + unit
          }
       }
 
-      if (this.state.height) {
-         height = getAttributeForCurrentSize(this.state.size, this.state.height)
-         if (height) {
-            const unit = height.endsWith('px') ? 'px' : '%'
-            stateModifier.height = parseFloat(height) + unit
-         }
       // Will only execute aspect ratio if no height exists
       // Height takes precedence in setting View size
-      } else if (aspectRatio && !height) {
+      if (aspectRatio && (!height || height === 'auto')) {
          const aspectRatioDimensions = aspectRatio.split(':')
          const aspectRatioWidth = aspectRatioDimensions[0]
          const aspectRatioHeight = aspectRatioDimensions[1]
          const viewWidth = this.node.offsetWidth
          const viewHeight = `${Math.round((viewWidth / aspectRatioWidth) * aspectRatioHeight)}px`
 
-         if (this.state.height !== viewHeight) {
-            stateModifier.height = viewHeight
-         }
+         if (viewWidth > 0) stateModifier.currentHeight = viewHeight
+         else stateModifier.currentHeight = 'auto'
+      } else if (height && height !== 'auto') {
+         const unit = height.endsWith('px') ? 'px' : '%'
+         stateModifier.currentHeight = parseFloat(height) + unit
       }
 
       if (Object.keys(stateModifier).length > 0) {
-         this.setState(stateModifier)
+         this.setState(stateModifier, this.updatePositionStyles)
+      } else {
+         this.updatePositionStyles()
       }
    }
 
@@ -126,8 +152,8 @@ export default class View extends React.Component {
 
          if (currentPosition.includes('middle')) {
             positionStyles.top = '50%'
-            if (this.state.height !== 'auto') {
-               positionStyles.marginTop = `-${this.node.offsetHeight / 2}px`
+            if (this.state.currentHeight !== 'auto') {
+               positionStyles.marginTop = `-${Math.floor(this.node.offsetHeight / 2)}px`
             }
          }
 
@@ -144,7 +170,7 @@ export default class View extends React.Component {
 
          if (currentPosition.includes('center')) {
             positionStyles.left = '50%'
-            if (this.state.width !== 'auto') {
+            if (this.state.currentWidth !== 'auto') {
                positionStyles.marginLeft = `-${this.node.offsetWidth / 2}px`
             }
          }
@@ -160,7 +186,9 @@ export default class View extends React.Component {
 
    windowSizeUpdated() {
       const windowSize = getWindowSize()
-      this.setState({ size: windowSize })
+      this.setState({ size: windowSize }, () => {
+         this.updateComponentSizeAndPosition()
+      })
    }
 
    render() {
@@ -254,12 +282,13 @@ export default class View extends React.Component {
          ...this.props.style,
          ...currentSizeStyles,
          ...this.state.positionStyles,
-         width: this.state.width,
-         height: this.state.height
+         width: this.state.currentWidth,
+         height: this.state.currentHeight
       }
 
       return (
          <div
+            id={this.props.id}
             ref={node => (this.node = node)}
             style={style}
             onScroll={this.props.onScroll}
