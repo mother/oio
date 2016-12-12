@@ -15,7 +15,7 @@ export default class File extends Component {
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
       style: React.PropTypes.object,
-      type: React.PropTypes.string,
+      type: React.PropTypes.oneOf(['image', 'file']),
       width: React.PropTypes.string
    }
 
