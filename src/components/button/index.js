@@ -62,7 +62,8 @@ export default class Button extends Component {
       const buttonName = this.props.name
 
       const style = {
-         backgroundColor: buttonColor
+         backgroundColor: buttonColor,
+         color: '#fff'
       }
 
       buttonClasses.push(styles[this.props.size])
@@ -93,6 +94,8 @@ export default class Button extends Component {
 
       if (this.props.outline) {
          buttonClasses.push(styles.outline)
+         style.color = buttonColor
+         style.borderColor = buttonColor
          delete style.backgroundColor
       }
 
