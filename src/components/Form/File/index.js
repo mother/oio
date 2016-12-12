@@ -10,14 +10,12 @@ export default class File extends Component {
    static propTypes = {
       accepts: React.PropTypes.array,
       alt: React.PropTypes.string,
-      height: React.PropTypes.string,
       label: React.PropTypes.string,
       maxFileSize: React.PropTypes.number,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
       style: React.PropTypes.object,
-      type: React.PropTypes.oneOf(['image', 'file']),
-      width: React.PropTypes.string
+      type: React.PropTypes.oneOf(['image', 'file'])
    }
 
    constructor(props, context) {
@@ -77,10 +75,6 @@ export default class File extends Component {
             )
          }
       }
-
-      const style = {}
-      if (this.props.height) style.height = this.props.height
-      if (this.props.width) style.width = this.props.width
 
       return (
          <div>
