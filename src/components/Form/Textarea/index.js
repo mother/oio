@@ -3,7 +3,9 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Textarea = ({ className, id, input, label, meta, placeholder, rows, value }) => {
+const Textarea = ({
+   className, error, id, label, name, onBlur, onChange, placeholder, rows, touched, value
+}) => {
    const classes = [styles.textarea, className]
 
    return (
@@ -12,14 +14,16 @@ const Textarea = ({ className, id, input, label, meta, placeholder, rows, value 
          <textarea
             className={classNames(classes)}
             id={id}
+            onBlur={onBlur}
+            onChange={onChange}
+            name={name}
             placeholder={placeholder}
-            value={value}
+            value={value || ''}
             rows={rows}
-            {...input}
          />
-         {meta && meta.touched && meta.error &&
+         {touched && error &&
             <div className={formStyles.error}>
-               {meta.error}
+               {error}
             </div>
          }
       </div>
@@ -28,17 +32,21 @@ const Textarea = ({ className, id, input, label, meta, placeholder, rows, value 
 
 Textarea.propTypes = {
    className: React.PropTypes.string,
+   error: React.PropTypes.string,
    id: React.PropTypes.string,
-   input: React.PropTypes.object,
    label: React.PropTypes.string,
-   meta: React.PropTypes.object,
+   name: React.PropTypes.string,
+   onBlur: React.PropTypes.func,
+   onChange: React.PropTypes.func,
    placeholder: React.PropTypes.string,
    rows: React.PropTypes.string,
+   touched: React.PropTypes.bool,
    value: React.PropTypes.string
 }
 
 Textarea.defaultProps = {
-   rows: '5'
+   rows: '5',
+   value: ''
 }
 
 export default Textarea
