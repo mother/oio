@@ -128,6 +128,7 @@ class Demo extends React.Component {
                               name="avatar"
                               label="Avatar"
                               src="http://placehold.it/500x500"
+                              alt="Avatar"
                            />
                            <Spacer size="2" />
                            <File

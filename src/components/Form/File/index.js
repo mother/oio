@@ -9,6 +9,7 @@ const imagePlaceholder = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBl
 export default class File extends Component {
    static propTypes = {
       accepts: React.PropTypes.array,
+      alt: React.PropTypes.string,
       height: React.PropTypes.string,
       label: React.PropTypes.string,
       maxFileSize: React.PropTypes.number,
@@ -41,12 +42,30 @@ export default class File extends Component {
    render() {
       let dropzone
       if (this.props.type === 'image') {
-         dropzone = <img className={formStyles.filesImage} src={imagePlaceholder} alt="placeholder" />
+         dropzone = (
+            <img
+               className={formStyles.filesImage}
+               src={imagePlaceholder}
+               alt={this.props.alt}
+            />
+         )
          if (this.state.src) {
-            dropzone = <img className={formStyles.filesImage} src={this.state.src} alt="Avatar" />
+            dropzone = (
+               <img
+                  className={formStyles.filesImage}
+                  src={this.state.src}
+                  alt={this.props.alt}
+               />
+            )
          }
          if (this.state.file) {
-            dropzone = <img className={formStyles.filesImage} src={this.state.file.preview.url} alt="Avatar" />
+            dropzone = (
+               <img
+                  className={formStyles.filesImage}
+                  src={this.state.file.preview.url}
+                  alt={this.props.alt}
+               />
+            )
          }
       } else {
          dropzone = <div>Drop a file or click here to upload.</div>
