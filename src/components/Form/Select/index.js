@@ -17,6 +17,10 @@ export default class Select extends Component {
       value: React.PropTypes.string
    }
 
+   static defaultProps = {
+      options: []
+   }
+
    constructor(props, context) {
       super(props, context)
       this.state = { value: undefined }
