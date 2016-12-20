@@ -75,12 +75,12 @@ export default class Button extends Component {
          buttonColorRGB = convertColor(buttonColor)
       }
 
-      if (this.props.icon && this.props.name) {
-         buttonClasses.push(style[`${this.props.size}IconAndText`])
-      }
-
-      if (this.props.icon && !this.props.name) {
-         buttonClasses.push(style[`${this.props.size}IconOnly`])
+      if (this.props.icon) {
+         if (this.props.name) {
+            buttonClasses.push(style[`${this.props.size}IconAndText`])
+         } else {
+            buttonClasses.push(style[`${this.props.size}IconOnly`])
+         }
       }
 
       if (this.props.mode) {
