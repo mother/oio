@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 
-export default class Popover extends React.Component {
+export default class Popover extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,

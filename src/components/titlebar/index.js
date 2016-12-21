@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 
 // TODO: This component will have more functionality
-export default class Titlebar extends React.Component {
+export default class Titlebar extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
