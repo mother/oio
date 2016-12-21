@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import style from './style.less'
 
-export default class OIO extends React.Component {
+export default class OIO extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,

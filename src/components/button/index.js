@@ -1,107 +1,151 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
+import convertColor from '../../utils/convertColor'
 import Icon from '../Icon'
-import styles from './styles.less'
+import style from './style.less'
 
-const Button = ({
-   className,
-   icon,
-   mode,
-   name,
-   onClick,
-   outline,
-   outlineNegative,
-   plain,
-   rounded,
-   size,
-   textClassName,
-   type
-}, context) => {
-   const buttonClasses = [className]
-   const buttonTextClasses = [styles.text]
-   const buttonName = name
-   const style = {}
-   let modeIcon
-
-   buttonClasses.push(styles[size])
-
-   if (icon && name) {
-      buttonClasses.push(styles[`${size}IconAndText`])
+export default class Button extends Component {
+   static propTypes = {
+      className: React.PropTypes.string,
+      color: React.PropTypes.string,
+      icon: React.PropTypes.string,
+      mode: React.PropTypes.string,
+      name: React.PropTypes.string,
+      onClick: React.PropTypes.func,
+      outline: React.PropTypes.bool,
+      outlineNegative: React.PropTypes.bool,
+      plain: React.PropTypes.bool,
+      rounded: React.PropTypes.bool,
+      size: React.PropTypes.string,
+      textClassName: React.PropTypes.string,
+      type: React.PropTypes.string
    }
 
-   if (icon && !name) {
-      buttonClasses.push(styles[`${size}IconOnly`])
+   static defaultProps = {
+      size: 'medium',
+      type: 'button'
    }
 
-   if (mode) {
-      buttonClasses.push(styles[`${mode}Mode`])
-      modeIcon = <span className={styles.loader} />
+   static contextTypes = {
+      buttonGroupStyle: React.PropTypes.object,
+      OIOStyles: React.PropTypes.object
    }
 
-   if (rounded) {
-      buttonClasses.push(styles[`${size}Rounded`])
+   constructor(props, context) {
+      super(props, context)
+
+      this.state = { hover: false }
+      this.onMouseOver = this.onMouseOver.bind(this)
+      this.onMouseOut = this.onMouseOut.bind(this)
    }
 
-   if (outline) {
-      buttonClasses.push(styles.outline)
+   onMouseOver() {
+      this.setState({ hover: true })
    }
 
-   if (outlineNegative) {
-      buttonClasses.push(styles.outlineNegative)
+   onMouseOut() {
+      this.setState({ hover: false })
    }
 
-   if (plain) {
-      buttonClasses.push(styles.plain)
-   }
+   render() {
+      let modeIcon
 
-   if (textClassName) {
-      buttonTextClasses.push(textClassName)
-   }
+      // buttonColorRGB is an Object with r,g,b values
+      // Sometimes you want to use the color as is directly,
+      // other times when you want to control the Alpha Transparency,
+      // you wan to yse the RGBA values
+      let buttonColor = this.context.OIOStyles.primaryColor
+      let buttonColorRGB = convertColor(buttonColor)
 
-   // If Buttons are part of a Button Group
-   if (context.buttonGroupStyle) {
-      const buttonGroup = context.buttonGroupStyle
-      style.marginBottom = buttonGroup.spacing
-      style.verticalAlign = 'middle'
+      const buttonClasses = [this.props.className]
+      const buttonTextClasses = [style.text]
+      const buttonName = this.props.name
 
-      if (buttonGroup.align === 'left') {
-         style.marginRight = buttonGroup.spacing
-      } else if (buttonGroup.align === 'right') {
-         style.marginLeft = buttonGroup.spacing
+      const buttonStyle = {
+         backgroundColor: buttonColor,
+         color: '#fff'
       }
+
+      buttonClasses.push(style[this.props.size])
+
+      // Button Color by default will use the OIO primary color
+      // Otherwise, it will use the color passed directly to the button
+      if (this.props.color) {
+         buttonColor = this.props.color
+         buttonColorRGB = convertColor(buttonColor)
+      }
+
+      if (this.props.icon) {
+         if (this.props.name) {
+            buttonClasses.push(style[`${this.props.size}IconAndText`])
+         } else {
+            buttonClasses.push(style[`${this.props.size}IconOnly`])
+         }
+      }
+
+      if (this.props.mode) {
+         buttonClasses.push(style[`${this.props.mode}Mode`])
+         modeIcon = <span className={style.loader} />
+      }
+
+      if (this.props.rounded) {
+         buttonClasses.push(style[`${this.props.size}Rounded`])
+      }
+
+      if (this.props.outline) {
+         buttonClasses.push(style.outline)
+         buttonStyle.color = buttonColor
+         buttonStyle.borderColor = buttonColor
+         delete buttonStyle.backgroundColor
+      }
+
+      if (this.props.outlineNegative) {
+         buttonClasses.push(style.outlineNegative)
+         delete buttonStyle.backgroundColor
+      }
+
+      if (this.props.plain) {
+         buttonClasses.push(style.plain)
+         buttonStyle.color = buttonColor
+         delete buttonStyle.backgroundColor
+
+         if (this.state.hover) {
+            buttonStyle.backgroundColor =
+               `rgba(${buttonColorRGB.r},
+               ${buttonColorRGB.g},
+               ${buttonColorRGB.b}, 0.15)`
+         }
+      }
+
+      if (this.props.textClassName) {
+         buttonTextClasses.push(this.props.textClassName)
+      }
+
+      // If Buttons are part of a Button Group
+      if (this.context.buttonGroupStyle) {
+         const buttonGroup = this.context.buttonGroupStyle
+         buttonStyle.marginBottom = buttonGroup.spacing
+         buttonStyle.verticalAlign = 'middle'
+
+         if (buttonGroup.align === 'left') {
+            buttonStyle.marginRight = buttonGroup.spacing
+         } else if (buttonGroup.align === 'right') {
+            buttonStyle.marginLeft = buttonGroup.spacing
+         }
+      }
+
+      return (
+         <button
+            className={classNames(buttonClasses)}
+            onClick={this.props.onClick}
+            onMouseOver={this.onMouseOver}
+            onMouseOut={this.onMouseOut}
+            style={buttonStyle}
+            type={this.props.type}>
+            <Icon className={style.icon} name={this.props.icon} />
+            <span className={classNames(style.text, buttonTextClasses)}>{buttonName}</span>
+            {modeIcon}
+         </button>
+      )
    }
-
-   return (
-      <button className={classNames(buttonClasses)} onClick={onClick} style={style} type={type}>
-         <Icon className={styles.icon} name={icon} />
-         <span className={classNames(styles.text, buttonTextClasses)}>{buttonName}</span>
-         {modeIcon}
-      </button>
-   )
 }
-
-Button.propTypes = {
-   className: React.PropTypes.string,
-   icon: React.PropTypes.string,
-   mode: React.PropTypes.string,
-   name: React.PropTypes.string,
-   onClick: React.PropTypes.func,
-   outline: React.PropTypes.bool,
-   outlineNegative: React.PropTypes.bool,
-   plain: React.PropTypes.bool,
-   rounded: React.PropTypes.bool,
-   size: React.PropTypes.string,
-   textClassName: React.PropTypes.string,
-   type: React.PropTypes.string
-}
-
-Button.defaultProps = {
-   size: 'medium',
-   type: 'button'
-}
-
-Button.contextTypes = {
-   buttonGroupStyle: React.PropTypes.object
-}
-
-export default Button

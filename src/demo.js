@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import {
    ActionBar,
@@ -31,7 +31,7 @@ import {
 
 import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
 
-class Demo extends React.Component {
+class Demo extends Component {
    constructor(props, context) {
       super(props, context)
       this.state = {}
