@@ -6,6 +6,7 @@ import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
    'CheckboxGroup',
+   'DateInput',
    'FileInput',
    'Input',
    'RadioGroup',
