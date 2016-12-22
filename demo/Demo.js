@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+
 import {
    ActionBar,
    Avatar,
@@ -29,11 +29,11 @@ import {
    TitleBar,
    ToolBar,
    View
-} from './'
+} from '../src'
 
-import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
+import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
 
-class Demo extends Component {
+export default class Demo extends Component {
    constructor(props, context) {
       super(props, context)
       this.state = {}
@@ -120,7 +120,9 @@ class Demo extends Component {
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
                      <GridCell colspan="2">
                         <Form
-                           onSubmit={(data, files, formData) => this.handleSubmit(data, files, formData)}
+                           onSubmit={(data, files, formData) => {
+                              this.handleSubmit(data, files, formData)
+                           }}
                            onError={error => this.handleError(error)}>
                            <FileInput
                               maxFileSize={5000000}
@@ -319,5 +321,3 @@ class Demo extends Component {
       )
    }
 }
-
-ReactDOM.render(<Demo />, document.getElementById('container'))
