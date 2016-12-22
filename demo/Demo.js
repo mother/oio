@@ -8,6 +8,7 @@ import {
    Checkbox,
    CheckboxGroup,
    // Cover,
+   DateInput,
    FileInput,
    Form,
    Grid,
@@ -134,6 +135,19 @@ export default class Demo extends Component {
                                  height: '100px',
                                  width: '100px'
                               }}
+                           />
+                           <Spacer size="2" />
+                           <DateInput
+                              name="date.start"
+                              label="Start Date"
+                              placeholder="Please enter a start date"
+                              enableTime
+                           />
+                           <Spacer size="2" />
+                           <DateInput
+                              name="date.end"
+                              label="End Date"
+                              placeholder="Please enter an end date"
                            />
                            <Spacer size="2" />
                            <FileInput
