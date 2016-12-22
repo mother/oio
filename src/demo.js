@@ -8,6 +8,7 @@ import {
    Checkbox,
    CheckboxGroup,
    // Cover,
+   FileInput,
    Form,
    Grid,
    GridCell,
@@ -37,8 +38,8 @@ class Demo extends Component {
       this.state = {}
    }
 
-   handleSubmit(data) {
-      console.log(data) // eslint-disable-line
+   handleSubmit(data, files, formData) {
+      console.log(data, files, formData) // eslint-disable-line
       // Simulate delayed promise
       return new Promise((resolve, reject) => {
          setTimeout(() => {
@@ -118,8 +119,27 @@ class Demo extends Component {
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
                      <GridCell colspan="2">
                         <Form
-                           onSubmit={data => this.handleSubmit(data)}
+                           onSubmit={(data, files, formData) => this.handleSubmit(data, files, formData)}
                            onError={error => this.handleError(error)}>
+                           <FileInput
+                              maxFileSize={5000000}
+                              type="image"
+                              name="avatar"
+                              label="Avatar"
+                              src="http://placehold.it/500x500"
+                              alt="Avatar"
+                              style={{
+                                 height: '100px',
+                                 width: '100px'
+                              }}
+                           />
+                           <Spacer size="2" />
+                           <FileInput
+                              maxFileSize={5000000}
+                              type="file"
+                              name="document"
+                              label="Document"
+                           />
                            <div>
                               <div>
                                  <Input
@@ -190,7 +210,7 @@ class Demo extends Component {
                               label="Sports"
                               rules={['required']}
                               value={null || ['golf', 'hockey']}>
-                              <Grid Grid columns="3">
+                              <Grid columns="3">
                                  <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                                  <GridCell>
                                     <div>

@@ -115,3 +115,46 @@
   -ms-transform: translateX(22px);
   transform: translateX(22px);
 }
+
+// =====================
+// FILES
+// =====================
+
+.files {
+   position: relative;
+   height: @uiBaseComponentHeightMedium;
+   line-height: @uiBaseComponentHeightMedium - 15px;
+   padding: 5px;
+   border: 2px dashed #D3D3D3;
+   box-sizing: border-box;
+   cursor: copy;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+
+.filesImageContainer {
+   position: relative;
+   height: 150px;
+   width: 150px;
+   border: 2px dashed #D3D3D3;
+   cursor: copy;
+}
+
+.filesImage {
+   max-height: 100%;
+   max-width: 100%;
+   width: auto;
+   height: auto;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+}
+
+.filesActive {
+   border-color: lightgreen;
+   color: lightgreen;
+}

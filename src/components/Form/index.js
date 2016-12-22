@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
+import Blob from 'blob'
+import FormData from 'form-data'
 
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
    'CheckboxGroup',
+   'FileInput',
    'Input',
    'RadioGroup',
    'Select',
    'Switch',
    'Textarea'
+]
+
+const formFileComponentNames = [
+   'FileInput'
 ]
 
 const predefinedRules = {
@@ -57,12 +64,14 @@ export default class Form extends Component {
       })
    }
 
-   componentWillReceiveProps(props) {
+   componentWillReceiveProps(newProps) {
       const newState = { data: { ...this.state.data } }
 
-      findNodesinDOM(props.children, ...formComponentNames)
+      findNodesinDOM(newProps.children, ...formComponentNames)
       .forEach((node) => {
-         const value = node.props.value || this.state.data[node.props.name].value
+         const value = typeof node.props.value !== 'undefined'
+            ? node.props.value
+            : this.state.data[node.props.name].value
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
             value,
@@ -139,11 +148,9 @@ export default class Form extends Component {
    handleSubmit(event) {
       event.preventDefault()
 
-      const data = {}
-      const errors = {}
-
       // Blur and check all relevant children for errors
       const newState = { data: { ...this.state.data } }
+      const namesForFiles = []
       findNodesinDOM(this.props.children, ...formComponentNames)
       .forEach((node) => {
          newState.data[node.props.name] = {
@@ -154,16 +161,46 @@ export default class Form extends Component {
             ),
             touched: true
          }
+
+         // Keep track of files on state.data
+         if (formFileComponentNames.includes(node.type.name)) {
+            namesForFiles.push(node.props.name)
+         }
+      })
+
+      const files = {}
+      const formData = new FormData()
+      // Apply "files" to formData
+      namesForFiles.forEach((name) => {
+         const file = newState.data[name].value
+         if (file) {
+            files[name] = file
+            formData.append(name, new Blob([file], { type: file.type }))
+         }
+      })
+      // Apply rest of data to formData
+      Object.keys(newState.data).forEach((key) => {
+         // Only apply if other data
+         if (!namesForFiles.includes(key)) {
+            // Append key to formData
+            formData.append(key, newState.data[key].value)
+         }
       })
 
       this.setState(newState, () => {
+         const data = {}
+         const errors = {}
+
          // Find data and errors
          Object.keys(this.state.data).forEach((key) => {
-            // Add the key/value to data
-            data[key] = this.state.data[key].value
-            // Add the error if applicable
-            if (this.state.data[key].error) {
-               errors[key] = this.state.data[key].error
+            // Don't add data keys that relate to files
+            if (!namesForFiles.includes(key)) {
+               // Add the key/value to data
+               data[key] = this.state.data[key].value
+               // Add the error if applicable
+               if (this.state.data[key].error) {
+                  errors[key] = this.state.data[key].error
+               }
             }
          })
 
@@ -171,7 +208,7 @@ export default class Form extends Component {
          if (Object.keys(errors).length > 0) {
             if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
-            const promise = this.props.onSubmit(data)
+            const promise = this.props.onSubmit(data, files, formData)
             if (promise instanceof Promise) {
                this.setState({ submitting: true }, () => {
                   promise
@@ -190,7 +227,7 @@ export default class Form extends Component {
          (child, i, j) => (
             React.cloneElement(child, {
                key: `${i},${j}`,
-               error: this.state.data[child.props.name].error,
+               error: this.state.data[child.props.name].error || '',
                touched: this.state.data[child.props.name].touched || false,
                onBlur: (event) => {
                   this.handleBlur(event.target.value, child)
