@@ -1,3 +1,5 @@
+@import '../../foundation/mixins';
+
 .container {
    margin-bottom: 12px;
 }
@@ -6,4 +8,153 @@
    font-weight: bold;
    color: #DD3300;
    margin-top: 4px;
+}
+
+// =====================
+// RADIOS & CHECKBOXES
+// =====================
+
+.inputRadio,
+.inputCheckbox {
+   opacity: 0;
+   position: absolute;
+}
+
+.inputRadio, .labelRadio,
+.inputCheckbox, .labelCheckbox {
+   display: inline-block;
+   vertical-align: middle;
+   margin-top: 5px;
+   margin-right: 15px;
+   cursor: pointer;
+}
+
+.labelRadio,
+.labelCheckbox {
+   position: relative;
+   width: initial;
+   max-width: calc(100% - 10px);
+   font-weight: initial;
+   font-size: 15px;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+
+.inputRadio + .labelRadio:before,
+.inputCheckbox + .labelCheckbox:before {
+   content: '';
+   background: #FFF;
+   border: 2px solid @uiBaseBorderColor;
+   display: inline-block;
+   vertical-align: middle;
+   width: 18px;
+   height: 18px;
+   padding: 2px;
+   margin-right: 10px;
+   text-align: center;
+}
+
+.inputRadio + .labelRadio:before {
+   border-radius: 50%;
+}
+
+.inputRadio:checked + .labelRadio:before,
+.inputCheckbox:checked + .labelCheckbox:before {
+   background-color: #888;
+   box-shadow: inset 0px 0px 0px 3px #FFF;
+}
+
+// =====================
+// SWITCHES
+// =====================
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 30px;
+}
+
+.switch input {
+   display: none;
+}
+
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  background-color: @uiBaseBorderColor;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.switchSlider:before {
+  position: absolute;
+  content: '';
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  border-radius: 50%;
+  background-color: white;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.switch input:checked + .switchSlider {
+  background-color: lightgreen;
+}
+
+.switch input:checked + .switchSlider:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
+}
+
+// =====================
+// FILES
+// =====================
+
+.files {
+   position: relative;
+   height: @uiBaseComponentHeightMedium;
+   line-height: @uiBaseComponentHeightMedium - 15px;
+   padding: 5px;
+   border: 2px dashed #D3D3D3;
+   box-sizing: border-box;
+   cursor: copy;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+
+.filesImageContainer {
+   position: relative;
+   height: 150px;
+   width: 150px;
+   border: 2px dashed #D3D3D3;
+   cursor: copy;
+}
+
+.filesImage {
+   max-height: 100%;
+   max-width: 100%;
+   width: auto;
+   height: auto;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+}
+
+.filesActive {
+   border-color: lightgreen;
+   color: lightgreen;
 }

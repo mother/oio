@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
-import { getWindowSize, getAttributeForCurrentSize } from '../../utils/sizeUtils'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import style from './style.less'
 
-export default class Grid extends React.Component {
+export default class Grid extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
@@ -88,9 +88,10 @@ export default class Grid extends React.Component {
       const classes = classNames(style.gridContainer, this.props.className)
       const gutter = parseFloat(getAttributeForCurrentSize(this.state.size, this.props.gutter))
 
+      // TODO: Should use setState
       if (this.props.width) {
          const width = getAttributeForCurrentSize(this.state.size, this.props.width)
-         const unit = width.indexOf('px') === -1 ? '%' : 'px'
+         const unit = width.endsWith('px') ? 'px' : '%'
          this.state.width = parseFloat(width) + unit
       }
 
