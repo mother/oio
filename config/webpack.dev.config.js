@@ -6,7 +6,7 @@ module.exports = {
    entry: [
       'webpack-dev-server/client?http://localhost:8000',
       'webpack/hot/only-dev-server',
-      './src/demo'
+      './demo/index.js'
    ],
    output: {
       path: path.join(__dirname, '..', 'dist'),
@@ -17,10 +17,7 @@ module.exports = {
       loaders: [{
          test: /\.js$/,
          exclude: /node_modules/,
-         loader: 'babel-loader',
-         query: {
-            presets: ['react', 'es2015', 'stage-0']
-         }
+         loaders: ['react-hot', 'babel-loader']
       },
       {
          test: /\.less$/,

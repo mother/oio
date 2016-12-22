@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+
 import {
    Avatar,
    Button,
@@ -26,11 +26,11 @@ import {
    Textarea,
    Title,
    View
-} from './'
+} from '../src'
 
-import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
+import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
 
-class Demo extends Component {
+export default class Demo extends Component {
    constructor(props, context) {
       super(props, context)
       this.state = {}
@@ -70,7 +70,7 @@ class Demo extends Component {
       return (
          <OIO>
             <View format="auto">
-               <View width="300px" height="100%" padding="48px 48px" className="bgGray10">
+               <View width="270px" height="100%" padding="36px" className="bgGray10">
                   <Notification
                      buttonAllAction={notification.buttonAllAction}
                      buttonFull={notification.buttonFull}
@@ -91,8 +91,8 @@ class Demo extends Component {
                   <Spacer size="9" />
                   <NavList contents={navContent} />
                </View>
-               <View format="auto" left="300px" scroll="on">
-                  <View padding="60px 60px">
+               <View format="auto" left="270px" scroll="on">
+                  <View width="100%" padding="60px 60px">
                      <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                         <GridCell>
                            <Title>Buttons</Title>
@@ -119,6 +119,18 @@ class Demo extends Component {
                                  className="p18">
                                  I am a popover!
                               </Popover>
+                           </ButtonGroup>
+                           <Spacer size="1" />
+                           <ButtonGroup>
+                              <Button size="small" name="Small Button" icon="ion-ios-monitor-outline" />
+                              <Button size="small" name="Small Button" />
+                              <Button size="small" name="Small Outline Button" outline />
+                           </ButtonGroup>
+                           <Spacer size="1" />
+                           <ButtonGroup>
+                              <Button size="tiny" name="Small Button" icon="ion-ios-monitor-outline" />
+                              <Button size="tiny" name="Small Button" />
+                              <Button size="tiny" name="Small Outline Button" outline />
                            </ButtonGroup>
                         </GridCell>
                         <GridCell>
@@ -258,6 +270,8 @@ class Demo extends Component {
                            <Text size="2">This is some text</Text>
                            <Text size="1">This is some text</Text>
 
+                           <Spacer size="9" />
+
                            <p>
                               Offal tilde blog venmo sartorial, crucifix leggings
                               pork belly bitters. Banh mi iPhone cardigan tote bag.
@@ -307,5 +321,3 @@ class Demo extends Component {
       )
    }
 }
-
-ReactDOM.render(<Demo />, document.getElementById('container'))

@@ -17,7 +17,7 @@ export default class NavDirectory extends Component {
             <Text size="1" weight="semibold" color="gray60" uppercase>{section.name}</Text>
             <Spacer size="2" />
             {(section.buttons || []).map((button) => {
-               const buttonClasses = []
+               const buttonClasses = [style.navListButton]
                const ButtonElement = button.indexLink ? IndexLink : Link
                const ButtonIcon = button.icon ? <span className={style.icon} /> : null
 
