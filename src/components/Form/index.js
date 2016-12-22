@@ -168,14 +168,13 @@ export default class Form extends Component {
          }
       })
 
-      const files = []
+      const files = {}
       const formData = new FormData()
       // Apply "files" to formData
       namesForFiles.forEach((name) => {
          const file = newState.data[name].value
          if (file) {
-            file.fieldname = name
-            files.push(file)
+            files[name] = file
             formData.append(name, new Blob([file], { type: file.type }))
          }
       })
