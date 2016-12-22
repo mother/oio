@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import {
    ActionBar,
@@ -33,15 +33,14 @@ import {
 
 import styles from './foundation/styles.less' // eslint-disable-line no-unused-vars
 
-class Demo extends React.Component {
+class Demo extends Component {
    constructor(props, context) {
       super(props, context)
       this.state = {}
    }
 
-   handleSubmit(data, formData) {
-      console.log(data) // eslint-disable-line
-      console.log(formData) // eslint-disable-line
+   handleSubmit(data, files, formData) {
+      console.log(data, files, formData) // eslint-disable-line
       // Simulate delayed promise
       return new Promise((resolve, reject) => {
          setTimeout(() => {
@@ -121,7 +120,7 @@ class Demo extends React.Component {
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
                      <GridCell colspan="2">
                         <Form
-                           onSubmit={(data, formData) => this.handleSubmit(data, formData)}
+                           onSubmit={(data, files, formData) => this.handleSubmit(data, files, formData)}
                            onError={error => this.handleError(error)}>
                            <FileInput
                               maxFileSize={5000000}
