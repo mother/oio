@@ -168,11 +168,15 @@ export default class Form extends Component {
          }
       })
 
+      const files = {}
       const formData = new FormData()
       // Apply "files" to formData
       namesForFiles.forEach((name) => {
          const file = newState.data[name].value
-         if (file) (formData.append(name, new Blob([file], { type: file.type }), file.name))
+         if (file) {
+            files[name] = file
+            formData.append(name, new Blob([file], { type: file.type }))
+         }
       })
       // Apply rest of data to formData
       Object.keys(newState.data).forEach((key) => {
@@ -204,7 +208,7 @@ export default class Form extends Component {
          if (Object.keys(errors).length > 0) {
             if (this.props.onError) this.props.onError(errors)
          } else if (this.props.onSubmit) {
-            const promise = this.props.onSubmit(data, formData)
+            const promise = this.props.onSubmit(data, files, formData)
             if (promise instanceof Promise) {
                this.setState({ submitting: true }, () => {
                   promise

@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './App'
+import OIO from '../src/components/OIO'
 
-ReactDOM.render(<App />, document.getElementById('container'))
+import Demo from './Demo'
+
+ReactDOM.render(<OIO><Demo /></OIO>, document.getElementById('container'))
