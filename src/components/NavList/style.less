@@ -1,0 +1,38 @@
+.nav {
+   a {
+      float: left;
+      position: relative;
+      width: 100%;
+      padding: 9px 18px 9px 18px;
+      color: #666;
+
+      &:hover {
+         background: #f4f4f4;
+      }
+   }
+
+   .active {
+      background: #fafafa;
+      color: #555;
+      font-weight: bold;
+
+      .icon {
+         background: #aaa;
+      }
+   }
+   
+   .icon {
+      position: absolute;
+      top: 50%;
+      margin-top: -12px;
+      left: 18px;
+      width: 24px;
+      height: 24px;
+      background: #ddd;
+      border-radius: 50%;
+   }
+}
+
+.buttonHasIcon {
+   padding: 9px 18px 9px 60px !important;
+}

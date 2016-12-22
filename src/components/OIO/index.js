@@ -7,11 +7,11 @@ export default class OIO extends Component {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       fontFamily: React.PropTypes.string,
-      primaryColor: React.PropTypes.string,
-      titleFontFamily: React.PropTypes.string
+      primaryColor: React.PropTypes.string
    }
 
    static defaultProps = {
+      fontFamily: 'Helvetica Neue, Arial',
       primaryColor: '#1cd6a8'
    }
 
@@ -22,8 +22,7 @@ export default class OIO extends Component {
    getChildContext() {
       const OIOStyles = {
          fontFamily: this.props.fontFamily,
-         primaryColor: this.props.primaryColor,
-         titleFontFamily: this.props.titleFontFamily
+         primaryColor: this.props.primaryColor
       }
 
       return { OIOStyles }
