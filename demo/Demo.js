@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import {
    ActionBar,
@@ -8,7 +8,7 @@ import {
    Checkbox,
    CheckboxGroup,
    // Cover,
-   File,
+   FileInput,
    Form,
    Grid,
    GridCell,
@@ -32,15 +32,14 @@ import {
 
 import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
 
-export default class Demo extends React.Component {
+export default class Demo extends Component {
    constructor(props, context) {
       super(props, context)
       this.state = {}
    }
 
-   handleSubmit(data, formData) {
-      console.log(data) // eslint-disable-line
-      console.log(formData) // eslint-disable-line
+   handleSubmit(data, files, formData) {
+      console.log(data, files, formData) // eslint-disable-line
       // Simulate delayed promise
       return new Promise((resolve, reject) => {
          setTimeout(() => {
@@ -120,9 +119,11 @@ export default class Demo extends React.Component {
                   <Grid columns="1[a] 2[b] 4[c] 4[d] 4[e]" gutter="30">
                      <GridCell colspan="2">
                         <Form
-                           onSubmit={(data, formData) => this.handleSubmit(data, formData)}
+                           onSubmit={(data, files, formData) => {
+                              this.handleSubmit(data, files, formData)
+                           }}
                            onError={error => this.handleError(error)}>
-                           <File
+                           <FileInput
                               maxFileSize={5000000}
                               type="image"
                               name="avatar"
@@ -135,7 +136,7 @@ export default class Demo extends React.Component {
                               }}
                            />
                            <Spacer size="2" />
-                           <File
+                           <FileInput
                               maxFileSize={5000000}
                               type="file"
                               name="document"
