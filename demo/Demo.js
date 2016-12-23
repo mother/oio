@@ -56,6 +56,13 @@ export default class Demo extends Component {
       const notification = (this.state && this.state.notification) || {}
 
       const navContent = [{
+         name: 'Style',
+         buttons: [{
+            name: 'Typography',
+            link: '/',
+            indexLink: true
+         }]
+      }, {
          name: 'Components',
          buttons: [{
             name: 'Buttons',
@@ -64,6 +71,13 @@ export default class Demo extends Component {
          }, {
             name: 'Forms',
             link: '/forms'
+         }]
+      }, {
+         name: 'Examples',
+         buttons: [{
+            name: 'Test',
+            link: '/',
+            indexLink: true
          }]
       }]
 
@@ -86,7 +100,7 @@ export default class Demo extends Component {
                      showing={notification.showing}
                      title={notification.title}
                   />
-                  <Title heading={titleHeading} weight="light" size="7">OIO</Title>
+                  <Title heading={titleHeading} weight="normal" size="7">OIO</Title>
                   <Text weight="bold" color="gray40">A Happy Style Framework</Text>
                   <Spacer size="9" />
                   <NavList contents={navContent} />
@@ -96,6 +110,9 @@ export default class Demo extends Component {
                      <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                         <GridCell>
                            <Title>Buttons</Title>
+                           <Text size="2" color="gray50">
+                              Buttons come in three sizes: Large, Medium, Small and Tiny. By default, if no size is specified, Medium will be used.
+                           </Text>
                         </GridCell>
                         <GridCell colspan="3">
                            <ButtonGroup>
@@ -105,6 +122,7 @@ export default class Demo extends Component {
                            </ButtonGroup>
                            <Spacer size="1" />
                            <ButtonGroup>
+                              <Button name="Button" icon="ion-ios-monitor-outline" />
                               <Button name="Outline Button" outline />
                               <Button name="Button" />
                               <Button color="#607D8B" name="Color Button" />
@@ -113,11 +131,13 @@ export default class Demo extends Component {
                               <Button name="Popover Button" onClick={event => this.popover.show(event)} />
                               <Popover
                                  ref={(popover) => { this.popover = popover }}
-                                 width="300px"
+                                 width="210px"
                                  offset="18px"
                                  position="right"
                                  className="p18">
-                                 I am a popover!
+                                 <Text size="2">
+                                    I am a popover!
+                                 </Text>
                               </Popover>
                            </ButtonGroup>
                            <Spacer size="1" />
@@ -128,9 +148,9 @@ export default class Demo extends Component {
                            </ButtonGroup>
                            <Spacer size="1" />
                            <ButtonGroup>
-                              <Button size="tiny" name="Small Button" icon="ion-ios-monitor-outline" />
-                              <Button size="tiny" name="Small Button" />
-                              <Button size="tiny" name="Small Outline Button" outline />
+                              <Button size="tiny" name="Tiny Button" icon="ion-ios-monitor-outline" />
+                              <Button size="tiny" name="Tiny Button" />
+                              <Button size="tiny" name="Tiny Outline Button" outline />
                            </ButtonGroup>
                         </GridCell>
                         <GridCell>
