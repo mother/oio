@@ -1,29 +1,11 @@
 import React, { Component } from 'react'
 
 import {
-   Avatar,
-   Button,
-   ButtonGroup,
-   Checkbox,
-   CheckboxGroup,
-   // Cover,
-   FileInput,
-   Form,
-   Grid,
-   GridCell,
-   // Icon,
-   Input,
    NavList,
    Notification,
    OIO,
-   Popover,
-   Radio,
-   RadioGroup,
-   Select,
    Spacer,
-   Switch,
    Text,
-   Textarea,
    Title,
    View
 } from '../src'
@@ -31,6 +13,10 @@ import {
 import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
 
 export default class Demo extends Component {
+   static propTypes = {
+      children: React.PropTypes.node
+   }
+
    constructor(props, context) {
       super(props, context)
       this.state = {}
@@ -65,11 +51,10 @@ export default class Demo extends Component {
          name: 'Components',
          buttons: [{
             name: 'Buttons',
-            link: '/',
-            indexLink: true
+            link: '/button'
          }, {
             name: 'Forms',
-            link: '/forms'
+            link: '/form'
          }]
       }, {
          name: 'Examples',
