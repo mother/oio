@@ -55,20 +55,22 @@ export default class Demo extends Component {
          }, {
             name: 'Forms',
             link: '/form'
+         }, {
+            name: 'Modal',
+            link: '/modal'
          }]
       }, {
          name: 'Examples',
          buttons: [{
-            name: 'Test',
-            link: '/',
-            indexLink: true
+            name: 'Window',
+            link: '/examples/window'
          }]
       }]
 
       return (
-         <OIO>
+         <OIO fontFamily="Helvetica Neue, Roboto" primaryColor="#879ea2">
             <View format="auto">
-               <View width="270px" height="100%" padding="36px" className="bgGray10">
+               <View width="210px[a-c] 240px[d] 270px[e]" height="100%" padding="36px" className="">
                   <Notification
                      buttonAllAction={notification.buttonAllAction}
                      buttonFull={notification.buttonFull}
@@ -85,12 +87,12 @@ export default class Demo extends Component {
                      title={notification.title}
                   />
                   <Title heading={titleHeading} weight="normal" size="7">OIO</Title>
-                  <Text weight="bold" color="gray40">A Happy Style Framework</Text>
+                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br/>Framework</Text>
                   <Spacer size="9" />
                   <NavList contents={navContent} />
                </View>
-               <View format="auto" left="270px" scroll="on">
-                  <View width="100%" padding="60px 60px">
+               <View format="auto" left="210px[a-c] 240px[d] 270px[e]" scroll="on">
+                  <View width="100%" padding="18px 60px 18px 30px">
                      {this.props.children}
                   </View>
                </View>
