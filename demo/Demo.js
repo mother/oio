@@ -68,7 +68,7 @@ export default class Demo extends Component {
       }]
 
       return (
-         <OIO fontFamily="Helvetica Neue, Roboto" primaryColor="#879ea2">
+         <OIO fontFamily="Helvetica Neue" primaryColor="#879ea2">
             <View format="auto">
                <View width="210px[a-c] 240px[d] 270px[e]" height="100%" padding="36px" className="">
                   <Notification
