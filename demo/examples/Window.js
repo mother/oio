@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {
+   ActionBar,
    Grid,
    GridCell,
+   NavTabs,
    Spacer,
    Text,
    Title,
@@ -17,6 +19,12 @@ export default class DemoExampleWindow extends Component {
    }
 
    render() {
+      const navContent = [{
+         name: 'Active',
+         link: '/examples/window',
+         indexLink: true
+      }]
+
       return (
          <View width="100%" className={style.docs}>
             <TitleBar title="Modal" flush />
@@ -31,6 +39,9 @@ export default class DemoExampleWindow extends Component {
                <GridCell colspan="3">
                   <View className={style.docsWindow} width="100%" height="600px">
                      <TitleBar title="A Window Example" />
+                     <ActionBar>
+                        <NavTabs content={navContent} />
+                     </ActionBar>
                   </View>
                </GridCell>
             </Grid>

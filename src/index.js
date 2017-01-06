@@ -13,6 +13,7 @@ import Icon from './components/Icon'
 import Input from './components/Form/Input'
 import Nav from './components/Nav'
 import NavList from './components/NavList'
+import NavTabs from './components/NavTabs'
 import Notification from './components/Notification'
 import OIO from './components/OIO'
 import Popover from './components/Popover'
@@ -46,6 +47,7 @@ export {
    Input,
    Nav,
    NavList,
+   NavTabs,
    Notification,
    OIO,
    Popover,
