@@ -60,6 +60,15 @@ export default class Demo extends Component {
             link: '/modal'
          }]
       }, {
+         name: 'Navigation',
+         buttons: [{
+            name: 'Tabs',
+            link: '/navigation/tabs'
+         }, {
+            name: 'List',
+            link: '/navigation/list'
+         }]
+      }, {
          name: 'Examples',
          buttons: [{
             name: 'Window',

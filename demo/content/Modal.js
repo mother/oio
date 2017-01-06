@@ -38,11 +38,11 @@ export default class DemoContentModal extends Component {
                         <th>Description/Options</th>
                      </tr>
                      <tr>
-                        <td><b>fillOffset</b></td>
+                        <td><b>windowMargin</b></td>
                         <td>String</td>
                         <td><code>0px</code></td>
                         <td>
-                           Applicable only when mode is set to <code>fill</code>. It is the pixel from top, left, right, bottom positions of the modal window.
+                           It is the pixel from top, left, right, bottom positions of the modal window.
                         </td>
                      </tr>
                      <tr>
@@ -63,7 +63,7 @@ export default class DemoContentModal extends Component {
                         </td>
                      </tr>
                      <tr>
-                        <td><b>onCloseLink</b></td>
+                        <td><b>closeURL</b></td>
                         <td>String</td>
                         <td>-</td>
                         <td>
