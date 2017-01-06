@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { IndexLink, Link } from 'react-router'
-import { Text } from '../Text'
-
+import Text from '../Text'
 import style from './style.less'
 
 export default class NavTabs extends Component {
