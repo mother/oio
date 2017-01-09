@@ -30,54 +30,58 @@ export default class DemoContentModal extends Component {
                   </Text>
                </GridCell>
                <GridCell colspan="3">
-                  <table class={style.table}>
-                     <tr>
-                        <th width="150px">Prop</th>
-                        <th width="90px">Prop Type</th>
-                        <th width="120px">Default Value</th>
-                        <th>Description/Options</th>
-                     </tr>
-                     <tr>
-                        <td><b>windowMargin</b></td>
-                        <td>String</td>
-                        <td><code>0px</code></td>
-                        <td>
-                           It is the pixel from top, left, right, bottom positions of the modal window.
-                        </td>
-                     </tr>
-                     <tr>
-                        <td><b>height</b></td>
-                        <td>String</td>
-                        <td>-</td>
-                        <td>
-                           -
-                        </td>
-                     </tr>
-                     <tr>
-                        <td><b>mode</b></td>
-                        <td>String</td>
-                        <td><code>fixed</code></td>
-                        <td>
-                           <code>fixed</code>
-                           <code>fill</code>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td><b>closeURL</b></td>
-                        <td>String</td>
-                        <td>-</td>
-                        <td>
-                           URL that user is directed to when they close the <code>Modal</code>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td><b>width</b></td>
-                        <td>String</td>
-                        <td>-</td>
-                        <td>
-                           -
-                        </td>
-                     </tr>
+                  <table className={style.table}>
+                     <thead>
+                        <tr>
+                           <th width="150px">Prop</th>
+                           <th width="90px">Prop Type</th>
+                           <th width="120px">Default Value</th>
+                           <th>Description/Options</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><b>windowMargin</b></td>
+                           <td>String</td>
+                           <td><code>0px</code></td>
+                           <td>
+                              It is the pixel from top, left, right, bottom positions of the modal window.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>height</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>
+                              -
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>mode</b></td>
+                           <td>String</td>
+                           <td><code>fixed</code></td>
+                           <td>
+                              <code>fixed</code>
+                              <code>fill</code>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>closeURL</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>
+                              URL that user is directed to when they close the <code>Modal</code>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>width</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>
+                              -
+                           </td>
+                        </tr>
+                     </tbody>
                   </table>
                </GridCell>
             </Grid>

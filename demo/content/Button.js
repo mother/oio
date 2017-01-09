@@ -108,53 +108,57 @@ export default class DemoContentButton extends Component {
                </GridCell>
                <GridCell colspan="3">
                   <table class={style.table}>
-                     <tr>
-                        <th>Prop</th>
-                        <th>Prop Type</th>
-                        <th>Default Value</th>
-                        <th>Description/Options</th>
-                     </tr>
-                     <tr>
-                        <td><b>Icon</b></td>
-                        <td>String</td>
-                        <td>-</td>
-                        <td>
-                           Set ioinicon icon class name
-                        </td>
-                     </tr>
-                     <tr>
-                        <td><b>Mode</b></td>
-                        <td>String</td>
-                        <td></td>
-                        <td>If set to <code>loading</code>, a loading indicator will be shown in place in the button</td>
-                     </tr>
-                     <tr>
-                        <td><b>Name</b></td>
-                        <td>String</td>
-                        <td></td>
-                        <td>Text that appears inside the button</td>
-                     </tr>
-                     <tr>
-                        <td><b>Size</b></td>
-                        <td>String</td>
-                        <td>
-                           <code>medium</code>
-                        </td>
-                        <td>
-                           <code>large</code>
-                           <code>medium</code>
-                           <code>small</code>
-                           <code>tiny</code>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td><b>Outline</b></td>
-                        <td>Boolean</td>
-                        <td>
-                           <code>false</code>
-                        </td>
-                        <td>Gives button an outline appearance</td>
-                     </tr>
+                     <thead>
+                        <tr>
+                           <th>Prop</th>
+                           <th>Prop Type</th>
+                           <th>Default Value</th>
+                           <th>Description/Options</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><b>icon</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>
+                              Set ioinicon icon class name
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>mode</b></td>
+                           <td>String</td>
+                           <td></td>
+                           <td>If set to <code>loading</code>, a loading indicator will be shown in place in the button</td>
+                        </tr>
+                        <tr>
+                           <td><b>name</b></td>
+                           <td>String</td>
+                           <td></td>
+                           <td>Text that appears inside the button</td>
+                        </tr>
+                        <tr>
+                           <td><b>size</b></td>
+                           <td>String</td>
+                           <td>
+                              <code>medium</code>
+                           </td>
+                           <td>
+                              <code>large</code>
+                              <code>medium</code>
+                              <code>small</code>
+                              <code>tiny</code>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>outline</b></td>
+                           <td>Boolean</td>
+                           <td>
+                              <code>false</code>
+                           </td>
+                           <td>Gives button an outline appearance</td>
+                        </tr>
+                     </tbody>
                   </table>
                </GridCell>
             </Grid>
