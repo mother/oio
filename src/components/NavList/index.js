@@ -10,8 +10,17 @@ export default class NavDirectory extends Component {
       contents: React.PropTypes.array
    }
 
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
+   }
+
    render() {
+      const primaryColor = this.context.OIOStyles.primaryColor
       const contents = this.props.contents || []
+      const actionStyle = {
+         color: primaryColor
+      }
+
       const navContents = contents.map((section, index) =>
          <div key={`section-${index}`}>
             <Text size="1" weight="semibold" color="gray70" uppercase>{section.name}</Text>
@@ -37,7 +46,10 @@ export default class NavDirectory extends Component {
                )
             })}
             {(section.actions || []).map(action =>
-               <Link to="/organization/settings/design/collections/add" className={style.action}>
+               <Link
+                  to="/organization/settings/design/collections/add"
+                  className={style.action}
+                  style={actionStyle}>
                   <div className={classNames('icon', 'ion-plus-circled', style.actionIcon)} />
                   <Text size="2" weight="semibold">
                      {action.name}
