@@ -36,6 +36,14 @@ export default class NavDirectory extends Component {
                   </ButtonElement>
                )
             })}
+            {(section.actions || []).map(action =>
+               <Link to="/organization/settings/design/collections/add" className={style.action}>
+                  <div className={classNames('icon', 'ion-plus-circled', style.actionIcon)} />
+                  <Text size="2" weight="semibold">
+                     {action.name}
+                  </Text>
+               </Link>
+            )}
             <Spacer size="4" />
          </div>
       )
