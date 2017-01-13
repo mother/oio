@@ -11,6 +11,7 @@ import Grid from './components/Grid'
 import GridCell from './components/GridCell'
 import Icon from './components/Icon'
 import Input from './components/Form/Input'
+import Modal from './components/Modal'
 import Nav from './components/Nav'
 import Notification from './components/Notification'
 import OIO from './components/OIO'
@@ -43,6 +44,7 @@ export {
    GridCell,
    Icon,
    Input,
+   Modal,
    Nav,
    Notification,
    OIO,
