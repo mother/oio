@@ -11,12 +11,14 @@ export default class Modal extends Component {
    }
 
    static defaultProps = {
+      closeURL: '/',
       width: '600',
       height: '600'
    }
 
    hideModal(event) {
       if (this.node === event.target) {
+         console.log(this.props.closeURL)
          browserHistory.push(this.props.closeURL)
       }
    }
