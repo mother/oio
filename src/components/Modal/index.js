@@ -18,7 +18,6 @@ export default class Modal extends Component {
 
    hideModal(event) {
       if (this.node === event.target) {
-         console.log(this.props.closeURL)
          browserHistory.push(this.props.closeURL)
       }
    }
