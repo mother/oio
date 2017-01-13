@@ -132,6 +132,9 @@ export default class Button extends Component {
             buttonStyle.marginRight = buttonGroup.spacing
          } else if (buttonGroup.align === 'right') {
             buttonStyle.marginLeft = buttonGroup.spacing
+         } else if (buttonGroup.align === 'center') {
+            buttonStyle.marginLeft = `${parseFloat(buttonGroup.spacing) / 2}px`
+            buttonStyle.marginRight = `${parseFloat(buttonGroup.spacing) / 2}px`
          }
       }
 
