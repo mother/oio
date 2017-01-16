@@ -27,8 +27,8 @@ export default class Modal extends Component {
    }
 
    render() {
-      const width = this.props.width
-      const height = this.props.height
+      const width = parseFloat(this.props.width)
+      const height = parseFloat(this.props.height)
       const windowStyles = {
          width: `${width}px`,
          height: `${height}px`,
