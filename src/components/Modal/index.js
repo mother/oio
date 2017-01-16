@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { browserHistory } from 'react-router'
 import style from './style.less'
 
 export default class Modal extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       height: React.PropTypes.string,
-      closeURL: React.PropTypes.string,
+      // closeURL: React.PropTypes.string,
+      onClose: React.PropTypes.func,
       width: React.PropTypes.string
    }
 
@@ -17,9 +17,13 @@ export default class Modal extends Component {
    }
 
    hideModal(event) {
-      if (this.node === event.target) {
-         browserHistory.push(this.props.closeURL)
+      if (this.props.onClose && this.node === event.target) {
+         this.props.onClose()
       }
+      // TODO: Below will be used once we figure out how to get browserHistory working correctly
+      // if (this.node === event.target) {
+      //    browserHistory.push(this.props.closeURL)
+      // }
    }
 
    render() {
