@@ -36,6 +36,8 @@ export default class Modal extends Component {
          marginTop: `${(height / 2) * -1}px`
       }
 
+      console.log(windowStyles)
+
       return (
          <div
             ref={node => (this.node = node)}
