@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import style from './style.less'
 
 export default class Modal extends Component {
@@ -7,7 +8,8 @@ export default class Modal extends Component {
       height: React.PropTypes.string,
       // closeURL: React.PropTypes.string,
       onClose: React.PropTypes.func,
-      width: React.PropTypes.string
+      width: React.PropTypes.string,
+      windowClassName: React.PropTypes.string
    }
 
    static defaultProps = {
@@ -21,6 +23,7 @@ export default class Modal extends Component {
          this.props.onClose()
       }
       // TODO: Below will be used once we figure out how to get browserHistory working correctly
+      // Presumeable, the developer can also pass an onClose function as well
       // if (this.node === event.target) {
       //    browserHistory.push(this.props.closeURL)
       // }
@@ -36,14 +39,14 @@ export default class Modal extends Component {
          marginTop: `${(height / 2) * -1}px`
       }
 
-      console.log(windowStyles)
-
       return (
          <div
             ref={node => (this.node = node)}
             onClick={event => this.hideModal(event)}
             className={style.modalOverlay}>
-            <div className={style.modalWindow} style={windowStyles}>
+            <div
+               className={classNames(style.modalWindow, this.props.windowClassName)}
+               style={windowStyles}>
                {this.props.children}
             </div>
          </div>
