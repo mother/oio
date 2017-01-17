@@ -73,6 +73,7 @@ export default class Button extends Component {
       if (this.props.color) {
          buttonColor = this.props.color
          buttonColorRGB = convertColor(buttonColor)
+         buttonStyle.backgroundColor = buttonColor
       }
 
       if (this.props.icon) {

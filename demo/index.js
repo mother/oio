@@ -1,7 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Router, browserHistory } from 'react-router'
 
 import OIO from '../src/components/OIO'
-import Demo from './Demo'
+import routes from './routes'
 
-ReactDOM.render(<OIO><Demo /></OIO>, document.getElementById('container'))
+ReactDOM.render(
+   <OIO>
+      <Router history={browserHistory} routes={routes} />
+   </OIO>
+, document.getElementById('container'))

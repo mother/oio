@@ -12,6 +12,7 @@ import GridCell from './components/GridCell'
 import Icon from './components/Icon'
 import Input from './components/Form/Input'
 import Nav from './components/Nav'
+import NavList from './components/NavList'
 import Notification from './components/Notification'
 import OIO from './components/OIO'
 import Popover from './components/Popover'
@@ -44,6 +45,7 @@ export {
    Icon,
    Input,
    Nav,
+   NavList,
    Notification,
    OIO,
    Popover,
