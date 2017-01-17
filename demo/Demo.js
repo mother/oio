@@ -10,7 +10,8 @@ import {
    View
 } from '../src'
 
-import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+import styles from '../src/foundation/styles.less'
 
 export default class Demo extends Component {
    static propTypes = {
