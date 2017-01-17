@@ -129,8 +129,10 @@ export default class DemoContentButton extends Component {
                            <td><b>mode</b></td>
                            <td>String</td>
                            <td />
-                           <td>If set to <code>loading</code>,
-                           a loading indicator will be shown in place in the button</td>
+                           <td>
+                              If set to <code>loading</code>,
+                              a loading indicator will be shown in place in the button
+                           </td>
                         </tr>
                         <tr>
                            <td><b>name</b></td>
