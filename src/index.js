@@ -49,6 +49,7 @@ export {
    Modal,
    Nav,
    NavList,
+   NavTabs,
    Notification,
    OIO,
    Popover,

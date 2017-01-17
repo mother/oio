@@ -12,7 +12,7 @@ export default class OIO extends Component {
 
    static defaultProps = {
       fontFamily: 'Helvetica Neue, Arial',
-      primaryColor: '#1cd6a8'
+      primaryColor: '#78909C'
    }
 
    static childContextTypes = {

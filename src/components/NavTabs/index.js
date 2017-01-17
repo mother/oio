@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { IndexLink, Link } from 'react-router'
+import convertColor from '../../utils/convertColor'
 import Text from '../Text'
 import style from './style.less'
 
@@ -19,6 +20,8 @@ export default class NavTabs extends Component {
    render() {
       const content = this.props.content
       const primaryColor = this.context.OIOStyles.primaryColor
+      const primaryColorRGB = convertColor(primaryColor)
+
       const tabs = content.map((tab) => {
          const TabElement = tab.indexLink ? IndexLink : Link
          const tabStyle = {
@@ -26,7 +29,10 @@ export default class NavTabs extends Component {
          }
 
          const activeStyle = {
-            borderBottom: `2px solid ${primaryColor}`
+            borderBottom: `4px solid
+            rgba(${primaryColorRGB.r},
+            ${primaryColorRGB.g},
+            ${primaryColorRGB.b}, 0.7)`
          }
 
          return (

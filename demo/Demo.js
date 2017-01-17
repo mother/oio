@@ -1,36 +1,23 @@
 import React, { Component } from 'react'
 
 import {
-   Avatar,
-   Button,
-   ButtonGroup,
-   Checkbox,
-   CheckboxGroup,
-   // Cover,
-   FileInput,
-   Form,
-   Grid,
-   GridCell,
-   // Icon,
-   Input,
    NavList,
    Notification,
    OIO,
-   Popover,
-   Radio,
-   RadioGroup,
-   Select,
    Spacer,
-   Switch,
    Text,
-   Textarea,
    Title,
    View
 } from '../src'
 
-import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+import styles from '../src/foundation/styles.less'
 
 export default class Demo extends Component {
+   static propTypes = {
+      children: React.PropTypes.node
+   }
+
    constructor(props, context) {
       super(props, context)
       this.state = {}
@@ -65,25 +52,35 @@ export default class Demo extends Component {
          name: 'Components',
          buttons: [{
             name: 'Buttons',
-            link: '/',
-            indexLink: true
+            link: '/button'
          }, {
             name: 'Forms',
-            link: '/forms'
+            link: '/form'
+         }, {
+            name: 'Modal',
+            link: '/modal'
+         }]
+      }, {
+         name: 'Navigation',
+         buttons: [{
+            name: 'Tabs',
+            link: '/navigation/tabs'
+         }, {
+            name: 'List',
+            link: '/navigation/list'
          }]
       }, {
          name: 'Examples',
          buttons: [{
-            name: 'Test',
-            link: '/',
-            indexLink: true
+            name: 'Window',
+            link: '/examples/window'
          }]
       }]
 
       return (
-         <OIO>
+         <OIO fontFamily="Helvetica Neue" primaryColor="#879ea2">
             <View format="auto">
-               <View width="270px" height="100%" padding="36px" className="bgGray10">
+               <View width="210px[a-c] 240px[d] 270px[e]" height="100%" padding="36px" className="">
                   <Notification
                      buttonAllAction={notification.buttonAllAction}
                      buttonFull={notification.buttonFull}
@@ -100,12 +97,12 @@ export default class Demo extends Component {
                      title={notification.title}
                   />
                   <Title heading={titleHeading} weight="normal" size="7">OIO</Title>
-                  <Text weight="bold" color="gray40">A Happy Style Framework</Text>
+                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br/>Framework</Text>
                   <Spacer size="9" />
                   <NavList contents={navContent} />
                </View>
-               <View format="auto" left="270px" scroll="on">
-                  <View width="100%" padding="60px 60px">
+               <View format="auto" left="210px[a-c] 240px[d] 270px[e]" scroll="on">
+                  <View width="100%" padding="18px 60px 18px 30px">
                      {this.props.children}
                   </View>
                </View>
