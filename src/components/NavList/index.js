@@ -21,11 +21,11 @@ export default class NavDirectory extends Component {
          color: primaryColor
       }
 
-      const navContents = contents.map((section, index) =>
-         <div key={`section-${index}`}>
+      const navContents = contents.map((section, index) => 
+         <div key={`${section.name || index}`}>
             <Text size="1" weight="semibold" color="gray70" uppercase>{section.name}</Text>
             <Spacer size="2" />
-            {(section.buttons || []).map((button) => {
+            {(section.buttons || []).map((button, buttonIndex) => {
                const buttonClasses = [style.navListButton]
                const ButtonElement = button.indexLink ? IndexLink : Link
                const ButtonIcon = button.icon ? <span className={style.icon} /> : null
@@ -37,7 +37,7 @@ export default class NavDirectory extends Component {
                return (
                   <ButtonElement
                      to={button.link}
-                     key={button.name}
+                     key={`${button.name || buttonIndex}`}
                      className={classNames(buttonClasses)}
                      activeClassName={style.active}>
                      {ButtonIcon}
@@ -47,6 +47,7 @@ export default class NavDirectory extends Component {
             })}
             {(section.actions || []).map(action =>
                <Link
+                  key={action.name}
                   to={action.link}
                   className={style.action}
                   style={actionStyle}>
