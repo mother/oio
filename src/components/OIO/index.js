@@ -14,7 +14,7 @@ export default class OIO extends Component {
       fontFamily: 'Helvetica Neue, Arial',
       primaryColor: '#78909C'
    }
-   //1cd6a8
+
    static childContextTypes = {
       OIOStyles: React.PropTypes.object
    }

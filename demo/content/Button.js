@@ -107,7 +107,7 @@ export default class DemoContentButton extends Component {
                   </Text>
                </GridCell>
                <GridCell colspan="3">
-                  <table class={style.table}>
+                  <table className={style.table}>
                      <thead>
                         <tr>
                            <th>Prop</th>
@@ -128,13 +128,14 @@ export default class DemoContentButton extends Component {
                         <tr>
                            <td><b>mode</b></td>
                            <td>String</td>
-                           <td></td>
-                           <td>If set to <code>loading</code>, a loading indicator will be shown in place in the button</td>
+                           <td />
+                           <td>If set to <code>loading</code>,
+                           a loading indicator will be shown in place in the button</td>
                         </tr>
                         <tr>
                            <td><b>name</b></td>
                            <td>String</td>
-                           <td></td>
+                           <td />
                            <td>Text that appears inside the button</td>
                         </tr>
                         <tr>
