@@ -39,7 +39,8 @@
     "classnames": "2.2.5",
     "flatten": "1.0.2",
     "form-data": "2.1.2",
-    "react-files": "2.3.1"
+    "react-files": "2.3.1",
+    "react-router": "3.0.0"
   },
   "devDependencies": {
     "babel-core": "6.20.0",
@@ -67,8 +68,8 @@
     "resolve-url-loader": "1.6.0",
     "sinon": "1.17.5",
     "style-loader": "0.13.1",
-    "webpack-dev-server": "1.12.1",
-    "webpack": "1.14.0"
+    "webpack": "1.14.0",
+    "webpack-dev-server": "1.12.1"
   },
   "config": {
     "ghooks": {
