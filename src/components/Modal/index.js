@@ -49,6 +49,9 @@ export default class Modal extends Component {
                style={windowStyles}>
                {this.props.children}
             </div>
+            <Link to={this.props.closeURL}>
+               <div className={classNames('icon', 'ion-ios-close-empty', style.closeButton)} />
+            </Link>
          </div>
       )
    }
