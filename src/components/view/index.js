@@ -83,11 +83,16 @@ export default class View extends Component {
          }
       })
 
-      if (Object.keys(stateModifier).length > 0) {
-         this.setState(stateModifier, () => {
-            this.updateComponentSizeAndPosition()
-         })
-      }
+      // Even if nothing has changed, we force a re-render since
+      // this may have been triggered by a state change in the parent
+      // component. And since the parent component's state has an
+      // impact on width and aspect ratio, it could therefore change
+      // this component's width and aspect ratio as well.
+      // TODO: Check if an ancestor view has changed in a relevant way
+      // in order to not render unecessarily.
+      this.setState(stateModifier, () => {
+         this.updateComponentSizeAndPosition()
+      })
    }
 
    componentWillUnmount() {
