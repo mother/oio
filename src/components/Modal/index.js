@@ -7,7 +7,7 @@ export default class Modal extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       height: React.PropTypes.string,
-      // closeURL: React.PropTypes.string,
+      closeURL: React.PropTypes.string,
       onClose: React.PropTypes.func,
       width: React.PropTypes.string,
       windowClassName: React.PropTypes.string
