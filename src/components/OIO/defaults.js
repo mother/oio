@@ -4,7 +4,7 @@ export default {
          primary: '#78909C',
          none: 'none'
       },
-      height: {
+      elementHeight: {
          large: '48px',
          medium: '36px',
          small: '30px',
@@ -15,8 +15,8 @@ export default {
       family: 'Helvetica Neue, Arial, sans-serif',
       sizes: {
          1: {
-            fontSize: ['11px[a] 20px[b-e]'],
-            lineHeight: ['16px']
+            fontSize: '11px[a] 20px[b-e]',
+            lineHeight: '16px'
          },
          2: {
             fontSize: '11px',
