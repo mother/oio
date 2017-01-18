@@ -15,28 +15,44 @@ export default {
       family: 'Helvetica Neue, Arial, sans-serif',
       sizes: {
          1: {
-            fontSize: '11px[a] 20px[b-e]',
+            fontSize: '9px[a] 10px[b-e]',
             lineHeight: '16px'
          },
          2: {
-            fontSize: '11px',
-            lineHeight: '16px'
+            fontSize: '13px',
+            lineHeight: '17px'
          },
          3: {
-            fontSize: '11px',
-            lineHeight: '16px'
+            fontSize: '15px',
+            lineHeight: '21px'
          },
          4: {
-            fontSize: '11px',
-            lineHeight: '16px'
+            fontSize: '17px',
+            lineHeight: '22px'
          },
          5: {
-            fontSize: '11px',
-            lineHeight: '16px'
+            fontSize: '19px',
+            lineHeight: '23px'
          },
          6: {
-            fontSize: '11px',
-            lineHeight: '16px'
+            fontSize: '25px',
+            lineHeight: '30px'
+         },
+         7: {
+            fontSize: '34px',
+            lineHeight: '1.2'
+         },
+         8: {
+            fontSize: '45px',
+            lineHeight: '1.2em'
+         },
+         9: {
+            fontSize: '56px',
+            lineHeight: '1.1em'
+         },
+         10: {
+            fontSize: '78px',
+            lineHeight: '78px'
          }
       }
    },
