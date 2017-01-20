@@ -6,13 +6,17 @@ export default class Popover extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
+      height: React.PropTypes.string,
       offset: React.PropTypes.string,
       position: React.PropTypes.string,
-      width: React.PropTypes.string.isRequired
+      width: React.PropTypes.string
    }
 
    static defaultProps = {
-      offset: '24'
+      height: '300',
+      offset: '24',
+      position: 'above left',
+      width: '300'
    }
 
    constructor(props, context) {
@@ -38,13 +42,14 @@ export default class Popover extends Component {
    }
 
    show(event) {
-      event.stopPropagation()
+      const button = event
+      button.stopPropagation()
 
       this.setState({
-         top: event.currentTarget.offsetTop,
-         left: event.currentTarget.offsetLeft,
+         top: button.currentTarget.offsetTop,
+         left: button.currentTarget.offsetLeft,
          visible: true,
-         buttonWidth: event.currentTarget.offsetWidth
+         buttonWidth: button.currentTarget.offsetWidth
       })
    }
 
@@ -53,17 +58,24 @@ export default class Popover extends Component {
    }
 
    render() {
+      const position = this.props.position
       const visibilityClass = this.state.visible ? 'isVisible' : ''
       const popoverStyle = {}
       const popoverOffset = parseFloat(this.props.offset)
       const popoverWidth = parseFloat(this.props.width)
+      const popoverHeight = parseFloat(this.props.height)
 
-      // Set Popover Position
-      if (this.props.position === 'right') {
-         popoverStyle.top = `${this.state.top + popoverOffset}px`
-         popoverStyle.left = `${this.state.left - popoverOffset - (popoverWidth - this.state.buttonWidth)}px`
+      // If above is not specified in the position, assume it should be below
+      if (position.includes('above')) {
+         popoverStyle.top = `${this.state.top - popoverOffset - popoverHeight}px`
       } else {
          popoverStyle.top = `${this.state.top + popoverOffset}px`
+      }
+
+      // Set Popover Position
+      if (position.includes('right')) {
+         popoverStyle.left = `${this.state.left - popoverOffset - (popoverWidth - this.state.buttonWidth)}px`
+      } else if (position.includes('left')) {
          popoverStyle.left = `${this.state.left - popoverOffset}px`
       }
 
