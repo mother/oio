@@ -81,7 +81,7 @@ export default class Popover extends Component {
 
       // Set Popover Margins and Container
       const popoverContainerStyle = {
-         height: popoverHeight,
+         height: `${popoverHeight}px`,
          margin: `${popoverOffset}px`,
          width: popoverWidth
       }
