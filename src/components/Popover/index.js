@@ -13,7 +13,7 @@ export default class Popover extends Component {
    }
 
    static defaultProps = {
-      height: '300',
+      height: '60',
       offset: '24',
       position: 'above left',
       width: '300'
