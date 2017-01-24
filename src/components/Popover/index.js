@@ -67,7 +67,7 @@ export default class Popover extends Component {
 
       // If above is not specified in the position, assume it should be below
       if (position.includes('above')) {
-         popoverStyle.top = `${this.state.top - popoverOffset - popoverHeight}px`
+         popoverStyle.top = `${this.state.top - (2 * popoverOffset) - popoverHeight}px`
       } else {
          popoverStyle.top = `${this.state.top + popoverOffset}px`
       }
