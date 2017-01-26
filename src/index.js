@@ -5,6 +5,7 @@ import ButtonGroup from './components/ButtonGroup'
 import Checkbox from './components/Form/Checkbox'
 import CheckboxGroup from './components/Form/CheckboxGroup'
 import Cover from './components/Cover'
+import DateInput from './components/Form/DateInput'
 import FileInput from './components/Form/FileInput'
 import Form from './components/Form'
 import Grid from './components/Grid'
@@ -40,6 +41,7 @@ export {
    Checkbox,
    CheckboxGroup,
    Cover,
+   DateInput,
    FileInput,
    Form,
    Grid,

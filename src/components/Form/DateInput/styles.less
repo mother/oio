@@ -1,0 +1,53 @@
+@import '../../../foundation/mixins';
+
+.container {
+   // padding-left: 5px;
+   // padding-right: 5px;
+   border: 2px solid @uiBaseBorderColor;
+   .rounded(@uiBaseComponentRadius);
+   box-sizing: border-box;
+}
+
+.input, .select {
+   -webkit-appearance: none;
+   margin: 0;
+   background: none;
+   border: none;
+   border-radius: 0;
+   outline: none;
+   display: inline-block;
+   width: initial;
+   height: @uiBaseComponentHeightMedium;
+   .uiTextSize3;
+   line-height: @uiBaseComponentHeightMedium - 13px;
+
+   padding: 5px;
+}
+
+.select {
+   height: @uiBaseComponentHeightMedium;
+   vertical-align: top;
+
+   &:hover {
+      background: none;
+   }
+}
+
+.year {
+   width: 25%;
+   border-right: 2px solid @uiBaseBorderColor;
+}
+
+.month {
+   width: 25%;
+   border-right: 2px solid @uiBaseBorderColor;
+}
+
+.day {
+   width: 25%;
+   border-right: 2px solid @uiBaseBorderColor;
+}
+
+.time {
+   width: 25%;
+}
