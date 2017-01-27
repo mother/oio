@@ -28,6 +28,14 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
+   handleSubmit(data, files, formData) {
+      console.log(data) // eslint-disable-line
+   }
+
+   handleError(error) {
+      console.log(error) // eslint-disable-line
+   }
+
    render() {
       const titleHeading = '1'
       const titleSize = '4'
