@@ -20,7 +20,15 @@ export default class Demo extends Component {
 
    constructor(props, context) {
       super(props, context)
-      this.state = {}
+
+      this.state = {
+         notification: {
+            autoDismiss: 2000,
+            message: 'Message',
+            showing: true,
+            title: 'Title'
+         }
+      }
    }
 
    handleSubmit(data, files, formData) {
@@ -82,6 +90,7 @@ export default class Demo extends Component {
             <View format="auto">
                <View width="210px[a-c] 240px[d] 270px[e]" height="100%" padding="36px" className="">
                   <Notification
+                     autoDismiss={notification.autoDismiss}
                      buttonAllAction={notification.buttonAllAction}
                      buttonFull={notification.buttonFull}
                      buttonFullAction={notification.buttonFullAction}
@@ -97,7 +106,7 @@ export default class Demo extends Component {
                      title={notification.title}
                   />
                   <Title heading={titleHeading} weight="normal" size="7">OIO</Title>
-                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br/>Framework</Text>
+                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br />Framework</Text>
                   <Spacer size="9" />
                   <NavList contents={navContent} />
                </View>
