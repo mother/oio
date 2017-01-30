@@ -44,6 +44,8 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
+      this.handleSubmit = this.handleSubmit.bind(this)
+
       this.testContext = {
          get: this.get.bind(this)
       }
@@ -243,7 +245,7 @@ export default class Form extends Component {
       )
 
       return (
-         <form onSubmit={event => this.handleSubmit(event)}>
+         <form onSubmit={this.handleSubmit}>
             {domWithNewFormElements}
          </form>
       )
