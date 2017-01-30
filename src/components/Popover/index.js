@@ -23,8 +23,6 @@ export default class Popover extends Component {
       super(props, context)
 
       this.hide = this.hide.bind(this)
-
-      // Eventually allow smart positioning and below/above
       this.state = {
          top: 0,
          left: 0,
@@ -65,6 +63,7 @@ export default class Popover extends Component {
       const popoverWidth = parseFloat(this.props.width)
       const popoverHeight = parseFloat(this.props.height)
 
+      // Set Popover Vertical Position
       // If above is not specified in the position, assume it should be below
       if (position.includes('above')) {
          popoverStyle.top = `${this.state.top - (2 * popoverOffset) - popoverHeight}px`
@@ -72,10 +71,11 @@ export default class Popover extends Component {
          popoverStyle.top = `${this.state.top + popoverOffset}px`
       }
 
-      // Set Popover Position
+      // Set Popover Horizontal Position
+      // If left or right is not set, assume left alignment
       if (position.includes('right')) {
          popoverStyle.left = `${this.state.left - popoverOffset - (popoverWidth - this.state.buttonWidth)}px`
-      } else if (position.includes('left')) {
+      } else {
          popoverStyle.left = `${this.state.left - popoverOffset}px`
       }
 
