@@ -141,7 +141,6 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
       newState.data[child.props.name] = {
          value,
-         error: this.applyRulesToValue(child.props.rules, value),
          touched: true
       }
       this.setState(newState)
