@@ -136,10 +136,56 @@ export default class DemoContentMessage extends Component {
                         </thead>
                         <tbody>
                            <tr>
-                              <td><b>propName</b></td>
+                              <td><b>onConfirm</b></td>
+                              <td>Function</td>
+                              <td><code>N/A</code></td>
+                              <td>
+                                 <code>onConfirm: result =&gt; &#123;&#125;</code>
+                                 <br />
+                                 <span>where <code>result</code> is true or false</span>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><b>onPrompt</b></td>
+                              <td>Function</td>
+                              <td><code>N/A</code></td>
+                              <td>
+                                 <code>onPrompt: result =&gt; &#123;&#125;</code>
+                                 <br />
+                                 <span>where <code>result</code> is text submitted</span>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><b>text</b></td>
                               <td>String</td>
-                              <td><code>0px</code></td>
-                              <td>Description...</td>
+                              <td><code>Text</code></td>
+                              <td>Text content of message</td>
+                           </tr>
+                           <tr>
+                              <td><b>title</b></td>
+                              <td>String</td>
+                              <td><code>Title</code></td>
+                              <td>Title of message</td>
+                           </tr>
+                           <tr>
+                              <td><b>type</b></td>
+                              <td>String</td>
+                              <td><code>alert</code></td>
+                              <td>
+                                 Type of message.
+                                 Can be <code>alert</code>,
+                                 <code>confirm</code>,
+                                 or <code>prompt</code>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><b>showing</b></td>
+                              <td>Boolean</td>
+                              <td><code>false</code></td>
+                              <td>
+                                 Boolean value to toggle whether
+                                 <code>Message</code> is showing or not.
+                              </td>
                            </tr>
                         </tbody>
                      </table>

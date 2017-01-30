@@ -17,8 +17,7 @@ export default class Message extends Component {
    }
 
    static defaultProps = {
-      promptInputValue: '',
-      text: 'Message',
+      text: 'Text',
       title: 'Title',
       type: 'alert',
       showing: false
