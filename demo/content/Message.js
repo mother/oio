@@ -22,12 +22,11 @@ export default class DemoContentMessage extends Component {
       super(props)
 
       this.handleAlertClick = this.handleAlertClick.bind(this)
+      this.handleConfirmClick = this.handleConfirmClick.bind(this)
+      this.handlePromptClick = this.handlePromptClick.bind(this)
 
       this.state = {
-         message: {
-            showing: false,
-            type: 'alert'
-         }
+         message: { showing: false }
       }
    }
 
@@ -35,6 +34,34 @@ export default class DemoContentMessage extends Component {
       this.setState({
          message: {
             ...this.state.message,
+            text: 'This is a test alert message.',
+            type: 'alert',
+            showing: true
+         }
+      })
+   }
+
+   handleConfirmClick() {
+      this.setState({
+         message: {
+            ...this.state.message,
+            onConfirm: result => console.log(result), // eslint-disable-line
+            text: 'This is a test confirm message. Are you sure?',
+            title: 'Confirm',
+            type: 'confirm',
+            showing: true
+         }
+      })
+   }
+
+   handlePromptClick() {
+      this.setState({
+         message: {
+            ...this.state.message,
+            onPrompt: result => console.log(result), // eslint-disable-line
+            text: 'This is a test prompt message. Enter your email:',
+            title: 'Prompt',
+            type: 'prompt',
             showing: true
          }
       })
@@ -46,6 +73,10 @@ export default class DemoContentMessage extends Component {
       return (
          <div>
             <Message
+               onConfirm={message.onConfirm}
+               onPrompt={message.onPrompt}
+               text={message.text}
+               title={message.title}
                type={message.type}
                showing={message.showing}
             />
@@ -63,17 +94,17 @@ export default class DemoContentMessage extends Component {
                      <Button onClick={this.handleAlertClick} name="Alert" size="large" />
                   </GridCell>
                </Grid>
+               <Spacer size="4" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
                      <Title>Message Confirm</Title>
-                     <Text size="2" color="gray50">
-                        Displays a dialog box with a specified message, along with an OK and a Cancel button.
-                     </Text>
+                     <Text size="2" color="gray50">Displays a dialog box with a specified message, along with an OK and a Cancel button.</Text>
                   </GridCell>
                   <GridCell colspan="3">
-                     <Button name="Confirm" size="large" />
+                     <Button onClick={this.handleConfirmClick} name="Confirm" size="large" />
                   </GridCell>
                </Grid>
+               <Spacer size="4" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
                      <Title>Message Prompt</Title>
@@ -82,9 +113,10 @@ export default class DemoContentMessage extends Component {
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
-                     <Button name="Prompt" size="large" />
+                     <Button onClick={this.handlePromptClick} name="Prompt" size="large" />
                   </GridCell>
                </Grid>
+               <Spacer size="4" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
                      <Title>Message Configurations</Title>

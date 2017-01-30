@@ -38,7 +38,6 @@
 
 .box {
    background-color: white;
-   // min-height: 100px;
    width: 100%;
    max-width: 420px;
    margin: 0 auto;
@@ -48,43 +47,43 @@
 
 .header, .content, .footer {
    padding: 20px;
+   word-wrap: break-word
 }
 
 .header {
    text-align: left;
    font-weight: bold;
    text-transform: uppercase;
-   // background-color: pink;
 }
 
 .headerText {
    display: inline-block;
-   width: calc(~'100% - 30px');
+   width: calc(~'100% - 35px');
    vertical-align: top;
-   // background-color: blue;
 }
 
 .headerClose {
+   position: relative;
    display: inline-block;
-   height: 30px;
-   width: 30px;
-   text-align: right;
-   // background-color: brown;
+   text-align: center;
+   top: calc(50% - 25px);
+   margin-left: 10px;
+   cursor: pointer;
+   border-radius: 50%;
+   background-color: #CCC;
+   // transition: 300ms;
+
+   // &:hover {
+   //    background: #AAA;
+   // }
 }
 
 .headerCloseButton {
-   font-size: 40px;
-   line-height: 40px;
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
-   color: #666;
-   // transition: 300ms;
-   //
-   // &:hover {
-   //    color: #fff;
-   //    background: #222;
-   // }
+   font-size: 25px;
+   line-height: 25px;
+   width: 25px;
+   height: 25px;
+   color: white;
 }
 
 .content {
@@ -94,4 +93,8 @@
 .footer {
    text-align: right;
    height: 75px;
+}
+
+.promptInput {
+   margin-top: 10px;
 }
