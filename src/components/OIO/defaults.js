@@ -57,7 +57,7 @@ export default {
       }
    },
    viewport: {
-      minSizes: {
+      breakpoints: {
          a: '0px',
          b: '768px',
          c: '992px',
