@@ -41,14 +41,14 @@ export default class Popover extends Component {
    }
 
    show(event) {
-      const button = event
-      button.stopPropagation()
+      event.stopPropagation()
 
+      const triggerButton = event.currentTarget
       this.setState({
-         top: button.currentTarget.offsetTop,
-         left: button.currentTarget.offsetLeft,
-         visible: true,
-         buttonWidth: button.currentTarget.offsetWidth
+         top: triggerButton.offsetTop,
+         left: triggerButton.offsetLeft,
+         buttonWidth: triggerButton.offsetWidth,
+         visible: true
       })
    }
 
