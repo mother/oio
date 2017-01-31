@@ -10,6 +10,7 @@ import Form from './components/Form'
 import Grid from './components/Grid'
 import GridCell from './components/GridCell'
 import Icon from './components/Icon'
+import ImageInput from './components/Form/ImageInput'
 import Input from './components/Form/Input'
 import Modal from './components/Modal'
 import Nav from './components/Nav'
@@ -45,6 +46,7 @@ export {
    Grid,
    GridCell,
    Icon,
+   ImageInput,
    Input,
    Modal,
    Nav,
