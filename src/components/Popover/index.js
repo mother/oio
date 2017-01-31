@@ -19,10 +19,11 @@ export default class Popover extends Component {
       width: '300'
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.hide = this.hide.bind(this)
+      this.show = this.show.bind(this)
       this.state = {
          top: 0,
          left: 0,
