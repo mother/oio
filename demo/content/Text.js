@@ -16,6 +16,21 @@ export default class DemoContentTypography extends Component {
       contents: React.PropTypes.array
    }
 
+   constructor(props) {
+      super(props)
+
+      this.handleEditCancel = this.handleEditCancel.bind(this)
+      this.handleEditDone = this.handleEditDone.bind(this)
+   }
+
+   handleEditCancel(text) {
+      console.log('handleEditCancel') // eslint-disable-line no-console
+   }
+
+   handleEditDone(text) {
+      console.log('handleEditDone') // eslint-disable-line no-console
+   }
+
    render() {
       return (
          <View width="100%" className={style.docs}>
@@ -25,12 +40,16 @@ export default class DemoContentTypography extends Component {
                <GridCell>
                   <Title>Text (content and editable)</Title>
                   <Text size="2" color="gray50">
-                     <p>With the <code>editable</code> prop, <code>Text</code> can be modified in place.</p>
+                     <p>With the <code>editable</code> prop,<code>Text</code>
+                     can be modified in place.</p>
                   </Text>
                </GridCell>
                <GridCell colspan="3">
-                  <Text editable>
-                     Flexitarian biodiesel kale chips, hoodie lumbersexual
+                  <Text
+                     editable
+                     onEditCancel={this.handleEditCancel}
+                     onEditDone={this.handleEditDone}
+                     body="Flexitarian biodiesel kale chips, hoodie lumbersexual
                      food truck keffiyeh umami single-origin coffee franzen.
                      Celiac viral put a bird on it, farm-to-table
                      heirloom everyday carry before they sold out locavore
@@ -41,8 +60,8 @@ export default class DemoContentTypography extends Component {
                      umami messenger bag sartorial. Humblebrag freegan offal,
                      mumblecore tote bag mustache venmo meditation lumbersexual.
                      Put a bird on it intelligentsia lomo gluten-free bitters marfa.
-                     Meh literally try-hard ugh everyday carry.
-                  </Text>
+                     Meh literally try-hard ugh everyday carry."
+                  />
                </GridCell>
             </Grid>
          </View>
