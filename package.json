@@ -39,7 +39,7 @@
     "classnames": "2.2.5",
     "flatten": "1.0.2",
     "form-data": "2.1.2",
-    "react-files": "2.3.1"
+    "react-files": "2.4.1"
   },
   "devDependencies": {
     "babel-core": "6.20.0",
