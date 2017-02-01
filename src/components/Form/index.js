@@ -7,6 +7,7 @@ import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 const formComponentNames = [
    'CheckboxGroup',
    'FileInput',
+   'ImageInput',
    'Input',
    'RadioGroup',
    'Select',
@@ -15,7 +16,8 @@ const formComponentNames = [
 ]
 
 const formFileComponentNames = [
-   'FileInput'
+   'FileInput',
+   'ImageInput'
 ]
 
 const predefinedRules = {
