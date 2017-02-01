@@ -19,6 +19,12 @@ export default class Modal extends Component {
       height: '600'
    }
 
+   constructor(props) {
+      super(props)
+
+      this.hideModal = this.hideModal.bind(this)
+   }
+
    hideModal(event) {
       if (this.props.onClose && this.node === event.target) {
          this.props.onClose()
@@ -43,7 +49,7 @@ export default class Modal extends Component {
       return (
          <div
             ref={node => (this.node = node)}
-            onClick={event => this.hideModal(event)}
+            onClick={this.hideModal}
             className={style.modalOverlay}>
             <div
                className={classNames(style.modalWindow, this.props.windowClassName)}
