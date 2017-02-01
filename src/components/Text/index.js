@@ -9,11 +9,11 @@ import colors from '../../foundation/colors.less'
 
 export default class Text extends Component {
    static propTypes = {
-      body: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       editable: React.PropTypes.bool,
+      editableBody: React.PropTypes.string,
       onEditCancel: React.PropTypes.func,
       onEditDone: React.PropTypes.func,
       size: React.PropTypes.string,
@@ -38,36 +38,59 @@ export default class Text extends Component {
       this.handleEditDone = this.handleEditDone.bind(this)
 
       this.state = {
-         body: this.props.body,
-         bodyBeforeEdit: this.props.body,
+         editableBody: this.props.editableBody,
+         editableBodyInitial: this.props.editableBody,
          editing: false
       }
    }
 
+   componentDidUpdate() {
+      if (this.editor) {
+         const textarea = this.editor.parentNode.getElementsByTagName('textarea')[0]
+         this.adjustTextareaHeight(textarea)
+      }
+   }
+
+   adjustTextareaHeight(textarea) {
+      if (textarea) {
+         textarea.style.height = 'auto'
+         textarea.style.height = `${textarea.scrollHeight + 5}px`
+      }
+   }
+
    handleChange(event) {
-      this.setState({ body: event.target.value })
+      this.adjustTextareaHeight(event.target)
+      let value = event.target.value
+      value = value.replace(/\n/g, '')
+      this.setState({ editableBody: value })
    }
 
    handleEditCancel() {
-      this.props.onEditCancel(this.state.body)
+      if (this.props.onEditCancel) {
+         this.props.onEditCancel(this.state.editableBody)
+      }
+
       this.setState({
-         body: this.state.bodyBeforeEdit,
+         editableBody: this.state.editableBodyInitial,
          editing: false
       })
    }
 
    handleEditClick(event) {
       this.setState({
-         body: this.state.body,
+         editableBody: this.state.editableBody,
          editing: true
       })
    }
 
    handleEditDone() {
-      this.props.onEditDone(this.state.body)
+      if (this.props.onEditDone) {
+         this.props.onEditDone(this.state.editableBody)
+      }
+
       this.setState({
-         body: this.state.body,
-         bodyBeforeEdit: this.state.body,
+         editableBody: this.state.editableBody,
+         editableBodyInitial: this.state.editableBody,
          editing: false
       })
    }
@@ -77,6 +100,7 @@ export default class Text extends Component {
       const textStyle = {}
 
       const classes = [
+         style.editContainer,
          style[fontSize],
          style[this.props.weight],
          colors[this.props.color],
@@ -92,24 +116,35 @@ export default class Text extends Component {
             {!this.props.children && !this.state.editing && this.props.editable && (
                <Button
                   onClick={this.handleEditClick}
-                  className={style.editable}
+                  className={style.editButton}
                   icon="ion-edit"
                   size="tiny"
                />
             )}
-            {!this.props.children && !this.state.editing && this.props.body && (
-               <span>{this.state.body}</span>
+            {!this.props.children && !this.state.editing && (
+               <span>{this.state.editableBody}</span>
             )}
             {!this.props.editable && this.props.children}
             {this.state.editing && this.props.editable && (
-               <div>
+               <div ref={(editor) => { this.editor = editor }}>
                   <Textarea
+                     className={style.editTextarea}
                      onChange={this.handleChange}
-                     value={this.state.body}
+                     value={this.state.editableBody}
+                     placeholder="Add text..."
                   />
                   <ButtonGroup align="right">
-                     <Button onClick={this.handleEditCancel} name="Cancel" size="tiny" />
-                     <Button onClick={this.handleEditDone} name="Done" size="tiny" />
+                     <Button
+                        onClick={this.handleEditCancel}
+                        name="Cancel"
+                        size="tiny"
+                        color="#CCC"
+                     />
+                     <Button
+                        onClick={this.handleEditDone}
+                        name="Done"
+                        size="tiny"
+                     />
                   </ButtonGroup>
                </div>
             )}
