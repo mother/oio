@@ -11,7 +11,7 @@ import {
 
 import style from '../style.less'
 
-export default class DemoContentTypography extends Component {
+export default class DemoContentText extends Component {
    static propTypes = {
       contents: React.PropTypes.array
    }
