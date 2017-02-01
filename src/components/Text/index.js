@@ -1,46 +1,53 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
+
 import style from './style.less'
 import colors from '../../foundation/colors.less'
 
-const Text = ({
-   children, className, color, size, uppercase, weight }, context) => {
-   const fontSize = size ? `textSize${size}` : 'textSize3'
-   const textStyle = {}
-
-   const classes = [
-      style[fontSize],
-      style[weight],
-      colors[color],
-      className
-   ]
-
-   if (uppercase) {
-      classes.push(style.uppercase)
+export default class Text extends Component {
+   static propTypes = {
+      children: React.PropTypes.node,
+      className: React.PropTypes.string,
+      color: React.PropTypes.string,
+      editable: React.PropTypes.bool,
+      size: React.PropTypes.string,
+      uppercase: React.PropTypes.bool,
+      weight: React.PropTypes.string
    }
 
-   return (
-      <div className={classNames(classes)} style={textStyle}>
-         {children}
-      </div>
-   )
-}
+   static defaultProps = {
+      weight: 'normal'
+   }
 
-Text.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string,
-   color: React.PropTypes.string,
-   size: React.PropTypes.string,
-   uppercase: React.PropTypes.bool,
-   weight: React.PropTypes.string
-}
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
+   }
 
-Text.defaultProps = {
-   weight: 'normal'
-}
+   render() {
+      const fontSize = this.props.size ? `textSize${this.props.size}` : 'textSize3'
+      const textStyle = {}
 
-Text.contextTypes = {
-   OIOStyles: React.PropTypes.object
-}
+      const classes = [
+         style[fontSize],
+         style[this.props.weight],
+         colors[this.props.color],
+         this.props.className
+      ]
 
-export default Text
+      if (this.props.uppercase) {
+         classes.push(style.uppercase)
+      }
+
+      return (
+         <div className={classNames(classes)} style={textStyle}>
+            {this.props.editable && (
+               <div
+                  className={classNames('icon', 'ion-edit', style.editable)}
+                  style={{ float: 'right' }}
+               />
+            )}
+            {this.props.children}
+         </div>
+      )
+   }
+}
