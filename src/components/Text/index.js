@@ -33,10 +33,13 @@ export default class Text extends Component {
       super(props)
 
       this.handleChange = this.handleChange.bind(this)
+      this.handleEditCancel = this.handleEditCancel.bind(this)
       this.handleEditClick = this.handleEditClick.bind(this)
+      this.handleEditDone = this.handleEditDone.bind(this)
 
       this.state = {
          body: this.props.body,
+         bodyBeforeEdit: this.props.body,
          editing: false
       }
    }
@@ -45,10 +48,27 @@ export default class Text extends Component {
       this.setState({ body: event.target.value })
    }
 
+   handleEditCancel() {
+      this.props.onEditCancel(this.state.body)
+      this.setState({
+         body: this.state.bodyBeforeEdit,
+         editing: false
+      })
+   }
+
    handleEditClick(event) {
       this.setState({
          body: this.state.body,
          editing: true
+      })
+   }
+
+   handleEditDone() {
+      this.props.onEditDone(this.state.body)
+      this.setState({
+         body: this.state.body,
+         bodyBeforeEdit: this.state.body,
+         editing: false
       })
    }
 
@@ -78,7 +98,7 @@ export default class Text extends Component {
                />
             )}
             {!this.props.children && !this.state.editing && this.props.body && (
-               <span>{this.props.body}</span>
+               <span>{this.state.body}</span>
             )}
             {!this.props.editable && this.props.children}
             {this.state.editing && this.props.editable && (
@@ -88,8 +108,8 @@ export default class Text extends Component {
                      value={this.state.body}
                   />
                   <ButtonGroup align="right">
-                     <Button onClick={this.props.onEditCancel} name="Cancel" />
-                     <Button onClick={this.props.onEditDone} name="Done" />
+                     <Button onClick={this.handleEditCancel} name="Cancel" size="tiny" />
+                     <Button onClick={this.handleEditDone} name="Done" size="tiny" />
                   </ButtonGroup>
                </div>
             )}

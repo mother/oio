@@ -23,12 +23,12 @@ export default class DemoContentTypography extends Component {
       this.handleEditDone = this.handleEditDone.bind(this)
    }
 
-   handleEditCancel(text) {
-      console.log('handleEditCancel') // eslint-disable-line no-console
+   handleEditCancel(body) {
+      console.log(body) // eslint-disable-line no-console
    }
 
-   handleEditDone(text) {
-      console.log('handleEditDone') // eslint-disable-line no-console
+   handleEditDone(body) {
+      console.log(body) // eslint-disable-line no-console
    }
 
    render() {
