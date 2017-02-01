@@ -74,12 +74,12 @@ export default class Message extends Component {
 
    render() {
       const displayClass = this.state.showing ? 'showMessage' : 'hideMessage'
-      const display = this.state.showing ? 'table' : 'none'
+      const displayStyle = this.state.showing ? 'table' : 'none'
 
       return (
          <div
             className={classNames(styles.container, styles[displayClass])}
-            style={{ display }}>
+            style={{ display: displayStyle }}>
             <div className={styles.containerInner}>
                <div className={styles.box}>
                   <div className={styles.header}>
