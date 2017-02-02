@@ -38,6 +38,8 @@ export default class DemoContentButton extends Component {
                      <Button name="Button" icon="ion-ios-plus" />
                      <Button name="Outline" outline />
                      <Button name="Loading" mode="loading" />
+                     <Button name="Disabled" mode="disabled" />
+                     <Button name="Pulsing" mode="pulsing" />
                      <Button name="Plain" plain />
                   </ButtonGroup>
                   <Spacer size="1" />
@@ -128,10 +130,11 @@ export default class DemoContentButton extends Component {
                         <tr>
                            <td><b>mode</b></td>
                            <td>String</td>
-                           <td />
+                           <td>-</td>
                            <td>
                               If set to <code>loading</code>,
-                              a loading indicator will be shown in place in the button
+                              a loading indicator will be shown in place in the button.
+                              Mode can also be set to <code>disabled</code> and <code>pulsing</code>
                            </td>
                         </tr>
                         <tr>
@@ -160,6 +163,14 @@ export default class DemoContentButton extends Component {
                               <code>false</code>
                            </td>
                            <td>Gives button an outline appearance</td>
+                        </tr>
+                        <tr>
+                           <td><b>rounded</b></td>
+                           <td>Boolean</td>
+                           <td>
+                              <code>false</code>
+                           </td>
+                           <td>Gives button a rounded appearance</td>
                         </tr>
                      </tbody>
                   </table>
