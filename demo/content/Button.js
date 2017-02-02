@@ -37,9 +37,6 @@ export default class DemoContentButton extends Component {
                      <Button name="Button" />
                      <Button name="Button" icon="ion-ios-plus" />
                      <Button name="Outline" outline />
-                     <Button name="Loading" mode="loading" />
-                     <Button name="Disabled" mode="disabled" />
-                     <Button name="Pulsing" mode="pulsing" />
                      <Button name="Plain" plain />
                   </ButtonGroup>
                   <Spacer size="1" />
@@ -100,6 +97,25 @@ export default class DemoContentButton extends Component {
                         <Button size="tiny" name="Plain" plain />
                      </ButtonGroup>
                      </OIO>
+                  <Spacer size="9" />
+               </GridCell>
+               <GridCell>
+                  <Title>Button Modes</Title>
+                  <Text size="2" color="gray50">
+                     The <code>Button</code> component has 3 different additional&nbsp;
+                     <b>modes</b>: <code>loading</code> <code>disabled</code>
+                     <code>pulsing</code>.&nbsp;
+                     This is useful for quickly communicating different stages
+                     &nbsp;of an interaction to a user.
+                  </Text>
+               </GridCell>
+               <GridCell colspan="3">
+                  <ButtonGroup>
+                     <Button name="Disabled" mode="disabled" />
+                     <Button name="Loading" mode="loading" />
+                     <Button name="Save Changes" mode="pulsing" />
+                  </ButtonGroup>
+                  <Spacer size="9" />
                   <Spacer size="9" />
                </GridCell>
                <GridCell>
