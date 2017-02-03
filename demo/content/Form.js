@@ -40,7 +40,7 @@ export default class DemoContentForm extends Component {
    }
 
    handleSubmit(data, files, formData) {
-      console.log(data) // eslint-disable-line no-console
+      console.log(data, files) // eslint-disable-line no-console
    }
 
    render() {
