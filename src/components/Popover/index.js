@@ -6,21 +6,24 @@ export default class Popover extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
+      height: React.PropTypes.string,
       offset: React.PropTypes.string,
       position: React.PropTypes.string,
-      width: React.PropTypes.string.isRequired
+      width: React.PropTypes.string
    }
 
    static defaultProps = {
-      offset: '24'
+      height: '60',
+      offset: '24',
+      position: 'above left',
+      width: '300'
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.hide = this.hide.bind(this)
-
-      // Eventually allow smart positioning and below/above
+      this.show = this.show.bind(this)
       this.state = {
          top: 0,
          left: 0,
@@ -40,11 +43,12 @@ export default class Popover extends Component {
    show(event) {
       event.stopPropagation()
 
+      const triggerButton = event.currentTarget
       this.setState({
-         top: event.currentTarget.offsetTop,
-         left: event.currentTarget.offsetLeft,
-         visible: true,
-         buttonWidth: event.currentTarget.offsetWidth
+         top: triggerButton.offsetTop,
+         left: triggerButton.offsetLeft,
+         buttonWidth: triggerButton.offsetWidth,
+         visible: true
       })
    }
 
@@ -53,22 +57,32 @@ export default class Popover extends Component {
    }
 
    render() {
+      const position = this.props.position
       const visibilityClass = this.state.visible ? 'isVisible' : ''
       const popoverStyle = {}
       const popoverOffset = parseFloat(this.props.offset)
       const popoverWidth = parseFloat(this.props.width)
+      const popoverHeight = parseFloat(this.props.height)
 
-      // Set Popover Position
-      if (this.props.position === 'right') {
-         popoverStyle.top = `${this.state.top + popoverOffset}px`
-         popoverStyle.left = `${this.state.left - popoverOffset - (popoverWidth - this.state.buttonWidth)}px`
+      // Set Popover Vertical Position
+      // If above is not specified in the position, assume it should be below
+      if (position.includes('above')) {
+         popoverStyle.top = `${this.state.top - (2 * popoverOffset) - popoverHeight}px`
       } else {
          popoverStyle.top = `${this.state.top + popoverOffset}px`
+      }
+
+      // Set Popover Horizontal Position
+      // If left or right is not set, assume left alignment
+      if (position.includes('right')) {
+         popoverStyle.left = `${this.state.left - popoverOffset - (popoverWidth - this.state.buttonWidth)}px`
+      } else {
          popoverStyle.left = `${this.state.left - popoverOffset}px`
       }
 
       // Set Popover Margins and Container
       const popoverContainerStyle = {
+         height: `${popoverHeight}px`,
          margin: `${popoverOffset}px`,
          width: popoverWidth
       }

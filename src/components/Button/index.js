@@ -22,6 +22,7 @@ export default class Button extends Component {
    }
 
    static defaultProps = {
+      mode: 'normal',
       size: 'medium',
       type: 'button'
    }
@@ -60,6 +61,7 @@ export default class Button extends Component {
       const buttonClasses = [this.props.className]
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
+      const mode = this.props.mode
 
       const buttonStyle = {
          backgroundColor: buttonColor,
@@ -84,9 +86,13 @@ export default class Button extends Component {
          }
       }
 
-      if (this.props.mode) {
-         buttonClasses.push(style[`${this.props.mode}Mode`])
+      if (mode === 'loading') {
+         buttonClasses.push(style.isLoading)
          modeIcon = <span className={style.loader} />
+      } else if (mode === 'disabled') {
+         buttonClasses.push(style.isDisabled)
+      } else if (mode === 'pulsing') {
+         buttonClasses.push(style.isPulsing)
       }
 
       if (this.props.rounded) {
