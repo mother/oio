@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-
 import Files from 'react-files'
-
 import formStyles from '../styles.less'
 
 export default class FileInput extends Component {
@@ -17,6 +15,7 @@ export default class FileInput extends Component {
 
    constructor(props, context) {
       super(props, context)
+      this.handleChange = this.handleChange.bind(this)
 
       this.state = {
          file: null,
@@ -44,7 +43,7 @@ export default class FileInput extends Component {
             {this.props.label && <label htmlFor="files">{this.props.label}</label>}
             <Files
                className={formStyles.files}
-               onChange={files => this.handleChange(files)}
+               onChange={this.handleChange}
                onError={(error, file) => this.handleError(error, file)}
                name={this.props.name}
                multiple={false}
