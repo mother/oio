@@ -8,6 +8,7 @@ import {
    Form,
    Grid,
    GridCell,
+   ImageInput,
    Input,
    Radio,
    RadioGroup,
@@ -27,6 +28,21 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
+   constructor(props) {
+      super(props)
+
+      this.handleError = this.handleError.bind(this)
+      this.handleSubmit = this.handleSubmit.bind(this)
+   }
+
+   handleError(error, file) {
+      console.log(error) // eslint-disable-line no-console
+   }
+
+   handleSubmit(data, files, formData) {
+      console.log(data) // eslint-disable-line no-console
+   }
+
    render() {
       const titleHeading = '1'
       const titleSize = '4'
@@ -42,9 +58,9 @@ export default class DemoContentForm extends Component {
                <GridCell colspan="3">
                   <View width="420px">
                      <Form
-                        onSubmit={(data, files, formData) => this.handleSubmit(data, files, formData)}
-                        onError={error => this.handleError(error)}>
-                        <FileInput
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <ImageInput
                            maxFileSize={5000000}
                            type="image"
                            name="avatar"

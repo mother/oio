@@ -13,6 +13,7 @@ export default class ImageInput extends Component {
       maxFileSize: React.PropTypes.number,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
+      onError: React.PropTypes.func,
       position: React.PropTypes.string,
       size: React.PropTypes.string,
       style: React.PropTypes.object
@@ -25,8 +26,9 @@ export default class ImageInput extends Component {
 
    constructor(props, context) {
       super(props, context)
+
       this.handleChange = this.handleChange.bind(this)
-      
+
       this.state = {
          file: null,
          src: ''
@@ -82,7 +84,7 @@ export default class ImageInput extends Component {
             <Files
                className={formStyles.filesImageContainer}
                onChange={this.handleChange}
-               onError={(error, file) => this.handleError(error, file)}
+               onError={this.props.onError}
                name={this.props.name}
                multiple={false}
                accepts={

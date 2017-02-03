@@ -5,16 +5,17 @@ import formStyles from '../styles.less'
 export default class FileInput extends Component {
    static propTypes = {
       accepts: React.PropTypes.array,
-      alt: React.PropTypes.string,
       label: React.PropTypes.string,
       maxFileSize: React.PropTypes.number,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
+      onError: React.PropTypes.func,
       style: React.PropTypes.object
    }
 
    constructor(props, context) {
       super(props, context)
+
       this.handleChange = this.handleChange.bind(this)
 
       this.state = {
@@ -44,7 +45,7 @@ export default class FileInput extends Component {
             <Files
                className={formStyles.files}
                onChange={this.handleChange}
-               onError={(error, file) => this.handleError(error, file)}
+               onError={this.props.onError}
                name={this.props.name}
                multiple={false}
                accepts={this.props.accepts}
