@@ -232,12 +232,12 @@ export default class Form extends Component {
                touched: this.state.data[child.props.name].touched || false,
                onBlur: (event) => {
                   this.handleBlur(event.target.value, child)
-                  if (this.props.onBlur) this.props.onBlur(event)
+                  if (child.props.onBlur) child.props.onBlur(event)
                },
                onChange: (event, value) => {
                   if (value || value === false) this.handleChange(value, child)
                   else this.handleChange(event.target.value, child)
-                  if (this.props.onChange) this.props.onChange(event)
+                  if (child.props.onChange) child.props.onChange(event)
                },
                value: this.state.data[child.props.name].value
             })
