@@ -22,6 +22,7 @@ export default class Button extends Component {
    }
 
    static defaultProps = {
+      mode: 'normal',
       size: 'medium',
       type: 'button'
    }

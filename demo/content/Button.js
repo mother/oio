@@ -102,9 +102,9 @@ export default class DemoContentButton extends Component {
                <GridCell>
                   <Title>Button Modes</Title>
                   <Text size="2" color="gray50">
-                     The <code>Button</code> component has 3 different additional&nbsp;
-                     <b>modes</b>: <code>loading</code> <code>disabled</code>
-                     <code>pulsing</code>.&nbsp;
+                     The <code>Button</code> component has 4 different&nbsp;
+                     <b>modes</b>: <code>disabled</code> <code>loading</code>
+                     <code>normal</code> <code>pulsing</code>.&nbsp;
                      This is useful for quickly communicating different stages
                      &nbsp;of an interaction to a user.
                   </Text>
@@ -114,6 +114,7 @@ export default class DemoContentButton extends Component {
                      <Button name="Disabled" mode="disabled" />
                      <Button name="Loading" mode="loading" />
                      <Button name="Save Changes" mode="pulsing" />
+                     <Button name="Normal" mode="normal" />
                   </ButtonGroup>
                   <Spacer size="9" />
                   <Spacer size="9" />
@@ -146,11 +147,13 @@ export default class DemoContentButton extends Component {
                         <tr>
                            <td><b>mode</b></td>
                            <td>String</td>
-                           <td>-</td>
+                           <td>
+                              <code>normal</code>
+                           </td>
                            <td>
                               If set to <code>loading</code>,
                               a loading indicator will be shown in place in the button.
-                              Mode can also be set to <code>disabled</code> and <code>pulsing</code>
+                              Mode can also be set to <code>disabled</code> <code>normal</code> and <code>pulsing</code>
                            </td>
                         </tr>
                         <tr>
