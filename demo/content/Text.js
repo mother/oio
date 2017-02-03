@@ -23,12 +23,24 @@ export default class DemoContentText extends Component {
       this.handleEditDone = this.handleEditDone.bind(this)
    }
 
-   handleEditCancel(body) {
-      console.log(body) // eslint-disable-line no-console
+   handleEditCancel(bodyInitial, bodyAfter) {
+      /* eslint-disable */
+      console.log('Cancel:')
+      console.log('Initial:')
+      console.log(bodyInitial)
+      console.log('After:')
+      console.log(bodyAfter)
+      /* eslint-enable */
    }
 
-   handleEditDone(body) {
-      console.log(body) // eslint-disable-line no-console
+   handleEditDone(bodyInitial, bodyAfter) {
+      /* eslint-disable */
+      console.log('Done:')
+      console.log('Initial:')
+      console.log(bodyInitial)
+      console.log('After:')
+      console.log(bodyAfter)
+      /* eslint-enable */
    }
 
    render() {
@@ -64,6 +76,8 @@ export default class DemoContentText extends Component {
                <GridCell colspan="3">
                   <Text
                      editable
+                     editing={false}
+                     showEditButton
                      onEditCancel={this.handleEditCancel}
                      onEditDone={this.handleEditDone}
                      editableBody="Flexitarian biodiesel kale chips, hoodie lumbersexual

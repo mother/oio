@@ -14,8 +14,10 @@ export default class Text extends Component {
       color: React.PropTypes.string,
       editable: React.PropTypes.bool,
       editableBody: React.PropTypes.string,
+      editing: React.PropTypes.bool,
       onEditCancel: React.PropTypes.func,
       onEditDone: React.PropTypes.func,
+      showEditButton: React.PropTypes.bool,
       size: React.PropTypes.string,
       uppercase: React.PropTypes.bool,
       weight: React.PropTypes.string
@@ -38,10 +40,14 @@ export default class Text extends Component {
       this.handleEditDone = this.handleEditDone.bind(this)
 
       this.state = {
-         editableBody: this.props.editableBody,
-         editableBodyInitial: this.props.editableBody,
-         editing: false
+         editableBody: props.editableBody,
+         editableBodyInitial: props.editableBody
+         // editing: props.editing
       }
+   }
+
+   componentWillReceiveProps(nextProps) {
+      this.setState({ editing: nextProps.editing })
    }
 
    componentDidUpdate() {
@@ -67,32 +73,31 @@ export default class Text extends Component {
 
    handleEditCancel() {
       if (this.props.onEditCancel) {
-         this.props.onEditCancel(this.state.editableBody)
+         this.props.onEditCancel(this.state.editableBodyInitial, this.state.editableBody)
       }
 
-      this.setState({
-         editableBody: this.state.editableBodyInitial,
-         editing: false
-      })
+      // this.setState({
+      //    editableBody: this.state.editableBodyInitial,
+      //    editing: false
+      // })
    }
 
    handleEditClick(event) {
       this.setState({
-         editableBody: this.state.editableBody,
-         editing: true
+         editableBody: this.state.editableBody
+         // editing: true
       })
    }
 
    handleEditDone() {
       if (this.props.onEditDone) {
-         this.props.onEditDone(this.state.editableBody)
+         this.props.onEditDone(this.state.editableBodyInitial, this.state.editableBody)
       }
 
-      this.setState({
-         editableBody: this.state.editableBody,
-         editableBodyInitial: this.state.editableBody,
-         editing: false
-      })
+      // this.setState({
+      //    editableBody: this.state.editableBodyInitial,
+      //    editing: false
+      // })
    }
 
    render() {
@@ -111,9 +116,16 @@ export default class Text extends Component {
          classes.push(style.uppercase)
       }
 
+      const showEditButton = (
+         !this.props.children &&
+         !this.props.editing &&
+         this.props.editable &&
+         this.props.showEditButton
+      )
+
       return (
          <div className={classNames(classes)} style={textStyle}>
-            {!this.props.children && !this.state.editing && this.props.editable && (
+            {showEditButton && (
                <Button
                   onClick={this.handleEditClick}
                   className={style.editButton}
@@ -121,11 +133,11 @@ export default class Text extends Component {
                   size="tiny"
                />
             )}
-            {!this.props.children && !this.state.editing && (
+            {!this.props.children && !this.props.editing && (
                <span>{this.state.editableBody}</span>
             )}
             {!this.props.editable && this.props.children}
-            {this.state.editing && this.props.editable && (
+            {this.props.editing && this.props.editable && (
                <div ref={(editor) => { this.editor = editor }}>
                   <Textarea
                      className={style.editTextarea}
