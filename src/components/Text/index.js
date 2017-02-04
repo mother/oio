@@ -47,7 +47,14 @@ export default class Text extends Component {
    }
 
    componentWillReceiveProps(nextProps) {
-      this.setState({ editing: nextProps.editing })
+      const newState = { editing: nextProps.editing }
+
+      // Update inputBody if different from body and not loading
+      if (nextProps.body !== this.state.inputBody && !nextProps.editLoading) {
+         newState.inputBody = nextProps.body
+      }
+
+      this.setState(newState)
    }
 
    componentDidUpdate() {
