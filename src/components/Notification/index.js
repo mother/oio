@@ -4,9 +4,14 @@ import Spacer from '../Spacer'
 import Text from '../Text'
 import styles from './styles.less'
 
+const defaultAutoDismissTime = 2000
+
 export default class Notification extends Component {
    static propTypes = {
-      autoDismiss: React.PropTypes.number,
+      autoDismiss:  React.PropTypes.oneOfType([
+         React.PropTypes.bool,
+         React.PropTypes.number
+      ]),
       buttonFull: React.PropTypes.string,
       buttonOne: React.PropTypes.string,
       buttonTwo: React.PropTypes.string,
@@ -24,8 +29,32 @@ export default class Notification extends Component {
 
    constructor(props) {
       super(props)
-
       this.state = { showing: this.props.showing }
+   }
+
+   componentDidMount() {
+      this.fireAutoDismiss()
+   }
+
+   componentWillReceiveProps(newProps) {
+      if (newProps.showing !== this.state.showing) {
+         this.setState({
+            showing: newProps.showing
+         }, this.fireAutoDismiss)
+      } else if (newProps.autoDismiss) {
+         this.fireAutoDismiss()
+      }
+   }
+
+   fireAutoDismiss() {
+      if (this.state.showing && this.props.autoDismiss) {
+         const autoDismissInterval = this.props.autoDismiss === true
+            ? defaultAutoDismissTime
+            : this.props.autoDismiss
+
+         // 700ms added to account for showing animation length
+         setTimeout(() => this.setState({ showing: false }), autoDismissInterval + 700)
+      }
    }
 
    render() {
@@ -84,11 +113,6 @@ export default class Notification extends Component {
 
       if (this.props.onHide && !this.state.showing) this.props.onHide()
       if (this.props.onShow && this.state.showing) this.props.onShow()
-
-      if (this.state.showing && this.props.autoDismiss) {
-         // 700ms added to account for showing animation length
-         setTimeout(() => this.setState({ showing: false }), this.props.autoDismiss + 700)
-      }
 
       return (
          <div className={classNames(styles.container, styles[displayClass])}>
