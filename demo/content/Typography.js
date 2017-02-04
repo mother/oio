@@ -8,7 +8,6 @@ import {
    TitleBar,
    View
 } from '../../src'
-
 import style from '../style.less'
 
 export default class DemoContentTypography extends Component {

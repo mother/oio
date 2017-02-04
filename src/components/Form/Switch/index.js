@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import formStyles from '../styles.less'
 
 export default class Switch extends Component {

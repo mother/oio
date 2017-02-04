@@ -1,12 +1,10 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-
 import Demo from './Demo'
 import Button from './content/Button'
 import Form from './content/Form'
 import Modal from './content/Modal'
 import Typography from './content/Typography'
-
 import ExamplesWindow from './examples/Window'
 
 export default (

@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-
 import styles from './styles.less'
 
 // TODO: This needs to be smarter
