@@ -9,12 +9,13 @@ import colors from '../../foundation/colors.less'
 
 export default class Text extends Component {
    static propTypes = {
+      body: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       editable: React.PropTypes.bool,
-      editableBody: React.PropTypes.string,
       editing: React.PropTypes.bool,
+      editLoading: React.PropTypes.bool,
       onEditCancel: React.PropTypes.func,
       onEditDone: React.PropTypes.func,
       showEditButton: React.PropTypes.bool,
@@ -40,9 +41,8 @@ export default class Text extends Component {
       this.handleEditDone = this.handleEditDone.bind(this)
 
       this.state = {
-         editableBody: props.editableBody,
-         editableBodyInitial: props.editableBody
-         // editing: props.editing
+         editing: props.editing,
+         inputBody: props.body
       }
    }
 
@@ -68,36 +68,24 @@ export default class Text extends Component {
       this.adjustTextareaHeight(event.target)
       let value = event.target.value
       value = value.replace(/\n/g, '')
-      this.setState({ editableBody: value })
+      this.setState({ inputBody: value })
    }
 
    handleEditCancel() {
-      if (this.props.onEditCancel) {
-         this.props.onEditCancel(this.state.editableBodyInitial, this.state.editableBody)
-      }
+      if (this.props.onEditCancel) this.props.onEditCancel(this.state.inputBody)
 
-      // this.setState({
-      //    editableBody: this.state.editableBodyInitial,
-      //    editing: false
-      // })
+      this.setState({ inputBody: this.props.body })
    }
 
    handleEditClick(event) {
       this.setState({
-         editableBody: this.state.editableBody
-         // editing: true
+         inputBody: this.props.body,
+         editing: true
       })
    }
 
    handleEditDone() {
-      if (this.props.onEditDone) {
-         this.props.onEditDone(this.state.editableBodyInitial, this.state.editableBody)
-      }
-
-      // this.setState({
-      //    editableBody: this.state.editableBodyInitial,
-      //    editing: false
-      // })
+      if (this.props.onEditDone) this.props.onEditDone(this.state.inputBody)
    }
 
    render() {
@@ -118,10 +106,33 @@ export default class Text extends Component {
 
       const showEditButton = (
          !this.props.children &&
-         !this.props.editing &&
+         !this.state.editing &&
          this.props.editable &&
          this.props.showEditButton
       )
+
+      const editActionButtons = this.props.editLoading
+         ? (<ButtonGroup align="right">
+            <Button
+               onClick={this.handleEditDone}
+               name="Done"
+               size="tiny"
+               mode="loading"
+            />
+         </ButtonGroup>)
+         : (<ButtonGroup align="right">
+            <Button
+               onClick={this.handleEditCancel}
+               name="Cancel"
+               size="tiny"
+               color="#CCC"
+            />
+            <Button
+               onClick={this.handleEditDone}
+               name="Done"
+               size="tiny"
+            />
+         </ButtonGroup>)
 
       return (
          <div className={classNames(classes)} style={textStyle}>
@@ -133,31 +144,19 @@ export default class Text extends Component {
                   size="tiny"
                />
             )}
-            {!this.props.children && !this.props.editing && (
-               <span>{this.state.editableBody}</span>
+            {!this.props.children && !this.state.editing && (
+               <span>{this.props.body}</span>
             )}
             {!this.props.editable && this.props.children}
-            {this.props.editing && this.props.editable && (
+            {this.state.editing && this.props.editable && (
                <div ref={(editor) => { this.editor = editor }}>
                   <Textarea
                      className={style.editTextarea}
                      onChange={this.handleChange}
-                     value={this.state.editableBody}
+                     value={this.state.inputBody}
                      placeholder="Add text..."
                   />
-                  <ButtonGroup align="right">
-                     <Button
-                        onClick={this.handleEditCancel}
-                        name="Cancel"
-                        size="tiny"
-                        color="#CCC"
-                     />
-                     <Button
-                        onClick={this.handleEditDone}
-                        name="Done"
-                        size="tiny"
-                     />
-                  </ButtonGroup>
+                  {editActionButtons}
                </div>
             )}
          </div>
