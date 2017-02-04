@@ -22,6 +22,9 @@ export default class CheckboxGroup extends Component {
 
    constructor(props, context) {
       super(props, context)
+
+      this.handleChange = this.handleChange.bind(this)
+
       this.state = { value: props.value || [] }
    }
 
@@ -51,7 +54,7 @@ export default class CheckboxGroup extends Component {
             name: this.props.name,
             checked: this.state.value.includes(node.props.value),
             onBlur: this.props.onBlur,
-            onChange: event => this.handleChange(event)
+            onChange: this.handleChange
          })
       })
 

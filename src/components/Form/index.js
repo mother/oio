@@ -7,6 +7,7 @@ import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 const formComponentNames = [
    'CheckboxGroup',
    'FileInput',
+   'ImageInput',
    'Input',
    'RadioGroup',
    'Select',
@@ -15,7 +16,8 @@ const formComponentNames = [
 ]
 
 const formFileComponentNames = [
-   'FileInput'
+   'FileInput',
+   'ImageInput'
 ]
 
 const predefinedRules = {
@@ -43,6 +45,8 @@ export default class Form extends Component {
 
    constructor(props) {
       super(props)
+
+      this.handleSubmit = this.handleSubmit.bind(this)
 
       this.testContext = {
          get: this.get.bind(this)
@@ -139,7 +143,6 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
       newState.data[child.props.name] = {
          value,
-         error: this.applyRulesToValue(child.props.rules, value),
          touched: true
       }
       this.setState(newState)
@@ -231,12 +234,12 @@ export default class Form extends Component {
                touched: this.state.data[child.props.name].touched || false,
                onBlur: (event) => {
                   this.handleBlur(event.target.value, child)
-                  if (this.props.onBlur) this.props.onBlur(event)
+                  if (child.props.onBlur) child.props.onBlur(event)
                },
                onChange: (event, value) => {
                   if (value || value === false) this.handleChange(value, child)
                   else this.handleChange(event.target.value, child)
-                  if (this.props.onChange) this.props.onChange(event)
+                  if (child.props.onChange) child.props.onChange(event)
                },
                value: this.state.data[child.props.name].value
             })
@@ -244,7 +247,7 @@ export default class Form extends Component {
       )
 
       return (
-         <form onSubmit={event => this.handleSubmit(event)}>
+         <form onSubmit={this.handleSubmit}>
             {domWithNewFormElements}
          </form>
       )
