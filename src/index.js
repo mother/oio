@@ -12,7 +12,7 @@ import GridCell from './components/GridCell'
 import Icon from './components/Icon'
 import ImageInput from './components/Form/ImageInput'
 import Input from './components/Form/Input'
-import Message from './components/Message'
+import Dialog from './components/Dialog'
 import Modal from './components/Modal'
 import Nav from './components/Nav'
 import NavList from './components/NavList'
@@ -49,7 +49,7 @@ export {
    Icon,
    ImageInput,
    Input,
-   Message,
+   Dialog,
    Modal,
    Nav,
    NavList,

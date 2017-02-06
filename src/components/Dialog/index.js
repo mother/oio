@@ -6,7 +6,7 @@ import ButtonGroup from '../ButtonGroup'
 import Input from '../Form/Input'
 import styles from './styles.less'
 
-export default class Message extends Component {
+export default class Dialog extends Component {
    static propTypes = {
       onConfirm: React.PropTypes.func,
       onPrompt: React.PropTypes.func,
@@ -73,7 +73,7 @@ export default class Message extends Component {
    }
 
    render() {
-      const displayClass = this.state.showing ? 'showMessage' : 'hideMessage'
+      const displayClass = this.state.showing ? 'showDialog' : 'hideDialog'
       const displayStyle = this.state.showing ? 'table' : 'none'
 
       return (

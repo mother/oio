@@ -54,11 +54,11 @@ export default class Demo extends Component {
             name: 'Buttons',
             link: '/button'
          }, {
+            name: 'Dialog',
+            link: '/dialog'
+         }, {
             name: 'Forms',
             link: '/form'
-         }, {
-            name: 'Message',
-            link: '/message'
          }, {
             name: 'Modal',
             link: '/modal'

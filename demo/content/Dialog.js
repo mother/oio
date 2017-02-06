@@ -3,7 +3,7 @@ import {
    Button,
    Grid,
    GridCell,
-   Message,
+   Dialog,
    Spacer,
    Text,
    Title,
@@ -13,7 +13,7 @@ import {
 
 import style from '../style.less'
 
-export default class DemoContentMessage extends Component {
+export default class DemoContentDialog extends Component {
    static propTypes = {
       contents: React.PropTypes.array
    }
@@ -26,15 +26,15 @@ export default class DemoContentMessage extends Component {
       this.handlePromptClick = this.handlePromptClick.bind(this)
 
       this.state = {
-         message: { showing: false }
+         dialog: { showing: false }
       }
    }
 
    handleAlertClick() {
       this.setState({
-         message: {
-            ...this.state.message,
-            text: 'This is a test alert message.',
+         dialog: {
+            ...this.state.dialog,
+            text: 'This is a test alert dialog.',
             type: 'alert',
             showing: true
          }
@@ -43,10 +43,10 @@ export default class DemoContentMessage extends Component {
 
    handleConfirmClick() {
       this.setState({
-         message: {
-            ...this.state.message,
+         dialog: {
+            ...this.state.dialog,
             onConfirm: result => console.log(result), // eslint-disable-line
-            text: 'This is a test confirm message. Are you sure?',
+            text: 'This is a test confirm dialog. Are you sure?',
             title: 'Confirm',
             type: 'confirm',
             showing: true
@@ -56,10 +56,10 @@ export default class DemoContentMessage extends Component {
 
    handlePromptClick() {
       this.setState({
-         message: {
-            ...this.state.message,
+         dialog: {
+            ...this.state.dialog,
             onPrompt: result => console.log(result), // eslint-disable-line
-            text: 'This is a test prompt message. Enter your email:',
+            text: 'This is a test prompt dialog. Enter your email:',
             title: 'Prompt',
             type: 'prompt',
             showing: true
@@ -68,26 +68,26 @@ export default class DemoContentMessage extends Component {
    }
 
    render() {
-      const message = (this.state && this.state.message) || {}
+      const dialog = (this.state && this.state.dialog) || {}
 
       return (
          <div>
-            <Message
-               onConfirm={message.onConfirm}
-               onPrompt={message.onPrompt}
-               text={message.text}
-               title={message.title}
-               type={message.type}
-               showing={message.showing}
+            <Dialog
+               onConfirm={dialog.onConfirm}
+               onPrompt={dialog.onPrompt}
+               text={dialog.text}
+               title={dialog.title}
+               type={dialog.type}
+               showing={dialog.showing}
             />
             <View width="100%" className={style.docs}>
-               <TitleBar title="Message" flush />
+               <TitleBar title="Dialog" flush />
                <Spacer size="9" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
-                     <Title>Message Alert</Title>
+                     <Title>Dialog Alert</Title>
                      <Text size="2" color="gray50">
-                        Displays an alert message with a specified message and an OK button.
+                        Displays an alert dialog with a specified message and an OK button.
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
@@ -97,7 +97,7 @@ export default class DemoContentMessage extends Component {
                <Spacer size="4" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
-                     <Title>Message Confirm</Title>
+                     <Title>Dialog Confirm</Title>
                      <Text size="2" color="gray50">Displays a dialog box with a specified message, along with an OK and a Cancel button.</Text>
                   </GridCell>
                   <GridCell colspan="3">
@@ -107,7 +107,7 @@ export default class DemoContentMessage extends Component {
                <Spacer size="4" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
-                     <Title>Message Prompt</Title>
+                     <Title>Dialog Prompt</Title>
                      <Text size="2" color="gray50">
                         Displays a dialog box that prompts the user for input.
                      </Text>
@@ -119,9 +119,9 @@ export default class DemoContentMessage extends Component {
                <Spacer size="4" />
                <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                   <GridCell>
-                     <Title>Message Configurations</Title>
+                     <Title>Dialog Configurations</Title>
                      <Text size="2" color="gray50">
-                        Props for using the <code>Message</code> component
+                        Props for using the <code>Dialog</code> component
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
@@ -159,20 +159,20 @@ export default class DemoContentMessage extends Component {
                               <td><b>text</b></td>
                               <td>String</td>
                               <td><code>Text</code></td>
-                              <td>Text content of message</td>
+                              <td>Text content of dialog</td>
                            </tr>
                            <tr>
                               <td><b>title</b></td>
                               <td>String</td>
                               <td><code>Title</code></td>
-                              <td>Title of message</td>
+                              <td>Title of dialog</td>
                            </tr>
                            <tr>
                               <td><b>type</b></td>
                               <td>String</td>
                               <td><code>alert</code></td>
                               <td>
-                                 Type of message.
+                                 Type of dialog.
                                  Can be <code>alert</code>,
                                  <code>confirm</code>,
                                  or <code>prompt</code>
@@ -184,7 +184,7 @@ export default class DemoContentMessage extends Component {
                               <td><code>false</code></td>
                               <td>
                                  Boolean value to toggle whether
-                                 <code>Message</code> is showing or not.
+                                 <code>Dialog</code> is showing or not.
                               </td>
                            </tr>
                         </tbody>
