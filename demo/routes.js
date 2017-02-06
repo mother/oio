@@ -6,6 +6,7 @@ import Button from './content/Button'
 import Form from './content/Form'
 import Modal from './content/Modal'
 import Typography from './content/Typography'
+import View from './content/View'
 
 import ExamplesWindow from './examples/Window'
 
@@ -15,6 +16,7 @@ export default (
       <Route path="button" component={Button} />
       <Route path="form" component={Form} />
       <Route path="modal" component={Modal} />
+      <Route path="view" component={View} />
 
       <Route path="examples">
          <IndexRoute component={ExamplesWindow} />
