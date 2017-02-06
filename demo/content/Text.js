@@ -8,7 +8,6 @@ import {
    TitleBar,
    View
 } from '../../src'
-
 import style from '../style.less'
 
 export default class DemoContentText extends Component {
@@ -21,26 +20,27 @@ export default class DemoContentText extends Component {
 
       this.handleEditCancel = this.handleEditCancel.bind(this)
       this.handleEditDone = this.handleEditDone.bind(this)
+
+      this.state = {
+         body: 'Flexitarian biodiesel kale chips, hoodie lumbersexual food truck keffiyeh umami single-origin coffee franzen. Celiac viral put a bird on it, farm-to-table heirloom everyday carry before they sold out locavore listicle stumptown. Cold-pressed single-origin coffee seitan, next level biodiesel vinyl synth chia pop-up sartorial ugh post-ironic. Hella bitters cardigan affogato selfies thundercats gentrify, man braid schlitz normcore banjo umami messenger bag sartorial. Humblebrag freegan offal, mumblecore tote bag mustache venmo meditation lumbersexual. Put a bird on it intelligentsia lomo gluten-free bitters marfa. Meh literally try-hard ugh everyday carry.',
+         editing: false,
+         editLoading: false
+      }
    }
 
-   handleEditCancel(bodyInitial, bodyAfter) {
-      /* eslint-disable */
-      console.log('Cancel:')
-      console.log('Initial:')
-      console.log(bodyInitial)
-      console.log('After:')
-      console.log(bodyAfter)
-      /* eslint-enable */
+   handleEditCancel(body) {
+      this.setState({ editing: false })
    }
 
-   handleEditDone(bodyInitial, bodyAfter) {
-      /* eslint-disable */
-      console.log('Done:')
-      console.log('Initial:')
-      console.log(bodyInitial)
-      console.log('After:')
-      console.log(bodyAfter)
-      /* eslint-enable */
+   handleEditDone(body) {
+      this.setState({ editing: true, editLoading: true })
+      setTimeout(() => {
+         this.setState({
+            body,
+            editing: false,
+            editLoading: false
+         })
+      }, 1000)
    }
 
    render() {
@@ -76,22 +76,12 @@ export default class DemoContentText extends Component {
                <GridCell colspan="3">
                   <Text
                      editable
-                     editing={false}
                      showEditButton
+                     editing={this.state.editing}
+                     editLoading={this.state.editLoading}
                      onEditCancel={this.handleEditCancel}
                      onEditDone={this.handleEditDone}
-                     editableBody="Flexitarian biodiesel kale chips, hoodie lumbersexual
-                     food truck keffiyeh umami single-origin coffee franzen.
-                     Celiac viral put a bird on it, farm-to-table
-                     heirloom everyday carry before they sold out locavore
-                     listicle stumptown. Cold-pressed single-origin coffee seitan,
-                     next level biodiesel vinyl synth chia pop-up sartorial ugh
-                     post-ironic. Hella bitters cardigan affogato selfies
-                     thundercats gentrify, man braid schlitz normcore banjo
-                     umami messenger bag sartorial. Humblebrag freegan offal,
-                     mumblecore tote bag mustache venmo meditation lumbersexual.
-                     Put a bird on it intelligentsia lomo gluten-free bitters marfa.
-                     Meh literally try-hard ugh everyday carry."
+                     body={this.state.body}
                   />
                </GridCell>
             </Grid>
@@ -126,32 +116,6 @@ export default class DemoContentText extends Component {
                            <td>CSS color (e.g. #CCC)</td>
                         </tr>
                         <tr>
-                           <td><b>editable</b></td>
-                           <td>Boolean</td>
-                           <td><code>false</code></td>
-                           <td>Makes Text component editable</td>
-                        </tr>
-                        <tr>
-                           <td><b>editableBody</b></td>
-                           <td>String</td>
-                           <td>-</td>
-                           <td>Initial body content (replaces children)</td>
-                        </tr>
-                        <tr>
-                           <td><b>onEditCancel</b></td>
-                           <td>Function</td>
-                           <td>-</td>
-                           <td>Returns <code>body</code> text to use.
-                              <code>editableBody is not changed.</code></td>
-                        </tr>
-                        <tr>
-                           <td><b>onEditDone</b></td>
-                           <td>Function</td>
-                           <td>-</td>
-                           <td>Returns <code>body</code> text to use.
-                              <code>editableBody IS changed.</code></td>
-                        </tr>
-                        <tr>
                            <td><b>size</b></td>
                            <td>String</td>
                            <td>-</td>
@@ -168,6 +132,36 @@ export default class DemoContentText extends Component {
                            <td>String</td>
                            <td><code>normal</code></td>
                            <td>Set content font-weight</td>
+                        </tr>
+                        <tr>
+                           <td><b>editable</b></td>
+                           <td>Boolean</td>
+                           <td><code>false</code></td>
+                           <td>Makes Text component editable</td>
+                        </tr>
+                        <tr>
+                           <td><b>body</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>Initial and editable body content (replaces children)</td>
+                        </tr>
+                        <tr>
+                           <td><b>onEditCancel</b></td>
+                           <td>Function</td>
+                           <td>-</td>
+                           <td>Returns <code>body</code> text to use.</td>
+                        </tr>
+                        <tr>
+                           <td><b>onEditDone</b></td>
+                           <td>Function</td>
+                           <td>-</td>
+                           <td>Returns <code>body</code> text to use.</td>
+                        </tr>
+                        <tr>
+                           <td><b>showEditButton</b></td>
+                           <td>Boolean</td>
+                           <td><code>false</code></td>
+                           <td>Show edit button at top right of text.</td>
                         </tr>
                      </tbody>
                   </table>
