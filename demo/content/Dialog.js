@@ -26,7 +26,7 @@ export default class DemoContentDialog extends Component {
       this.handlePromptClick = this.handlePromptClick.bind(this)
 
       this.state = {
-         dialog: { showing: false }
+         dialog: { visible: false }
       }
    }
 
@@ -36,7 +36,7 @@ export default class DemoContentDialog extends Component {
             ...this.state.dialog,
             text: 'This is a test alert dialog.',
             type: 'alert',
-            showing: true
+            visible: true
          }
       })
    }
@@ -49,7 +49,7 @@ export default class DemoContentDialog extends Component {
             text: 'This is a test confirm dialog. Are you sure?',
             title: 'Confirm',
             type: 'confirm',
-            showing: true
+            visible: true
          }
       })
    }
@@ -62,7 +62,7 @@ export default class DemoContentDialog extends Component {
             text: 'This is a test prompt dialog. Enter your email:',
             title: 'Prompt',
             type: 'prompt',
-            showing: true
+            visible: true
          }
       })
    }
@@ -78,7 +78,7 @@ export default class DemoContentDialog extends Component {
                text={dialog.text}
                title={dialog.title}
                type={dialog.type}
-               showing={dialog.showing}
+               visible={dialog.visible}
             />
             <View width="100%" className={style.docs}>
                <TitleBar title="Dialog" flush />
@@ -179,12 +179,12 @@ export default class DemoContentDialog extends Component {
                               </td>
                            </tr>
                            <tr>
-                              <td><b>showing</b></td>
+                              <td><b>visible</b></td>
                               <td>Boolean</td>
                               <td><code>false</code></td>
                               <td>
                                  Boolean value to toggle whether
-                                 <code>Dialog</code> is showing or not.
+                                 <code>Dialog</code> is visible or not.
                               </td>
                            </tr>
                         </tbody>

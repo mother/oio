@@ -13,14 +13,14 @@ export default class Dialog extends Component {
       text: React.PropTypes.string,
       title: React.PropTypes.string,
       type: React.PropTypes.string,
-      showing: React.PropTypes.bool
+      visible: React.PropTypes.bool
    }
 
    static defaultProps = {
       text: 'Text',
       title: 'Title',
       type: 'alert',
-      showing: false
+      visible: false
    }
 
    constructor(props) {
@@ -33,18 +33,18 @@ export default class Dialog extends Component {
 
       this.state = {
          promptInputValue: '',
-         showing: props.showing
+         visible: props.visible
       }
    }
 
    componentWillReceiveProps(nextProps) {
       this.setState({
-         showing: nextProps.showing
+         visible: nextProps.visible
       })
    }
 
    close() {
-      this.setState({ showing: false })
+      this.setState({ visible: false })
    }
 
    handleCancelClick() {
@@ -73,8 +73,8 @@ export default class Dialog extends Component {
    }
 
    render() {
-      const displayClass = this.state.showing ? 'showDialog' : 'hideDialog'
-      const displayStyle = this.state.showing ? 'table' : 'none'
+      const displayClass = this.state.visible ? 'showDialog' : 'hideDialog'
+      const displayStyle = this.state.visible ? 'table' : 'none'
 
       return (
          <div
