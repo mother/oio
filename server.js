@@ -6,7 +6,7 @@ new WebpackDevServer(webpack(config), {
    publicPath: config.output.publicPath,
    hot: true,
    historyApiFallback: true
-}).listen(8000, 'localhost', (err, result) => {
+}).listen(8000, (err, result) => {
    if (err) {
       return console.log(err) // eslint-disable-line no-console
    }
