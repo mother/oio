@@ -5,12 +5,14 @@ export default class ButtonGroup extends Component {
       align: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
+      mode: React.PropTypes.string,
       spacing: React.PropTypes.number
    }
 
    static defaultProps = {
-      spacing: 6,
-      align: 'left'
+      align: 'left',
+      mode: 'normal',
+      spacing: 6
    }
 
    static childContextTypes = {
@@ -20,6 +22,7 @@ export default class ButtonGroup extends Component {
    getChildContext() {
       const buttonGroupStyle = {
          align: this.props.align,
+         mode: this.props.mode,
          spacing: `${this.props.spacing}px`
       }
 
@@ -28,11 +31,11 @@ export default class ButtonGroup extends Component {
 
    render() {
       const style = {
+         float: 'left',
          position: 'relative'
       }
 
       if (this.props.align === 'center') {
-         style.float = 'left'
          style.width = '100%'
          style.textAlign = 'center'
       } else {

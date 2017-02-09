@@ -51,10 +51,13 @@ export default class Demo extends Component {
       }, {
          name: 'Components',
          buttons: [{
-            name: 'Buttons',
+            name: 'Button',
             link: '/button'
          }, {
-            name: 'Forms',
+            name: 'ButtonGroup',
+            link: '/button-group'
+         }, {
+            name: 'Form',
             link: '/form'
          }, {
             name: 'Modal',
