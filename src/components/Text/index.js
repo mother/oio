@@ -8,14 +8,16 @@ import colors from '../../foundation/colors.less'
 
 export default class Text extends Component {
    static propTypes = {
+      cancelButtonText: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       color: React.PropTypes.string,
+      doneButtonText: React.PropTypes.string,
       editable: React.PropTypes.bool,
       editing: React.PropTypes.bool,
       editLoading: React.PropTypes.bool,
-      onEditCancel: React.PropTypes.func,
-      onEditDone: React.PropTypes.func,
+      onCancel: React.PropTypes.func,
+      onDone: React.PropTypes.func,
       showEditButton: React.PropTypes.bool,
       size: React.PropTypes.string,
       uppercase: React.PropTypes.bool,
@@ -24,6 +26,8 @@ export default class Text extends Component {
    }
 
    static defaultProps = {
+      cancelButtonText: 'Cancel',
+      doneButtonText: 'Done',
       editable: false,
       editing: false,
       editLoading: false,
@@ -89,7 +93,7 @@ export default class Text extends Component {
    }
 
    handleEditCancel() {
-      if (this.props.onEditCancel) this.props.onEditCancel(this.state.inputValue)
+      if (this.props.onCancel) this.props.onCancel(this.state.inputValue)
 
       this.setState({ inputValue: this.props.value })
    }
@@ -102,7 +106,7 @@ export default class Text extends Component {
    }
 
    handleEditDone() {
-      if (this.props.onEditDone) this.props.onEditDone(this.state.inputValue)
+      if (this.props.onDone) this.props.onDone(this.state.inputValue)
    }
 
    render() {
@@ -132,13 +136,13 @@ export default class Text extends Component {
          <ButtonGroup align="right">
             <Button
                onClick={this.handleEditCancel}
-               name="Cancel"
+               name={this.props.cancelButtonText}
                size="tiny"
                color="#CCC"
             />
             <Button
                onClick={this.handleEditDone}
-               name="Done"
+               name={this.props.doneButtonText}
                size="tiny"
             />
          </ButtonGroup>
