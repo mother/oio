@@ -8,30 +8,30 @@ import colors from '../../foundation/colors.less'
 
 export default class Text extends Component {
    static propTypes = {
-      cancelButtonText: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       color: React.PropTypes.string,
-      doneButtonText: React.PropTypes.string,
       editable: React.PropTypes.bool,
+      editorCancelButtonText: React.PropTypes.string,
+      editorDoneButtonText: React.PropTypes.string,
+      editorLoading: React.PropTypes.bool,
+      editorOnCancel: React.PropTypes.func,
+      editorOnDone: React.PropTypes.func,
+      editorShowEditButton: React.PropTypes.bool,
+      editorValue: React.PropTypes.string,
       editing: React.PropTypes.bool,
-      editLoading: React.PropTypes.bool,
-      onCancel: React.PropTypes.func,
-      onDone: React.PropTypes.func,
-      showEditButton: React.PropTypes.bool,
       size: React.PropTypes.string,
       uppercase: React.PropTypes.bool,
-      value: React.PropTypes.string,
       weight: React.PropTypes.string
    }
 
    static defaultProps = {
-      cancelButtonText: 'Cancel',
-      doneButtonText: 'Done',
       editable: false,
+      editorCancelButtonText: 'Cancel',
+      editorDoneButtonText: 'Done',
+      editorLoading: false,
+      editorShowEditButton: false,
       editing: false,
-      editLoading: false,
-      showEditButton: false,
       weight: 'normal'
    }
 
@@ -49,7 +49,7 @@ export default class Text extends Component {
 
       this.state = {
          editing: props.editing,
-         inputValue: props.value
+         inputValue: props.editorValue
       }
    }
 
@@ -57,8 +57,8 @@ export default class Text extends Component {
       const newState = { editing: nextProps.editing }
 
       // Update inputValue if different from value and not loading
-      if (nextProps.value !== this.state.inputValue && !nextProps.editLoading) {
-         newState.inputValue = nextProps.value
+      if (nextProps.editorValue !== this.state.inputValue && !nextProps.editorLoading) {
+         newState.inputValue = nextProps.editorValue
       }
 
       this.setState(newState)
@@ -93,20 +93,20 @@ export default class Text extends Component {
    }
 
    handleEditCancel() {
-      if (this.props.onCancel) this.props.onCancel(this.state.inputValue)
+      if (this.props.editorOnCancel) this.props.editorOnCancel(this.state.inputValue)
 
-      this.setState({ inputValue: this.props.value })
+      this.setState({ inputValue: this.props.editorValue })
    }
 
    handleEditClick(event) {
       this.setState({
-         inputValue: this.props.value,
+         inputValue: this.props.editorValue,
          editing: true
       })
    }
 
    handleEditDone() {
-      if (this.props.onDone) this.props.onDone(this.state.inputValue)
+      if (this.props.editorOnDone) this.props.editorOnDone(this.state.inputValue)
    }
 
    render() {
@@ -129,26 +129,26 @@ export default class Text extends Component {
          !this.props.children &&
          !this.state.editing &&
          this.props.editable &&
-         this.props.showEditButton
+         this.props.editorShowEditButton
       )
 
       let editActionButtons = (
          <ButtonGroup align="right">
             <Button
                onClick={this.handleEditCancel}
-               name={this.props.cancelButtonText}
+               name={this.props.editorCancelButtonText}
                size="tiny"
                color="#CCC"
             />
             <Button
                onClick={this.handleEditDone}
-               name={this.props.doneButtonText}
+               name={this.props.editorDoneButtonText}
                size="tiny"
             />
          </ButtonGroup>
       )
 
-      if (this.props.editLoading) {
+      if (this.props.editorLoading) {
          editActionButtons = (
             <ButtonGroup align="right">
                <Button
@@ -172,7 +172,7 @@ export default class Text extends Component {
                />
             )}
             {!this.props.children && !this.state.editing && (
-               <span>{this.props.value}</span>
+               <span>{this.props.editorValue}</span>
             )}
             {!this.props.editable && this.props.children}
             {this.state.editing && this.props.editable && (

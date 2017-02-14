@@ -75,13 +75,13 @@ export default class DemoContentText extends Component {
                </GridCell>
                <GridCell colspan="3">
                   <Text
-                     editable
-                     showEditButton
                      editing={this.state.editing}
-                     editLoading={this.state.editLoading}
-                     onCancel={this.handleCancel}
-                     onDone={this.handleDone}
-                     value={this.state.value}
+                     editable
+                     editorShowEditButton
+                     editorLoading={this.state.editLoading}
+                     editorOnCancel={this.handleCancel}
+                     editorOnDone={this.handleDone}
+                     editorValue={this.state.value}
                   />
                </GridCell>
             </Grid>
@@ -140,28 +140,46 @@ export default class DemoContentText extends Component {
                            <td>Makes Text component editable</td>
                         </tr>
                         <tr>
-                           <td><b>body</b></td>
+                           <td><b>editing</b></td>
+                           <td>Boolean</td>
+                           <td><code>false</code></td>
+                           <td>Whether editor is open to edit or not.</td>
+                        </tr>
+                        <tr>
+                           <td><b>editorCancelButtonText</b></td>
                            <td>String</td>
-                           <td>-</td>
-                           <td>Initial and editable body content (replaces children)</td>
+                           <td><code>Cancel</code></td>
+                           <td>Text for cancel button</td>
                         </tr>
                         <tr>
-                           <td><b>onEditCancel</b></td>
+                           <td><b>editorDoneButtonText</b></td>
+                           <td>String</td>
+                           <td><code>Done</code></td>
+                           <td>Text for done button</td>
+                        </tr>
+                        <tr>
+                           <td><b>editorOnCancel</b></td>
                            <td>Function</td>
                            <td>-</td>
                            <td>Returns <code>body</code> text to use.</td>
                         </tr>
                         <tr>
-                           <td><b>onEditDone</b></td>
+                           <td><b>editorOnDone</b></td>
                            <td>Function</td>
                            <td>-</td>
                            <td>Returns <code>body</code> text to use.</td>
                         </tr>
                         <tr>
-                           <td><b>showEditButton</b></td>
+                           <td><b>editorShowEditButton</b></td>
                            <td>Boolean</td>
                            <td><code>false</code></td>
                            <td>Show edit button at top right of text.</td>
+                        </tr>
+                        <tr>
+                           <td><b>editorValue</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>Initial and editable body content (replaces children)</td>
                         </tr>
                      </tbody>
                   </table>
