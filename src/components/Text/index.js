@@ -8,7 +8,6 @@ import colors from '../../foundation/colors.less'
 
 export default class Text extends Component {
    static propTypes = {
-      body: React.PropTypes.string,
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       color: React.PropTypes.string,
@@ -20,6 +19,7 @@ export default class Text extends Component {
       showEditButton: React.PropTypes.bool,
       size: React.PropTypes.string,
       uppercase: React.PropTypes.bool,
+      value: React.PropTypes.string,
       weight: React.PropTypes.string
    }
 
@@ -45,16 +45,16 @@ export default class Text extends Component {
 
       this.state = {
          editing: props.editing,
-         inputBody: props.body
+         inputValue: props.value
       }
    }
 
    componentWillReceiveProps(nextProps) {
       const newState = { editing: nextProps.editing }
 
-      // Update inputBody if different from body and not loading
-      if (nextProps.body !== this.state.inputBody && !nextProps.editLoading) {
-         newState.inputBody = nextProps.body
+      // Update inputValue if different from value and not loading
+      if (nextProps.value !== this.state.inputValue && !nextProps.editLoading) {
+         newState.inputValue = nextProps.value
       }
 
       this.setState(newState)
@@ -85,24 +85,24 @@ export default class Text extends Component {
       // Remove line-breaks from textarea value
       value = value.replace(/\n/g, '')
 
-      this.setState({ inputBody: value })
+      this.setState({ inputValue: value })
    }
 
    handleEditCancel() {
-      if (this.props.onEditCancel) this.props.onEditCancel(this.state.inputBody)
+      if (this.props.onEditCancel) this.props.onEditCancel(this.state.inputValue)
 
-      this.setState({ inputBody: this.props.body })
+      this.setState({ inputValue: this.props.value })
    }
 
    handleEditClick(event) {
       this.setState({
-         inputBody: this.props.body,
+         inputValue: this.props.value,
          editing: true
       })
    }
 
    handleEditDone() {
-      if (this.props.onEditDone) this.props.onEditDone(this.state.inputBody)
+      if (this.props.onEditDone) this.props.onEditDone(this.state.inputValue)
    }
 
    render() {
@@ -168,7 +168,7 @@ export default class Text extends Component {
                />
             )}
             {!this.props.children && !this.state.editing && (
-               <span>{this.props.body}</span>
+               <span>{this.props.value}</span>
             )}
             {!this.props.editable && this.props.children}
             {this.state.editing && this.props.editable && (
@@ -176,7 +176,7 @@ export default class Text extends Component {
                   <Textarea
                      className={style.editTextarea}
                      onChange={this.handleChange}
-                     value={this.state.inputBody}
+                     value={this.state.inputValue}
                      placeholder="Add text..."
                   />
                   {editActionButtons}

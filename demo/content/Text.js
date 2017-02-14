@@ -22,21 +22,21 @@ export default class DemoContentText extends Component {
       this.handleEditDone = this.handleEditDone.bind(this)
 
       this.state = {
-         body: 'Flexitarian biodiesel kale chips, hoodie lumbersexual food truck keffiyeh umami single-origin coffee franzen. Celiac viral put a bird on it, farm-to-table heirloom everyday carry before they sold out locavore listicle stumptown. Cold-pressed single-origin coffee seitan, next level biodiesel vinyl synth chia pop-up sartorial ugh post-ironic. Hella bitters cardigan affogato selfies thundercats gentrify, man braid schlitz normcore banjo umami messenger bag sartorial. Humblebrag freegan offal, mumblecore tote bag mustache venmo meditation lumbersexual. Put a bird on it intelligentsia lomo gluten-free bitters marfa. Meh literally try-hard ugh everyday carry.',
+         value: 'Flexitarian biodiesel kale chips, hoodie lumbersexual food truck keffiyeh umami single-origin coffee franzen. Celiac viral put a bird on it, farm-to-table heirloom everyday carry before they sold out locavore listicle stumptown. Cold-pressed single-origin coffee seitan, next level biodiesel vinyl synth chia pop-up sartorial ugh post-ironic. Hella bitters cardigan affogato selfies thundercats gentrify, man braid schlitz normcore banjo umami messenger bag sartorial. Humblebrag freegan offal, mumblecore tote bag mustache venmo meditation lumbersexual. Put a bird on it intelligentsia lomo gluten-free bitters marfa. Meh literally try-hard ugh everyday carry.',
          editing: false,
          editLoading: false
       }
    }
 
-   handleEditCancel(body) {
+   handleEditCancel(value) {
       this.setState({ editing: false })
    }
 
-   handleEditDone(body) {
+   handleEditDone(value) {
       this.setState({ editing: true, editLoading: true })
       setTimeout(() => {
          this.setState({
-            body,
+            value,
             editing: false,
             editLoading: false
          })
@@ -81,7 +81,7 @@ export default class DemoContentText extends Component {
                      editLoading={this.state.editLoading}
                      onEditCancel={this.handleEditCancel}
                      onEditDone={this.handleEditDone}
-                     body={this.state.body}
+                     value={this.state.value}
                   />
                </GridCell>
             </Grid>
