@@ -49,16 +49,16 @@ export default class Text extends Component {
 
       this.state = {
          editing: props.editing,
-         inputValue: props.editorValue
+         editorValue: props.editorValue
       }
    }
 
    componentWillReceiveProps(nextProps) {
       const newState = { editing: nextProps.editing }
 
-      // Update inputValue if different from value and not loading
-      if (nextProps.editorValue !== this.state.inputValue && !nextProps.editorLoading) {
-         newState.inputValue = nextProps.editorValue
+      // Update editorValue if different from value and not loading
+      if (nextProps.editorValue !== this.state.editorValue && !nextProps.editorLoading) {
+         newState.editorValue = nextProps.editorValue
       }
 
       this.setState(newState)
@@ -89,24 +89,24 @@ export default class Text extends Component {
       // Remove line-breaks from textarea value
       value = value.replace(/\n/g, '')
 
-      this.setState({ inputValue: value })
+      this.setState({ editorValue: value })
    }
 
    handleEditCancel() {
-      if (this.props.editorOnCancel) this.props.editorOnCancel(this.state.inputValue)
+      if (this.props.editorOnCancel) this.props.editorOnCancel(this.state.editorValue)
 
-      this.setState({ inputValue: this.props.editorValue })
+      this.setState({ editorValue: this.props.editorValue })
    }
 
    handleEditClick(event) {
       this.setState({
-         inputValue: this.props.editorValue,
+         editorValue: this.props.editorValue,
          editing: true
       })
    }
 
    handleEditDone() {
-      if (this.props.editorOnDone) this.props.editorOnDone(this.state.inputValue)
+      if (this.props.editorOnDone) this.props.editorOnDone(this.state.editorValue)
    }
 
    render() {
@@ -180,7 +180,7 @@ export default class Text extends Component {
                   <Textarea
                      className={style.editTextarea}
                      onChange={this.handleChange}
-                     value={this.state.inputValue}
+                     value={this.state.editorValue}
                      placeholder="Add text..."
                   />
                   {editActionButtons}
