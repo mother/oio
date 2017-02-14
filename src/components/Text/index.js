@@ -1,46 +1,70 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import style from './style.less'
 import colors from '../../foundation/colors.less'
 
-const Text = ({
-   children, className, color, size, uppercase, weight }, context) => {
-   const fontSize = size ? `textSize${size}` : 'textSize3'
-   const textStyle = {}
-
-   const classes = [
-      style[fontSize],
-      style[weight],
-      colors[color],
-      className
-   ]
-
-   if (uppercase) {
-      classes.push(style.uppercase)
+export default class Text extends Component {
+   static propTypes = {
+      children: React.PropTypes.node,
+      className: React.PropTypes.string,
+      color: React.PropTypes.string,
+      size: React.PropTypes.string,
+      uppercase: React.PropTypes.bool,
+      weight: React.PropTypes.string
    }
 
-   return (
-      <div className={classNames(classes)} style={textStyle}>
-         {children}
-      </div>
-   )
-}
+   static defaultProps = {
+      size: '3',
+      weight: 'normal'
+   }
 
-Text.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string,
-   color: React.PropTypes.string,
-   size: React.PropTypes.string,
-   uppercase: React.PropTypes.bool,
-   weight: React.PropTypes.string
-}
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
+   }
 
-Text.defaultProps = {
-   weight: 'normal'
-}
+   constructor(props, context) {
+      super(props, context)
 
-Text.contextTypes = {
-   OIOStyles: React.PropTypes.object
-}
+      this.state = {
+         size: getWindowSize()
+      }
 
-export default Text
+      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
+   }
+
+   componentDidMount() {
+      window.addEventListener('resize', this.windowSizeUpdated, false)
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
+   }
+
+   windowSizeUpdated() {
+      const windowSize = getWindowSize()
+      this.setState({ size: windowSize })
+   }
+
+   render() {
+      const fontSize = `textSize${getAttributeForCurrentSize(this.state.size, this.props.size)}`
+      const textStyle = {}
+
+      const textClasses = [
+         style[fontSize],
+         style[this.props.weight],
+         colors[this.props.color],
+         this.props.className
+      ]
+
+      if (this.props.uppercase) {
+         textClasses.push(style.uppercase)
+      }
+
+      return (
+         <div className={classNames(textClasses)} style={textStyle}>
+            {this.props.children}
+         </div>
+      )
+   }
+}
