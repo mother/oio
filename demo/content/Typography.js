@@ -89,6 +89,61 @@ export default class DemoContentTypography extends Component {
                      Meh literally try-hard ugh everyday carry.
                   </p>
                </GridCell>
+               <GridCell>
+                  <Title>Text Configurations</Title>
+                  <Text size="2" color="gray50">
+                     Props for using the <code>Text</code> component
+                  </Text>
+               </GridCell>
+               <GridCell colspan="3">
+                  <table className={style.table}>
+                     <thead>
+                        <tr>
+                           <th width="150px">Prop</th>
+                           <th width="90px">Prop Type</th>
+                           <th width="120px">Default Value</th>
+                           <th>Description/Options</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><b>color</b></td>
+                           <td>IN PROGRESS</td>
+                           <td>-</td>
+                           <td>
+                              Will be able to pass hex, rgba, or preset classes
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>size</b></td>
+                           <td>String</td>
+                           <td><code>3</code></td>
+                           <td>
+                              -
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>uppercase</b></td>
+                           <td>Boolean</td>
+                           <td><code>false</code></td>
+                           <td>
+                              Set to <code>true</code> to enable uppercase on text
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>weight</b></td>
+                           <td>String</td>
+                           <td><code>normal</code></td>
+                           <td>
+                              <code>light</code>
+                              <code>normal</code>
+                              <code>semibold</code>
+                              <code>bold</code>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </GridCell>
             </Grid>
          </View>
       )

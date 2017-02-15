@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import Button from '../Button'
 import ButtonGroup from '../ButtonGroup'
 import Textarea from '../Form/Textarea'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import style from './style.less'
 import colors from '../../foundation/colors.less'
 
@@ -32,6 +33,7 @@ export default class Text extends Component {
       editorLoading: false,
       editorShowEditButton: false,
       editing: false,
+      size: '3',
       weight: 'normal'
    }
 
@@ -46,11 +48,17 @@ export default class Text extends Component {
       this.handleEditCancel = this.handleEditCancel.bind(this)
       this.handleEditClick = this.handleEditClick.bind(this)
       this.handleEditDone = this.handleEditDone.bind(this)
+      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
 
       this.state = {
          editing: props.editing,
-         editorValue: props.editorValue
+         editorValue: props.editorValue,
+         size: getWindowSize()
       }
+   }
+
+   componentDidMount() {
+      window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
    componentWillReceiveProps(nextProps) {
@@ -71,6 +79,10 @@ export default class Text extends Component {
          const textarea = this.editor.parentNode.getElementsByTagName('textarea')[0]
          this.adjustTextareaHeight(textarea)
       }
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
    adjustTextareaHeight(textarea) {
@@ -109,12 +121,16 @@ export default class Text extends Component {
       if (this.props.editorOnDone) this.props.editorOnDone(this.state.editorValue)
    }
 
+   windowSizeUpdated() {
+      const windowSize = getWindowSize()
+      this.setState({ size: windowSize })
+   }
+
    render() {
-      const fontSize = this.props.size ? `textSize${this.props.size}` : 'textSize3'
+      const fontSize = `textSize${getAttributeForCurrentSize(this.state.size, this.props.size)}`
       const textStyle = {}
 
-      const classes = [
-         style.editContainer,
+      const textClasses = [
          style[fontSize],
          style[this.props.weight],
          colors[this.props.color],
@@ -122,7 +138,7 @@ export default class Text extends Component {
       ]
 
       if (this.props.uppercase) {
-         classes.push(style.uppercase)
+         textClasses.push(style.uppercase)
       }
 
       const showEditButton = (
@@ -162,7 +178,7 @@ export default class Text extends Component {
       }
 
       return (
-         <div className={classNames(classes)} style={textStyle}>
+         <div className={classNames(textClasses)} style={textStyle}>
             {showEditButton && (
                <Button
                   onClick={this.handleEditClick}
