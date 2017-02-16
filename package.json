@@ -67,7 +67,7 @@
     "resolve-url-loader": "1.6.0",
     "sinon": "1.17.5",
     "style-loader": "0.13.1",
-    "webpack": "1.14.0",
+    "webpack": "2.2.1",
     "webpack-dev-server": "1.12.1"
   },
   "config": {
