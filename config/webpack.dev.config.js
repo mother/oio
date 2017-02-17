@@ -14,18 +14,18 @@ module.exports = {
       publicPath: '/dist/'
    },
    module: {
-      loaders: [{
+      rules: [{
          test: /\.js$/,
          exclude: /node_modules/,
-         loaders: ['react-hot', 'babel-loader']
+         use: ['react-hot-loader', 'babel-loader']
       },
       {
          test: /\.less$/,
-         loaders: [
-            'style',
-            'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-            'resolve-url',
-            'less'
+         use: [
+            'style-loader',
+            'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+            'resolve-url-loader',
+            'less-loader'
          ]
       }]
    },
