@@ -40,7 +40,7 @@ export default class DemoContentText extends Component {
             editing: false,
             editorState: 'ready'
          })
-      }, 1000)
+      }, 2000)
    }
 
    render() {

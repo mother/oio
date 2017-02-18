@@ -66,7 +66,7 @@ export default class Text extends Component {
    }
 
    componentWillReceiveProps(nextProps) {
-      const stateChangeRequired = ['editable', 'editing', 'editorValue'].some(prop => (
+      const stateChangeRequired = ['editable', 'editing', 'editorState', 'editorValue'].some(prop => (
          typeof nextProps[prop] !== 'undefined' && this.state[prop] !== nextProps[prop]
       ))
 
@@ -74,6 +74,7 @@ export default class Text extends Component {
          this.setState({
             editable: nextProps.editable,
             editing: nextProps.editing,
+            editorState: nextProps.editorState,
             editorValue: nextProps.editorValue
          })
       }
@@ -217,6 +218,7 @@ export default class Text extends Component {
                   onChange={this.handleChange}
                   value={this.state.editorValue}
                   placeholder="Add text..."
+                  disabled={this.state.editorState === 'pending'}
                />
                {editActionButtons}
             </div>
