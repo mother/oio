@@ -24,7 +24,7 @@ export default class DemoContentText extends Component {
       this.state = {
          value: 'Flexitarian biodiesel kale chips, hoodie lumbersexual food truck keffiyeh umami single-origin coffee franzen. Celiac viral put a bird on it, farm-to-table heirloom everyday carry before they sold out locavore listicle stumptown. Cold-pressed single-origin coffee seitan, next level biodiesel vinyl synth chia pop-up sartorial ugh post-ironic. Hella bitters cardigan affogato selfies thundercats gentrify, man braid schlitz normcore banjo umami messenger bag sartorial. Humblebrag freegan offal, mumblecore tote bag mustache venmo meditation lumbersexual. Put a bird on it intelligentsia lomo gluten-free bitters marfa. Meh literally try-hard ugh everyday carry.',
          editing: false,
-         editLoading: false
+         editorState: 'ready'
       }
    }
 
@@ -33,12 +33,12 @@ export default class DemoContentText extends Component {
    }
 
    handleEditDone(value) {
-      this.setState({ editing: true, editLoading: true })
+      this.setState({ editing: true, editorState: 'pending' })
       setTimeout(() => {
          this.setState({
             value,
             editing: false,
-            editLoading: false
+            editorState: 'ready'
          })
       }, 1000)
    }
@@ -78,7 +78,7 @@ export default class DemoContentText extends Component {
                      editing={this.state.editing}
                      editable
                      editorShowEditButton
-                     editorLoading={this.state.editLoading}
+                     editorState={this.state.editorState}
                      editorOnCancel={this.handleEditCancel}
                      editorOnDone={this.handleEditDone}
                      editorValue={this.state.value}
@@ -174,6 +174,12 @@ export default class DemoContentText extends Component {
                            <td>Boolean</td>
                            <td><code>false</code></td>
                            <td>Show edit button at top right of text.</td>
+                        </tr>
+                        <tr>
+                           <td><b>editorState</b></td>
+                           <td>String</td>
+                           <td><code>ready</code></td>
+                           <td>Should the editor indicate something is happening (<code>pending</code>) or is it ready to be used (<code>ready</code>)</td>
                         </tr>
                         <tr>
                            <td><b>editorValue</b></td>
