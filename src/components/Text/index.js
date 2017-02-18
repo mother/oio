@@ -66,14 +66,17 @@ export default class Text extends Component {
    }
 
    componentWillReceiveProps(nextProps) {
-      const newState = { editing: nextProps.editing }
+      const stateChangeRequired = ['editable', 'editing', 'editorValue'].some(prop => (
+         typeof nextProps[prop] !== 'undefined' && this.state[prop] !== nextProps[prop]
+      ))
 
-      // Update editorValue if different from existing value and not pending
-      if (nextProps.editorValue !== this.state.editorValue && nextProps.editorState === 'ready') {
-         newState.editorValue = nextProps.editorValue
+      if (stateChangeRequired) {
+         this.setState({
+            editable: nextProps.editable,
+            editing: nextProps.editing,
+            editorValue: nextProps.editorValue
+         })
       }
-
-      this.setState(newState)
    }
 
    componentDidUpdate() {
