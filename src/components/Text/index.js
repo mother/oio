@@ -15,7 +15,7 @@ export default class Text extends Component {
       editable: React.PropTypes.bool,
       editorCancelButtonText: React.PropTypes.string,
       editorDoneButtonText: React.PropTypes.string,
-      editorLoading: React.PropTypes.bool,
+      editorState: React.PropTypes.oneOf(['ready', 'pending']),
       editorOnCancel: React.PropTypes.func,
       editorOnDone: React.PropTypes.func,
       editorShowEditButton: React.PropTypes.bool,
@@ -30,7 +30,7 @@ export default class Text extends Component {
       editable: false,
       editorCancelButtonText: 'Cancel',
       editorDoneButtonText: 'Done',
-      editorLoading: false,
+      editorState: 'ready',
       editorShowEditButton: false,
       editing: false,
       size: '3',
@@ -57,6 +57,10 @@ export default class Text extends Component {
       }
    }
 
+   // =====================================================
+   // Lifecycle
+   // =====================================================
+
    componentDidMount() {
       window.addEventListener('resize', this.windowSizeUpdated, false)
    }
@@ -64,8 +68,8 @@ export default class Text extends Component {
    componentWillReceiveProps(nextProps) {
       const newState = { editing: nextProps.editing }
 
-      // Update editorValue if different from value and not loading
-      if (nextProps.editorValue !== this.state.editorValue && !nextProps.editorLoading) {
+      // Update editorValue if different from existing value and not pending
+      if (nextProps.editorValue !== this.state.editorValue && nextProps.editorState === 'ready') {
          newState.editorValue = nextProps.editorValue
       }
 
@@ -85,6 +89,10 @@ export default class Text extends Component {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
+   // =====================================================
+   // Utils
+   // =====================================================
+
    adjustTextareaHeight(textarea) {
       if (textarea) {
          // Set to auto first to "reset" to avoid browser jank
@@ -92,6 +100,10 @@ export default class Text extends Component {
          textarea.style.height = `${textarea.scrollHeight + 5}px`
       }
    }
+
+   // =====================================================
+   // Event Handlers
+   // =====================================================
 
    handleChange(event) {
       this.adjustTextareaHeight(event.target)
@@ -126,6 +138,45 @@ export default class Text extends Component {
       this.setState({ size: windowSize })
    }
 
+   // =====================================================
+   // Edit Action Buttons JSX (Editable Text Only)
+   // =====================================================
+
+   editButtonsReady() {
+      return (
+         <ButtonGroup align="right">
+            <Button
+               onClick={this.handleEditCancel}
+               name={this.props.editorCancelButtonText}
+               size="tiny"
+               color="#CCC"
+            />
+            <Button
+               onClick={this.handleEditDone}
+               name={this.props.editorDoneButtonText}
+               size="tiny"
+            />
+         </ButtonGroup>
+      )
+   }
+
+   editButtonsPending() {
+      return (
+         <ButtonGroup align="right">
+            <Button
+               onClick={this.handleEditDone}
+               name="Done"
+               size="tiny"
+               mode="loading"
+            />
+         </ButtonGroup>
+      )
+   }
+
+   // =====================================================
+   // Render
+   // =====================================================
+
    render() {
       const fontSize = `textSize${getAttributeForCurrentSize(this.state.size, this.props.size)}`
       const textStyle = {}
@@ -141,39 +192,31 @@ export default class Text extends Component {
          textClasses.push(style.uppercase)
       }
 
+      const editing = this.props.editable && this.state.editing
+      const editorValue = this.props.editable && this.props.editorValue
+
       const showEditButton = (
-         !this.props.children &&
          !this.state.editing &&
          this.props.editable &&
          this.props.editorShowEditButton
       )
 
-      let editActionButtons = (
-         <ButtonGroup align="right">
-            <Button
-               onClick={this.handleEditCancel}
-               name={this.props.editorCancelButtonText}
-               size="tiny"
-               color="#CCC"
-            />
-            <Button
-               onClick={this.handleEditDone}
-               name={this.props.editorDoneButtonText}
-               size="tiny"
-            />
-         </ButtonGroup>
-      )
+      const editActionButtons = this.props.editorState === 'ready'
+         ? this.editButtonsReady()
+         : this.editButtonsPending()
 
-      if (this.props.editorLoading) {
-         editActionButtons = (
-            <ButtonGroup align="right">
-               <Button
-                  onClick={this.handleEditDone}
-                  name="Done"
-                  size="tiny"
-                  mode="loading"
+      let content = <span>{this.props.children || editorValue}</span>
+      if (editing) {
+         content = (
+            <div ref={(editor) => { this.editor = editor }}>
+               <Textarea
+                  className={style.editTextarea}
+                  onChange={this.handleChange}
+                  value={this.state.editorValue}
+                  placeholder="Add text..."
                />
-            </ButtonGroup>
+               {editActionButtons}
+            </div>
          )
       }
 
@@ -187,21 +230,7 @@ export default class Text extends Component {
                   size="tiny"
                />
             )}
-            {!this.props.children && !this.state.editing && (
-               <span>{this.props.editorValue}</span>
-            )}
-            {!this.props.editable && this.props.children}
-            {this.state.editing && this.props.editable && (
-               <div ref={(editor) => { this.editor = editor }}>
-                  <Textarea
-                     className={style.editTextarea}
-                     onChange={this.handleChange}
-                     value={this.state.editorValue}
-                     placeholder="Add text..."
-                  />
-                  {editActionButtons}
-               </div>
-            )}
+            {content}
          </div>
       )
    }
