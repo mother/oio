@@ -6,6 +6,7 @@ import formStyles from '../styles.less'
 export default class Textarea extends Component {
    static propTypes = {
       className: React.PropTypes.string,
+	  disabled: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
@@ -19,6 +20,7 @@ export default class Textarea extends Component {
    }
 
    static defaultProps = {
+ 	  disabled: false,
       rows: '5',
       value: ''
    }
@@ -46,6 +48,7 @@ export default class Textarea extends Component {
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
             <textarea
                className={classNames(classes)}
+               disabled={this.props.disabled}
                id={this.props.id}
                onBlur={this.props.onBlur}
                onChange={this.handleChange}
