@@ -1,52 +1,65 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-const Textarea = ({
-   className, error, id, label, name, onBlur, onChange, placeholder, rows, touched, value
-}) => {
-   const classes = [styles.textarea, className]
+export default class Textarea extends Component {
+   static propTypes = {
+      className: React.PropTypes.string,
+      error: React.PropTypes.string,
+      id: React.PropTypes.string,
+      label: React.PropTypes.string,
+      name: React.PropTypes.string,
+      onBlur: React.PropTypes.func,
+      onChange: React.PropTypes.func,
+      placeholder: React.PropTypes.string,
+      rows: React.PropTypes.string,
+      touched: React.PropTypes.bool,
+      value: React.PropTypes.string
+   }
 
-   return (
-      <div className={formStyles.container}>
-         {label && <label htmlFor={id}>{label}</label>}
-         <textarea
-            className={classNames(classes)}
-            id={id}
-            onBlur={onBlur}
-            onChange={onChange}
-            name={name}
-            placeholder={placeholder}
-            value={value || ''}
-            rows={rows}
-         />
-         {touched && error &&
-            <div className={formStyles.error}>
-               {error}
-            </div>
-         }
-      </div>
-   )
+   static defaultProps = {
+      rows: '5',
+      value: ''
+   }
+
+   constructor(props, context) {
+      super(props, context)
+      this.handleChange = this.handleChange.bind(this)
+      this.state = {
+         value: props.value
+      }
+   }
+
+   handleChange(event) {
+      this.setState({ value: event.target.value })
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.value)
+      }
+   }
+
+   render() {
+      const classes = [styles.textarea, this.props.className]
+
+      return (
+         <div className={formStyles.container}>
+            {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
+            <textarea
+               className={classNames(classes)}
+               id={this.props.id}
+               onBlur={this.props.onBlur}
+               onChange={this.handleChange}
+               name={this.props.name}
+               placeholder={this.props.placeholder}
+               value={this.state.value}
+               rows={this.props.rows}
+            />
+            {this.props.touched && this.props.error &&
+               <div className={formStyles.error}>
+                  {this.props.error}
+               </div>
+            }
+         </div>
+      )
+   }
 }
-
-Textarea.propTypes = {
-   className: React.PropTypes.string,
-   error: React.PropTypes.string,
-   id: React.PropTypes.string,
-   label: React.PropTypes.string,
-   name: React.PropTypes.string,
-   onBlur: React.PropTypes.func,
-   onChange: React.PropTypes.func,
-   placeholder: React.PropTypes.string,
-   rows: React.PropTypes.string,
-   touched: React.PropTypes.bool,
-   value: React.PropTypes.string
-}
-
-Textarea.defaultProps = {
-   rows: '5',
-   value: ''
-}
-
-export default Textarea

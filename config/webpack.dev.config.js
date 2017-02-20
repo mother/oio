@@ -31,11 +31,11 @@ module.exports = {
          }
       ]
    },
+   plugins: [
+      new webpack.HotModuleReplacementPlugin()
+   ],
    resolve: {
       extensions: ['.js'],
       enforceExtension: false
-   },
-   plugins: [
-      new webpack.HotModuleReplacementPlugin()
-   ]
+   }
 }
