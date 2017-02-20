@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
-
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
