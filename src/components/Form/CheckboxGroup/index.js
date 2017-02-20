@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
