@@ -4,6 +4,7 @@ import formStyles from '../styles.less'
 export default class Radio extends Component {
    static propTypes = {
       checked: React.PropTypes.bool,
+      children: React.PropTypes.node,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
