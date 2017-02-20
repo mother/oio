@@ -59,7 +59,8 @@ export default class Form extends Component {
          submitting: false
       }
 
-      // TODO: Currently deals with checkbox data incorrectly
+      // TODO: Currently deals with checkbox and radio data incorrectly
+      // since they haves values but may not necessarily be checked
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach((node) => {
          this.state.data[node.props.name] = {
@@ -189,7 +190,9 @@ export default class Form extends Component {
          // Only apply if other data
          if (!namesForFiles.includes(key)) {
             // Append key to formData
-            formData.append(key, newState.data[key].value)
+            if (typeof newState.data[key].value !== 'undefined') {
+               formData.append(key, newState.data[key].value)
+            }
          }
       })
 
@@ -202,7 +205,10 @@ export default class Form extends Component {
             // Don't add data keys that relate to files
             if (!namesForFiles.includes(key)) {
                // Add the key/value to data
-               data[key] = this.state.data[key].value
+               if (typeof this.state.data[key].value !== 'undefined') {
+                  data[key] = this.state.data[key].value
+               }
+
                // Add the error if applicable
                if (this.state.data[key].error) {
                   errors[key] = this.state.data[key].error
