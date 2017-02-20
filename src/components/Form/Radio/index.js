@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import formStyles from '../styles.less'
+import Icon from '../../Icon'
+import Text from '../../Text'
+import View from '../../View'
+import style from './style.less'
 
 export default class Radio extends Component {
    static propTypes = {
       checked: React.PropTypes.bool,
+      children: React.PropTypes.node,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
@@ -14,6 +18,10 @@ export default class Radio extends Component {
 
    static defaultProps = {
       checked: false
+   }
+
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
    }
 
    constructor(props) {
@@ -32,12 +40,22 @@ export default class Radio extends Component {
    }
 
    render() {
+      const primaryColor = this.context.OIOStyles.primaryColor
+      let radioIcon = 'ion-ios-circle-outline'
+      let radioIconStyle = {}
+
+      if (this.props.checked) {
+         radioIcon = 'ion-ios-circle-filled'
+         radioIconStyle = {
+            color: primaryColor
+         }
+      }
+
       return (
-         <span className={formStyles.container}>
-            <label className={formStyles.labelRadio} htmlFor={this.props.id}>
+         <View width="100%">
+            <label className={style.radioLabel} htmlFor={this.props.id}>
                <input
                   id={this.props.id}
-                  className={formStyles.inputRadio}
                   checked={this.props.checked}
                   type="radio"
                   name={this.props.name}
@@ -45,13 +63,13 @@ export default class Radio extends Component {
                   onChange={this.handleChange}
                   onBlur={this.props.onBlur}
                />
-               {this.props.label}
+               <Icon name={radioIcon} className={style.icon} style={radioIconStyle} />
+               <Text size="3" weight="normal">
+                  {this.props.label}
+               </Text>
                {this.props.children}
-
-               {/* TODO: Text is temporary until styling is fixed */}
-               {this.props.checked && ` (checked)`}
             </label>
-         </span>
+         </View>
       )
    }
 }
