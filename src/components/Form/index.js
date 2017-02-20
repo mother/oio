@@ -5,6 +5,7 @@ import FormData from 'form-data'
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
+   'Checkbox',
    'CheckboxGroup',
    'FileInput',
    'ImageInput',
@@ -58,6 +59,7 @@ export default class Form extends Component {
          submitting: false
       }
 
+      // TODO: Currently deals with checkbox data incorrectly
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach((node) => {
          this.state.data[node.props.name] = {
@@ -76,6 +78,7 @@ export default class Form extends Component {
          const value = typeof node.props.value !== 'undefined'
             ? node.props.value
             : this.state.data[node.props.name].value
+
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
             value,
@@ -237,8 +240,9 @@ export default class Form extends Component {
                   if (child.props.onBlur) child.props.onBlur(event)
                },
                onChange: (event, value) => {
-                  if (value || value === false) this.handleChange(value, child)
-                  else this.handleChange(event.target.value, child)
+                  this.handleChange(value, child)
+                  // if (value || value === false) this.handleChange(value, child)
+                  // else this.handleChange(event.target.value, child)
                   if (child.props.onChange) child.props.onChange(event)
                },
                value: this.state.data[child.props.name].value

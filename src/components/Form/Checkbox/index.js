@@ -26,9 +26,16 @@ export default class Checkbox extends Component {
    }
 
    handleChange(event) {
-      this.setState({ checked: event.target.checked })
+      this.setState({
+         checked: event.target.checked
+      })
+
       if (this.props.onChange) {
-         this.props.onChange(event, event.target.checked)
+         const value = event.target.checked
+            ? event.target.value
+            : undefined
+
+         this.props.onChange(event, value)
       }
    }
 
@@ -47,6 +54,10 @@ export default class Checkbox extends Component {
                   onBlur={this.props.onBlur}
                />
                {this.props.label}
+               {this.props.children}
+               
+               {/* TODO: Text is temporary until styling is fixed */}
+               {this.state.checked && ` (checked)`}
             </label>
          </span>
       )

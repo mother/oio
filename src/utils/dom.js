@@ -25,6 +25,7 @@ const deepTraverse = (nodes, targetNodeNames, iteratorFn, level = 0) => {
    })
 }
 
+// TODO: Deprecate
 export const replaceNodesInDOM = (nodes, targetNodeNames, iteratorFn) => {
    const targetNodeNamesArr = Array.isArray(targetNodeNames) ? targetNodeNames : [targetNodeNames]
    return deepTraverse(nodes, targetNodeNamesArr, iteratorFn)

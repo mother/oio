@@ -28,6 +28,7 @@ export default class Select extends Component {
 
    handleChange(event) {
       this.setState({ value: event.target.value })
+      // TODO: Fire this.props.onChange
    }
 
    render() {
