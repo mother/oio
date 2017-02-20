@@ -5,6 +5,7 @@
   "description": "A UI component kit for React",
   "scripts": {
     "build": "rm -rf dist && webpack --config config/webpack.config.js && gulp",
+    "demo": "npm run dev",
     "dev": "node server.js",
     "test": "mocha --compilers js:babel-core/register --recursive test/test.js",
     "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
@@ -68,7 +69,7 @@
     "sinon": "1.17.5",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",
-    "webpack-dev-server": "1.12.1"
+    "webpack-dev-server": "2.4.1"
   },
   "config": {
     "ghooks": {
