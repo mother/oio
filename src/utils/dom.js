@@ -5,7 +5,7 @@ const deepTraverse = (nodes, targetNodeNames, iteratorFn, level = 0) => {
    return nodesArray.map((node, i) => {
       if (React.isValidElement(node)) {
          // TODO: targetNodeNames.includes(node.type.name) causes issues with uglify mangle
-         if (node.type && targetNodeNames.includes(node.type.name) ) {
+         if (node.type && targetNodeNames.includes(node.type.name)) {
             return iteratorFn(node, level, i)
          } else if (node.props && node.props.children) {
             const traversedChildren = deepTraverse(

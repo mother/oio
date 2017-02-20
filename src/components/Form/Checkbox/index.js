@@ -1,34 +1,54 @@
-import React from 'react'
+import React, { Component } from 'react'
 import formStyles from '../styles.less'
 
-const Checkbox = ({
-   checked, children, id, label, name, onBlur, onChange, value
-}) => (
-   <span className={formStyles.container}>
-      <input
-         id={id}
-         className={formStyles.inputCheckbox}
-         checked={checked}
-         type="checkbox"
-         name={name}
-         value={value}
-         onChange={onChange}
-         onBlur={onBlur}
-      />
-      <label className={formStyles.labelCheckbox} htmlFor={id}>{label}</label>
-      {children}
-   </span>
-)
+export default class Checkbox extends Component {
+   static propTypes = {
+      checked: React.PropTypes.bool,
+      children: React.PropTypes.node,
+      id: React.PropTypes.string,
+      label: React.PropTypes.string,
+      name: React.PropTypes.string,
+      onBlur: React.PropTypes.func,
+      onChange: React.PropTypes.func,
+      value: React.PropTypes.string
+   }
 
-Checkbox.propTypes = {
-   checked: React.PropTypes.bool,
-   children: React.PropTypes.node,
-   id: React.PropTypes.string,
-   label: React.PropTypes.string,
-   name: React.PropTypes.string,
-   onBlur: React.PropTypes.func,
-   onChange: React.PropTypes.func,
-   value: React.PropTypes.string
+   static defaultProps = {
+      checked: false
+   }
+
+   constructor(props) {
+      super(props)
+      this.handleChange = this.handleChange.bind(this)
+      this.state = {
+         checked: props.checked
+      }
+   }
+
+   handleChange(event) {
+      this.setState({ checked: event.target.checked })
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.checked)
+      }
+   }
+
+   render() {
+      return (
+         <span className={formStyles.container}>
+            <label className={formStyles.labelCheckbox} htmlFor={this.props.id}>
+               <input
+                  type="checkbox"
+                  id={this.props.id}
+                  checked={this.state.checked}
+                  className={formStyles.inputCheckbox}
+                  name={this.props.name}
+                  value={this.props.value}
+                  onChange={this.handleChange}
+                  onBlur={this.props.onBlur}
+               />
+               {this.props.label}
+            </label>
+         </span>
+      )
+   }
 }
-
-export default Checkbox
