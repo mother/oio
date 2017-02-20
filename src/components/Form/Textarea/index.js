@@ -4,7 +4,7 @@ import styles from './styles.less'
 import formStyles from '../styles.less'
 
 const Textarea = ({
-   className, error, id, label, name, onBlur, onChange, placeholder, rows, touched, value
+   className, disabled, error, id, label, name, onBlur, onChange, placeholder, rows, touched, value
 }) => {
    const classes = [styles.textarea, className]
 
@@ -13,6 +13,7 @@ const Textarea = ({
          {label && <label htmlFor={id}>{label}</label>}
          <textarea
             className={classNames(classes)}
+            disabled={disabled}
             id={id}
             onBlur={onBlur}
             onChange={onChange}
