@@ -23,12 +23,17 @@ export default class Select extends Component {
 
    constructor(props, context) {
       super(props, context)
+      this.handleChange = this.handleChange.bind(this)
       this.state = { value: undefined }
    }
 
+   // TODO: Handle componentWillReceiveProps
+
    handleChange(event) {
       this.setState({ value: event.target.value })
-      // TODO: Fire this.props.onChange
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.value)
+      }
    }
 
    render() {
@@ -50,10 +55,7 @@ export default class Select extends Component {
                value={this.props.value}
                name={this.props.name}
                onBlur={this.props.onBlur}
-               onChange={(event) => {
-                  this.handleChange(event)
-                  this.props.onChange(event)
-               }}>
+               onChange={this.handleChange}>
                {children}
             </select>
             {this.props.touched && this.props.error &&

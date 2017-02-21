@@ -9,6 +9,7 @@ const formComponentNames = [
    'FileInput',
    'ImageInput',
    'Input',
+   'Radio',
    'RadioGroup',
    'Select',
    'Switch',

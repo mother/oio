@@ -33,6 +33,12 @@ export default class Textarea extends Component {
       }
    }
 
+   componentWillReceiveProps(newProps) {
+      if (newProps.value !== this.state.value) {
+         this.setState({ value: newProps.value })
+      }
+   }
+
    handleChange(event) {
       this.setState({ value: event.target.value })
       if (this.props.onChange) {
