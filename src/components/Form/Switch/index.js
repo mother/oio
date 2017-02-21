@@ -17,6 +17,10 @@ export default class Switch extends Component {
       value: false
    }
 
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
+   }
+
    constructor(props, context) {
       super(props, context)
       this.handleChange = this.handleChange.bind(this)
@@ -33,11 +37,18 @@ export default class Switch extends Component {
    handleChange(event) {
       this.setState({ value: event.target.checked })
       if (this.props.onChange) {
-         this.props.onChange(event, this.state.value)
+         this.props.onChange(event, event.target.checked)
       }
    }
 
    render() {
+      const primaryColor = this.context.OIOStyles.primaryColor
+      const switchStyle = {}
+
+      if (this.state.value) {
+         switchStyle.backgroundColor = primaryColor
+      }
+
       return (
          <span className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
@@ -50,7 +61,7 @@ export default class Switch extends Component {
                   onChange={this.handleChange}
                   onBlur={this.props.onBlur}
                />
-               <div className={formStyles.switchSlider} />
+               <div className={formStyles.switchSlider} style={switchStyle} />
             </label>
             {this.props.touched && this.props.error &&
                <div className={formStyles.error}>
