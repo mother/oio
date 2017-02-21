@@ -249,7 +249,7 @@ export default class Form extends Component {
                   this.handleChange(value, child)
                   // if (value || value === false) this.handleChange(value, child)
                   // else this.handleChange(event.target.value, child)
-                  if (child.props.onChange) child.props.onChange(event)
+                  if (child.props.onChange) child.props.onChange(event, value)
                },
                value: this.state.data[child.props.name].value
             })

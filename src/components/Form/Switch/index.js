@@ -19,20 +19,22 @@ export default class Switch extends Component {
 
    constructor(props, context) {
       super(props, context)
-
       this.handleChange = this.handleChange.bind(this)
-
       this.state = { value: !!props.value }
    }
 
-   componentWillReceiveProps(props) {
-      this.setState({ value: !!props.value })
+   componentWillReceiveProps(newProps) {
+      const newValue = !!newProps.value
+      if (this.state.value !== newValue) {
+         this.setState({ value: newValue })
+      }
    }
 
    handleChange(event) {
-      this.setState({ value: event.target.checked }, () => {
+      this.setState({ value: event.target.checked })
+      if (this.props.onChange) {
          this.props.onChange(event, this.state.value)
-      })
+      }
    }
 
    render() {

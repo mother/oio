@@ -27,7 +27,11 @@ export default class Select extends Component {
       this.state = { value: undefined }
    }
 
-   // TODO: Handle componentWillReceiveProps
+   componentWillReceiveProps(newProps) {
+      if (newProps.value !== this.state.value) {
+         this.setState({ value: newProps.value })
+      }
+   }
 
    handleChange(event) {
       this.setState({ value: event.target.value })
