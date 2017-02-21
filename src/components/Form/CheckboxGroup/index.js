@@ -47,10 +47,10 @@ export default class CheckboxGroup extends Component {
    }
 
    render() {
-      let counter = 0
       const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node, i, j) => {
          const key = node.props.value
-         const id = node.props.id || `${this.props.name}-${counter += 1}`
+         const uniqueIdentifier = Math.random().toString(36).slice(2)
+         const id = node.props.id || `${this.props.name}-${uniqueIdentifier}`
          return React.cloneElement(node, {
             key,
             id,
