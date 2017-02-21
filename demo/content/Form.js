@@ -131,37 +131,44 @@ export default class DemoContentForm extends Component {
                            name="gender"
                            label="Gender">
                            <Grid columns="3">
-                              <GridCell><Radio value="male" label="Male" /></GridCell>
                               <GridCell>
-                                 <div>
-                                    <div>
-                                       <Radio value="female" label="Female" />
-                                    </div>
-                                 </div>
+                                 <Radio value="male" label="Male" />
                               </GridCell>
-                              <GridCell><Radio value="undecided" label="Undecided" /></GridCell>
+                              <GridCell>
+                                 <Radio value="female" label="Female" />
+                              </GridCell>
+                              <GridCell>
+                                 <Radio value="undecided" label="Undecided" />
+                              </GridCell>
                            </Grid>
                         </RadioGroup>
-                        <Spacer size="6" />
+                        <Spacer size="3" />
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
                            rules={['required']}
-                           value={null || ['golf', 'hockey']}>
+                           value={['golf', 'hockey']}>
                            <Grid columns="3">
-                              <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                               <GridCell>
-                                 <div>
-                                    <div>
-                                       <Checkbox value="golf" label="Golf" />
-                                    </div>
-                                 </div>
+                                 <Checkbox value="baseball" label="Baseball" />
                               </GridCell>
-                              <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
+                              <GridCell>
+                                 <Checkbox value="golf" label="Golf" />
+                              </GridCell>
+                              <GridCell>
+                                 <Checkbox value="hockey" label="Hockey" />
+                              </GridCell>
                            </Grid>
                         </CheckboxGroup>
-                        <Switch name="notifications" label="Notifications" />
-                        <Button name="Save Changes" type="submit" />
+                        <Spacer size="3" />
+                        <View width="100%">
+                           <Switch name="notifications" label="Notifications" />
+                           <Spacer size="9" />
+                        </View>
+                        <View width="100%">
+                           <Button name="Save Changes" type="submit" />
+                        </View>
+
                      </Form>
                   </View>
                </GridCell>
