@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import formStyles from '../styles.less'
+import Icon from '../../Icon'
+import Text from '../../Text'
+import View from '../../View'
+import style from './style.less'
 
 export default class Checkbox extends Component {
    static propTypes = {
@@ -15,6 +18,10 @@ export default class Checkbox extends Component {
 
    static defaultProps = {
       checked: false
+   }
+
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
    }
 
    constructor(props) {
@@ -40,26 +47,36 @@ export default class Checkbox extends Component {
    }
 
    render() {
+      const primaryColor = this.context.OIOStyles.primaryColor
+      let checkboxIcon = 'ion-ios-circle-outline'
+      let checkboxIconStyle = {}
+
+      if (this.state.checked) {
+         checkboxIcon = 'ion-ios-checkmark'
+         checkboxIconStyle = {
+            color: primaryColor
+         }
+      }
+
       return (
-         <span className={formStyles.container}>
-            <label className={formStyles.labelCheckbox} htmlFor={this.props.id}>
+         <View width="100%">
+            <label className={style.checkboxLabel} htmlFor={this.props.id}>
                <input
                   type="checkbox"
                   id={this.props.id}
                   checked={this.state.checked}
-                  className={formStyles.inputCheckbox}
                   name={this.props.name}
                   value={this.props.value}
                   onChange={this.handleChange}
                   onBlur={this.props.onBlur}
                />
-               {this.props.label}
+               <Icon name={checkboxIcon} className={style.icon} style={checkboxIconStyle} />
+               <Text size="3" weight="normal">
+                  {this.props.label}
+               </Text>
                {this.props.children}
-               
-               {/* TODO: Text is temporary until styling is fixed */}
-               {this.state.checked && ` (checked)`}
             </label>
-         </span>
+         </View>
       )
    }
 }
