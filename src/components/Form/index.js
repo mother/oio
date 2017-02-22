@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
-
 import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
 
 const formComponentNames = [
+   'Checkbox',
    'CheckboxGroup',
    'DateInput',
    'FileInput',
+   'ImageInput',
    'Input',
+   'Radio',
    'RadioGroup',
    'Select',
    'Switch',
@@ -16,7 +18,8 @@ const formComponentNames = [
 ]
 
 const formFileComponentNames = [
-   'FileInput'
+   'FileInput',
+   'ImageInput'
 ]
 
 const predefinedRules = {
@@ -45,6 +48,8 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
+      this.handleSubmit = this.handleSubmit.bind(this)
+
       this.testContext = {
          get: this.get.bind(this)
       }
@@ -55,6 +60,8 @@ export default class Form extends Component {
          submitting: false
       }
 
+      // TODO: Currently deals with checkbox and radio data incorrectly
+      // since they haves values but may not necessarily be checked
       findNodesinDOM(props.children, ...formComponentNames)
       .forEach((node) => {
          this.state.data[node.props.name] = {
@@ -73,6 +80,7 @@ export default class Form extends Component {
          const value = typeof node.props.value !== 'undefined'
             ? node.props.value
             : this.state.data[node.props.name].value
+
          newState.data[node.props.name] = {
             ...this.state.data[node.props.name],
             value,
@@ -140,7 +148,6 @@ export default class Form extends Component {
       const newState = { data: { ...this.state.data } }
       newState.data[child.props.name] = {
          value,
-         error: this.applyRulesToValue(child.props.rules, value),
          touched: true
       }
       this.setState(newState)
@@ -184,7 +191,9 @@ export default class Form extends Component {
          // Only apply if other data
          if (!namesForFiles.includes(key)) {
             // Append key to formData
-            formData.append(key, newState.data[key].value)
+            if (typeof newState.data[key].value !== 'undefined') {
+               formData.append(key, newState.data[key].value)
+            }
          }
       })
 
@@ -197,7 +206,10 @@ export default class Form extends Component {
             // Don't add data keys that relate to files
             if (!namesForFiles.includes(key)) {
                // Add the key/value to data
-               data[key] = this.state.data[key].value
+               if (typeof this.state.data[key].value !== 'undefined') {
+                  data[key] = this.state.data[key].value
+               }
+
                // Add the error if applicable
                if (this.state.data[key].error) {
                   errors[key] = this.state.data[key].error
@@ -232,12 +244,13 @@ export default class Form extends Component {
                touched: this.state.data[child.props.name].touched || false,
                onBlur: (event) => {
                   this.handleBlur(event.target.value, child)
-                  if (this.props.onBlur) this.props.onBlur(event)
+                  if (child.props.onBlur) child.props.onBlur(event)
                },
                onChange: (event, value) => {
-                  if (value || value === false) this.handleChange(value, child)
-                  else this.handleChange(event.target.value, child)
-                  if (this.props.onChange) this.props.onChange(event)
+                  this.handleChange(value, child)
+                  // if (value || value === false) this.handleChange(value, child)
+                  // else this.handleChange(event.target.value, child)
+                  if (child.props.onChange) child.props.onChange(event, value)
                },
                value: this.state.data[child.props.name].value
             })
@@ -245,7 +258,7 @@ export default class Form extends Component {
       )
 
       return (
-         <form onSubmit={event => this.handleSubmit(event)}>
+         <form onSubmit={this.handleSubmit}>
             {domWithNewFormElements}
          </form>
       )

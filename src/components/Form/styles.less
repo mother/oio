@@ -11,61 +11,6 @@
 }
 
 // =====================
-// RADIOS & CHECKBOXES
-// =====================
-
-.inputRadio,
-.inputCheckbox {
-   opacity: 0;
-   position: absolute;
-}
-
-.inputRadio, .labelRadio,
-.inputCheckbox, .labelCheckbox {
-   display: inline-block;
-   vertical-align: middle;
-   margin-top: 5px;
-   margin-right: 15px;
-   cursor: pointer;
-}
-
-.labelRadio,
-.labelCheckbox {
-   position: relative;
-   width: initial;
-   max-width: calc(100% - 10px);
-   font-weight: initial;
-   font-size: 15px;
-   overflow: hidden;
-   white-space: nowrap;
-   text-overflow: ellipsis;
-}
-
-.inputRadio + .labelRadio:before,
-.inputCheckbox + .labelCheckbox:before {
-   content: '';
-   background: #FFF;
-   border: 2px solid @uiBaseBorderColor;
-   display: inline-block;
-   vertical-align: middle;
-   width: 18px;
-   height: 18px;
-   padding: 2px;
-   margin-right: 10px;
-   text-align: center;
-}
-
-.inputRadio + .labelRadio:before {
-   border-radius: 50%;
-}
-
-.inputRadio:checked + .labelRadio:before,
-.inputCheckbox:checked + .labelCheckbox:before {
-   background-color: #888;
-   box-shadow: inset 0px 0px 0px 3px #FFF;
-}
-
-// =====================
 // SWITCHES
 // =====================
 
@@ -104,10 +49,6 @@
   background-color: white;
   -webkit-transition: .2s;
   transition: .2s;
-}
-
-.switch input:checked + .switchSlider {
-  background-color: lightgreen;
 }
 
 .switch input:checked + .switchSlider:before {

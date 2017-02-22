@@ -1,32 +1,75 @@
-import React from 'react'
-import formStyles from '../styles.less'
+import React, { Component } from 'react'
+import Icon from '../../Icon'
+import Text from '../../Text'
+import View from '../../View'
+import style from './style.less'
 
-const Radio = ({
-   checked, id, label, name, onBlur, onChange, value
-}) => (
-   <span className={formStyles.container}>
-      <input
-         id={id}
-         className={formStyles.inputRadio}
-         checked={checked}
-         type="radio"
-         name={name}
-         value={value}
-         onChange={onChange}
-         onBlur={onBlur}
-      />
-      <label className={formStyles.labelRadio} htmlFor={id}>{label}</label>
-   </span>
-)
+export default class Radio extends Component {
+   static propTypes = {
+      checked: React.PropTypes.bool,
+      children: React.PropTypes.node,
+      id: React.PropTypes.string,
+      label: React.PropTypes.string,
+      name: React.PropTypes.string,
+      onBlur: React.PropTypes.func,
+      onChange: React.PropTypes.func,
+      value: React.PropTypes.string
+   }
 
-Radio.propTypes = {
-   checked: React.PropTypes.bool,
-   id: React.PropTypes.string,
-   label: React.PropTypes.string,
-   name: React.PropTypes.string,
-   onBlur: React.PropTypes.func,
-   onChange: React.PropTypes.func,
-   value: React.PropTypes.string
+   static defaultProps = {
+      checked: false
+   }
+
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
+      this.handleChange = this.handleChange.bind(this)
+   }
+
+   handleChange(event) {
+      if (this.props.onChange) {
+         const value = event.target.checked
+            ? event.target.value
+            : undefined
+
+         this.props.onChange(event, value)
+      }
+   }
+
+   render() {
+      const primaryColor = this.context.OIOStyles.primaryColor
+      let radioIcon = 'ion-ios-circle-outline'
+      let radioIconStyle = {}
+
+      if (this.props.checked) {
+         radioIcon = 'ion-ios-circle-filled'
+         radioIconStyle = {
+            color: primaryColor
+         }
+      }
+
+      return (
+         <View width="100%">
+            <label className={style.radioLabel} htmlFor={this.props.id}>
+               <input
+                  id={this.props.id}
+                  checked={this.props.checked}
+                  type="radio"
+                  name={this.props.name}
+                  value={this.props.value}
+                  onChange={this.handleChange}
+                  onBlur={this.props.onBlur}
+               />
+               <Icon name={radioIcon} className={style.icon} style={radioIconStyle} />
+               <Text size="3" weight="normal">
+                  {this.props.label}
+               </Text>
+               {this.props.children}
+            </label>
+         </View>
+      )
+   }
 }
-
-export default Radio

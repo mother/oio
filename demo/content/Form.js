@@ -9,6 +9,7 @@ import {
    Form,
    Grid,
    GridCell,
+   ImageInput,
    Input,
    Radio,
    RadioGroup,
@@ -20,7 +21,6 @@ import {
    TitleBar,
    View
 } from '../../src'
-
 import style from '../style.less'
 
 export default class DemoContentForm extends Component {
@@ -28,12 +28,19 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
-   handleSubmit(data, files, formData) {
-      console.log(data) // eslint-disable-line
+   constructor(props) {
+      super(props)
+
+      this.handleError = this.handleError.bind(this)
+      this.handleSubmit = this.handleSubmit.bind(this)
    }
 
-   handleError(error) {
-      console.log(error) // eslint-disable-line
+   handleError(error, file) {
+      console.log(error) // eslint-disable-line no-console
+   }
+
+   handleSubmit(data, files, formData) {
+      console.log(data, files) // eslint-disable-line no-console
    }
 
    render() {
@@ -51,9 +58,9 @@ export default class DemoContentForm extends Component {
                <GridCell colspan="3">
                   <View width="420px">
                      <Form
-                        onSubmit={(data, files, formData) => this.handleSubmit(data, files, formData)}
-                        onError={error => this.handleError(error)}>
-                        <FileInput
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <ImageInput
                            maxFileSize={5000000}
                            type="image"
                            name="avatar"
@@ -137,37 +144,44 @@ export default class DemoContentForm extends Component {
                            name="gender"
                            label="Gender">
                            <Grid columns="3">
-                              <GridCell><Radio value="male" label="Male" /></GridCell>
                               <GridCell>
-                                 <div>
-                                    <div>
-                                       <Radio value="female" label="Female" />
-                                    </div>
-                                 </div>
+                                 <Radio value="male" label="Male" />
                               </GridCell>
-                              <GridCell><Radio value="undecided" label="Undecided" /></GridCell>
+                              <GridCell>
+                                 <Radio value="female" label="Female" />
+                              </GridCell>
+                              <GridCell>
+                                 <Radio value="undecided" label="Undecided" />
+                              </GridCell>
                            </Grid>
                         </RadioGroup>
-                        <Spacer size="6" />
+                        <Spacer size="3" />
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
                            rules={['required']}
-                           value={null || ['golf', 'hockey']}>
+                           value={['golf', 'hockey']}>
                            <Grid columns="3">
-                              <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                               <GridCell>
-                                 <div>
-                                    <div>
-                                       <Checkbox value="golf" label="Golf" />
-                                    </div>
-                                 </div>
+                                 <Checkbox value="baseball" label="Baseball" />
                               </GridCell>
-                              <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
+                              <GridCell>
+                                 <Checkbox value="golf" label="Golf" />
+                              </GridCell>
+                              <GridCell>
+                                 <Checkbox value="hockey" label="Hockey" />
+                              </GridCell>
                            </Grid>
                         </CheckboxGroup>
-                        <Switch name="notifications" label="Notifications" />
-                        <Button name="Save Changes" type="submit" />
+                        <Spacer size="3" />
+                        <View width="100%">
+                           <Switch name="notifications" label="Notifications" />
+                           <Spacer size="9" />
+                        </View>
+                        <View width="100%">
+                           <Button name="Save Changes" type="submit" />
+                        </View>
+
                      </Form>
                   </View>
                </GridCell>
