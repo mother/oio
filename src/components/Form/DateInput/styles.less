@@ -3,8 +3,8 @@
 .container {
    // padding-left: 5px;
    // padding-right: 5px;
-   border: 2px solid @uiBaseBorderColor;
-   .rounded(@uiBaseComponentRadius);
+   border-bottom: 2px solid @uiBaseBorderColor;
+   // .rounded(@uiBaseComponentRadius);
    box-sizing: border-box;
 }
 
@@ -21,7 +21,7 @@
    .uiTextSize3;
    line-height: @uiBaseComponentHeightMedium - 13px;
 
-   padding: 5px;
+   padding: 0;
 }
 
 .select {
@@ -34,22 +34,35 @@
 }
 
 .year {
-   width: 26%;
-   border-right: 2px solid @uiBaseBorderColor;
+   width: 25%;
+   // border-right: 2px solid @uiBaseBorderColor;
 }
 
 .month {
-   width: 26%;
-   border-right: 2px solid @uiBaseBorderColor;
+   width: 25%;
+   // border-right: 2px solid @uiBaseBorderColor;
 }
 
 .day {
-   width: 26%;
-   border-right: 2px solid @uiBaseBorderColor;
+   width: 25%;
+   // border-right: 2px solid @uiBaseBorderColor;
+}
+
+.hour, .minute {
+   // padding: 0;
+   width: 25px;
+}
+.hour {
+   text-align: right;
+   padding-right: 2px;
+}
+.minute {
+   text-align: left;
+   padding-left: 2px;
 }
 
 .time {
-   width: ~'calc(22% - 35px)';
+   width: ~'calc(25% - 35px)';
 }
 
 .meridiem {

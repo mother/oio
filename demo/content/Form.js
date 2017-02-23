@@ -83,13 +83,15 @@ export default class DemoContentForm extends Component {
                            name="date.start"
                            label="Start Date"
                            placeholder="Please enter a start date"
-                           enableTime
+                           value={new Date(2015, 3, 20)}
                         />
                         <Spacer size="2" />
                         <DateInput
                            name="date.end"
                            label="End Date"
                            placeholder="Please enter an end date"
+                           value={new Date(2015, 9, 15, 14, 7)}
+                           enableTime
                         />
                         <div>
                            <div>
