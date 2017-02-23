@@ -90,7 +90,7 @@ export default class DemoContentForm extends Component {
                            name="date.end"
                            label="End Date"
                            placeholder="Please enter an end date"
-                           value={new Date(2015, 9, 15, 14, 7)}
+                           value={new Date(2015, 7, 11, 5, 8)}
                            enableTime
                         />
                         <div>

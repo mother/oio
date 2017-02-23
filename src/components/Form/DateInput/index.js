@@ -63,11 +63,6 @@ export default class DateInput extends Component {
       }
    }
 
-   componentWillReceiveProps(props) {
-      // console.log('componentWillReceiveProps')
-      // console.log(props)
-   }
-
    handleChange() {
       let hour = this.state.hour
       if (this.state.meridiem === 'p') hour = (Number(hour) + 12).toString()
