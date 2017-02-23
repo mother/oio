@@ -5,6 +5,9 @@ import classNames from 'classnames'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
+const currentDateZeroed = new Date()
+currentDateZeroed.setHours(0, 0, 0, 0)
+
 export default class DateInput extends Component {
    static propTypes = {
       // className: React.PropTypes.string,
@@ -21,7 +24,7 @@ export default class DateInput extends Component {
    }
 
    static defaultProps = {
-      value: new Date()
+      value: currentDateZeroed
    }
 
    static contextTypes = {
@@ -44,13 +47,13 @@ export default class DateInput extends Component {
 
       let meridiem = 'a'
 
-      let hour = (props.value.getHours() || now.getHours()).toString()
+      let hour = (props.value.getHours() || 0).toString()
       if (Number(hour) > 12) {
          meridiem = 'p'
          hour = (Number(hour) - 12).toString()
       }
 
-      let minute = (props.value.getMinutes() || now.getMinutes()).toString()
+      let minute = (props.value.getMinutes() || 0).toString()
       if (minute.length === 1) minute = `0${minute}`
 
       this.state = {
@@ -67,13 +70,9 @@ export default class DateInput extends Component {
       let hour = this.state.hour
       if (this.state.meridiem === 'p') hour = (Number(hour) + 12).toString()
 
-      const value = new Date(
-         this.state.year,
-         this.state.month,
-         this.state.day,
-         hour,
-         this.state.minute
-      )
+      const value = this.props.enableTime
+         ? new Date(this.state.year, this.state.month, this.state.day, hour, this.state.minute)
+         : new Date(this.state.year, this.state.month, this.state.day)
 
       if (this.props.onChange) {
          this.props.onChange(null, value)
