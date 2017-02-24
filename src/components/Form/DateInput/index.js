@@ -34,6 +34,7 @@ export default class DateInput extends Component {
    constructor(props, context) {
       super(props, context)
 
+      this.handleDayBlur = this.handleDayBlur.bind(this)
       this.handleDayChange = this.handleDayChange.bind(this)
       this.handleHourBlur = this.handleHourBlur.bind(this)
       this.handleHourChange = this.handleHourChange.bind(this)
@@ -41,12 +42,10 @@ export default class DateInput extends Component {
       this.handleMinuteBlur = this.handleMinuteBlur.bind(this)
       this.handleMinuteChange = this.handleMinuteChange.bind(this)
       this.handleMonthChange = this.handleMonthChange.bind(this)
+      this.handleYearBlur = this.handleYearBlur.bind(this)
       this.handleYearChange = this.handleYearChange.bind(this)
 
-      const now = new Date()
-
       let meridiem = 'a'
-
       let hour = (props.value.getHours() || 0).toString()
       if (Number(hour) > 12) {
          meridiem = 'p'
@@ -57,12 +56,12 @@ export default class DateInput extends Component {
       if (minute.length === 1) minute = `0${minute}`
 
       this.state = {
-         day: (props.value.getDate() || now.getDate()).toString(),
+         day: (props.value.getDate() || currentDateZeroed.getDate()).toString(),
          hour,
          meridiem,
          minute,
-         month: (props.value.getMonth() || now.getMonth()).toString(),
-         year: (props.value.getFullYear() || now.getFullYear()).toString()
+         month: (props.value.getMonth() || currentDateZeroed.getMonth()).toString(),
+         year: (props.value.getFullYear() || currentDateZeroed.getFullYear()).toString()
       }
    }
 
@@ -86,6 +85,12 @@ export default class DateInput extends Component {
       }
    }
 
+   handleDayBlur(event) {
+      let value = event.target.value
+      if (!value.length) value = currentDateZeroed.getDate().toString()
+      this.setState({ day: value }, () => this.handleChange())
+   }
+
    handleDayChange(event) {
       let value = event.target.value
       value = value.replace(/[^\d]/g, '')
@@ -97,7 +102,7 @@ export default class DateInput extends Component {
 
    handleHourBlur(event) {
       let value = event.target.value
-      if (Number(value) > 12) value = '12'
+      if (Number(value) > 12 || !value.length) value = '12'
       this.setState({ hour: value }, () => this.handleChange())
    }
 
@@ -119,6 +124,7 @@ export default class DateInput extends Component {
       let value = event.target.value
       if (value.length === 1) value = `0${value}`
       if (Number(value) > 59) value = '59'
+      if (!value.length) value = '00'
       this.setState({ minute: value }, () => this.handleChange())
    }
 
@@ -133,6 +139,12 @@ export default class DateInput extends Component {
    handleMonthChange(event) {
       const value = event.target.value
       this.setState({ month: value }, () => this.handleChange())
+   }
+
+   handleYearBlur(event) {
+      let value = event.target.value
+      if (!value.length) value = currentDateZeroed.getFullYear().toString()
+      this.setState({ year: value }, () => this.handleChange())
    }
 
    handleYearChange(event) {
@@ -151,6 +163,7 @@ export default class DateInput extends Component {
             <div className={styles.container}>
                <input
                   className={classNames([styles.input, styles.year])}
+                  onBlur={this.handleYearBlur}
                   onChange={this.handleYearChange}
                   placeholder="Year"
                   type="tel"
@@ -175,6 +188,7 @@ export default class DateInput extends Component {
                </select>
                <input
                   className={classNames([styles.input, styles.day])}
+                  onBlur={this.handleDayBlur}
                   onChange={this.handleDayChange}
                   placeholder="Day"
                   type="tel"
