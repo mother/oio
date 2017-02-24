@@ -14,27 +14,28 @@ module.exports = {
       publicPath: '/dist/'
    },
    module: {
-      loaders: [{
-         test: /\.js$/,
-         exclude: /node_modules/,
-         loaders: ['react-hot', 'babel-loader']
-      },
-      {
-         test: /\.less$/,
-         loaders: [
-            'style',
-            'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-            'resolve-url',
-            'less'
-         ]
-      }]
-   },
-   resolve: {
-      extensions: ['', '.js']
+      rules: [
+         {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: ['react-hot-loader', 'babel-loader']
+         },
+         {
+            test: /\.less$/,
+            use: [
+               'style-loader',
+               'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+               'resolve-url-loader',
+               'less-loader'
+            ]
+         }
+      ]
    },
    plugins: [
-      new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
-   ]
+      new webpack.HotModuleReplacementPlugin()
+   ],
+   resolve: {
+      extensions: ['.js'],
+      enforceExtension: false
+   }
 }
