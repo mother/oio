@@ -15,8 +15,7 @@ export default class DateInput extends Component {
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       onChange: React.PropTypes.func,
-      touched: React.PropTypes.bool,
-      value: React.PropTypes.object
+      touched: React.PropTypes.bool
    }
 
    static defaultProps = {
@@ -41,23 +40,33 @@ export default class DateInput extends Component {
       this.handleYearBlur = this.handleYearBlur.bind(this)
       this.handleYearChange = this.handleYearChange.bind(this)
 
+      this.state = this.prepareState(props)
+   }
+
+   componentWillReceiveProps(nextProps) {
+      this.setState(this.prepareState(nextProps))
+   }
+
+   prepareState(props) {
+      const value = props.value || currentDateZeroed
+
       let meridiem = 'a'
-      let hour = (props.value.getHours() || 0).toString()
+      let hour = (value.getHours() || 0).toString()
       if (Number(hour) > 12) {
          meridiem = 'p'
          hour = (Number(hour) - 12).toString()
       }
 
-      let minute = (props.value.getMinutes() || 0).toString()
+      let minute = (value.getMinutes() || 0).toString()
       if (minute.length === 1) minute = `0${minute}`
 
-      this.state = {
-         day: (props.value || currentDateZeroed).getDate().toString(),
+      return {
+         day: value.getDate().toString(),
          hour,
          meridiem,
          minute,
-         month: (props.value || currentDateZeroed).getMonth().toString(),
-         year: (props.value || currentDateZeroed).getFullYear().toString()
+         month: value.getMonth().toString(),
+         year: value.getFullYear().toString()
       }
    }
 
@@ -92,7 +101,7 @@ export default class DateInput extends Component {
       value = this.removeNonNumericCharacters(value)
       value = this.removeLeadingZeroes(value)
       if (value.length <= 2) {
-         this.setState({ day: value }, () => this.handleChange())
+         this.setState({ day: value })
       }
    }
 
@@ -107,7 +116,7 @@ export default class DateInput extends Component {
       value = this.removeNonNumericCharacters(value)
       value = this.removeLeadingZeroes(value)
       if (value.length <= 2) {
-         this.setState({ hour: value }, () => this.handleChange())
+         this.setState({ hour: value })
       }
    }
 
@@ -128,7 +137,7 @@ export default class DateInput extends Component {
       let value = event.target.value
       value = this.removeNonNumericCharacters(value)
       if (value.length <= 2) {
-         this.setState({ minute: value }, () => this.handleChange())
+         this.setState({ minute: value })
       }
    }
 
@@ -148,7 +157,7 @@ export default class DateInput extends Component {
       value = this.removeNonNumericCharacters(value)
       value = this.removeLeadingZeroes(value)
       if (value.length <= 4) {
-         this.setState({ year: value }, () => this.handleChange())
+         this.setState({ year: value })
       }
    }
 
@@ -165,14 +174,6 @@ export default class DateInput extends Component {
          <div className={formStyles.container}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
             <div className={styles.container}>
-               <input
-                  className={classNames([styles.input, styles.year])}
-                  onBlur={this.handleYearBlur}
-                  onChange={this.handleYearChange}
-                  placeholder="Year"
-                  type="tel"
-                  value={this.state.year}
-               />
                <select
                   className={classNames([styles.select, styles.month])}
                   onChange={this.handleMonthChange}
@@ -197,6 +198,14 @@ export default class DateInput extends Component {
                   placeholder="Day"
                   type="tel"
                   value={this.state.day}
+               />
+               <input
+                  className={classNames([styles.input, styles.year])}
+                  onBlur={this.handleYearBlur}
+                  onChange={this.handleYearChange}
+                  placeholder="Year"
+                  type="tel"
+                  value={this.state.year}
                />
                {this.props.enableTime &&
                   <span>
