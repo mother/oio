@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import {
    Button,
    ButtonGroup,
@@ -26,34 +27,46 @@ export default class DemoContentButtonGroup extends Component {
             <Spacer size="9" />
             <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
                <GridCell>
-                  <Title>ButtonGroup Orientation</Title>
+                  <Title>ButtonGroup Modes</Title>
                   <Text size="2" color="gray50">
-                     You can set a group of buttons to flow vertically or horizontally.&nbsp;
-                     The vertical orientation is useful for uses such as having a list of options in a popover menu.
+                     ButtonGroup modes are different ways to visually present a set of&nbsp;
+                     buttons. Often it is useful to present them as a vertical <code>list</code>
+                     or grouped more tightly together like a <code>segmented</code> control.
                   </Text>
                </GridCell>
                <GridCell colspan="3">
-                  <View width="600px">
-                     <Grid gutter="30px" width="100%" columns="4">
-                        <GridCell colspan="3">
-                           <Text weight="semibold" size="3">Horizontal (Default orientation)</Text>
+                  <View width="100%">
+                     <Grid gutter="30px" width="100%" columns="1">
+                        <GridCell>
+                           <Text weight="semibold" size="3">Normal</Text>
                            <Spacer size="3" />
-                           <View width="100%" height="240px" className={style.docsWindow}>
+                           <View width="100%">
                               <ButtonGroup>
                                  <Button name="Button One" />
-                                 <Button name="Button Two" />
-                                 <Button name="Button Three" />
+                                 <Button name="Button Two" outline />
+                                 <Button name="Button Three" outline />
                               </ButtonGroup>
                            </View>
                         </GridCell>
                         <GridCell>
-                           <Text weight="semibold" size="3">Vertical</Text>
+                           <Text weight="semibold" size="3">List</Text>
                            <Spacer size="3" />
-                           <View width="100%" height="240px" className={style.docsWindow}>
-                              <ButtonGroup>
-                                 <Button name="Button One" />
-                                 <Button name="Button Two" />
-                                 <Button name="Button Three" />
+                           <View width="150px" height="240px" className={style.docsWindow}>
+                              <ButtonGroup mode="list">
+                                 <Button size="small" name="Button One" />
+                                 <Button size="small" name="Button Two" />
+                                 <Button size="small" name="Button Three" />
+                              </ButtonGroup>
+                           </View>
+                        </GridCell>
+                        <GridCell>
+                           <Text weight="semibold" size="3">Segmented Control</Text>
+                           <Spacer size="3" />
+                           <View width="100%">
+                              <ButtonGroup mode="segmented">
+                                 <Button link="/button-group" indexLink size="small" name="Button One" />
+                                 <Button size="small" name="Button Two" />
+                                 <Button size="small" name="Button Three" />
                               </ButtonGroup>
                            </View>
                         </GridCell>
@@ -94,15 +107,7 @@ export default class DemoContentButtonGroup extends Component {
                            <td>
                               <code>normal</code>
                               <code>segmented</code>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td><b>orientation</b></td>
-                           <td>String</td>
-                           <td><code>horizontal</code></td>
-                           <td>
-                              <code>horizontal</code>
-                              <code>vertical</code>
+                              <code>list</code>
                            </td>
                         </tr>
                         <tr>

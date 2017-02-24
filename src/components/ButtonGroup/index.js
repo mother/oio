@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import convertColor from '../../utils/convertColor'
 
 export default class ButtonGroup extends Component {
    static propTypes = {
@@ -15,21 +16,32 @@ export default class ButtonGroup extends Component {
       spacing: 6
    }
 
+   static contextTypes = {
+      OIOStyles: React.PropTypes.object
+   }
+
    static childContextTypes = {
       buttonGroupStyle: React.PropTypes.object
    }
 
    getChildContext() {
+      const buttonSpacing = (this.props.mode === 'list' || this.props.mode === 'segmented')
+         ? 0
+         : this.props.spacing
+
       const buttonGroupStyle = {
          align: this.props.align,
          mode: this.props.mode,
-         spacing: `${this.props.spacing}px`
+         spacing: `${buttonSpacing}px`
       }
 
       return { buttonGroupStyle }
    }
 
    render() {
+      let buttonColor = this.context.OIOStyles.primaryColor
+      let buttonColorRGB = convertColor(buttonColor)
+
       const style = {
          float: 'left',
          position: 'relative'
@@ -40,6 +52,14 @@ export default class ButtonGroup extends Component {
          style.textAlign = 'center'
       } else {
          style.float = this.props.align
+      }
+
+      if (this.props.mode === 'segmented') {
+         style.border = `2px solid
+            rgba(${buttonColorRGB.r},
+            ${buttonColorRGB.g},
+            ${buttonColorRGB.b}, 1)`
+         style.borderRadius = '3px'
       }
 
       return (
