@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
@@ -24,12 +23,14 @@ export default class CheckboxGroup extends Component {
       super(props, context)
 
       this.handleChange = this.handleChange.bind(this)
-
       this.state = { value: props.value || [] }
    }
 
-   componentWillReceiveProps(props) {
-      this.setState({ value: props.value })
+   componentWillReceiveProps(newProps) {
+      const newValue = newProps.value || []
+      if (newValue.sort().join() !== this.state.value.sort().join()) {
+         this.setState({ value: newValue })
+      }
    }
 
    handleChange(event) {
@@ -38,9 +39,11 @@ export default class CheckboxGroup extends Component {
       if (event.target.checked) set.add(event.target.value)
       else set.delete(event.target.value)
 
-      this.setState({ value: Array.from(set) }, () => {
-         this.props.onChange(event, this.state.value)
-      })
+      const newValue = Array.from(set)
+      this.setState({ value: newValue })
+      if (this.props.onChange) {
+         this.props.onChange(event, newValue)
+      }
    }
 
    render() {

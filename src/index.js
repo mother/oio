@@ -9,6 +9,7 @@ import FileInput from './components/Form/FileInput'
 import Form from './components/Form'
 import Grid from './components/Grid'
 import GridCell from './components/GridCell'
+import GridRow from './components/GridRow'
 import Icon from './components/Icon'
 import ImageInput from './components/Form/ImageInput'
 import Input from './components/Form/Input'
@@ -45,6 +46,7 @@ export {
    Form,
    Grid,
    GridCell,
+   GridRow,
    Icon,
    ImageInput,
    Input,
