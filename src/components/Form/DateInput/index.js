@@ -70,6 +70,13 @@ export default class DateInput extends Component {
       let hour = this.state.hour
       if (this.state.meridiem === 'p') hour = (Number(hour) + 12).toString()
 
+      if (this.state.year && this.state.month && this.state.day) {
+         const daysInMonth = new Date(this.state.year, Number(this.state.month) + 1, 0).getDate()
+         if (Number(this.state.day) > daysInMonth) {
+            return this.setState({ day: daysInMonth }, () => this.handleChange())
+         }
+      }
+
       const value = this.props.enableTime
          ? new Date(this.state.year, this.state.month, this.state.day, hour, this.state.minute)
          : new Date(this.state.year, this.state.month, this.state.day)
@@ -83,7 +90,7 @@ export default class DateInput extends Component {
       let value = event.target.value
       value = value.replace(/[^\d]/g, '')
       value = value.replace(/^0+/, '')
-      if (value.length <= 2 && Number(value) <= 31) {
+      if (value.length <= 2) {
          this.setState({ day: value }, () => this.handleChange())
       }
    }
