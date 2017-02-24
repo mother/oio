@@ -10,15 +10,11 @@ currentDateZeroed.setHours(0, 0, 0, 0)
 
 export default class DateInput extends Component {
    static propTypes = {
-      // className: React.PropTypes.string,
       enableTime: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
-      // name: React.PropTypes.string,
-      // onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
-      // placeholder: React.PropTypes.string,
       touched: React.PropTypes.bool,
       value: React.PropTypes.object
    }
@@ -56,24 +52,24 @@ export default class DateInput extends Component {
       if (minute.length === 1) minute = `0${minute}`
 
       this.state = {
-         day: (props.value.getDate() || currentDateZeroed.getDate()).toString(),
+         day: (props.value || currentDateZeroed).getDate().toString(),
          hour,
          meridiem,
          minute,
-         month: (props.value.getMonth() || currentDateZeroed.getMonth()).toString(),
-         year: (props.value.getFullYear() || currentDateZeroed.getFullYear()).toString()
+         month: (props.value || currentDateZeroed).getMonth().toString(),
+         year: (props.value || currentDateZeroed).getFullYear().toString()
       }
    }
 
    handleChange() {
+      // Check for and apply proper meridiem/hour
       let hour = this.state.hour
       if (this.state.meridiem === 'p') hour = (Number(hour) + 12).toString()
 
-      if (this.state.year && this.state.month && this.state.day) {
-         const daysInMonth = new Date(this.state.year, Number(this.state.month) + 1, 0).getDate()
-         if (Number(this.state.day) > daysInMonth) {
-            return this.setState({ day: daysInMonth }, () => this.handleChange())
-         }
+      // Ensure day is correct given the entered year/month
+      const daysInMonth = new Date(this.state.year, Number(this.state.month) + 1, 0).getDate()
+      if (Number(this.state.day) > daysInMonth) {
+         return this.setState({ day: daysInMonth }, () => this.handleChange())
       }
 
       const value = this.props.enableTime
@@ -93,8 +89,8 @@ export default class DateInput extends Component {
 
    handleDayChange(event) {
       let value = event.target.value
-      value = value.replace(/[^\d]/g, '')
-      value = value.replace(/^0+/, '')
+      value = this.removeNonNumericCharacters(value)
+      value = this.removeLeadingZeroes(value)
       if (value.length <= 2) {
          this.setState({ day: value }, () => this.handleChange())
       }
@@ -108,8 +104,8 @@ export default class DateInput extends Component {
 
    handleHourChange(event) {
       let value = event.target.value
-      value = value.replace(/[^\d]/g, '')
-      value = value.replace(/^0+/, '')
+      value = this.removeNonNumericCharacters(value)
+      value = this.removeLeadingZeroes(value)
       if (value.length <= 2) {
          this.setState({ hour: value }, () => this.handleChange())
       }
@@ -130,7 +126,7 @@ export default class DateInput extends Component {
 
    handleMinuteChange(event) {
       let value = event.target.value
-      value = value.replace(/[^\d]/g, '')
+      value = this.removeNonNumericCharacters(value)
       if (value.length <= 2) {
          this.setState({ minute: value }, () => this.handleChange())
       }
@@ -149,11 +145,19 @@ export default class DateInput extends Component {
 
    handleYearChange(event) {
       let value = event.target.value
-      value = value.replace(/[^\d]/g, '')
-      value = value.replace(/^0+/, '')
+      value = this.removeNonNumericCharacters(value)
+      value = this.removeLeadingZeroes(value)
       if (value.length <= 4) {
          this.setState({ year: value }, () => this.handleChange())
       }
+   }
+
+   removeLeadingZeroes(str) {
+      return str.replace(/^0+/, '')
+   }
+
+   removeNonNumericCharacters(str) {
+      return str.replace(/[^\d]/g, '')
    }
 
    render() {
