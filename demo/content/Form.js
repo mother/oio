@@ -93,7 +93,7 @@ export default class DemoContentForm extends Component {
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
-                           value="Reich"
+                           defaultValue="Reich"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -103,7 +103,7 @@ export default class DemoContentForm extends Component {
                            name="email"
                            label="Email"
                            placeholder="Please enter your email"
-                           value="jared@mother.co"
+                           defaultValue="jared@mother.co"
                            rules={[
                               'required',
                               { test: 'email', message: 'Enter a valid email!' },

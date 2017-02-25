@@ -20,10 +20,11 @@ export default class Input extends Component {
 
    static defaultProps = {
       type: 'text',
-      value: ''
+      defaultValue: ''
    }
 
    static contextTypes = {
+      OIOForm: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
@@ -31,18 +32,31 @@ export default class Input extends Component {
       super(props, context)
       this.handleChange = this.handleChange.bind(this)
       this.state = {
-         value: props.value
+         value: props.value || props.defaultValue
+      }
+   }
+
+   componentDidMount() {
+      if (this.props.name) {
+         this.context.OIOForm.set(this.props.name, this.state.value)
       }
    }
 
    componentWillReceiveProps(newProps) {
-      if (newProps.value !== this.state.value) {
+      if (newProps.value && newProps.value !== this.state.value) {
          this.setState({ value: newProps.value })
       }
+
+      // TODO: If name changes, need to remove form value corresponding to old name
    }
 
    handleChange(event) {
       this.setState({ value: event.target.value })
+
+      if (this.props.name) {
+         this.context.OIOForm.set(this.props.name, event.target.value)
+      }
+
       if (this.props.onChange) {
          this.props.onChange(event, event.target.value)
       }
