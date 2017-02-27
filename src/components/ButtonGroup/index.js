@@ -21,7 +21,7 @@ export default class ButtonGroup extends Component {
    }
 
    static childContextTypes = {
-      buttonGroupStyle: React.PropTypes.object
+      buttonGroup: React.PropTypes.object
    }
 
    getChildContext() {
@@ -29,18 +29,18 @@ export default class ButtonGroup extends Component {
          ? 0
          : this.props.spacing
 
-      const buttonGroupStyle = {
+      const buttonGroup = {
          align: this.props.align,
          mode: this.props.mode,
          spacing: `${buttonSpacing}px`
       }
 
-      return { buttonGroupStyle }
+      return { buttonGroup }
    }
 
    render() {
-      let buttonColor = this.context.OIOStyles.primaryColor
-      let buttonColorRGB = convertColor(buttonColor)
+      const buttonColor = this.context.OIOStyles.primaryColor
+      const buttonColorRGB = convertColor(buttonColor)
 
       const style = {
          float: 'left',

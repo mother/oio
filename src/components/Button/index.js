@@ -30,7 +30,7 @@ export default class Button extends Component {
    }
 
    static contextTypes = {
-      buttonGroupStyle: React.PropTypes.object,
+      buttonGroup: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
@@ -173,8 +173,8 @@ export default class Button extends Component {
       // If Buttons are part of a Button Group
       // =======================================================
 
-      if (this.context.buttonGroupStyle) {
-         const buttonGroup = this.context.buttonGroupStyle
+      if (this.context.buttonGroup) {
+         const buttonGroup = this.context.buttonGroup
          buttonStyle.marginBottom = buttonGroup.spacing
          buttonStyle.verticalAlign = 'middle'
 

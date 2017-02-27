@@ -4,7 +4,6 @@ import {
    ButtonGroup,
    Grid,
    GridCell,
-   // Icon,
    Spacer,
    Text,
    Title,
@@ -121,7 +120,7 @@ export default class DemoContentButtonGroup extends Component {
                            <td><code>6px</code></td>
                            <td>
                               <p>
-                                 Pass a number with pixel-based unit. 
+                                 Pass a number with pixel-based unit.
                               </p>
                               <p>
                                  This prop only applies
