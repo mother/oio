@@ -1,25 +1,6 @@
 import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
-import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
-
-const formComponentNames = [
-   'Checkbox',
-   'CheckboxGroup',
-   'FileInput',
-   'ImageInput',
-   'Input',
-   'Radio',
-   'RadioGroup',
-   'Select',
-   'Switch',
-   'Textarea'
-]
-
-const formFileComponentNames = [
-   'FileInput',
-   'ImageInput'
-]
 
 const predefinedRules = {
    required: {
@@ -52,8 +33,11 @@ export default class Form extends Component {
       super(props)
 
       this.handleSubmit = this.handleSubmit.bind(this)
-      this.set = this.set.bind(this)
-      this.validate = this.validate.bind(this)
+
+      // For consumpotion by form components via context
+      this.setDefaultValue = this.setDefaultValue.bind(this)
+      this.setValue = this.setValue.bind(this)
+      this.validateValue = this.validateValue.bind(this)
 
       this.testContext = {
          get: this.get.bind(this)
@@ -64,17 +48,6 @@ export default class Form extends Component {
          pristine: true,
          submitting: false
       }
-
-      // TODO: Currently deals with checkbox and radio data incorrectly
-      // since they haves values but may not necessarily be checked
-      // findNodesinDOM(props.children, ...formComponentNames)
-      // .forEach((node) => {
-      //    this.state.data[node.props.name] = {
-      //       value: node.props.value,
-      //       error: null,
-      //       touched: false
-      //    }
-      // })
    }
 
    // ===================================================
@@ -84,15 +57,19 @@ export default class Form extends Component {
 
    getChildContext() {
       const OIOForm = {
-         set: this.set,
-         validate: this.validate // commit? touch?
+         setDefaultValue: this.setDefaultValue,
+         setValue: this.setValue,
+         validateValue: this.validateValue,
+         errors: this.getErrors(),
+         pristine: this.state.pristine,
+         submitting: this.state.submitting
       }
 
       return { OIOForm }
    }
 
-   set(name, value) {
-      console.log('set', name, value) // eslint-disable-line no-console
+   setDefaultValue(name, value) {
+      if (!name) return
 
       this.setState((state, props) => {
          return {
@@ -107,8 +84,44 @@ export default class Form extends Component {
       })
    }
 
-   validate(key, value) {
-      console.log('validating value', key, value) // eslint-disable-line no-console
+   setValue(name, value) {
+      if (!name) return
+      console.log('setting', name, value) // eslint-disable-line no-console
+
+      this.setState((state, props) => {
+         return {
+            pristine: false,
+            data: {
+               ...state.data,
+               [name]: {
+                  ...state.data[name],
+                  value
+               }
+            }
+         }
+      })
+   }
+
+   validateValue(name, value, rules) {
+      const validationResult = this.applyRulesToValue(rules, value)
+      console.log('validating value', name, value, validationResult) // eslint-disable-line no-console
+
+      if (name) {
+         this.setState((state, props) => {
+            return {
+               ...state,
+               data: {
+                  ...state.data,
+                  [name]: {
+                     ...state.data[name],
+                     error: validationResult
+                  }
+               }
+            }
+         })
+      }
+
+      return validationResult
    }
 
    // ===================================================
@@ -116,33 +129,30 @@ export default class Form extends Component {
    // ===================================================
 
    componentWillReceiveProps(newProps) {
-      // const newState = { data: { ...this.state.data } }
-      //
-      // findNodesinDOM(newProps.children, ...formComponentNames)
-      // .forEach((node) => {
-      //    const value = typeof node.props.value !== 'undefined'
-      //       ? node.props.value
-      //       : this.state.data[node.props.name].value
-      //
-      //    newState.data[node.props.name] = {
-      //       ...this.state.data[node.props.name],
-      //       value,
-      //       error: this.applyRulesToValue(node.props.rules, value)
-      //    }
-      // })
-      //
-      // this.setState(newState)
+
    }
 
+   // TODO: We can actually do some optimization here to ensure that
+   // re-renders are not triggered by form components called `setValue`,
+   // `setDefaultValue`, or `validateValue`
    shouldComponentUpdate(nextProps, nextState) {
-      // TODO: Should actually return true in some cases,
-      // but not in the case of most state changes
-      return false
+      return true
    }
 
    // ===================================================
    // Stuff
    // ===================================================
+
+   getErrors() {
+      const errors = []
+      Object.keys(this.state.data).forEach((key) => {
+         if (this.state.data[key].error) {
+            errors.push(this.state.data[key].error)
+         }
+      })
+
+      return errors
+   }
 
    applyRulesToValue(rules = [], value) {
       for (const rule of rules) {
@@ -184,133 +194,37 @@ export default class Form extends Component {
       }
    }
 
-   // handleBlur(value, child) {
-   //    const newState = {
-   //       data: { ...this.state.data },
-   //       pristine: false
-   //    }
-   //    newState.data[child.props.name] = {
-   //       ...this.state.data[child.props.name],
-   //       error: this.applyRulesToValue(child.props.rules, value),
-   //       touched: true
-   //    }
-   //    this.setState(newState)
-   // }
-   //
-   // handleChange(value, child) {
-   //    const newState = { data: { ...this.state.data } }
-   //    newState.data[child.props.name] = {
-   //       value,
-   //       touched: true
-   //    }
-   //    this.setState(newState)
-   // }
-   //
    handleSubmit(event) {
       event.preventDefault()
       console.log('submitting form data', this.state.data) // eslint-disable-line no-console
 
-      // Blur and check all relevant children for errors
-      // const newState = { data: { ...this.state.data } }
-      // const namesForFiles = []
-      // findNodesinDOM(this.props.children, ...formComponentNames)
-      // .forEach((node) => {
-      //    newState.data[node.props.name] = {
-      //       ...this.state.data[node.props.name],
-      //       error: this.applyRulesToValue(
-      //          node.props.rules,
-      //          this.state.data[node.props.name].value
-      //       ),
-      //       touched: true
-      //    }
-      //
-      //    // Keep track of files on state.data
-      //    if (formFileComponentNames.includes(node.type.name)) {
-      //       namesForFiles.push(node.props.name)
-      //    }
-      // })
+      const errors = this.getErrors()
+      if (errors.length > 0) {
+         if (this.props.onError) this.props.onError(errors)
+         return
+      }
 
-      // const files = {}
-      // const formData = new FormData()
-      // // Apply "files" to formData
-      // namesForFiles.forEach((name) => {
-      //    const file = newState.data[name].value
-      //    if (file) {
-      //       files[name] = file
-      //       formData.append(name, new Blob([file], { type: file.type }))
-      //    }
-      // })
-      // // Apply rest of data to formData
-      // Object.keys(newState.data).forEach((key) => {
-      //    // Only apply if other data
-      //    if (!namesForFiles.includes(key)) {
-      //       // Append key to formData
-      //       if (typeof newState.data[key].value !== 'undefined') {
-      //          formData.append(key, newState.data[key].value)
-      //       }
-      //    }
-      // })
+      // TODO: Implement files and formData
+      // FileInput and ImageInput should pass in Blob or File as values
+      // Then we can iterate through this.state.data, checking for
+      // values that are instanceof Blob or File
+      const data = this.state.data
+      const files = null
+      const formData = null
 
-      // this.setState(newState, () => {
-      //    const data = {}
-      //    const errors = {}
-      //
-      //    // Find data and errors
-      //    Object.keys(this.state.data).forEach((key) => {
-      //       // Don't add data keys that relate to files
-      //       if (!namesForFiles.includes(key)) {
-      //          // Add the key/value to data
-      //          if (typeof this.state.data[key].value !== 'undefined') {
-      //             data[key] = this.state.data[key].value
-      //          }
-      //
-      //          // Add the error if applicable
-      //          if (this.state.data[key].error) {
-      //             errors[key] = this.state.data[key].error
-      //          }
-      //       }
-      //    })
-      //
-      //    // Pass data or errors in to appropriate event handler prop
-      //    if (Object.keys(errors).length > 0) {
-      //       if (this.props.onError) this.props.onError(errors)
-      //    } else if (this.props.onSubmit) {
-      //       const promise = this.props.onSubmit(data, files, formData)
-      //       if (promise instanceof Promise) {
-      //          this.setState({ submitting: true }, () => {
-      //             promise
-      //             .then(() => this.setState({ submitting: false }))
-      //             .catch(() => this.setState({ submitting: false }))
-      //          })
-      //       }
-      //    }
-      // })
+      if (this.props.onSubmit) {
+         const submitPromise = this.props.onSubmit(data, files, formData)
+         if (submitPromise instanceof Promise) {
+            this.setState({ submitting: true }, () => {
+               submitPromise
+               .then(() => this.setState({ pristine: true, submitting: false }))
+               .catch(() => this.setState({ submitting: false }))
+            })
+         }
+      }
    }
 
    render() {
-      // const domWithNewFormElements = replaceNodesInDOM(
-      //    this.props.children,
-      //    formComponentNames,
-      //    (child, i, j) => (
-      //       React.cloneElement(child, {
-      //          key: `${i},${j}`,
-      //          error: this.state.data[child.props.name].error || '',
-      //          touched: this.state.data[child.props.name].touched || false,
-      //          onBlur: (event) => {
-      //             this.handleBlur(event.target.value, child)
-      //             if (child.props.onBlur) child.props.onBlur(event)
-      //          },
-      //          onChange: (event, value) => {
-      //             this.handleChange(value, child)
-      //             // if (value || value === false) this.handleChange(value, child)
-      //             // else this.handleChange(event.target.value, child)
-      //             if (child.props.onChange) child.props.onChange(event, value)
-      //          },
-      //          value: this.state.data[child.props.name].value
-      //       })
-      //    )
-      // )
-
       return (
          <form onSubmit={this.handleSubmit}>
             {this.props.children}

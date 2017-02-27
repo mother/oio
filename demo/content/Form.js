@@ -27,8 +27,8 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
-   constructor(props) {
-      super(props)
+   constructor(props, context) {
+      super(props, context)
 
       this.handleError = this.handleError.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
@@ -39,7 +39,10 @@ export default class DemoContentForm extends Component {
    }
 
    handleSubmit(data, files, formData) {
-      console.log(data, files) // eslint-disable-line no-console
+      return new Promise((resolve, reject) => {
+         console.log('Submitting...', data, files) // eslint-disable-line no-console
+         setTimeout(resolve, 2000)
+      })
    }
 
    render() {

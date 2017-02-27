@@ -15,6 +15,7 @@ export default class Input extends Component {
       placeholder: React.PropTypes.string,
       touched: React.PropTypes.bool,
       type: React.PropTypes.string,
+      rules: React.PropTypes.array,
       value: React.PropTypes.string
    }
 
@@ -30,15 +31,17 @@ export default class Input extends Component {
 
    constructor(props, context) {
       super(props, context)
+      this.handleBlur = this.handleBlur.bind(this)
       this.handleChange = this.handleChange.bind(this)
       this.state = {
+         error: props.error,
          value: props.value || props.defaultValue
       }
    }
 
    componentDidMount() {
       if (this.props.name) {
-         this.context.OIOForm.set(this.props.name, this.state.value)
+         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
       }
    }
 
@@ -50,12 +53,28 @@ export default class Input extends Component {
       // TODO: If name changes, need to remove form value corresponding to old name
    }
 
+   handleBlur(event) {
+      const error = this.context.OIOForm.validateValue(
+         this.props.name,
+         event.target.value,
+         this.props.rules
+      )
+
+      if (error) {
+         this.setState({ error })
+      } else {
+         this.setState({ error: undefined })
+      }
+
+      if (this.props.onBlur) {
+         this.props.onBlur(event)
+      }
+   }
+
    handleChange(event) {
       this.setState({ value: event.target.value })
+      this.context.OIOForm.setValue(this.props.name, event.target.value)
 
-      if (this.props.name) {
-         this.context.OIOForm.set(this.props.name, event.target.value)
-      }
 
       if (this.props.onChange) {
          this.props.onChange(event, event.target.value)
@@ -77,16 +96,16 @@ export default class Input extends Component {
                style={inputStyles}
                className={classNames(classes)}
                id={this.props.id}
-               onBlur={this.props.onBlur}
+               onBlur={this.handleBlur}
                onChange={this.handleChange}
                name={this.props.name}
                placeholder={this.props.placeholder}
                type={this.props.type}
                value={this.state.value}
             />
-            {this.props.touched && this.props.error &&
+            {this.state.error &&
                <div className={formStyles.error}>
-                  {this.props.error}
+                  {this.state.error}
                </div>
             }
          </div>

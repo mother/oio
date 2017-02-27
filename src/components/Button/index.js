@@ -29,6 +29,7 @@ export default class Button extends Component {
 
    static contextTypes = {
       buttonGroupStyle: React.PropTypes.object,
+      OIOForm: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
@@ -61,7 +62,6 @@ export default class Button extends Component {
       const buttonClasses = [this.props.className]
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
-      const mode = this.props.mode
 
       const buttonStyle = {
          backgroundColor: buttonColor,
@@ -83,6 +83,21 @@ export default class Button extends Component {
             buttonClasses.push(style[`${this.props.size}IconAndText`])
          } else {
             buttonClasses.push(style[`${this.props.size}IconOnly`])
+         }
+      }
+
+      // TODO: We shouldn't assume that the developer wants to do this automatically
+      let mode = this.props.mode
+      const formContext = this.context.OIOForm
+      if (this.props.type === 'submit' && formContext) {
+         const isPristine = formContext.pristine
+         const isSubmitting = formContext.submitting
+         if (isPristine) mode = 'disabled'
+         else if (isSubmitting) mode = 'loading'
+
+         if (formContext.errors.length) {
+            buttonStyle.backgroundColor = 'red'
+            mode = 'disabled'
          }
       }
 
