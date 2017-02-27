@@ -87,7 +87,7 @@ export default class DemoContentForm extends Component {
                                  name="name.first"
                                  label="First Name"
                                  placeholder="Please enter your first name"
-                                 value="Jared"
+                                 defaultValue="Jared"
                                  rules={['required']}
                               />
                            </div>

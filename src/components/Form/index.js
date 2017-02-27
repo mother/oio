@@ -191,19 +191,20 @@ export default class Form extends Component {
 
    handleSubmit(event) {
       event.preventDefault()
-      console.log('submitting form data', this.state.data) // eslint-disable-line no-console
 
       const errors = this.getErrors()
       if (errors.length > 0) {
-         if (this.props.onError) this.props.onError(errors)
-         return
+         if (this.props.onError) return this.props.onError(errors)
       }
 
       // TODO: Implement files and formData
       // FileInput and ImageInput should pass in Blob or File as values
       // Then we can iterate through this.state.data, checking for
       // values that are instanceof Blob or File
-      const data = this.state.data
+      const data = {}
+      for (const key of Object.keys(this.state.data)) {
+         data[key] = this.state.data[key].value
+      }
       const files = null
       const formData = null
 
