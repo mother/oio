@@ -6,6 +6,7 @@ import formStyles from '../styles.less'
 export default class Input extends Component {
    static propTypes = {
       className: React.PropTypes.string,
+      defaultValue: React.PropTypes.string,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
@@ -13,7 +14,7 @@ export default class Input extends Component {
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
-      touched: React.PropTypes.bool,
+      // touched: React.PropTypes.bool,
       type: React.PropTypes.string,
       rules: React.PropTypes.array,
       value: React.PropTypes.string
@@ -74,7 +75,6 @@ export default class Input extends Component {
    handleChange(event) {
       this.setState({ value: event.target.value })
       this.context.OIOForm.setValue(this.props.name, event.target.value)
-
 
       if (this.props.onChange) {
          this.props.onChange(event, event.target.value)

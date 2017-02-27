@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Blob from 'blob'
-import FormData from 'form-data'
+// import Blob from 'blob'
+// import FormData from 'form-data'
 
 const predefinedRules = {
    required: {
@@ -19,8 +19,8 @@ const predefinedRules = {
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
+      // onBlur: React.PropTypes.func,
+      // onChange: React.PropTypes.func,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -68,38 +68,35 @@ export default class Form extends Component {
       return { OIOForm }
    }
 
+   // eslint-disable-next-line react/sort-comp
    setDefaultValue(name, value) {
       if (!name) return
 
-      this.setState((state, props) => {
-         return {
-            data: {
-               ...state.data,
-               [name]: {
-                  ...state.data[name],
-                  value
-               }
+      this.setState(state => ({
+         data: {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               value
             }
          }
-      })
+      }))
    }
 
    setValue(name, value) {
       if (!name) return
       console.log('setting', name, value) // eslint-disable-line no-console
 
-      this.setState((state, props) => {
-         return {
-            pristine: false,
-            data: {
-               ...state.data,
-               [name]: {
-                  ...state.data[name],
-                  value
-               }
+      this.setState(state => ({
+         pristine: false,
+         data: {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               value
             }
          }
-      })
+      }))
    }
 
    validateValue(name, value, rules) {
@@ -107,18 +104,16 @@ export default class Form extends Component {
       console.log('validating value', name, value, validationResult) // eslint-disable-line no-console
 
       if (name) {
-         this.setState((state, props) => {
-            return {
-               ...state,
-               data: {
-                  ...state.data,
-                  [name]: {
-                     ...state.data[name],
-                     error: validationResult
-                  }
+         this.setState((state, props) => ({
+            ...state,
+            data: {
+               ...state.data,
+               [name]: {
+                  ...state.data[name],
+                  error: validationResult
                }
             }
-         })
+         }))
       }
 
       return validationResult
