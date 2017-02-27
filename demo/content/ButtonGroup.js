@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
 import {
    Button,
    ButtonGroup,
@@ -51,7 +50,7 @@ export default class DemoContentButtonGroup extends Component {
                         <GridCell>
                            <Text weight="semibold" size="3">List</Text>
                            <Spacer size="3" />
-                           <View width="150px" height="240px" className={style.docsWindow}>
+                           <View width="150px" height="180px" className={style.docsWindow}>
                               <ButtonGroup mode="list">
                                  <Button size="small" name="Button One" />
                                  <Button size="small" name="Button Two" />
@@ -95,9 +94,15 @@ export default class DemoContentButtonGroup extends Component {
                            <td>String</td>
                            <td><code>left</code></td>
                            <td>
-                              <code>left</code>
-                              <code>center</code>
-                              <code>right</code>
+                              <p>
+                                 <code>left</code>
+                                 <code>center</code>
+                                 <code>right</code>
+                              </p>
+                              <p>
+                                 This prop only applies
+                                 when <code>ButtonGroup</code> is in the <code>normal</code> mode.
+                              </p>
                            </td>
                         </tr>
                         <tr>
@@ -115,7 +120,13 @@ export default class DemoContentButtonGroup extends Component {
                            <td>String</td>
                            <td><code>6px</code></td>
                            <td>
-                              pass a number with pixel-based unit
+                              <p>
+                                 Pass a number with pixel-based unit. 
+                              </p>
+                              <p>
+                                 This prop only applies
+                                 when <code>ButtonGroup</code> is in the <code>normal</code> mode.
+                              </p>
                            </td>
                         </tr>
                      </tbody>
