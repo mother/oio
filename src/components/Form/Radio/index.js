@@ -6,7 +6,6 @@ import style from './style.less'
 
 export default class Radio extends Component {
    static propTypes = {
-      // checked: React.PropTypes.bool,
       children: React.PropTypes.node,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
@@ -14,13 +13,9 @@ export default class Radio extends Component {
       value: React.PropTypes.string
    }
 
-   // static defaultProps = {
-   //    checked: false
-   // }
-
    static contextTypes = {
       OIOForm: React.PropTypes.object,
-      OIOFormRadioGroup: React.PropTypes.object,
+      OIOFormRadio: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
@@ -34,24 +29,22 @@ export default class Radio extends Component {
       }
    }
 
-   handleChange(event) {
-      const value = this.state.checked ? '' : event.target.value
-
+   componentWillReceiveProps(nextProps) {
       this.setState({
-         checked: !this.state.checked,
-         value
+         checked: this.props.value === this.context.OIOFormRadio.getValue()
       })
+   }
 
-      const name = this.context.OIOFormRadioGroup.name
-      this.context.OIOForm.setValue(name, value)
+   handleChange(event) {
+      if (!this.state.checked) this.setState({ checked: true })
 
       if (this.props.onChange) {
-         this.props.onChange(event, value)
+         this.props.onChange(event, event.target.value)
       }
    }
 
    render() {
-      const name = this.context.OIOFormRadioGroup.name
+      const name = this.context.OIOFormRadio.name
 
       const primaryColor = this.context.OIOStyles.primaryColor
       let radioIcon = 'ion-ios-circle-outline'

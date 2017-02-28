@@ -132,7 +132,8 @@ export default class DemoContentForm extends Component {
                         />
                         <RadioGroup
                            name="gender"
-                           label="Gender">
+                           label="Gender"
+                           rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
                                  <Radio value="male" label="Male" />

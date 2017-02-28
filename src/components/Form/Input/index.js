@@ -62,11 +62,7 @@ export default class Input extends Component {
          this.props.rules
       )
 
-      if (error) {
-         this.setState({ error })
-      } else {
-         this.setState({ error: undefined })
-      }
+      this.setState({ error })
 
       if (this.props.onBlur) {
          this.props.onBlur(event)

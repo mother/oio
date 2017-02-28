@@ -65,11 +65,7 @@ export default class Select extends Component {
          this.props.rules
       )
 
-      if (error) {
-         this.setState({ error })
-      } else {
-         this.setState({ error: undefined })
-      }
+      this.setState({ error })
    }
 
    render() {

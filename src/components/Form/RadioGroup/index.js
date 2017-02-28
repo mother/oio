@@ -9,6 +9,7 @@ export default class RadioGroup extends Component {
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
+      rules: React.PropTypes.array,
       value: React.PropTypes.string
    }
 
@@ -21,11 +22,14 @@ export default class RadioGroup extends Component {
    }
 
    static childContextTypes = {
-      OIOFormRadioGroup: React.PropTypes.object
+      OIOFormRadio: React.PropTypes.object
    }
 
    constructor(props) {
       super(props)
+
+      this.getValue = this.getValue.bind(this)
+      this.handleChange = this.handleChange.bind(this)
 
       this.state = {
          error: props.error,
@@ -34,11 +38,12 @@ export default class RadioGroup extends Component {
    }
 
    getChildContext() {
-      const OIOFormRadioGroup = {
-         name: this.props.name
+      const OIOFormRadio = {
+         name: this.props.name,
+         getValue: this.getValue
       }
 
-      return { OIOFormRadioGroup }
+      return { OIOFormRadio }
    }
 
    componentDidMount() {
@@ -55,11 +60,30 @@ export default class RadioGroup extends Component {
       // TODO: If name changes, need to remove form value corresponding to old name
    }
 
+   getValue() {
+      return this.state.value
+   }
+
+   handleChange(event) {
+      this.setState({ value: event.target.value })
+      this.context.OIOForm.setValue(this.props.name, event.target.value)
+
+      const error = this.context.OIOForm.validateValue(
+         this.props.name,
+         event.target.value,
+         this.props.rules
+      )
+
+      this.setState({ error })
+   }
+
    render() {
       return (
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
-            {this.props.children}
+            <div onChange={this.handleChange}>
+               {this.props.children}
+            </div>
             {this.state.error &&
                <div className={formStyles.error}>
                   {this.state.error}

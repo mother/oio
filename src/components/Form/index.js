@@ -85,7 +85,6 @@ export default class Form extends Component {
 
    setValue(name, value) {
       if (!name) return
-      console.log('setting', name, value) // eslint-disable-line no-console
 
       this.setState(state => ({
          pristine: false,
