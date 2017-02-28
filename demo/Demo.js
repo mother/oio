@@ -57,6 +57,9 @@ export default class Demo extends Component {
             name: 'Modal',
             link: '/modal'
          }, {
+            name: 'View',
+            link: '/view'
+         }, {
             name: 'Text',
             link: '/text'
          }]
