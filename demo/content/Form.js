@@ -128,7 +128,6 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
-                           value={null || 'two'}
                            rules={['required']}
                         />
                         <RadioGroup
