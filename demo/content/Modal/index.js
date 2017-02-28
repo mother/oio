@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import {
+   Button,
+   ButtonGroup,
    Grid,
    GridCell,
-   // Icon,
+   GridRow,
    Spacer,
    Text,
    Title,
    TitleBar,
    View
-} from '../../src'
-import style from '../style.less'
+} from '../../../src'
+import style from '../../style.less'
 
 export default class DemoContentModal extends Component {
    static propTypes = {
-      contents: React.PropTypes.array
+      children: React.PropTypes.node
    }
 
    render() {
@@ -22,6 +25,27 @@ export default class DemoContentModal extends Component {
             <TitleBar title="Modal" flush />
             <Spacer size="9" />
             <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
+               <GridRow>
+                  <GridCell>
+                     <Title>Modal Examples</Title>
+                     <Text size="2" color="gray50">
+                        Examples of: a standard modal window that is&nbsp;
+                        vertically and horizontally centered; a modal window that is taller&nbsp;
+                        than the browser window height.
+
+                     </Text>
+                  </GridCell>
+                  <GridCell colspan="3">
+                     <ButtonGroup>
+                        <Link to="/modal/example1">
+                           <Button name="Standard Modal Window" />
+                        </Link>
+                        <Link to="/modal/example2">
+                           <Button name="Tall Modal Window" />
+                        </Link>
+                     </ButtonGroup>
+                  </GridCell>
+               </GridRow>
                <GridCell>
                   <Title>Modal Configurations</Title>
                   <Text size="2" color="gray50">
@@ -39,6 +63,15 @@ export default class DemoContentModal extends Component {
                         </tr>
                      </thead>
                      <tbody>
+                        <tr>
+                           <td><b>animation</b></td>
+                           <td>String</td>
+                           <td><code>scaleIn</code></td>
+                           <td>
+                              <code>scaleIn</code>
+                              <code>slideFromBottom</code>
+                           </td>
+                        </tr>
                         <tr>
                            <td><b>windowMargin</b></td>
                            <td>String</td>
@@ -60,8 +93,12 @@ export default class DemoContentModal extends Component {
                            <td>String</td>
                            <td><code>fixed</code></td>
                            <td>
-                              <code>fixed</code>
-                              <code>fill</code>
+                              <p>
+                                 <code>fixed</code> is the default mode
+                              </p>
+                              <p>
+                                 <code>fill</code> mode will be available soon
+                              </p>
                            </td>
                         </tr>
                         <tr>
@@ -70,6 +107,14 @@ export default class DemoContentModal extends Component {
                            <td>-</td>
                            <td>
                               URL that user is directed to when they close the <code>Modal</code>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>onClose</b></td>
+                           <td>Function</td>
+                           <td>-</td>
+                           <td>
+                              Pass a function that will fire when Modal window is closed
                            </td>
                         </tr>
                         <tr>
@@ -84,6 +129,7 @@ export default class DemoContentModal extends Component {
                   </table>
                </GridCell>
             </Grid>
+            {this.props.children}
          </View>
       )
    }

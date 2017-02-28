@@ -3,11 +3,33 @@
      to { opacity: 1; }
 }
 
-@keyframes showLayout {
+@keyframes scaleIn {
    0% { opacity: 0;}
    25% { opacity: 0; transform: scale(0.9); }
    100% { opacity: 1; transform: scale(1); }
 }
+
+@keyframes slideFromBottom {
+   0% { opacity: 0; transform: translateY(100%) scale(1); }
+   25% { opacity: 0.8; transform: translateY(100%) scale(1); }
+   100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.scaleIn {
+   animation-duration: 400ms;
+   animation-name: scaleIn;
+   animation-timing-function: ease-out;
+}
+
+.slideFromBottom {
+   animation-duration: 900ms;
+   animation-name: slideFromBottom;
+   animation-timing-function: ease-out;
+}
+
+// =====================================================
+// Window Overlay
+// =====================================================
 
 .modalOverlay {
    position: fixed;
@@ -25,16 +47,29 @@
    overflow: auto;
 }
 
+// =====================================================
+// Modal Window
+// =====================================================
+
 .modalWindow {
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   animation-name: showLayout;
-   animation-duration: 700ms;
    -webkit-backface-visibility: hidden;
    animation-timing-function: ease-out;
    background: #fff;
 }
+
+.positionAtMiddleAndCenter {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+}
+
+.positionAtTopCenter {
+   margin: auto;
+}
+
+// =====================================================
+// Close Button
+// =====================================================
 
 .closeButton {
    position: fixed;
