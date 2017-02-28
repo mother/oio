@@ -14,7 +14,6 @@ export default class Radio extends Component {
    }
 
    static contextTypes = {
-      OIOForm: React.PropTypes.object,
       OIOFormRadio: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
@@ -31,7 +30,7 @@ export default class Radio extends Component {
 
    componentWillReceiveProps(nextProps) {
       this.setState({
-         checked: this.props.value === this.context.OIOFormRadio.getValue()
+         checked: nextProps.value === this.context.OIOFormRadio.getValue()
       })
    }
 

@@ -151,7 +151,7 @@ export default class DemoContentForm extends Component {
                            name="sports"
                            label="Sports"
                            rules={['required']}
-                           value={['golf', 'hockey']}>
+                           defaultValue={['golf', 'hockey']}>
                            <Grid columns="3">
                               <GridCell>
                                  <Checkbox value="baseball" label="Baseball" />

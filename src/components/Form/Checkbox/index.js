@@ -6,51 +6,45 @@ import style from './style.less'
 
 export default class Checkbox extends Component {
    static propTypes = {
-      checked: React.PropTypes.bool,
       children: React.PropTypes.node,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
       value: React.PropTypes.string
    }
 
-   static defaultProps = {
-      checked: false
-   }
-
    static contextTypes = {
+      OIOFormCheckbox: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
    constructor(props) {
       super(props)
+
       this.handleChange = this.handleChange.bind(this)
+
       this.state = {
-         checked: props.checked
+         checked: false
       }
    }
 
-   componentWillReceiveProps(newProps) {
-      if (newProps.checked !== this.state.checked) {
-         this.setState({ checked: newProps.checked })
-      }
+   componentWillReceiveProps(nextProps) {
+      // this.setState({
+      //    checked: nextProps.value === this.context.OIOFormCheckbox.getValue()
+      // })
    }
 
    handleChange(event) {
-      this.setState({ checked: event.target.checked })
+      this.setState({ checked: !this.state.checked })
 
       if (this.props.onChange) {
-         const value = event.target.checked
-            ? event.target.value
-            : undefined
-
-         this.props.onChange(event, value)
+         this.props.onChange(event, event.target.value)
       }
    }
 
    render() {
+      const name = this.context.OIOFormCheckbox.name
+
       const primaryColor = this.context.OIOStyles.primaryColor
       let checkboxIcon = 'ion-ios-circle-outline'
       let checkboxIconStyle = {}
@@ -69,10 +63,9 @@ export default class Checkbox extends Component {
                   type="checkbox"
                   id={this.props.id}
                   checked={this.state.checked}
-                  name={this.props.name}
+                  name={name}
                   value={this.props.value}
                   onChange={this.handleChange}
-                  onBlur={this.props.onBlur}
                />
                <Icon name={checkboxIcon} className={style.icon} style={checkboxIconStyle} />
                <Text size="3" weight="normal">
