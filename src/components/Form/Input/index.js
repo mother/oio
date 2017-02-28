@@ -14,7 +14,6 @@ export default class Input extends Component {
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
-      // touched: React.PropTypes.bool,
       type: React.PropTypes.string,
       rules: React.PropTypes.array,
       value: React.PropTypes.string
@@ -30,10 +29,12 @@ export default class Input extends Component {
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
+
       this.handleBlur = this.handleBlur.bind(this)
       this.handleChange = this.handleChange.bind(this)
+
       this.state = {
          error: props.error,
          value: props.value || props.defaultValue

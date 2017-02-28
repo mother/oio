@@ -116,7 +116,7 @@ export default class DemoContentForm extends Component {
                         <Textarea
                            name="description"
                            label="Description"
-                           placeholder="Please enter the subtitle"
+                           placeholder="Please enter the description"
                         />
                         <Select
                            name="choice"

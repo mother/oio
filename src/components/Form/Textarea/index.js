@@ -6,6 +6,7 @@ import formStyles from '../styles.less'
 export default class Textarea extends Component {
    static propTypes = {
       className: React.PropTypes.string,
+      defaultValue: React.PropTypes.string,
       disabled: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
@@ -15,6 +16,7 @@ export default class Textarea extends Component {
       onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
       rows: React.PropTypes.string,
+      rules: React.PropTypes.array,
       touched: React.PropTypes.bool,
       value: React.PropTypes.string
    }
@@ -22,25 +24,62 @@ export default class Textarea extends Component {
    static defaultProps = {
       disabled: false,
       rows: '5',
-      value: ''
+      defaultValue: ''
    }
 
-   constructor(props, context) {
-      super(props, context)
+   static contextTypes = {
+      OIOForm: React.PropTypes.object,
+      OIOStyles: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
+
+      this.handleBlur = this.handleBlur.bind(this)
       this.handleChange = this.handleChange.bind(this)
+
       this.state = {
-         value: props.value
+         error: props.error,
+         value: props.value || props.defaultValue
+      }
+   }
+
+   componentDidMount() {
+      if (this.props.name) {
+         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
       }
    }
 
    componentWillReceiveProps(newProps) {
-      if (newProps.value !== this.state.value) {
+      if (newProps.value && newProps.value !== this.state.value) {
          this.setState({ value: newProps.value })
+      }
+
+      // TODO: If name changes, need to remove form value corresponding to old name
+   }
+
+   handleBlur(event) {
+      const error = this.context.OIOForm.validateValue(
+         this.props.name,
+         event.target.value,
+         this.props.rules
+      )
+
+      if (error) {
+         this.setState({ error })
+      } else {
+         this.setState({ error: undefined })
+      }
+
+      if (this.props.onBlur) {
+         this.props.onBlur(event)
       }
    }
 
    handleChange(event) {
       this.setState({ value: event.target.value })
+      this.context.OIOForm.setValue(this.props.name, event.target.value)
+
       if (this.props.onChange) {
          this.props.onChange(event, event.target.value)
       }
