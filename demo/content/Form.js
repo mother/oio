@@ -117,6 +117,7 @@ export default class DemoContentForm extends Component {
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
+                           rules={['required']}
                         />
                         <Select
                            name="choice"

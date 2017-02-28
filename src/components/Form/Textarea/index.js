@@ -17,7 +17,6 @@ export default class Textarea extends Component {
       placeholder: React.PropTypes.string,
       rows: React.PropTypes.string,
       rules: React.PropTypes.array,
-      touched: React.PropTypes.bool,
       value: React.PropTypes.string
    }
 
@@ -95,16 +94,16 @@ export default class Textarea extends Component {
                className={classNames(classes)}
                disabled={this.props.disabled}
                id={this.props.id}
-               onBlur={this.props.onBlur}
+               onBlur={this.handleBlur}
                onChange={this.handleChange}
                name={this.props.name}
                placeholder={this.props.placeholder}
                value={this.state.value}
                rows={this.props.rows}
             />
-            {this.props.touched && this.props.error &&
+            {this.state.error &&
                <div className={formStyles.error}>
-                  {this.props.error}
+                  {this.state.error}
                </div>
             }
          </div>
