@@ -5,13 +5,13 @@ import Button from './content/Button'
 import Form from './content/Form'
 import Text from './content/Text'
 import Modal from './content/Modal'
-import Typography from './content/Typography'
 import View from './content/View'
+import Welcome from './content/Welcome'
 import ExamplesWindow from './examples/Window'
 
 export default (
    <Route path="/" component={Demo}>
-      <IndexRoute component={Typography} />
+      <IndexRoute component={Welcome} />
       <Route path="button" component={Button} />
       <Route path="form" component={Form} />
       <Route path="modal" component={Modal} />
