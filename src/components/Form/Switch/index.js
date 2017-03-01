@@ -3,42 +3,53 @@ import formStyles from '../styles.less'
 
 export default class Switch extends Component {
    static propTypes = {
+      defaultValue: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      touched: React.PropTypes.bool,
       value: React.PropTypes.bool
    }
 
    static defaultProps = {
-      value: false
+      defaultValue: false
    }
 
    static contextTypes = {
+      OIOForm: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
+
       this.handleChange = this.handleChange.bind(this)
-      this.state = { value: !!props.value }
+
+      this.state = {
+         error: props.error,
+         value: props.value === true || props.value === false
+            ? props.value
+            : props.defaultValue
+      }
    }
 
-   componentWillReceiveProps(newProps) {
-      const newValue = !!newProps.value
-      if (this.state.value !== newValue) {
-         this.setState({ value: newValue })
+   componentDidMount() {
+      if (this.props.name) {
+         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
       }
+   }
+
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value && nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
+      }
+      // this.context.OIOForm.setValue(this.props.name, nextProps.value)
    }
 
    handleChange(event) {
-      this.setState({ value: event.target.checked })
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.checked)
-      }
+      const value = !this.state.value
+      this.setState({ value })
+      this.context.OIOForm.setValue(this.props.name, value)
    }
 
    render() {
@@ -59,13 +70,12 @@ export default class Switch extends Component {
                   type="checkbox"
                   name={this.props.name}
                   onChange={this.handleChange}
-                  onBlur={this.props.onBlur}
                />
                <div className={formStyles.switchSlider} style={switchStyle} />
             </label>
-            {this.props.touched && this.props.error &&
+            {this.state.error &&
                <div className={formStyles.error}>
-                  {this.props.error}
+                  {this.state.error}
                </div>
             }
          </span>
