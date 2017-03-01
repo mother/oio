@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-// import Blob from 'blob'
-// import FormData from 'form-data'
 
 const predefinedRules = {
    required: {
@@ -199,10 +197,12 @@ export default class Form extends Component {
       // Then we can iterate through this.state.data, checking for
       // values that are instanceof Blob or File
       const data = {}
+      const files = []
       for (const key of Object.keys(this.state.data)) {
-         data[key] = this.state.data[key].value
+         const value = this.state.data[key].value
+         data[key] = value
+         if (value instanceof window.File) files.push(value)
       }
-      const files = null
       const formData = null
 
       if (this.props.onSubmit) {

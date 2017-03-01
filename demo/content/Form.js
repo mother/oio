@@ -39,8 +39,10 @@ export default class DemoContentForm extends Component {
    }
 
    handleSubmit(data, files, formData) {
+      console.log(data)
+      console.log(files)
+      console.log(formData)
       return new Promise((resolve, reject) => {
-         console.log('Submitting...', data, files) // eslint-disable-line no-console
          setTimeout(resolve, 2000)
       })
    }

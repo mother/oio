@@ -13,8 +13,12 @@ export default class FileInput extends Component {
       style: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   static contextTypes = {
+      OIOForm: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
 
       this.handleChange = this.handleChange.bind(this)
 
@@ -29,9 +33,14 @@ export default class FileInput extends Component {
    }
 
    handleChange(files) {
-      this.setState({ file: files[0] }, () => {
-         this.props.onChange(null, this.state.file)
-      })
+      const file = files[0]
+
+      this.setState({ file })
+      this.context.OIOForm.setValue(this.props.name, file)
+
+      if (this.props.onChange) {
+         this.props.onChange(null, file)
+      }
    }
 
    render() {
