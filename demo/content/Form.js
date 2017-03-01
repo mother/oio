@@ -59,6 +59,7 @@ export default class DemoContentForm extends Component {
                </GridCell>
                <GridCell colspan="3">
                   <View width="420px">
+                     <button onClick={() => this.setState({ radio: 'male' })}>change radio</button>
                      <Form
                         onSubmit={this.handleSubmit}
                         onError={this.handleError}>
@@ -133,6 +134,7 @@ export default class DemoContentForm extends Component {
                         <RadioGroup
                            name="gender"
                            label="Gender"
+                           defaultValue="female"
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>

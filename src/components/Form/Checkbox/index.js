@@ -29,9 +29,9 @@ export default class Checkbox extends Component {
    }
 
    componentWillReceiveProps(nextProps) {
-      // this.setState({
-      //    checked: nextProps.value === this.context.OIOFormCheckbox.getValue()
-      // })
+      this.setState({
+         checked: this.context.OIOFormCheckbox.getValue().includes(nextProps.value)
+      })
    }
 
    handleChange(event) {

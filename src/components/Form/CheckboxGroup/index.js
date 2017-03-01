@@ -65,12 +65,23 @@ export default class CheckboxGroup extends Component {
    }
 
    handleChange(event) {
-      this.setState({ value: event.target.value })
-      this.context.OIOForm.setValue(this.props.name, event.target.value)
+      const checkboxChecked = event.target.checked
+      const checkboxValue = event.target.value
+      const checkboxGroupValue = this.state.value
+
+      if (checkboxChecked) {
+         checkboxGroupValue.push(checkboxValue)
+      } else {
+         const index = checkboxGroupValue.indexOf(checkboxValue)
+         if (index > -1) checkboxGroupValue.splice(index, 1)
+      }
+
+      this.setState({ checkboxGroupValue })
+      this.context.OIOForm.setValue(this.props.name, checkboxGroupValue)
 
       const error = this.context.OIOForm.validateValue(
          this.props.name,
-         event.target.value,
+         checkboxGroupValue,
          this.props.rules
       )
 
