@@ -33,7 +33,9 @@ export default class Form extends Component {
       this.handleSubmit = this.handleSubmit.bind(this)
 
       // For consumpotion by form components via context
+      this.getErrors = this.getErrors.bind(this)
       this.setDefaultValue = this.setDefaultValue.bind(this)
+      this.setRules = this.setRules.bind(this)
       this.setValue = this.setValue.bind(this)
       this.validateValue = this.validateValue.bind(this)
 
@@ -55,10 +57,11 @@ export default class Form extends Component {
 
    getChildContext() {
       const OIOForm = {
+         getErrors: this.getErrors,
          setDefaultValue: this.setDefaultValue,
+         setRules: this.setRules,
          setValue: this.setValue,
          validateValue: this.validateValue,
-         errors: this.getErrors(),
          pristine: this.state.pristine,
          submitting: this.state.submitting
       }
@@ -81,6 +84,19 @@ export default class Form extends Component {
       }))
    }
 
+   setRules(name, rules) {
+      this.setState(state => ({
+         ...state,
+         data: {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               rules
+            }
+         }
+      }))
+   }
+
    setValue(name, value) {
       if (!name) return
 
@@ -98,7 +114,6 @@ export default class Form extends Component {
 
    validateValue(name, value, rules) {
       const validationResult = this.applyRulesToValue(rules, value)
-      console.log('validating value', name, value, validationResult) // eslint-disable-line no-console
 
       if (name) {
          this.setState((state, props) => ({
@@ -120,10 +135,6 @@ export default class Form extends Component {
    // Lifecycle
    // ===================================================
 
-   componentWillReceiveProps(newProps) {
-
-   }
-
    // TODO: We can actually do some optimization here to ensure that
    // re-renders are not triggered by form components called `setValue`,
    // `setDefaultValue`, or `validateValue`
@@ -136,11 +147,10 @@ export default class Form extends Component {
    // ===================================================
 
    getErrors() {
-      const errors = []
+      const errors = {}
+
       Object.keys(this.state.data).forEach((key) => {
-         if (this.state.data[key].error) {
-            errors.push(this.state.data[key].error)
-         }
+         errors[key] = this.state.data[key].error
       })
 
       return errors
@@ -189,26 +199,29 @@ export default class Form extends Component {
    handleSubmit(event) {
       event.preventDefault()
 
-      const errors = this.getErrors()
-      if (errors.length > 0) {
-         if (this.props.onError) return this.props.onError(errors)
-      }
-
+      const errors = {}
+      let errorsPresent = false
       const data = {}
       const files = []
       const formData = new FormData()
       for (const key of Object.keys(this.state.data)) {
          const value = this.state.data[key].value
+         const rules = this.state.data[key].rules
+
          if (value instanceof window.File) {
             files.push(value)
             formData.append(key, new Blob([value], { type: value.type }))
          } else {
+            errors[key] = this.validateValue(key, value, rules)
+            if (errors[key]) errorsPresent = true
             data[key] = value
             formData.append(key, value)
          }
       }
 
-      if (this.props.onSubmit) {
+      if (errorsPresent) {
+         if (this.props.onError) this.props.onError(errors)
+      } else if (this.props.onSubmit) {
          const submitPromise = this.props.onSubmit(data, files, formData)
          if (submitPromise instanceof Promise) {
             this.setState({ submitting: true }, () => {

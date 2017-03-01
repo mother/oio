@@ -49,6 +49,7 @@ export default class CheckboxGroup extends Component {
    componentDidMount() {
       if (this.props.name) {
          this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
 
@@ -57,6 +58,8 @@ export default class CheckboxGroup extends Component {
          this.setState({ value: nextProps.value })
          this.context.OIOForm.setValue(this.props.name, nextProps.value)
       }
+
+      this.setState({ error: this.context.OIOForm.getErrors()[this.props.name] })
 
       // TODO: If name changes, need to remove form value corresponding to old name
    }

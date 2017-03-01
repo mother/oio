@@ -8,6 +8,8 @@ export default class Switch extends Component {
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
+      onChange: React.PropTypes.func,
+      rules: React.PropTypes.array,
       value: React.PropTypes.bool
    }
 
@@ -36,6 +38,7 @@ export default class Switch extends Component {
    componentDidMount() {
       if (this.props.name) {
          this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
 
@@ -44,12 +47,28 @@ export default class Switch extends Component {
          this.setState({ value: nextProps.value })
          this.context.OIOForm.setValue(this.props.name, nextProps.value)
       }
+
+      this.setState({ error: this.context.OIOForm.getErrors()[this.props.name] })
+
+      // TODO: If name changes, need to remove form value corresponding to old name
    }
 
    handleChange(event) {
       const value = !this.state.value
       this.setState({ value })
       this.context.OIOForm.setValue(this.props.name, value)
+
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.value)
+      }
+
+      const error = this.context.OIOForm.validateValue(
+         this.props.name,
+         value,
+         this.props.rules
+      )
+
+      this.setState({ error })
    }
 
    render() {
