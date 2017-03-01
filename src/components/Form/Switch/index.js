@@ -42,8 +42,8 @@ export default class Switch extends Component {
    componentWillReceiveProps(nextProps) {
       if (nextProps.value && nextProps.value !== this.state.value) {
          this.setState({ value: nextProps.value })
+         this.context.OIOForm.setValue(this.props.name, nextProps.value)
       }
-      // this.context.OIOForm.setValue(this.props.name, nextProps.value)
    }
 
    handleChange(event) {

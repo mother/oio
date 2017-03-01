@@ -52,9 +52,10 @@ export default class RadioGroup extends Component {
       }
    }
 
-   componentWillReceiveProps(newProps) {
-      if (newProps.value && newProps.value !== this.state.value) {
-         this.setState({ value: newProps.value })
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value && nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
+         this.context.OIOForm.setValue(this.props.name, nextProps.value)
       }
 
       // TODO: If name changes, need to remove form value corresponding to old name
