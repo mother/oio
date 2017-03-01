@@ -19,8 +19,6 @@ const predefinedRules = {
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      // onBlur: React.PropTypes.func,
-      // onChange: React.PropTypes.func,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
