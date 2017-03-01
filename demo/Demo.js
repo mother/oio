@@ -105,7 +105,9 @@ export default class Demo extends Component {
                   <NavList contents={navContent} />
                </View>
                <View format="auto" left="210px[a-c] 240px[d] 270px[e]" scroll="on">
-                  <View width="100%" padding="18px 60px 18px 30px">
+                  <View
+                     width="100%"
+                     padding="18px[a-d] 18px 60px 18px 30px[e]">
                      {this.props.children}
                   </View>
                </View>
