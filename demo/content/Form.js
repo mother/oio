@@ -39,9 +39,14 @@ export default class DemoContentForm extends Component {
    }
 
    handleSubmit(data, files, formData) {
+      /* eslint-disable */
       console.log(data)
       console.log(files)
-      console.log(formData)
+      const formdata = {}
+      for (const pair of formData.entries()) formdata[pair[0]] = pair[1]
+      console.log(formdata)
+      /* eslint-enable */
+
       return new Promise((resolve, reject) => {
          setTimeout(resolve, 2000)
       })
