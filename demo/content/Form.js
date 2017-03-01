@@ -32,6 +32,18 @@ export default class DemoContentForm extends Component {
 
       this.handleError = this.handleError.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
+      this.updateData = this.updateData.bind(this)
+
+      this.state = {
+         nameFirst: '',
+         nameLast: '',
+         email: '',
+         description: '',
+         choice: '',
+         gender: '',
+         sports: [],
+         notifications: false
+      }
    }
 
    handleError(error, file) {
@@ -42,6 +54,19 @@ export default class DemoContentForm extends Component {
       return new Promise((resolve, reject) => {
          console.log('Submitting...', data, files) // eslint-disable-line no-console
          setTimeout(resolve, 2000)
+      })
+   }
+
+   updateData() {
+      this.setState({
+         nameFirst: 'Alloe',
+         nameLast: 'Walaschuk',
+         email: 'awalaschuk@test.com',
+         description: 'This is the updated description.',
+         choice: 'three',
+         gender: 'undecided',
+         sports: ['hockey', 'baseball'],
+         notifications: true
       })
    }
 
@@ -88,6 +113,7 @@ export default class DemoContentForm extends Component {
                                  label="First Name"
                                  placeholder="Please enter your first name"
                                  defaultValue="Jared"
+                                 value={this.state.nameFirst}
                                  rules={['required']}
                               />
                            </div>
@@ -97,6 +123,7 @@ export default class DemoContentForm extends Component {
                            label="Last Name"
                            placeholder="Please enter your last name"
                            defaultValue="Reich"
+                           value={this.state.nameLast}
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -107,6 +134,7 @@ export default class DemoContentForm extends Component {
                            label="Email"
                            placeholder="Please enter your email"
                            defaultValue="jared@mother.co"
+                           value={this.state.email}
                            rules={[
                               'required',
                               { test: 'email', message: 'Enter a valid email!' },
@@ -117,6 +145,8 @@ export default class DemoContentForm extends Component {
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
+                           defaultValue="Enter description here"
+                           value={this.state.description}
                            rules={['required']}
                         />
                         <Select
@@ -128,12 +158,15 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
+                           defaultValue="two"
+                           value={this.state.choice}
                            rules={['required']}
                         />
                         <RadioGroup
                            name="gender"
                            label="Gender"
                            defaultValue="female"
+                           value={this.state.gender}
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
@@ -151,8 +184,9 @@ export default class DemoContentForm extends Component {
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
-                           rules={['required']}
-                           defaultValue={['golf', 'hockey']}>
+                           defaultValue={['golf', 'hockey']}
+                           value={this.state.sports}
+                           rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
                                  <Checkbox value="baseball" label="Baseball" />
@@ -167,13 +201,19 @@ export default class DemoContentForm extends Component {
                         </CheckboxGroup>
                         <Spacer size="3" />
                         <View width="100%">
-                           <Switch name="notifications" label="Notifications" />
+                           <Switch
+                              name="notifications"
+                              label="Notifications"
+                              defaultValue={false}
+                              value={this.state.notifications}
+                           />
                            <Spacer size="9" />
                         </View>
                         <View width="100%">
                            <Button name="Save Changes" type="submit" />
                         </View>
-
+                        <Spacer size="2" />
+                        <Button name="Update Form Data" onClick={this.updateData} />
                      </Form>
                   </View>
                </GridCell>
