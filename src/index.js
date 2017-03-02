@@ -1,4 +1,5 @@
 import ActionBar from './components/ActionBar'
+import AnalyticsBlock from './components/Analytics/Block'
 import Avatar from './components/Avatar'
 import Button from './components/Button'
 import ButtonGroup from './components/ButtonGroup'
@@ -36,6 +37,7 @@ import View from './components/View'
 
 export {
    ActionBar,
+   AnalyticsBlock,
    Avatar,
    Button,
    ButtonGroup,
