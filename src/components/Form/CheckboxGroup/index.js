@@ -59,7 +59,7 @@ export default class CheckboxGroup extends Component {
          this.context.OIOForm.setValue(this.props.name, nextProps.value)
       }
 
-      this.setState({ error: this.context.OIOForm.getErrors()[this.props.name] })
+      this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
 
       // TODO: If name changes, need to remove form value corresponding to old name
    }

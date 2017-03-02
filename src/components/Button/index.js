@@ -88,9 +88,9 @@ export default class Button extends Component {
       }
 
       let mode = this.props.mode
+
       if (this.props.autoFormRespond) {
          const formContext = this.context.OIOForm
-         console.log(formContext.hasErrors)
          if (this.props.type === 'submit' && formContext) {
             const isPristine = formContext.pristine
             const isSubmitting = formContext.submitting
@@ -98,10 +98,10 @@ export default class Button extends Component {
             if (isPristine) mode = 'disabled'
             else if (isSubmitting) mode = 'loading'
 
-            // if (formContext.errors.length) {
-            //    buttonStyle.backgroundColor = 'red'
-            //    mode = 'disabled'
-            // }
+            if (formContext.getErrors().exist) {
+               buttonStyle.backgroundColor = 'red'
+               mode = 'disabled'
+            }
          }
       }
 

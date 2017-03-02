@@ -33,9 +33,7 @@ export default class Form extends Component {
       this.handleSubmit = this.handleSubmit.bind(this)
 
       // For consumption by form components via context
-      this.hasErrors = false
       this.getErrors = this.getErrors.bind(this)
-      // this.hasErrors = this.hasErrors.bind(this)
       this.setDefaultValue = this.setDefaultValue.bind(this)
       this.setRules = this.setRules.bind(this)
       this.setValue = this.setValue.bind(this)
@@ -47,20 +45,15 @@ export default class Form extends Component {
 
       this.state = {
          data: {},
+         errors: {},
          pristine: true,
          submitting: false
       }
    }
 
-   // ===================================================
-   // Context Things
-   // Allows Form Components to Update Form State
-   // ===================================================
-
    getChildContext() {
       const OIOForm = {
          getErrors: this.getErrors,
-         hasErrors: this.hasErrors,
          setDefaultValue: this.setDefaultValue,
          setRules: this.setRules,
          setValue: this.setValue,
@@ -70,6 +63,13 @@ export default class Form extends Component {
       }
 
       return { OIOForm }
+   }
+
+   // TODO: We can actually do some optimization here to ensure that
+   // re-renders are not triggered by form components called `setValue`,
+   // `setDefaultValue`, or `validateValue`
+   shouldComponentUpdate(nextProps, nextState) {
+      return true
    }
 
    // eslint-disable-next-line react/sort-comp
@@ -115,55 +115,25 @@ export default class Form extends Component {
       }))
    }
 
-   validateValue(name, value, rules) {
-      const validationResult = this.applyRulesToValue(rules, value)
-
-      if (name) {
-         this.setState((state, props) => ({
-            ...state,
-            data: {
-               ...state.data,
-               [name]: {
-                  ...state.data[name],
-                  error: validationResult
-               }
-            }
-         }))
-      }
-
-      return validationResult
-   }
-
-   // ===================================================
-   // Lifecycle
-   // ===================================================
-
-   // TODO: We can actually do some optimization here to ensure that
-   // re-renders are not triggered by form components called `setValue`,
-   // `setDefaultValue`, or `validateValue`
-   shouldComponentUpdate(nextProps, nextState) {
-      return true
-   }
-
-   // ===================================================
-   // Stuff
-   // ===================================================
-
    getErrors() {
       const errors = {}
-      this.hasErrors = false
+      let exist = false
 
       Object.keys(this.state.data).forEach((key) => {
          errors[key] = this.state.data[key].error
-         if (errors[key]) this.hasErrors = true
+         if (errors[key]) exist = true
       })
 
-      return errors
+      return { errors, exist }
    }
 
-   // hasErrors() {
-   //    return this.hasErrors
-   // }
+   get(key) {
+      try {
+         return this.state.data[key].value
+      } catch (e) {
+         return undefined
+      }
+   }
 
    applyRulesToValue(rules = [], value) {
       for (const rule of rules) {
@@ -197,22 +167,15 @@ export default class Form extends Component {
       return null
    }
 
-   get(key) {
-      try {
-         return this.state.data[key].value
-      } catch (e) {
-         return undefined
-      }
-   }
-
    handleSubmit(event) {
       event.preventDefault()
 
       const errors = {}
-      let errorsPresent = false
+      let errorsExist = false
       const data = {}
       const files = []
       const formData = new FormData()
+
       for (const key of Object.keys(this.state.data)) {
          const value = this.state.data[key].value
          const rules = this.state.data[key].rules
@@ -222,13 +185,13 @@ export default class Form extends Component {
             formData.append(key, new Blob([value], { type: value.type }))
          } else {
             errors[key] = this.validateValue(key, value, rules)
-            if (errors[key]) errorsPresent = true
+            if (errors[key]) errorsExist = true
             data[key] = value
             formData.append(key, value)
          }
       }
 
-      if (errorsPresent) {
+      if (errorsExist) {
          if (this.props.onError) this.props.onError(errors)
       } else if (this.props.onSubmit) {
          const submitPromise = this.props.onSubmit(data, files, formData)
@@ -240,6 +203,25 @@ export default class Form extends Component {
             })
          }
       }
+   }
+
+   validateValue(name, value, rules) {
+      const validationResult = this.applyRulesToValue(rules, value)
+
+      if (name) {
+         this.setState((state, props) => ({
+            ...state,
+            data: {
+               ...state.data,
+               [name]: {
+                  ...state.data[name],
+                  error: validationResult
+               }
+            }
+         }))
+      }
+
+      return validationResult
    }
 
    render() {
