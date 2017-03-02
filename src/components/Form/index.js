@@ -1,25 +1,6 @@
 import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
-import { findNodesinDOM, replaceNodesInDOM } from '../../utils/dom'
-
-const formComponentNames = [
-   'Checkbox',
-   'CheckboxGroup',
-   'FileInput',
-   'ImageInput',
-   'Input',
-   'Radio',
-   'RadioGroup',
-   'Select',
-   'Switch',
-   'Textarea'
-]
-
-const formFileComponentNames = [
-   'FileInput',
-   'ImageInput'
-]
 
 const predefinedRules = {
    required: {
@@ -38,10 +19,12 @@ const predefinedRules = {
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
+   }
+
+   static childContextTypes = {
+      OIOForm: React.PropTypes.object
    }
 
    constructor(props) {
@@ -49,45 +32,107 @@ export default class Form extends Component {
 
       this.handleSubmit = this.handleSubmit.bind(this)
 
+      // For consumption by form components via context
+      this.getErrors = this.getErrors.bind(this)
+      this.setDefaultValue = this.setDefaultValue.bind(this)
+      this.setRules = this.setRules.bind(this)
+      this.setValue = this.setValue.bind(this)
+      this.validateValue = this.validateValue.bind(this)
+
       this.testContext = {
          get: this.get.bind(this)
       }
 
       this.state = {
          data: {},
+         errors: {},
          pristine: true,
          submitting: false
       }
-
-      // TODO: Currently deals with checkbox and radio data incorrectly
-      // since they haves values but may not necessarily be checked
-      findNodesinDOM(props.children, ...formComponentNames)
-      .forEach((node) => {
-         this.state.data[node.props.name] = {
-            value: node.props.value,
-            error: null,
-            touched: false
-         }
-      })
    }
 
-   componentWillReceiveProps(newProps) {
-      const newState = { data: { ...this.state.data } }
+   getChildContext() {
+      const OIOForm = {
+         getErrors: this.getErrors,
+         setDefaultValue: this.setDefaultValue,
+         setRules: this.setRules,
+         setValue: this.setValue,
+         validateValue: this.validateValue,
+         pristine: this.state.pristine,
+         submitting: this.state.submitting
+      }
 
-      findNodesinDOM(newProps.children, ...formComponentNames)
-      .forEach((node) => {
-         const value = typeof node.props.value !== 'undefined'
-            ? node.props.value
-            : this.state.data[node.props.name].value
+      return { OIOForm }
+   }
 
-         newState.data[node.props.name] = {
-            ...this.state.data[node.props.name],
-            value,
-            error: this.applyRulesToValue(node.props.rules, value)
+   // TODO: We can actually do some optimization here to ensure that
+   // re-renders are not triggered by form components called `setValue`,
+   // `setDefaultValue`, or `validateValue`
+   shouldComponentUpdate(nextProps, nextState) {
+      return true
+   }
+
+   // eslint-disable-next-line react/sort-comp
+   setDefaultValue(name, value) {
+      if (!name) return
+
+      this.setState(state => ({
+         data: {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               value
+            }
          }
+      }))
+   }
+
+   setRules(name, rules) {
+      this.setState(state => ({
+         ...state,
+         data: {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               rules
+            }
+         }
+      }))
+   }
+
+   setValue(name, value) {
+      if (!name) return
+
+      this.setState(state => ({
+         pristine: false,
+         data: {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               value
+            }
+         }
+      }))
+   }
+
+   getErrors() {
+      const errors = {}
+      let exist = false
+
+      Object.keys(this.state.data).forEach((key) => {
+         errors[key] = this.state.data[key].error
+         if (errors[key]) exist = true
       })
 
-      this.setState(newState)
+      return { errors, exist }
+   }
+
+   get(key) {
+      try {
+         return this.state.data[key].value
+      } catch (e) {
+         return undefined
+      }
    }
 
    applyRulesToValue(rules = [], value) {
@@ -122,143 +167,67 @@ export default class Form extends Component {
       return null
    }
 
-   get(key) {
-      try {
-         return this.state.data[key].value
-      } catch (e) {
-         return undefined
-      }
-   }
-
-   handleBlur(value, child) {
-      const newState = {
-         data: { ...this.state.data },
-         pristine: false
-      }
-      newState.data[child.props.name] = {
-         ...this.state.data[child.props.name],
-         error: this.applyRulesToValue(child.props.rules, value),
-         touched: true
-      }
-      this.setState(newState)
-   }
-
-   handleChange(value, child) {
-      const newState = { data: { ...this.state.data } }
-      newState.data[child.props.name] = {
-         value,
-         touched: true
-      }
-      this.setState(newState)
-   }
-
    handleSubmit(event) {
       event.preventDefault()
 
-      // Blur and check all relevant children for errors
-      const newState = { data: { ...this.state.data } }
-      const namesForFiles = []
-      findNodesinDOM(this.props.children, ...formComponentNames)
-      .forEach((node) => {
-         newState.data[node.props.name] = {
-            ...this.state.data[node.props.name],
-            error: this.applyRulesToValue(
-               node.props.rules,
-               this.state.data[node.props.name].value
-            ),
-            touched: true
-         }
-
-         // Keep track of files on state.data
-         if (formFileComponentNames.includes(node.type.name)) {
-            namesForFiles.push(node.props.name)
-         }
-      })
-
-      const files = {}
+      const errors = {}
+      let errorsExist = false
+      const data = {}
+      const files = []
       const formData = new FormData()
-      // Apply "files" to formData
-      namesForFiles.forEach((name) => {
-         const file = newState.data[name].value
-         if (file) {
-            files[name] = file
-            formData.append(name, new Blob([file], { type: file.type }))
-         }
-      })
-      // Apply rest of data to formData
-      Object.keys(newState.data).forEach((key) => {
-         // Only apply if other data
-         if (!namesForFiles.includes(key)) {
-            // Append key to formData
-            if (typeof newState.data[key].value !== 'undefined') {
-               formData.append(key, newState.data[key].value)
-            }
-         }
-      })
 
-      this.setState(newState, () => {
-         const data = {}
-         const errors = {}
+      for (const key of Object.keys(this.state.data)) {
+         const value = this.state.data[key].value
+         const rules = this.state.data[key].rules
 
-         // Find data and errors
-         Object.keys(this.state.data).forEach((key) => {
-            // Don't add data keys that relate to files
-            if (!namesForFiles.includes(key)) {
-               // Add the key/value to data
-               if (typeof this.state.data[key].value !== 'undefined') {
-                  data[key] = this.state.data[key].value
+         if (value instanceof window.File) {
+            files.push(value)
+            formData.append(key, new Blob([value], { type: value.type }))
+         } else {
+            errors[key] = this.validateValue(key, value, rules)
+            if (errors[key]) errorsExist = true
+            data[key] = value
+            formData.append(key, value)
+         }
+      }
+
+      if (errorsExist) {
+         if (this.props.onError) this.props.onError(errors)
+      } else if (this.props.onSubmit) {
+         const submitPromise = this.props.onSubmit(data, files, formData)
+         if (submitPromise instanceof Promise) {
+            this.setState({ submitting: true }, () => {
+               submitPromise
+               .then(() => this.setState({ pristine: true, submitting: false }))
+               .catch(() => this.setState({ submitting: false }))
+            })
+         }
+      }
+   }
+
+   validateValue(name, value, rules) {
+      const validationResult = this.applyRulesToValue(rules, value)
+
+      if (name) {
+         this.setState((state, props) => ({
+            ...state,
+            data: {
+               ...state.data,
+               [name]: {
+                  ...state.data[name],
+                  error: validationResult
                }
-
-               // Add the error if applicable
-               if (this.state.data[key].error) {
-                  errors[key] = this.state.data[key].error
-               }
             }
-         })
+         }))
+      }
 
-         // Pass data or errors in to appropriate event handler prop
-         if (Object.keys(errors).length > 0) {
-            if (this.props.onError) this.props.onError(errors)
-         } else if (this.props.onSubmit) {
-            const promise = this.props.onSubmit(data, files, formData)
-            if (promise instanceof Promise) {
-               this.setState({ submitting: true }, () => {
-                  promise
-                  .then(() => this.setState({ submitting: false }))
-                  .catch(() => this.setState({ submitting: false }))
-               })
-            }
-         }
-      })
+      return validationResult
    }
 
    render() {
-      const domWithNewFormElements = replaceNodesInDOM(
-         this.props.children,
-         formComponentNames,
-         (child, i, j) => (
-            React.cloneElement(child, {
-               key: `${i},${j}`,
-               error: this.state.data[child.props.name].error || '',
-               touched: this.state.data[child.props.name].touched || false,
-               onBlur: (event) => {
-                  this.handleBlur(event.target.value, child)
-                  if (child.props.onBlur) child.props.onBlur(event)
-               },
-               onChange: (event, value) => {
-                  this.handleChange(value, child)
-                  // if (value || value === false) this.handleChange(value, child)
-                  // else this.handleChange(event.target.value, child)
-                  if (child.props.onChange) child.props.onChange(event, value)
-               },
-               value: this.state.data[child.props.name].value
-            })
-         )
-      )
-
       return (
          <form onSubmit={this.handleSubmit}>
-            {domWithNewFormElements}
+            {this.props.children}
          </form>
       )
    }
