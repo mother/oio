@@ -94,7 +94,6 @@ export default class DemoContentForm extends Component {
                                  name="name.first"
                                  label="First Name"
                                  placeholder="Please enter your first name"
-                                 defaultValue="Jared"
                                  rules={['required']}
                               />
                            </div>
@@ -103,7 +102,6 @@ export default class DemoContentForm extends Component {
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
-                           defaultValue="Reich"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -113,7 +111,6 @@ export default class DemoContentForm extends Component {
                            name="email"
                            label="Email"
                            placeholder="Please enter your email"
-                           defaultValue="jared@mother.co"
                            rules={[
                               'required',
                               { test: 'email', message: 'Enter a valid email!' },
@@ -124,7 +121,6 @@ export default class DemoContentForm extends Component {
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
-                           defaultValue="Enter description here"
                            rules={['required']}
                         />
                         <Select
@@ -136,13 +132,11 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
-                           defaultValue="two"
                            rules={['required']}
                         />
                         <RadioGroup
                            name="gender"
                            label="Gender"
-                           defaultValue="female"
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
@@ -152,7 +146,7 @@ export default class DemoContentForm extends Component {
                                  <Radio value="female" label="Female" />
                               </GridCell>
                               <GridCell>
-                                 <Radio value="undecided" label="Undecided" />
+                                 <Radio value="undisclosed" label="Undisclosed" />
                               </GridCell>
                            </Grid>
                         </RadioGroup>
@@ -160,8 +154,9 @@ export default class DemoContentForm extends Component {
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
-                           defaultValue={['golf', 'hockey']}
-                           rules={['required']}>
+                           rules={[
+                              { test: value => value.includes('hockey'), message: 'Must contain hockey!' }
+                           ]}>
                            <Grid columns="3">
                               <GridCell>
                                  <Checkbox value="baseball" label="Baseball" />
@@ -179,12 +174,12 @@ export default class DemoContentForm extends Component {
                            <Switch
                               name="notifications"
                               label="Notifications"
-                              defaultValue={false}
+                              rules={['required']}
                            />
                            <Spacer size="9" />
                         </View>
                         <View width="100%">
-                           <Button name="Save Changes" type="submit" />
+                           <Button name="Save Changes" type="submit" autoFormRespond />
                         </View>
                      </Form>
                   </View>

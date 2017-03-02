@@ -32,8 +32,10 @@ export default class Form extends Component {
 
       this.handleSubmit = this.handleSubmit.bind(this)
 
-      // For consumpotion by form components via context
+      // For consumption by form components via context
+      this.hasErrors = false
       this.getErrors = this.getErrors.bind(this)
+      // this.hasErrors = this.hasErrors.bind(this)
       this.setDefaultValue = this.setDefaultValue.bind(this)
       this.setRules = this.setRules.bind(this)
       this.setValue = this.setValue.bind(this)
@@ -58,6 +60,7 @@ export default class Form extends Component {
    getChildContext() {
       const OIOForm = {
          getErrors: this.getErrors,
+         hasErrors: this.hasErrors,
          setDefaultValue: this.setDefaultValue,
          setRules: this.setRules,
          setValue: this.setValue,
@@ -148,13 +151,19 @@ export default class Form extends Component {
 
    getErrors() {
       const errors = {}
+      this.hasErrors = false
 
       Object.keys(this.state.data).forEach((key) => {
          errors[key] = this.state.data[key].error
+         if (errors[key]) this.hasErrors = true
       })
 
       return errors
    }
+
+   // hasErrors() {
+   //    return this.hasErrors
+   // }
 
    applyRulesToValue(rules = [], value) {
       for (const rule of rules) {
