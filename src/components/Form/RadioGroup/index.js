@@ -1,52 +1,96 @@
 import React, { Component } from 'react'
-import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
 export default class RadioGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
+      defaultValue: React.PropTypes.string,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      touched: React.PropTypes.bool
+      rules: React.PropTypes.array,
+      value: React.PropTypes.string
    }
 
-   constructor(props, context) {
-      super(props, context)
-      this.state = { value: undefined }
+   static defaultProps = {
+      defaultValue: ''
    }
 
-   componentWillReceiveProps(newProps) {
-      if (newProps.value !== this.state.value) {
-         this.setState({ value: newProps.value })
+   static contextTypes = {
+      OIOForm: React.PropTypes.object
+   }
+
+   static childContextTypes = {
+      OIOFormRadio: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
+
+      this.getValue = this.getValue.bind(this)
+      this.handleChange = this.handleChange.bind(this)
+
+      this.state = {
+         error: props.error,
+         value: props.value || props.defaultValue
       }
    }
 
-   render() {
-      let counter = 0
-      const domWithNewRadios = replaceNodesInDOM(this.props.children, 'Radio', (node, i, j) => {
-         const key = node.props.value
-         const id = node.props.id || `${this.props.name}-${counter += 1}`
-         return React.cloneElement(node, {
-            key,
-            id,
-            name: this.props.name,
-            checked: this.state.value === node.props.value,
-            onBlur: this.props.onBlur,
-            onChange: this.props.onChange
-         })
-      })
+   getChildContext() {
+      const OIOFormRadio = {
+         name: this.props.name,
+         getValue: this.getValue
+      }
 
+      return { OIOFormRadio }
+   }
+
+   componentDidMount() {
+      if (this.props.name) {
+         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setRules(this.props.name, this.props.rules)
+      }
+   }
+
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value && nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
+         this.context.OIOForm.setValue(this.props.name, nextProps.value)
+      }
+
+      this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
+
+      // TODO: If name changes, need to remove form value corresponding to old name
+   }
+
+   getValue() {
+      return this.state.value
+   }
+
+   handleChange(event) {
+      this.setState({ value: event.target.value })
+      this.context.OIOForm.setValue(this.props.name, event.target.value)
+
+      const error = this.context.OIOForm.validateValue(
+         this.props.name,
+         event.target.value,
+         this.props.rules
+      )
+
+      this.setState({ error })
+   }
+
+   render() {
       return (
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
-            {domWithNewRadios}
-            {this.props.touched && this.props.error &&
+            <div onChange={this.handleChange}>
+               {this.props.children}
+            </div>
+            {this.state.error &&
                <div className={formStyles.error}>
-                  {this.props.error}
+                  {this.state.error}
                </div>
             }
          </div>

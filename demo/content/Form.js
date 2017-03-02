@@ -4,6 +4,7 @@ import {
    Button,
    Checkbox,
    CheckboxGroup,
+   DateInput,
    FileInput,
    Form,
    Grid,
@@ -27,8 +28,8 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
-   constructor(props) {
-      super(props)
+   constructor(props, context) {
+      super(props, context)
 
       this.handleError = this.handleError.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
@@ -39,7 +40,17 @@ export default class DemoContentForm extends Component {
    }
 
    handleSubmit(data, files, formData) {
-      console.log(data, files) // eslint-disable-line no-console
+      /* eslint-disable */
+      console.log(data)
+      console.log(files)
+      const formdata = {}
+      for (const pair of formData.entries()) formdata[pair[0]] = pair[1]
+      console.log(formdata)
+      /* eslint-enable */
+
+      return new Promise((resolve, reject) => {
+         setTimeout(resolve, 2000)
+      })
    }
 
    render() {
@@ -84,7 +95,6 @@ export default class DemoContentForm extends Component {
                                  name="name.first"
                                  label="First Name"
                                  placeholder="Please enter your first name"
-                                 value="Jared"
                                  rules={['required']}
                               />
                            </div>
@@ -93,7 +103,6 @@ export default class DemoContentForm extends Component {
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
-                           value="Reich"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -103,17 +112,32 @@ export default class DemoContentForm extends Component {
                            name="email"
                            label="Email"
                            placeholder="Please enter your email"
-                           value="jared@mother.co"
                            rules={[
                               'required',
                               { test: 'email', message: 'Enter a valid email!' },
                               { test: value => value.length > 8, message: 'At least 8 characters' }
                            ]}
                         />
+                        <DateInput
+                           name="date.start"
+                           label="Start Date"
+                           placeholder="Please enter a start date"
+                           defaultValue={new Date(2015, 3, 20)}
+                        />
+                        <Spacer size="2" />
+                        <DateInput
+                           name="date.end"
+                           label="End Date"
+                           placeholder="Please enter an end date"
+                           defaultValue={new Date(2015, 7, 11, 5, 8)}
+                           enableTime
+                        />
+                        <Spacer size="2" />
                         <Textarea
                            name="description"
                            label="Description"
-                           placeholder="Please enter the subtitle"
+                           placeholder="Please enter the description"
+                           rules={['required']}
                         />
                         <Select
                            name="choice"
@@ -124,12 +148,12 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
-                           value={null || 'two'}
                            rules={['required']}
                         />
                         <RadioGroup
                            name="gender"
-                           label="Gender">
+                           label="Gender"
+                           rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
                                  <Radio value="male" label="Male" />
@@ -138,7 +162,7 @@ export default class DemoContentForm extends Component {
                                  <Radio value="female" label="Female" />
                               </GridCell>
                               <GridCell>
-                                 <Radio value="undecided" label="Undecided" />
+                                 <Radio value="undisclosed" label="Undisclosed" />
                               </GridCell>
                            </Grid>
                         </RadioGroup>
@@ -146,8 +170,9 @@ export default class DemoContentForm extends Component {
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
-                           rules={['required']}
-                           value={['golf', 'hockey']}>
+                           rules={[
+                              { test: value => value.includes('hockey'), message: 'Must contain hockey!' }
+                           ]}>
                            <Grid columns="3">
                               <GridCell>
                                  <Checkbox value="baseball" label="Baseball" />
@@ -162,13 +187,16 @@ export default class DemoContentForm extends Component {
                         </CheckboxGroup>
                         <Spacer size="3" />
                         <View width="100%">
-                           <Switch name="notifications" label="Notifications" />
+                           <Switch
+                              name="notifications"
+                              label="Notifications"
+                              rules={['required']}
+                           />
                            <Spacer size="9" />
                         </View>
                         <View width="100%">
-                           <Button name="Save Changes" type="submit" />
+                           <Button name="Save Changes" type="submit" autoFormRespond />
                         </View>
-
                      </Form>
                   </View>
                </GridCell>

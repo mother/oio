@@ -54,6 +54,9 @@ export default class Demo extends Component {
             name: 'Forms',
             link: '/form'
          }, {
+            name: 'Form Components',
+            link: '/form-components'
+         }, {
             name: 'Modal',
             link: '/modal'
          }, {
@@ -97,7 +100,7 @@ export default class Demo extends Component {
                      title={notification.title}
                   />
                   <Title heading={titleHeading} weight="normal" size="7">OIO</Title>
-                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br/>Framework</Text>
+                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br />Framework</Text>
                   <Spacer size="9" />
                   <NavList contents={navContent} />
                </View>

@@ -1,73 +1,107 @@
 import React, { Component } from 'react'
-import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
 export default class CheckboxGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
+      defaultValue: React.PropTypes.array,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      touched: React.PropTypes.bool,
+      rules: React.PropTypes.array,
       value: React.PropTypes.array
    }
 
    static defaultProps = {
-      value: []
+      defaultValue: []
    }
 
-   constructor(props, context) {
-      super(props, context)
+   static contextTypes = {
+      OIOForm: React.PropTypes.object
+   }
 
+   static childContextTypes = {
+      OIOFormCheckbox: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
+
+      this.getValue = this.getValue.bind(this)
       this.handleChange = this.handleChange.bind(this)
-      this.state = { value: props.value || [] }
+
+      this.state = {
+         error: props.error,
+         value: props.value || props.defaultValue
+      }
    }
 
-   componentWillReceiveProps(newProps) {
-      const newValue = newProps.value || []
-      if (newValue.sort().join() !== this.state.value.sort().join()) {
-         this.setState({ value: newValue })
+   getChildContext() {
+      const OIOFormCheckbox = {
+         name: this.props.name,
+         getValue: this.getValue
       }
+
+      return { OIOFormCheckbox }
+   }
+
+   componentDidMount() {
+      if (this.props.name) {
+         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setRules(this.props.name, this.props.rules)
+      }
+   }
+
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value && nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
+         this.context.OIOForm.setValue(this.props.name, nextProps.value)
+      }
+
+      this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
+
+      // TODO: If name changes, need to remove form value corresponding to old name
+   }
+
+   getValue() {
+      return this.state.value
    }
 
    handleChange(event) {
-      const set = new Set(this.state.value)
+      const checkboxChecked = event.target.checked
+      const checkboxValue = event.target.value
+      const checkboxGroupValue = this.state.value
 
-      if (event.target.checked) set.add(event.target.value)
-      else set.delete(event.target.value)
-
-      const newValue = Array.from(set)
-      this.setState({ value: newValue })
-      if (this.props.onChange) {
-         this.props.onChange(event, newValue)
+      if (checkboxChecked) {
+         checkboxGroupValue.push(checkboxValue)
+      } else {
+         const index = checkboxGroupValue.indexOf(checkboxValue)
+         if (index > -1) checkboxGroupValue.splice(index, 1)
       }
+
+      this.setState({ checkboxGroupValue })
+      this.context.OIOForm.setValue(this.props.name, checkboxGroupValue)
+
+      const error = this.context.OIOForm.validateValue(
+         this.props.name,
+         checkboxGroupValue,
+         this.props.rules
+      )
+
+      this.setState({ error })
    }
 
    render() {
-      let counter = 0
-      const domWithNewCheckboxes = replaceNodesInDOM(this.props.children, 'Checkbox', (node, i, j) => {
-         const key = node.props.value
-         const id = node.props.id || `${this.props.name}-${counter += 1}`
-         return React.cloneElement(node, {
-            key,
-            id,
-            name: this.props.name,
-            checked: this.state.value.includes(node.props.value),
-            onBlur: this.props.onBlur,
-            onChange: this.handleChange
-         })
-      })
-
       return (
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
-            {domWithNewCheckboxes}
-            {this.props.touched && this.props.error &&
+            <div onChange={this.handleChange}>
+               {this.props.children}
+            </div>
+            {this.state.error &&
                <div className={formStyles.error}>
-                  {this.props.error}
+                  {this.state.error}
                </div>
             }
          </div>

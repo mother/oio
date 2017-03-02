@@ -6,45 +6,50 @@ import style from './style.less'
 
 export default class Radio extends Component {
    static propTypes = {
-      checked: React.PropTypes.bool,
       children: React.PropTypes.node,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
       value: React.PropTypes.string
    }
 
-   static defaultProps = {
-      checked: false
-   }
-
    static contextTypes = {
+      OIOFormRadio: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
    constructor(props) {
       super(props)
+
       this.handleChange = this.handleChange.bind(this)
+
+      this.state = {
+         checked: false
+      }
+   }
+
+   componentWillReceiveProps(nextProps) {
+      this.setState({
+         checked: nextProps.value === this.context.OIOFormRadio.getValue()
+      })
    }
 
    handleChange(event) {
-      if (this.props.onChange) {
-         const value = event.target.checked
-            ? event.target.value
-            : undefined
+      if (!this.state.checked) this.setState({ checked: true })
 
-         this.props.onChange(event, value)
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.value)
       }
    }
 
    render() {
+      const name = this.context.OIOFormRadio.name
+
       const primaryColor = this.context.OIOStyles.primaryColor
       let radioIcon = 'ion-ios-circle-outline'
       let radioIconStyle = {}
 
-      if (this.props.checked) {
+      if (this.state.checked) {
          radioIcon = 'ion-ios-circle-filled'
          radioIconStyle = {
             color: primaryColor
@@ -56,12 +61,11 @@ export default class Radio extends Component {
             <label className={style.radioLabel} htmlFor={this.props.id}>
                <input
                   id={this.props.id}
-                  checked={this.props.checked}
+                  checked={this.state.checked}
                   type="radio"
-                  name={this.props.name}
+                  name={name}
                   value={this.props.value}
                   onChange={this.handleChange}
-                  onBlur={this.props.onBlur}
                />
                <Icon name={radioIcon} className={style.icon} style={radioIconStyle} />
                <Text size="3" weight="normal">
