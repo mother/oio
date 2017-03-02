@@ -28,8 +28,7 @@ export default class DemoContentView extends Component {
                <GridCell colspan="3">
                   <Text size="6" weight="light">
                      The View component is probably one of the most important components within OIO.
-                     It is the core OIO component you should use to structure your pages, layouts and components for your application.
-                     You can think of the <code>View</code> component as OIO‘s take on a <code>div</code>.
+                     It is the core OIO component you should use to structure your pages, layouts and components for your application. You can think of the <code>View</code> component as OIO‘s take on a <code>div</code>.
                   </Text>
                </GridCell>
                <GridCell>

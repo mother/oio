@@ -7,7 +7,8 @@ export default class GridCell extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
-      colspan: React.PropTypes.string
+      colspan: React.PropTypes.string,
+      style: React.PropTypes.object
    }
 
    static contextTypes = {
@@ -62,7 +63,7 @@ export default class GridCell extends Component {
       }
 
       return (
-         <div className={classes} style={cellStyle} >
+         <div className={classes} style={{ ...cellStyle, ...this.props.style }} >
             <div className={styles.gridCellInner}>
                {this.props.children}
             </div>

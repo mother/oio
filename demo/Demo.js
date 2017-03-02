@@ -48,6 +48,9 @@ export default class Demo extends Component {
       }, {
          name: 'Components',
          buttons: [{
+            name: 'Analytics',
+            link: '/analytics'
+         }, {
             name: 'Buttons',
             link: '/button'
          }, {
