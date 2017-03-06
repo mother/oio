@@ -55,6 +55,7 @@ export default class Input extends Component {
             this.setState({ value: nextProps.value })
             this.context.OIOForm.setValue(this.props.name, nextProps.value)
          }
+
          this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
       }
    }
