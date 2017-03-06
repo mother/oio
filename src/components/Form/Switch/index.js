@@ -49,10 +49,13 @@ export default class Switch extends Component {
 
          if (this.context.OIOForm) {
             this.context.OIOForm.setValue(this.props.name, nextProps.value)
-            this.setState({
-               error: this.context.OIOForm.getErrors().errors[this.props.name]
-            })
          }
+      }
+
+      if (this.context.OIOForm) {
+         this.setState({
+            error: this.context.OIOForm.getErrors().errors[this.props.name]
+         })
       }
    }
 
