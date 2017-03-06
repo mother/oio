@@ -52,13 +52,15 @@ export default class Textarea extends Component {
 
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
-      if (this.context.OIOForm) {
-         if (nextProps.value && nextProps.value !== this.state.value) {
-            this.setState({ value: nextProps.value })
-            this.context.OIOForm.setValue(this.props.name, nextProps.value)
-         }
+      if (nextProps.value && nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
 
-         this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
+         if (this.context.OIOForm) {
+            this.context.OIOForm.setValue(this.props.name, nextProps.value)
+            this.setState({
+               error: this.context.OIOForm.getErrors().errors[this.props.name]
+            })
+         }
       }
    }
 
