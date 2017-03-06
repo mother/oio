@@ -38,38 +38,42 @@ export default class Select extends Component {
    }
 
    componentDidMount() {
-      if (this.props.name) {
+      if (this.context.OIOForm && this.props.name) {
          this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
 
    componentWillReceiveProps(nextProps) {
-      if (nextProps.value && nextProps.value !== this.state.value) {
-         this.setState({ value: nextProps.value })
-         this.context.OIOForm.setValue(this.props.name, nextProps.value)
-      }
-
-      this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
-
       // TODO: If name changes, need to remove form value corresponding to old name
+      if (this.context.OIOForm) {
+         if (nextProps.value && nextProps.value !== this.state.value) {
+            this.setState({ value: nextProps.value })
+            this.context.OIOForm.setValue(this.props.name, nextProps.value)
+         }
+
+         this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
+      }
    }
 
    handleChange(event) {
       this.setState({ value: event.target.value })
-      this.context.OIOForm.setValue(this.props.name, event.target.value)
 
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.value)
+      if (this.context.OIOForm) {
+         this.context.OIOForm.setValue(this.props.name, event.target.value)
+
+         const error = this.context.OIOForm.validateValue(
+            this.props.name,
+            event.target.value,
+            this.props.rules
+         )
+
+         this.setState({ error })
       }
 
-      const error = this.context.OIOForm.validateValue(
-         this.props.name,
-         event.target.value,
-         this.props.rules
-      )
-
-      this.setState({ error })
+      if (this.props.onChange) {
+         this.props.onChange(event)
+      }
    }
 
    render() {
@@ -78,7 +82,12 @@ export default class Select extends Component {
       const children = []
       this.props.options.forEach((option) => {
          children.push(
-            <option key={option.value} value={option.value}>{option.text}</option>
+            <option
+               key={option.value}
+               value={option.value}
+               disabled={option.disabled}>
+               {option.text}
+            </option>
          )
       })
 
