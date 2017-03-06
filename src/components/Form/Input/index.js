@@ -35,9 +35,9 @@ export default class Input extends Component {
       }
    }
 
-   componentWillReceiveProps(newProps) {
-      if (newProps.value !== this.state.value) {
-         this.setState({ value: newProps.value })
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
       }
    }
 

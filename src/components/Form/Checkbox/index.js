@@ -32,9 +32,9 @@ export default class Checkbox extends Component {
       }
    }
 
-   componentWillReceiveProps(newProps) {
-      if (newProps.checked !== this.state.checked) {
-         this.setState({ checked: newProps.checked })
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.checked !== this.state.checked) {
+         this.setState({ checked: nextProps.checked })
       }
    }
 

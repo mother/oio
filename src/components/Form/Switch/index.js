@@ -27,8 +27,8 @@ export default class Switch extends Component {
       this.state = { value: !!props.value }
    }
 
-   componentWillReceiveProps(newProps) {
-      const newValue = !!newProps.value
+   componentWillReceiveProps(nextProps) {
+      const newValue = !!nextProps.value
       if (this.state.value !== newValue) {
          this.setState({ value: newValue })
       }
