@@ -6,11 +6,17 @@ import style from './style.less'
 
 export default class Checkbox extends Component {
    static propTypes = {
+      checked: React.PropTypes.bool,
       children: React.PropTypes.node,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
+      name: React.PropTypes.string,
       onChange: React.PropTypes.func,
       value: React.PropTypes.string
+   }
+
+   static defaultProps = {
+      checked: false
    }
 
    static contextTypes = {
@@ -24,26 +30,32 @@ export default class Checkbox extends Component {
       this.handleChange = this.handleChange.bind(this)
 
       this.state = {
-         checked: false
+         checked: props.checked
       }
    }
 
    componentWillReceiveProps(nextProps) {
-      this.setState({
-         checked: this.context.OIOFormCheckbox.getValue().includes(nextProps.value)
-      })
+      let checked = nextProps.checked
+
+      if (this.context.OIOFormCheckbox) {
+         checked = this.context.OIOFormCheckbox.getValue().includes(nextProps.value)
+      }
+
+      this.setState({ checked })
    }
 
    handleChange(event) {
       this.setState({ checked: !this.state.checked })
 
       if (this.props.onChange) {
-         this.props.onChange(event, event.target.value)
+         this.props.onChange(event)
       }
    }
 
    render() {
-      const name = this.context.OIOFormCheckbox.name
+      const name = this.context.OIOFormCheckbox
+         ? this.context.OIOFormCheckbox.name
+         : this.props.name
 
       const primaryColor = this.context.OIOStyles.primaryColor
       let checkboxIcon = 'ion-ios-circle-outline'

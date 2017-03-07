@@ -47,21 +47,27 @@ export default class CheckboxGroup extends Component {
    }
 
    componentDidMount() {
-      if (this.props.name) {
+      if (this.context.OIOForm && this.props.name) {
          this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
 
    componentWillReceiveProps(nextProps) {
+      // TODO: If name changes, need to remove form value corresponding to old name
       if (nextProps.value && nextProps.value !== this.state.value) {
          this.setState({ value: nextProps.value })
-         this.context.OIOForm.setValue(this.props.name, nextProps.value)
+
+         if (this.context.OIOForm) {
+            this.context.OIOForm.setValue(this.props.name, nextProps.value)
+         }
       }
 
-      this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
-
-      // TODO: If name changes, need to remove form value corresponding to old name
+      if (this.context.OIOForm) {
+         this.setState({
+            error: this.context.OIOForm.getErrors().errors[this.props.name]
+         })
+      }
    }
 
    getValue() {
@@ -81,15 +87,18 @@ export default class CheckboxGroup extends Component {
       }
 
       this.setState({ checkboxGroupValue })
-      this.context.OIOForm.setValue(this.props.name, checkboxGroupValue)
 
-      const error = this.context.OIOForm.validateValue(
-         this.props.name,
-         checkboxGroupValue,
-         this.props.rules
-      )
+      if (this.context.OIOForm) {
+         this.context.OIOForm.setValue(this.props.name, checkboxGroupValue)
 
-      this.setState({ error })
+         const error = this.context.OIOForm.validateValue(
+            this.props.name,
+            checkboxGroupValue,
+            this.props.rules
+         )
+
+         this.setState({ error })
+      }
    }
 
    render() {
