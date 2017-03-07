@@ -101,7 +101,9 @@ export default class CheckboxGroup extends Component {
          this.setState({ error })
       }
 
-      if (this.props.onChange) this.props.onChange(checkboxGroupValue)
+      if (this.props.onChange) {
+         this.props.onChange(event, checkboxGroupValue)
+      }
    }
 
    render() {

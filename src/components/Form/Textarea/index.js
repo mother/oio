@@ -91,7 +91,7 @@ export default class Textarea extends Component {
       }
 
       if (this.props.onChange) {
-         this.props.onChange(event)
+         this.props.onChange(event, event.target.value)
       }
    }
 

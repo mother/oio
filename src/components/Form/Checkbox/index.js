@@ -45,10 +45,10 @@ export default class Checkbox extends Component {
    }
 
    handleChange(event) {
-      this.setState({ checked: !this.state.checked })
+      this.setState({ checked: event.target.checked })
 
       if (this.props.onChange) {
-         this.props.onChange(event)
+         this.props.onChange(event, event.target.checked)
       }
    }
 

@@ -90,7 +90,9 @@ export default class RadioGroup extends Component {
          this.setState({ error })
       }
 
-      if (this.props.onChange) this.props.onChange(event)
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.value)
+      }
    }
 
    render() {

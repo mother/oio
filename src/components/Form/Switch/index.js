@@ -76,7 +76,7 @@ export default class Switch extends Component {
       }
 
       if (this.props.onChange) {
-         this.props.onChange(value)
+         this.props.onChange(event, value)
       }
    }
 

@@ -45,10 +45,12 @@ export default class Radio extends Component {
    }
 
    handleChange(event) {
-      if (!this.state.checked) this.setState({ checked: true })
+      if (!this.state.checked) {
+         this.setState({ checked: event.target.checked })
+      }
 
       if (this.props.onChange) {
-         this.props.onChange(event)
+         this.props.onChange(event, event.target.checked)
       }
    }
 
