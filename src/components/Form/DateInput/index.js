@@ -30,8 +30,8 @@ export default class DateInput extends Component {
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.handleDayBlur = this.handleDayBlur.bind(this)
       this.handleDayChange = this.handleDayChange.bind(this)
@@ -51,21 +51,27 @@ export default class DateInput extends Component {
    }
 
    componentDidMount() {
-      if (this.props.name) {
+      if (this.context.OIOForm && this.props.name) {
          this.context.OIOForm.setDefaultValue(this.props.name, this.valueToDate(this.state.value))
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
 
    componentWillReceiveProps(nextProps) {
+      // TODO: If name changes, need to remove form value corresponding to old name
       if (nextProps.value) {
          this.setState({ value: this.prepareState(nextProps) })
-         this.context.OIOForm.setValue(this.props.name, this.valueToDate(nextProps.value))
+
+         if (this.context.OIOForm) {
+            this.context.OIOForm.setValue(this.props.name, this.valueToDate(nextProps.value))
+         }
       }
 
-      this.setState({ error: this.context.OIOForm.getErrors().errors[this.props.name] })
-
-      // TODO: If name changes, need to remove form value corresponding to old name
+      if (this.context.OIOForm) {
+         this.setState({
+            error: this.context.OIOForm.getErrors().errors[this.props.name]
+         })
+      }
    }
 
    prepareState(props) {
@@ -105,10 +111,12 @@ export default class DateInput extends Component {
 
       const date = this.valueToDate(this.state.value)
 
-      this.context.OIOForm.setValue(this.props.name, date)
+      if (this.context.OIOForm) {
+         this.context.OIOForm.setValue(this.props.name, date)
+      }
 
       if (this.props.onChange) {
-         this.props.onChange(null, date)
+         this.props.onChange(date)
       }
    }
 
