@@ -9,6 +9,7 @@ export default class RadioGroup extends Component {
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
+      onChange: React.PropTypes.func,
       rules: React.PropTypes.array,
       value: React.PropTypes.string
    }
@@ -88,6 +89,8 @@ export default class RadioGroup extends Component {
 
          this.setState({ error })
       }
+
+      if (this.props.onChange) this.props.onChange(event)
    }
 
    render() {

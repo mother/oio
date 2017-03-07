@@ -9,6 +9,7 @@ export default class CheckboxGroup extends Component {
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
+      onChange: React.PropTypes.func,
       rules: React.PropTypes.array,
       value: React.PropTypes.array
    }
@@ -99,6 +100,8 @@ export default class CheckboxGroup extends Component {
 
          this.setState({ error })
       }
+
+      if (this.props.onChange) this.props.onChange(checkboxGroupValue)
    }
 
    render() {
