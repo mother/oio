@@ -36,10 +36,13 @@ export default class FileInput extends Component {
       const file = files[0]
 
       this.setState({ file })
-      this.context.OIOForm.setValue(this.props.name, file)
+
+      if (this.context.OIOForm) {
+         this.context.OIOForm.setValue(this.props.name, file)
+      }
 
       if (this.props.onChange) {
-         this.props.onChange(null, file)
+         this.props.onChange(file)
       }
    }
 
