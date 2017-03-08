@@ -20,6 +20,7 @@ export default class Button extends Component {
       rounded: React.PropTypes.bool,
       size: React.PropTypes.string,
       textClassName: React.PropTypes.string,
+      translucent: React.PropTypes.bool,
       type: React.PropTypes.string
    }
 
@@ -166,6 +167,21 @@ export default class Button extends Component {
                `rgba(${buttonColorRGB.r},
                ${buttonColorRGB.g},
                ${buttonColorRGB.b}, 0.15)`
+         }
+      }
+
+      if (this.props.translucent) {
+         buttonClasses.push(style.plain)
+         buttonStyle.backgroundColor =
+            `rgba(${buttonColorRGB.r},
+            ${buttonColorRGB.g},
+            ${buttonColorRGB.b}, 0.15)`
+
+         if (this.state.hover) {
+            buttonStyle.backgroundColor =
+               `rgba(${buttonColorRGB.r},
+               ${buttonColorRGB.g},
+               ${buttonColorRGB.b}, 0.35)`
          }
       }
 
