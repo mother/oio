@@ -39,9 +39,10 @@ export default class DemoContentForm extends Component {
       console.log(error) // eslint-disable-line no-console
    }
 
-   handleSubmit(data, formData, constructFormData) {
+   handleSubmit(data, files, formData, constructFormData) {
       /* eslint-disable */
       console.log(data)
+      console.log(files)
       const formdata = {}
       for (const pair of formData.entries()) formdata[pair[0]] = pair[1]
       console.log(formdata)

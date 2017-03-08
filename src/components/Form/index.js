@@ -188,6 +188,7 @@ export default class Form extends Component {
       const errors = {}
       let errorsExist = false
       const data = {}
+      const files = []
 
       for (const key of Object.keys(this.state.data)) {
          const value = this.state.data[key].value
@@ -195,6 +196,7 @@ export default class Form extends Component {
          errors[key] = this.validateValue(key, value, rules)
          if (errors[key]) errorsExist = true
          data[key] = value
+         if (value instanceof window.File) files.push(value)
       }
 
       const formData = this.constructFormData(data)
@@ -202,7 +204,7 @@ export default class Form extends Component {
       if (errorsExist) {
          if (this.props.onError) this.props.onError(errors)
       } else if (this.props.onSubmit) {
-         const submitPromise = this.props.onSubmit(data, formData, this.constructFormData)
+         const submitPromise = this.props.onSubmit(data, files, formData, this.constructFormData)
          if (submitPromise instanceof Promise) {
             this.setState({ submitting: true }, () => {
                submitPromise
