@@ -167,34 +167,42 @@ export default class Form extends Component {
       return null
    }
 
+   constructFormData(data) {
+      const formData = new FormData()
+
+      for (const key of Object.keys(data)) {
+         const value = data[key]
+         if (value instanceof window.File) {
+            formData.append(key, new Blob([value], { type: value.type }))
+         } else {
+            formData.append(key, value)
+         }
+      }
+
+      return formData
+   }
+
    handleSubmit(event) {
       event.preventDefault()
 
       const errors = {}
       let errorsExist = false
       const data = {}
-      const files = []
-      const formData = new FormData()
 
       for (const key of Object.keys(this.state.data)) {
          const value = this.state.data[key].value
          const rules = this.state.data[key].rules
-
-         if (value instanceof window.File) {
-            files.push(value)
-            formData.append(key, new Blob([value], { type: value.type }))
-         } else {
-            errors[key] = this.validateValue(key, value, rules)
-            if (errors[key]) errorsExist = true
-            data[key] = value
-            formData.append(key, value)
-         }
+         errors[key] = this.validateValue(key, value, rules)
+         if (errors[key]) errorsExist = true
+         data[key] = value
       }
+
+      const formData = this.constructFormData(data)
 
       if (errorsExist) {
          if (this.props.onError) this.props.onError(errors)
       } else if (this.props.onSubmit) {
-         const submitPromise = this.props.onSubmit(data, files, formData)
+         const submitPromise = this.props.onSubmit(data, formData, this.constructFormData)
          if (submitPromise instanceof Promise) {
             this.setState({ submitting: true }, () => {
                submitPromise
