@@ -21,7 +21,7 @@ export default class NavDirectory extends Component {
          color: primaryColor
       }
 
-      const navContents = contents.map((section, index) => 
+      const navContents = contents.map((section, index) =>
          <div key={`${section.name || index}`}>
             <Text size="1" weight="semibold" color="gray70" uppercase>{section.name}</Text>
             <Spacer size="2" />
