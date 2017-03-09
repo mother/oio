@@ -63,6 +63,7 @@ export default class Button extends Component {
          ButtonElement = Link
          buttonLinkObj = { to: this.props.link }
       }
+
       if (this.props.indexLink) ButtonElement = IndexLink
 
       // buttonColorRGB is an Object with r,g,b values
@@ -147,6 +148,7 @@ export default class Button extends Component {
             `rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
             ${buttonColorRGB.b}, 0.6)`
+
          delete buttonStyle.backgroundColor
 
          if (this.state.hover) {
@@ -235,6 +237,7 @@ export default class Button extends Component {
                rgba(${buttonColorRGB.r},
                ${buttonColorRGB.g},
                ${buttonColorRGB.b}, 1)`
+
             delete buttonStyle.backgroundColor
 
             if (this.props.link) {

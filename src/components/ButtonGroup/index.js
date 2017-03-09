@@ -59,6 +59,7 @@ export default class ButtonGroup extends Component {
             rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
             ${buttonColorRGB.b}, 1)`
+
          style.borderRadius = '3px'
       }
 
