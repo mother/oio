@@ -1,6 +1,16 @@
 import React, { Component } from 'react'
-import { Button, ButtonGroup, Grid, GridCell, Spacer, Text, Title, TitleBar, View } from '../../src'
+import {
+   Button,
+   ButtonGroup,
+   Grid,
+   GridCell,
+   Spacer,
 
+   Text,
+   Title,
+   TitleBar,
+   View
+} from '../../src'
 import style from '../style.less'
 
 export default class DemoContentButtonGroup extends Component {
