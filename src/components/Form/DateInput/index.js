@@ -10,7 +10,7 @@ currentDateZeroed.setHours(0, 0, 0, 0)
 
 export default class DateInput extends Component {
    static propTypes = {
-      // defaultValue: React.PropTypes.string,
+      defaultValue: React.PropTypes.object,
       enableTime: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
@@ -18,7 +18,8 @@ export default class DateInput extends Component {
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
       rules: React.PropTypes.array,
-      touched: React.PropTypes.bool
+      touched: React.PropTypes.bool,
+      value: React.PropTypes.object
    }
 
    static defaultProps = {
@@ -46,7 +47,7 @@ export default class DateInput extends Component {
 
       this.state = {
          error: props.error,
-         value: this.prepareState(props)
+         value: this.prepareState(props.value || props.defaultValue)
       }
    }
 
@@ -59,8 +60,14 @@ export default class DateInput extends Component {
 
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
-      if (nextProps.value) {
-         this.setState({ value: this.prepareState(nextProps) })
+
+      const stateIsUntouched = (
+         !this.state.value ||
+         this.datesAreEqual(this.state.value, this.prepareState(this.props.defaultValue))
+      )
+
+      if (nextProps.value && stateIsUntouched) {
+         this.setState({ value: this.prepareState(nextProps.value) })
 
          if (this.context.OIOForm) {
             this.context.OIOForm.setValue(this.props.name, this.valueToDate(nextProps.value))
@@ -74,9 +81,18 @@ export default class DateInput extends Component {
       }
    }
 
-   prepareState(props) {
-      const value = props.value || props.defaultValue
+   datesAreEqual(dateOne, dateTwo) {
+      return (
+         dateOne.day === dateTwo.day &&
+         dateOne.hour === dateTwo.hour &&
+         dateOne.meridiem === dateTwo.meridiem &&
+         dateOne.minute === dateTwo.minute &&
+         dateOne.month === dateTwo.month &&
+         dateOne.year === dateTwo.year
+      )
+   }
 
+   prepareState(value) {
       let meridiem = 'a'
       let hour = (value.getHours() || 0).toString()
       if (Number(hour) > 12) {
