@@ -26,8 +26,8 @@ export default class CheckboxGroup extends Component {
       this.state = { value: props.value || [] }
    }
 
-   componentWillReceiveProps(newProps) {
-      const newValue = newProps.value || []
+   componentWillReceiveProps(nextProps) {
+      const newValue = nextProps.value || []
       if (newValue.sort().join() !== this.state.value.sort().join()) {
          this.setState({ value: newValue })
       }
