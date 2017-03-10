@@ -98,6 +98,8 @@ export default class DateInput extends Component {
       if (Number(hour) > 12) {
          meridiem = 'p'
          hour = (Number(hour) - 12).toString()
+      } else if (Number(hour) === 0) {
+         hour = '12'
       }
 
       let minute = (value.getMinutes() || 0).toString()
@@ -115,8 +117,13 @@ export default class DateInput extends Component {
 
    handleChange() {
       // Ensure day is correct given the entered year/month
-      const daysInMonth = new Date(this.state.year, Number(this.state.month) + 1, 0).getDate()
-      if (Number(this.state.day) > daysInMonth) {
+      const daysInMonth = new Date(
+         this.state.value.year,
+         Number(this.state.value.month) + 1,
+         0
+      ).getDate()
+
+      if (Number(this.state.value.day) > daysInMonth) {
          this.setState({
             value: {
                ...this.state.value,
@@ -268,7 +275,11 @@ export default class DateInput extends Component {
    valueToDate(value) {
       // Check for and apply proper meridiem/hour
       let hour = value.hour
-      if (value.meridiem === 'p') hour = (Number(hour) + 12).toString()
+      if (value.meridiem === 'a' && hour === '12') {
+         hour = '0'
+      } else if (value.meridiem === 'p' && hour !== '12') {
+         hour = (Number(hour) + 12).toString()
+      }
 
       return this.props.enableTime
          ? new Date(value.year, value.month, value.day, hour, value.minute)
