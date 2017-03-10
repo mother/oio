@@ -50,7 +50,11 @@ export default class Input extends Component {
 
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
-      if (nextProps.value && nextProps.value !== this.state.value) {
+
+      if (
+         nextProps.value &&
+         (!this.state.value || this.state.value === this.props.defaultValue)
+      ) {
          this.setState({ value: nextProps.value })
 
          if (this.context.OIOForm) {
