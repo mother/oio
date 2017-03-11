@@ -19,6 +19,7 @@ const predefinedRules = {
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
+      novalidate: React.PropTypes.bool,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -38,6 +39,8 @@ export default class Form extends Component {
       this.setRules = this.setRules.bind(this)
       this.setValue = this.setValue.bind(this)
       this.validateValue = this.validateValue.bind(this)
+
+      this.setting = false
 
       this.testContext = {
          get: this.get.bind(this)
@@ -69,7 +72,7 @@ export default class Form extends Component {
    // re-renders are not triggered by form components called `setValue`,
    // `setDefaultValue`, or `validateValue`
    shouldComponentUpdate(nextProps, nextState) {
-      return true
+      return !this.setting
    }
 
    // eslint-disable-next-line react/sort-comp
@@ -103,6 +106,8 @@ export default class Form extends Component {
    setValue(name, value) {
       if (!name) return
 
+      this.setting = true
+
       this.setState(state => ({
          pristine: false,
          data: {
@@ -112,7 +117,7 @@ export default class Form extends Component {
                value
             }
          }
-      }))
+      }), () => (this.setting = false))
    }
 
    getErrors() {
@@ -216,9 +221,13 @@ export default class Form extends Component {
    }
 
    validateValue(name, value, rules) {
+      if (this.props.novalidate) return null
+
       const validationResult = this.applyRulesToValue(rules, value)
 
       if (name) {
+         this.setting = true
+
          this.setState((state, props) => ({
             ...state,
             data: {
@@ -228,7 +237,7 @@ export default class Form extends Component {
                   error: validationResult
                }
             }
-         }))
+         }), () => (this.setting = false))
       }
 
       return validationResult
