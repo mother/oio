@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import Icon from '../Icon'
 import style from './style.less'
 
@@ -10,6 +11,7 @@ export default class Modal extends Component {
       children: React.PropTypes.node,
       height: React.PropTypes.string,
       closeURL: React.PropTypes.string,
+      mode: React.PropTypes.string,
       onClose: React.PropTypes.func,
       width: React.PropTypes.string,
       windowClassName: React.PropTypes.string,
@@ -19,6 +21,7 @@ export default class Modal extends Component {
    static defaultProps = {
       animation: 'scaleIn',
       closeURL: '/',
+      mode: 'fixed',
       width: '600',
       height: '600',
       windowMargin: '0px'
@@ -30,8 +33,9 @@ export default class Modal extends Component {
       this.hideModal = this.hideModal.bind(this)
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
       this.state = {
+         // modalWindowMargin: props.windowMargin,
          positionClassName: 'positionAtMiddleAndCenter',
-         modalWindowMargin: props.windowMargin
+         size: getWindowSize()
       }
    }
 
@@ -47,12 +51,14 @@ export default class Modal extends Component {
    windowSizeUpdated() {
       const browserWindowHeight = document.documentElement.clientHeight
       const modalHeight = parseFloat(this.props.height)
+      const windowSize = getWindowSize()
+      const stateObj = { size: windowSize }
 
       if (modalHeight > browserWindowHeight) {
-         this.setState({
-            positionClassName: 'positionAtTopCenter'
-         })
+         stateObj.positionClassName = 'positionAtTopCenter'
       }
+
+      this.setState(stateObj)
    }
 
    hideModal(event) {
@@ -70,26 +76,37 @@ export default class Modal extends Component {
       const width = parseFloat(this.props.width)
       const height = parseFloat(this.props.height)
 
+      const mode = getAttributeForCurrentSize(this.state.size, this.props.mode)
+      const modalWindowMargin = getAttributeForCurrentSize(this.state.size, this.props.windowMargin)
+      const modalWindowStyle = {}
+
       const modalOverlayStyle = {
-         padding: this.state.modalWindowMargin
+         padding: modalWindowMargin
       }
 
       const modalWindowClasses = [
          style.modalWindow,
-         style[this.state.positionClassName],
          style[this.props.animation],
          this.props.windowClassName
       ]
 
-      const modalWindowStyle = {
-         width: `${width}px`,
-         height: `${height}px`
+      if (mode === 'fixed') {
+         modalWindowClasses.push(style[this.state.positionClassName])
+         modalWindowStyle.width = `${width}px`
+         modalWindowStyle.height = `${height}px`
+
+         if (this.state.positionClassName === 'positionAtMiddleAndCenter') {
+            modalWindowStyle.marginTop = `${(height / 2) * -1}px`
+            modalWindowStyle.marginLeft = `${(width / 2) * -1}px`
+         }
+      } else if (mode === 'fill') {
+         modalWindowClasses.push(style.positionFill)
+         modalWindowStyle.top = modalWindowMargin
+         modalWindowStyle.left = modalWindowMargin
+         modalWindowStyle.right = modalWindowMargin
+         modalWindowStyle.bottom = modalWindowMargin
       }
 
-      if (this.state.positionClassName === 'positionAtMiddleAndCenter') {
-         modalWindowStyle.marginTop = `${(height / 2) * -1}px`
-         modalWindowStyle.marginLeft = `${(width / 2) * -1}px`
-      }
 
       return (
          <div
