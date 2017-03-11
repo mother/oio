@@ -53,9 +53,7 @@ export default class Textarea extends Component {
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
 
-      const stateIsUntouched = !this.state.value || this.state.value === this.props.defaultValue
-
-      if (nextProps.value && stateIsUntouched) {
+      if (typeof nextProps.value !== 'undefined' && nextProps.value !== this.state.value) {
          this.setState({ value: nextProps.value })
 
          if (this.context.OIOForm) {
