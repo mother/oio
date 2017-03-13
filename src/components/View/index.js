@@ -75,11 +75,11 @@ export default class View extends Component {
    }
 
    // TODO: Untested
-   componentWillReceiveProps(newProps) {
+   componentWillReceiveProps(nextProps) {
       const stateModifier = {};
       ['aspectRatio', 'position', 'height', 'width'].forEach((key) => {
-         if (newProps[key] && newProps[key] !== this.state[key]) {
-            stateModifier[key] = newProps[key]
+         if (nextProps[key] && nextProps[key] !== this.state[key]) {
+            stateModifier[key] = nextProps[key]
          }
       })
 
