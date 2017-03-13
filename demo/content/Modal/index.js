@@ -31,8 +31,7 @@ export default class DemoContentModal extends Component {
                      <Text size="2" color="gray50">
                         Examples of: a standard modal window that is&nbsp;
                         vertically and horizontally centered; a modal window that is taller&nbsp;
-                        than the browser window height.
-
+                        than the browser window height. Notice how you can scroll the Modal.
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
