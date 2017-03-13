@@ -33,7 +33,7 @@ export default class Modal extends Component {
       this.hideModal = this.hideModal.bind(this)
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
       this.state = {
-         positionClassName: 'positionAtMiddleAndCenter',
+         position: 'middleCenter',
          size: getWindowSize()
       }
    }
@@ -54,7 +54,7 @@ export default class Modal extends Component {
       const stateObj = { size: windowSize }
 
       if (modalHeight > browserWindowHeight) {
-         stateObj.positionClassName = 'positionAtTopCenter'
+         stateObj.position = 'topCenter'
       }
 
       this.setState(stateObj)
@@ -73,17 +73,8 @@ export default class Modal extends Component {
 
    render() {
       const size = this.state.size
-      let width = ''
-      let height = ''
-
-      if (this.props.width) {
-         width = getAttributeForCurrentSize(size, this.props.width)
-      }
-
-      if (this.props.height) {
-         height = getAttributeForCurrentSize(size, this.props.height)
-      }
-
+      const width = parseFloat(getAttributeForCurrentSize(size, this.props.width))
+      const height = parseFloat(getAttributeForCurrentSize(size, this.props.height))
       const mode = getAttributeForCurrentSize(size, this.props.mode)
       const modalWindowMargin = getAttributeForCurrentSize(size, this.props.windowMargin)
       const modalWindowStyle = {}
@@ -99,13 +90,15 @@ export default class Modal extends Component {
       ]
 
       if (mode === 'fixed') {
-         modalWindowClasses.push(style[this.state.positionClassName])
-         modalWindowStyle.width = `${parseFloat(width)}px`
-         modalWindowStyle.height = `${parseFloat(height)}px`
+         modalWindowStyle.width = `${width}px`
+         modalWindowStyle.height = `${height}px`
 
-         if (this.state.positionClassName === 'positionAtMiddleAndCenter') {
-            modalWindowStyle.marginTop = `${(parseFloat(height / 2) * -1)}px`
-            modalWindowStyle.marginLeft = `${(parseFloat(width / 2) * -1)}px`
+         if (this.state.position === 'middleCenter') {
+            modalWindowClasses.push(style.positionAtMiddleAndCenter)
+            modalWindowStyle.marginTop = `${(height / 2) * -1}px`
+            modalWindowStyle.marginLeft = `${(width / 2) * -1}px`
+         } else if (this.state.position === 'topCenter') {
+            modalWindowClasses.push(style.positionAtTopCenter)
          }
       } else if (mode === 'fill') {
          modalWindowClasses.push(style.positionFill)
