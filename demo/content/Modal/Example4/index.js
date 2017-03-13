@@ -21,7 +21,7 @@ export default class DemoContentModalExample3 extends Component {
 
       return (
          <Modal
-            width="900px"
+            width="900px[c] 1200px[d-e]"
             height="1800px"
             mode="fill[a-b] fixed[c-e]"
             windowMargin="0px[a-b] 30px[c-e]"

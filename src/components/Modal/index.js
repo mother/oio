@@ -33,7 +33,6 @@ export default class Modal extends Component {
       this.hideModal = this.hideModal.bind(this)
       this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
       this.state = {
-         // modalWindowMargin: props.windowMargin,
          positionClassName: 'positionAtMiddleAndCenter',
          size: getWindowSize()
       }
@@ -73,11 +72,20 @@ export default class Modal extends Component {
    }
 
    render() {
-      const width = parseFloat(this.props.width)
-      const height = parseFloat(this.props.height)
+      const size = this.state.size
+      let width = ''
+      let height = ''
 
-      const mode = getAttributeForCurrentSize(this.state.size, this.props.mode)
-      const modalWindowMargin = getAttributeForCurrentSize(this.state.size, this.props.windowMargin)
+      if (this.props.width) {
+         width = getAttributeForCurrentSize(size, this.props.width)
+      }
+
+      if (this.props.height) {
+         height = getAttributeForCurrentSize(size, this.props.height)
+      }
+
+      const mode = getAttributeForCurrentSize(size, this.props.mode)
+      const modalWindowMargin = getAttributeForCurrentSize(size, this.props.windowMargin)
       const modalWindowStyle = {}
 
       const modalOverlayStyle = {
@@ -92,12 +100,12 @@ export default class Modal extends Component {
 
       if (mode === 'fixed') {
          modalWindowClasses.push(style[this.state.positionClassName])
-         modalWindowStyle.width = `${width}px`
-         modalWindowStyle.height = `${height}px`
+         modalWindowStyle.width = `${parseFloat(width)}px`
+         modalWindowStyle.height = `${parseFloat(height)}px`
 
          if (this.state.positionClassName === 'positionAtMiddleAndCenter') {
-            modalWindowStyle.marginTop = `${(height / 2) * -1}px`
-            modalWindowStyle.marginLeft = `${(width / 2) * -1}px`
+            modalWindowStyle.marginTop = `${(parseFloat(height / 2) * -1)}px`
+            modalWindowStyle.marginLeft = `${(parseFloat(width / 2) * -1)}px`
          }
       } else if (mode === 'fill') {
          modalWindowClasses.push(style.positionFill)
@@ -106,7 +114,6 @@ export default class Modal extends Component {
          modalWindowStyle.right = modalWindowMargin
          modalWindowStyle.bottom = modalWindowMargin
       }
-
 
       return (
          <div
