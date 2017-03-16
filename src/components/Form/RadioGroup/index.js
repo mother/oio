@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { replaceNodesInDOM } from '../../../utils/dom'
 import formStyles from '../styles.less'
 
@@ -20,8 +19,10 @@ export default class RadioGroup extends Component {
       this.state = { value: undefined }
    }
 
-   componentWillReceiveProps(props) {
-      this.setState({ value: props.value })
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
+      }
    }
 
    render() {

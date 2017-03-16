@@ -91,7 +91,7 @@ export default class DemoContentDialog extends Component {
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
-                     <Button onClick={this.handleAlertClick} name="Alert" size="large" />
+                     <Button onClick={this.handleAlertClick} name="Alert" />
                   </GridCell>
                </Grid>
                <Spacer size="4" />
@@ -101,7 +101,7 @@ export default class DemoContentDialog extends Component {
                      <Text size="2" color="gray50">Displays a dialog box with a specified message, along with an OK and a Cancel button.</Text>
                   </GridCell>
                   <GridCell colspan="3">
-                     <Button onClick={this.handleConfirmClick} name="Confirm" size="large" />
+                     <Button onClick={this.handleConfirmClick} name="Confirm" />
                   </GridCell>
                </Grid>
                <Spacer size="4" />
@@ -113,7 +113,7 @@ export default class DemoContentDialog extends Component {
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
-                     <Button onClick={this.handlePromptClick} name="Prompt" size="large" />
+                     <Button onClick={this.handlePromptClick} name="Prompt" />
                   </GridCell>
                </Grid>
                <Spacer size="4" />

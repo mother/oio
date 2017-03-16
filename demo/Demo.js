@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import {
    NavList,
    Notification,
@@ -9,9 +8,7 @@ import {
    Title,
    View
 } from '../src'
-
-// eslint-disable-next-line no-unused-vars
-import styles from '../src/foundation/styles.less'
+import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
 
 export default class Demo extends Component {
    static propTypes = {
@@ -51,17 +48,23 @@ export default class Demo extends Component {
       }, {
          name: 'Components',
          buttons: [{
-            name: 'Buttons',
+            name: 'Button',
             link: '/button'
+         }, {
+            name: 'ButtonGroup',
+            link: '/button-group'
          }, {
             name: 'Dialog',
             link: '/dialog'
          }, {
-            name: 'Forms',
+            name: 'Form',
             link: '/form'
          }, {
             name: 'Modal',
             link: '/modal'
+         }, {
+            name: 'Text',
+            link: '/text'
          }]
       }, {
          name: 'Navigation',

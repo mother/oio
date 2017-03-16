@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-
 import Button from '../Button'
 import ButtonGroup from '../ButtonGroup'
+import Icon from '../Icon'
 import Input from '../Form/Input'
 import styles from './styles.less'
 
@@ -85,7 +85,7 @@ export default class Dialog extends Component {
                   <div className={styles.header}>
                      <div className={styles.headerText}>{ this.props.title }</div>
                      <div onClick={this.handleCancelClick} className={styles.headerClose}>
-                        <div className={classNames('icon', 'ion-ios-close-empty', styles.headerCloseButton)} />
+                        <Icon name="ion-android-close" className={styles.headerCloseButton} />
                      </div>
                   </div>
                   <div className={styles.content}>
@@ -103,7 +103,7 @@ export default class Dialog extends Component {
                   <div className={styles.footer}>
                      <ButtonGroup align="right">
                         {this.props.type !== 'alert' &&
-                           <Button onClick={this.handleCancelClick} color="#CCC" name="Cancel" />}
+                           <Button onClick={this.handleCancelClick} color="#aaa" name="Cancel" plain />}
                         <Button onClick={this.handleOKClick} name="OK" />
                      </ButtonGroup>
                   </div>
