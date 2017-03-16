@@ -138,7 +138,7 @@ export default class DemoContentDialog extends Component {
                            <tr>
                               <td><b>onConfirm</b></td>
                               <td>Function</td>
-                              <td><code>N/A</code></td>
+                              <td>-</td>
                               <td>
                                  <code>onConfirm: result =&gt; &#123;&#125;</code>
                                  <br />
@@ -148,7 +148,7 @@ export default class DemoContentDialog extends Component {
                            <tr>
                               <td><b>onPrompt</b></td>
                               <td>Function</td>
-                              <td><code>N/A</code></td>
+                              <td>-</td>
                               <td>
                                  <code>onPrompt: result =&gt; &#123;&#125;</code>
                                  <br />
