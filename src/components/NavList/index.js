@@ -23,7 +23,7 @@ export default class NavDirectory extends Component {
 
       const navContents = contents.map((section, index) =>
          <div key={`${section.name || index}`}>
-            <Text size="1" weight="semibold" color="gray70" uppercase>{section.name}</Text>
+            <Text size="2" weight="semibold" color="gray90">{section.name}</Text>
             <Spacer size="2" />
             {(section.buttons || []).map((button, buttonIndex) => {
                const buttonClasses = [style.navListButton]
