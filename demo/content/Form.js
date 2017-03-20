@@ -44,7 +44,7 @@ export default class DemoContentForm extends Component {
       console.log(data)
       console.log(files)
       const formdata = {}
-      for (const pair of formData.entries()) formdata[pair[0]] = pair[1]
+      for (const key of formData) { formdata[key[0]] = key[1] }
       console.log(formdata)
       /* eslint-enable */
 
