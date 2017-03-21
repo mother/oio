@@ -95,6 +95,7 @@ export default class DemoContentForm extends Component {
                                  name="name.first"
                                  label="First Name"
                                  placeholder="Please enter your first name"
+                                 defaultValue="Jane"
                                  rules={['required']}
                               />
                            </div>
@@ -103,6 +104,7 @@ export default class DemoContentForm extends Component {
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
+                           defaultValue="Smith"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -148,11 +150,13 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
+                           initialValue="two"
                            rules={['required']}
                         />
                         <RadioGroup
                            name="gender"
                            label="Gender"
+                           defaultValue="undisclosed"
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
@@ -170,6 +174,7 @@ export default class DemoContentForm extends Component {
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
+                           initialValue={['hockey', 'baseball']}
                            rules={[
                               { test: value => value.includes('hockey'), message: 'Must contain hockey!' }
                            ]}>
