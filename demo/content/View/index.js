@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
    Grid,
    GridCell,
+   GridRow,
    Spacer,
    Text,
    Title,
@@ -28,10 +29,137 @@ export default class DemoContentView extends Component {
                <GridCell colspan="3">
                   <Text size="6" weight="light">
                      The View component is probably one of the most important components within OIO.
-                     It is the core OIO component you should use to structure your pages, layouts and components for your application.
-                     You can think of the <code>View</code> component as OIO‘s take on a <code>div</code>.
+                     It is the core OIO component you should use to structure your pages,&nbsp;
+                     layouts and components for your application. You can think of the&nbsp;
+                     <code>View</code> component as OIO‘s take on a <code>div</code>.
                   </Text>
                </GridCell>
+               <GridRow>
+                  <GridCell>
+                     <Title>View Example 1</Title>
+                     <Text size="2" color="gray50">
+                        Example of a View component where format equals <code>float</code>
+                     </Text>
+                  </GridCell>
+                  <GridCell colspan="3">
+                     <View width="100%" height="360px" className={style.docsWindow}>
+                        <View width="30%" height="100%" padding="30px" className="bgGray10">
+                           <Text weight="semibold">View 1</Text>
+                           <Spacer size="2" />
+                           <code>View</code> with format of <code>fixed</code> with width of&nbsp;
+                           <code>20%</code>&nbsp;
+                           and height of <code>100%</code> and padding of <code>30px</code>
+                        </View>
+                        <View width="70%" height="100%" padding="30px 60px">
+                           <Text weight="semibold">View 2</Text>
+                           <Spacer size="2" />
+                           <code>View</code> with format of <code>fixed</code> with width of&nbsp;
+                           <code>80%</code>&nbsp;
+                           and height of <code>100%</code> and padding of <code>30px 60px</code>
+                        </View>
+                     </View>
+                  </GridCell>
+               </GridRow>
+               <GridRow>
+                  <GridCell>
+                     <Title>View Example 2</Title>
+                     <Text size="2" color="gray50">
+                        Similar to previous example, but implemented slightly differently.
+                     </Text>
+                  </GridCell>
+                  <GridCell colspan="3">
+                     <View width="100%" height="360px" className={style.docsWindow}>
+                        <View width="30%" height="100%" padding="30px" className="bgGray10">
+                           <Text weight="semibold">View 1</Text>
+                           <Spacer size="2" />
+                           <code>View</code> with format of <code>fixed</code> with width of&nbsp;
+                           <code>30%</code>&nbsp;
+                           and height of <code>100%</code> and padding of <code>30px</code>
+                        </View>
+                        <View format="auto" left="30%" padding="30px 60px" scroll="on">
+                           <Text weight="semibold">View 2 (Scroll Me!)</Text>
+                           <Spacer size="2" />
+                           <code>View</code> with format of <code>auto</code> with left of&nbsp;
+                           <code>30%</code> and padding of <code>30px 60px</code> and &nbsp;
+                           scroll is set to <code>on</code>
+                           <Spacer size="5" />
+                           Fingerstache next level pickled, sriracha swag portland disrupt.
+                           Schlitz synth pourover, activated charcoal kale chips echo park
+                           narwhal viral drinking vinegar. Quinoa kitsch PBRB, everyday carry
+                           godard woke occupy. Hot chicken lumbersexual swag,
+                           lomo flexitarian post-ironic crucifix vegan bitters.
+                           Williamsburg lo-fi fam biodiesel, disrupt whatever health goth fashion
+                           axe kickstarter pitchfork brooklyn pabst hot chicken food truck brunch.
+                           Af neutra lyft schlitz. Activated charcoal biodiesel af food truck
+                           succulents, readymade fam fashion axe mixtape vape portland pinterest
+                           irony narwhal. Fap chicharrones normcore plaid. Keffiyeh irony schlitz,
+                           roof party poke paleo hashtag skateboard
+                           succulents gochujang glutenfree pok pok locavore.
+                           Iceland put a bird on it four loko prism affogato kinfolk,
+                           franzen etsy listicle fixie. Williamsburg hashtag pinterest lyft
+                           cornhole listicle. Chambray gochujang hammock YOLO small batch.
+                           Typewriter microdosing direct trade jean shorts,
+                           godard messenger bag hexagon street art copper mug fashion
+                           axe chartreuse mixtape authentic fap. Helvetica pug twee,
+                           wolf bespoke subway tile kickstarter chicharrones single-origin coffee
+                           viral mumblecore flannel heirloom.
+                        </View>
+                     </View>
+                  </GridCell>
+               </GridRow>
+               <GridRow>
+                  <GridCell>
+                     <Title>View Example 3</Title>
+                     <Text size="2" color="gray50">
+                        Example of a View component where format equals <code>float</code>
+                     </Text>
+                  </GridCell>
+                  <GridCell colspan="3">
+                     <View width="100%" height="360px" className={style.docsWindow}>
+                        <View format="auto" padding="30px 330px 30px 30px" scroll="on">
+                           <Text weight="semibold">View 1 (Scroll Me)</Text>
+                           <Spacer size="2" />
+                           <code>View</code> with format of <code>fixed</code> with width of&nbsp;
+                           <code>20%</code>&nbsp;
+                           and height of <code>100%</code> and padding of <code>30px</code>
+                           <Spacer size="5" />
+                           Fingerstache next level pickled, sriracha swag portland disrupt.
+                           Schlitz synth pourover, activated charcoal kale chips echo park
+                           narwhal viral drinking vinegar. Quinoa kitsch PBRB, everyday carry
+                           godard woke occupy. Hot chicken lumbersexual swag,
+                           lomo flexitarian post-ironic crucifix vegan bitters.
+                           Williamsburg lo-fi fam biodiesel, disrupt whatever health goth fashion
+                           axe kickstarter pitchfork brooklyn pabst hot chicken food truck brunch.
+                           Af neutra lyft schlitz. Activated charcoal biodiesel af food truck
+                           succulents, readymade fam fashion axe mixtape vape portland pinterest
+                           irony narwhal. Fap chicharrones normcore plaid. Keffiyeh irony schlitz,
+                           roof party poke paleo hashtag skateboard
+                           succulents gochujang glutenfree pok pok locavore.
+                           Iceland put a bird on it four loko prism affogato kinfolk,
+                           franzen etsy listicle fixie. Williamsburg hashtag pinterest lyft
+                           cornhole listicle. Chambray gochujang hammock YOLO small batch.
+                           Typewriter microdosing direct trade jean shorts,
+                           godard messenger bag hexagon street art copper mug fashion
+                           axe chartreuse mixtape authentic fap. Helvetica pug twee,
+                           wolf bespoke subway tile kickstarter chicharrones single-origin coffee
+                           viral mumblecore flannel heirloom.
+                        </View>
+                        <View
+                           format="auto"
+                           className="bgGray10"
+                           width="300px"
+                           height="180px"
+                           padding="30px"
+                           position="top right">
+                           <Text weight="semibold">View 2 (I Stick)</Text>
+                           <Spacer size="2" />
+                           <code>View</code> with format of <code>fixed</code> with width of&nbsp;
+                           <code>80%</code>&nbsp;
+                           and height of <code>100%</code> and padding of <code>30px 60px</code>
+                        </View>
+                     </View>
+                  </GridCell>
+               </GridRow>
                <GridCell>
                   <Title>View Configurations</Title>
                   <Text size="2" color="gray50">
