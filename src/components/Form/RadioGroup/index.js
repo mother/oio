@@ -19,9 +19,9 @@ export default class RadioGroup extends Component {
       this.state = { value: undefined }
    }
 
-   componentWillReceiveProps(newProps) {
-      if (newProps.value !== this.state.value) {
-         this.setState({ value: newProps.value })
+   componentWillReceiveProps(nextProps) {
+      if (nextProps.value !== this.state.value) {
+         this.setState({ value: nextProps.value })
       }
    }
 
