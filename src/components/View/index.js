@@ -54,8 +54,6 @@ export default class View extends Component {
          width: props.width,
          height: props.height
       }
-
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    componentWillMount() {
@@ -189,7 +187,7 @@ export default class View extends Component {
       this.setState({ positionStyles })
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize }, () => {
          this.updateComponentSizeAndPosition()

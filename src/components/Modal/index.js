@@ -19,13 +19,7 @@ export default class Modal extends Component {
       height: '600'
    }
 
-   constructor(props) {
-      super(props)
-
-      this.hideModal = this.hideModal.bind(this)
-   }
-
-   hideModal(event) {
+   hideModal = (event) => {
       if (this.props.onClose && this.node === event.target) {
          this.props.onClose()
       }

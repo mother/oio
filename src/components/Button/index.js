@@ -39,15 +39,13 @@ export default class Button extends Component {
       super(props, context)
 
       this.state = { hover: false }
-      this.onMouseOver = this.onMouseOver.bind(this)
-      this.onMouseOut = this.onMouseOut.bind(this)
    }
 
-   onMouseOver() {
+   onMouseOver = () => {
       this.setState({ hover: true })
    }
 
-   onMouseOut() {
+   onMouseOut = () => {
       this.setState({ hover: false })
    }
 

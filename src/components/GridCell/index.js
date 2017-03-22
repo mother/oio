@@ -22,8 +22,6 @@ export default class GridCell extends Component {
          width: '0',
          gutter: '0'
       }
-
-      this.windowResizeListener = this.windowSizeUpdated.bind(this)
    }
 
    componentDidMount() {
@@ -34,7 +32,7 @@ export default class GridCell extends Component {
       window.removeEventListener('resize', this.windowResizeListener)
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }

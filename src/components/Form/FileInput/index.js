@@ -16,8 +16,6 @@ export default class FileInput extends Component {
    constructor(props, context) {
       super(props, context)
 
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = {
          file: null,
          src: ''
@@ -28,7 +26,7 @@ export default class FileInput extends Component {
       this.setState({ src: props.src })
    }
 
-   handleChange(files) {
+   handleChange = (files) => {
       this.setState({ file: files[0] }, () => {
          this.props.onChange(null, this.state.file)
       })

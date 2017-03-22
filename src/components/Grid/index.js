@@ -31,8 +31,6 @@ export default class Grid extends Component {
          cellWidth: 'auto',
          cellGutter: 'auto'
       }
-
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    getChildContext() {
@@ -57,7 +55,7 @@ export default class Grid extends Component {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }
