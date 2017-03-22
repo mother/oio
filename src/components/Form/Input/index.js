@@ -15,8 +15,7 @@ export default class Input extends Component {
       onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
       type: React.PropTypes.string,
-      rules: React.PropTypes.array,
-      value: React.PropTypes.string
+      rules: React.PropTypes.array
    }
 
    static defaultProps = {
@@ -37,7 +36,8 @@ export default class Input extends Component {
 
       this.state = {
          error: props.error,
-         value: props.value || props.defaultValue
+         initialValue: null,
+         value: props.defaultValue
       }
    }
 
@@ -51,11 +51,14 @@ export default class Input extends Component {
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
 
-      if (typeof nextProps.value !== 'undefined' && nextProps.value !== this.state.value) {
-         this.setState({ value: nextProps.value })
+      if (nextProps.initialValue && !this.state.initialValue) {
+         this.setState({
+            initialValue: nextProps.initialValue,
+            value: nextProps.initialValue
+         })
 
          if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, nextProps.value)
+            this.context.OIOForm.setValue(this.props.name, nextProps.initialValue)
          }
       }
 

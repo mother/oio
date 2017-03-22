@@ -40,8 +40,6 @@ export default class Form extends Component {
       this.setValue = this.setValue.bind(this)
       this.validateValue = this.validateValue.bind(this)
 
-      this.setting = false
-
       this.testContext = {
          get: this.get.bind(this)
       }
@@ -72,7 +70,7 @@ export default class Form extends Component {
    // re-renders are not triggered by form components called `setValue`,
    // `setDefaultValue`, or `validateValue`
    shouldComponentUpdate(nextProps, nextState) {
-      return !this.setting
+      return true
    }
 
    // eslint-disable-next-line react/sort-comp
@@ -106,8 +104,6 @@ export default class Form extends Component {
    setValue(name, value) {
       if (!name) return
 
-      this.setting = true
-
       this.setState(state => ({
          pristine: false,
          data: {
@@ -117,7 +113,7 @@ export default class Form extends Component {
                value
             }
          }
-      }), () => (this.setting = false))
+      }))
    }
 
    getErrors() {
@@ -226,8 +222,6 @@ export default class Form extends Component {
       const validationResult = this.applyRulesToValue(rules, value)
 
       if (name) {
-         this.setting = true
-
          this.setState((state, props) => ({
             ...state,
             data: {
@@ -237,7 +231,7 @@ export default class Form extends Component {
                   error: validationResult
                }
             }
-         }), () => (this.setting = false))
+         }))
       }
 
       return validationResult

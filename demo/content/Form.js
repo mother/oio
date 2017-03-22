@@ -44,7 +44,7 @@ export default class DemoContentForm extends Component {
       console.log(data)
       console.log(files)
       const formdata = {}
-      for (const pair of formData.entries()) formdata[pair[0]] = pair[1]
+      for (const key of formData) { formdata[key[0]] = key[1] }
       console.log(formdata)
       /* eslint-enable */
 
@@ -95,6 +95,7 @@ export default class DemoContentForm extends Component {
                                  name="name.first"
                                  label="First Name"
                                  placeholder="Please enter your first name"
+                                 defaultValue="Jane"
                                  rules={['required']}
                               />
                            </div>
@@ -103,6 +104,7 @@ export default class DemoContentForm extends Component {
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
+                           defaultValue="Smith"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -122,14 +124,14 @@ export default class DemoContentForm extends Component {
                            name="date.start"
                            label="Start Date"
                            placeholder="Please enter a start date"
-                           defaultValue={new Date(2015, 3, 20)}
+                           initialValue={new Date(2015, 3, 20)}
                         />
                         <Spacer size="2" />
                         <DateInput
                            name="date.end"
                            label="End Date"
                            placeholder="Please enter an end date"
-                           defaultValue={new Date(2015, 7, 11, 5, 8)}
+                           initialValue={new Date(2015, 7, 11, 5, 8)}
                            enableTime
                         />
                         <Spacer size="2" />
@@ -148,11 +150,13 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
+                           initialValue="two"
                            rules={['required']}
                         />
                         <RadioGroup
                            name="gender"
                            label="Gender"
+                           defaultValue="undisclosed"
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
@@ -170,6 +174,7 @@ export default class DemoContentForm extends Component {
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
+                           initialValue={['hockey', 'baseball']}
                            rules={[
                               { test: value => value.includes('hockey'), message: 'Must contain hockey!' }
                            ]}>

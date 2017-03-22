@@ -18,8 +18,7 @@ export default class DateInput extends Component {
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
       rules: React.PropTypes.array,
-      touched: React.PropTypes.bool,
-      value: React.PropTypes.object
+      touched: React.PropTypes.bool
    }
 
    static defaultProps = {
@@ -47,7 +46,8 @@ export default class DateInput extends Component {
 
       this.state = {
          error: props.error,
-         value: this.prepareState(props.value || props.defaultValue)
+         initialValue: null,
+         value: this.prepareState(props.defaultValue)
       }
    }
 
@@ -61,17 +61,15 @@ export default class DateInput extends Component {
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
 
-      const stateIsUntouched = (
-         !this.state.value ||
-         this.datesAreEqual(this.state.value, this.prepareState(this.props.defaultValue))
-      )
-
-      if (nextProps.value && stateIsUntouched) {
-         this.setState({ value: this.prepareState(nextProps.value) })
-
-         if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, this.valueToDate(nextProps.value))
-         }
+      if (nextProps.initialValue && !this.state.initialValue) {
+         this.setState({
+            initialValue: this.prepareState(nextProps.initialValue),
+            value: this.prepareState(nextProps.initialValue)
+         }, () => {
+            if (this.context.OIOForm) {
+               this.context.OIOForm.setValue(this.props.name, this.valueToDate(this.state.value))
+            }
+         })
       }
 
       if (this.context.OIOForm) {
