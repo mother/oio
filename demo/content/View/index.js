@@ -111,7 +111,7 @@ export default class DemoContentView extends Component {
                   <GridCell>
                      <Title>View Example 3</Title>
                      <Text size="2" color="gray50">
-                        Example of a View component where format equals <code>float</code>
+                        Example of a View component that sticks to the top right corner
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
@@ -119,9 +119,8 @@ export default class DemoContentView extends Component {
                         <View format="auto" padding="30px 330px 30px 30px" scroll="on">
                            <Text weight="semibold">View 1 (Scroll Me)</Text>
                            <Spacer size="2" />
-                           <code>View</code> with format of <code>fixed</code> with width of&nbsp;
-                           <code>20%</code>&nbsp;
-                           and height of <code>100%</code> and padding of <code>30px</code>
+                           <code>View</code> with format of <code>auto</code> with padding&nbsp;
+                           of <code>30px 330px 30px 30px</code> and scroll is set to <code>on</code>
                            <Spacer size="5" />
                            Fingerstache next level pickled, sriracha swag portland disrupt.
                            Schlitz synth pourover, activated charcoal kale chips echo park
@@ -153,9 +152,30 @@ export default class DemoContentView extends Component {
                            position="top right">
                            <Text weight="semibold">View 2 (I Stick)</Text>
                            <Spacer size="2" />
+                           <code>View</code> with format of <code>auto</code> with width of&nbsp;
+                           <code>300px</code>&nbsp;
+                           and height of <code>180px</code> and padding of <code>30px</code>&nbsp;
+                           and position of <code>top right</code>
+                        </View>
+                     </View>
+                  </GridCell>
+               </GridRow>
+               <GridRow>
+                  <GridCell>
+                     <Title>View Example 4</Title>
+                     <Text size="2" color="gray50">
+                        Example of a View component that is positioned in the middle center
+                     </Text>
+                  </GridCell>
+                  <GridCell colspan="3">
+                     <View width="100%" height="360px" className={style.docsWindow}>
+                        <View width="300px" height="120px" position="middle center" className="bgGray10">
+                           <Text weight="semibold">View 1</Text>
+                           <Spacer size="2" />
                            <code>View</code> with format of <code>fixed</code> with width of&nbsp;
-                           <code>80%</code>&nbsp;
-                           and height of <code>100%</code> and padding of <code>30px 60px</code>
+                           <code>360px</code>&nbsp;
+                           and height of <code>120px</code> and position of&nbsp;
+                           <code>middle center</code>
                         </View>
                      </View>
                   </GridCell>
