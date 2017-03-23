@@ -31,8 +31,6 @@ export default class ImageInput extends Component {
    constructor(props) {
       super(props)
 
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = {
          file: null,
          src: ''
@@ -43,7 +41,7 @@ export default class ImageInput extends Component {
       this.setState({ src: props.src })
    }
 
-   handleChange(files) {
+   handleChange = (files) => {
       const file = files[0]
 
       this.setState({ file })

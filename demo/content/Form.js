@@ -95,7 +95,7 @@ export default class DemoContentForm extends Component {
                                  name="name.first"
                                  label="First Name"
                                  placeholder="Please enter your first name"
-                                 defaultValue="Jane"
+                                 initialValue="Jane"
                                  rules={['required']}
                               />
                            </div>
@@ -104,7 +104,7 @@ export default class DemoContentForm extends Component {
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
-                           defaultValue="Smith"
+                           initialValue="Smith"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -114,6 +114,7 @@ export default class DemoContentForm extends Component {
                            name="email"
                            label="Email"
                            placeholder="Please enter your email"
+                           initialValue="jane@example.com"
                            rules={[
                               'required',
                               { test: 'email', message: 'Enter a valid email!' },
@@ -139,6 +140,7 @@ export default class DemoContentForm extends Component {
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
+                           initialValue="A cool description"
                            rules={['required']}
                         />
                         <Select
@@ -156,7 +158,7 @@ export default class DemoContentForm extends Component {
                         <RadioGroup
                            name="gender"
                            label="Gender"
-                           defaultValue="undisclosed"
+                           initialValue="undisclosed"
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
@@ -195,6 +197,7 @@ export default class DemoContentForm extends Component {
                            <Switch
                               name="notifications"
                               label="Notifications"
+                              initialValue
                               rules={['required']}
                            />
                            <Spacer size="9" />

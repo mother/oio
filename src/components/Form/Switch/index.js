@@ -3,9 +3,9 @@ import formStyles from '../styles.less'
 
 export default class Switch extends Component {
    static propTypes = {
-      defaultValue: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
+      initialValue: React.PropTypes.bool,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
@@ -14,7 +14,7 @@ export default class Switch extends Component {
    }
 
    static defaultProps = {
-      defaultValue: false
+      initialValue: false
    }
 
    static contextTypes = {
@@ -25,19 +25,17 @@ export default class Switch extends Component {
    constructor(props) {
       super(props)
 
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = {
          error: props.error,
          value: props.value === true || props.value === false
             ? props.value
-            : props.defaultValue
+            : props.initialValue
       }
    }
 
    componentDidMount() {
       if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
@@ -59,7 +57,7 @@ export default class Switch extends Component {
       }
    }
 
-   handleChange(event) {
+   handleChange = (event) => {
       const value = !this.state.value
       this.setState({ value })
 

@@ -27,8 +27,6 @@ export default class Radio extends Component {
    constructor(props) {
       super(props)
 
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = {
          checked: props.checked
       }
@@ -44,7 +42,7 @@ export default class Radio extends Component {
       this.setState({ checked })
    }
 
-   handleChange(event) {
+   handleChange = (event) => {
       if (!this.state.checked) {
          this.setState({ checked: event.target.checked })
       }

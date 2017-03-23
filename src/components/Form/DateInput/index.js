@@ -10,10 +10,10 @@ currentDateZeroed.setHours(0, 0, 0, 0)
 
 export default class DateInput extends Component {
    static propTypes = {
-      defaultValue: React.PropTypes.object,
       enableTime: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
+      initialValue: React.PropTypes.object,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
@@ -22,7 +22,7 @@ export default class DateInput extends Component {
    }
 
    static defaultProps = {
-      defaultValue: currentDateZeroed
+      initialValue: currentDateZeroed
    }
 
    static contextTypes = {
@@ -33,27 +33,16 @@ export default class DateInput extends Component {
    constructor(props) {
       super(props)
 
-      this.handleDayBlur = this.handleDayBlur.bind(this)
-      this.handleDayChange = this.handleDayChange.bind(this)
-      this.handleHourBlur = this.handleHourBlur.bind(this)
-      this.handleHourChange = this.handleHourChange.bind(this)
-      this.handleMeridiemChange = this.handleMeridiemChange.bind(this)
-      this.handleMinuteBlur = this.handleMinuteBlur.bind(this)
-      this.handleMinuteChange = this.handleMinuteChange.bind(this)
-      this.handleMonthChange = this.handleMonthChange.bind(this)
-      this.handleYearBlur = this.handleYearBlur.bind(this)
-      this.handleYearChange = this.handleYearChange.bind(this)
-
       this.state = {
          error: props.error,
          initialValue: null,
-         value: this.prepareState(props.defaultValue)
+         value: this.prepareState(props.initialValue)
       }
    }
 
    componentDidMount() {
       if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setDefaultValue(this.props.name, this.valueToDate(this.state.value))
+         this.context.OIOForm.setInitialValue(this.props.name, this.valueToDate(this.state.value))
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
@@ -113,7 +102,7 @@ export default class DateInput extends Component {
       }
    }
 
-   handleChange() {
+   handleChange = () => {
       // Ensure day is correct given the entered year/month
       const daysInMonth = new Date(
          this.state.value.year,
@@ -141,7 +130,7 @@ export default class DateInput extends Component {
       }
    }
 
-   handleDayBlur(event) {
+   handleDayBlur = (event) => {
       let value = event.target.value
       if (!value.length) value = currentDateZeroed.getDate().toString()
       this.setState({
@@ -152,7 +141,7 @@ export default class DateInput extends Component {
       }, () => this.handleChange())
    }
 
-   handleDayChange(event) {
+   handleDayChange = (event) => {
       let value = event.target.value
       value = this.removeNonNumericCharacters(value)
       value = this.removeLeadingZeroes(value)
@@ -166,7 +155,7 @@ export default class DateInput extends Component {
       }
    }
 
-   handleHourBlur(event) {
+   handleHourBlur = (event) => {
       let value = event.target.value
       if (Number(value) > 12 || !value.length) value = '12'
       this.setState({
@@ -177,7 +166,7 @@ export default class DateInput extends Component {
       }, () => this.handleChange())
    }
 
-   handleHourChange(event) {
+   handleHourChange = (event) => {
       let value = event.target.value
       value = this.removeNonNumericCharacters(value)
       value = this.removeLeadingZeroes(value)
@@ -191,7 +180,7 @@ export default class DateInput extends Component {
       }
    }
 
-   handleMeridiemChange(event) {
+   handleMeridiemChange = (event) => {
       const value = event.target.value
       this.setState({
          value: {
@@ -201,7 +190,7 @@ export default class DateInput extends Component {
       }, () => this.handleChange())
    }
 
-   handleMinuteBlur(event) {
+   handleMinuteBlur = (event) => {
       let value = event.target.value
       if (value.length === 1) value = `0${value}`
       if (Number(value) > 59) value = '59'
@@ -214,7 +203,7 @@ export default class DateInput extends Component {
       }, () => this.handleChange())
    }
 
-   handleMinuteChange(event) {
+   handleMinuteChange = (event) => {
       let value = event.target.value
       value = this.removeNonNumericCharacters(value)
       if (value.length <= 2) {
@@ -227,7 +216,7 @@ export default class DateInput extends Component {
       }
    }
 
-   handleMonthChange(event) {
+   handleMonthChange = (event) => {
       const value = event.target.value
       this.setState({
          value: {
@@ -237,7 +226,7 @@ export default class DateInput extends Component {
       }, () => this.handleChange())
    }
 
-   handleYearBlur(event) {
+   handleYearBlur = (event) => {
       let value = event.target.value
       if (!value.length) value = currentDateZeroed.getFullYear().toString()
       this.setState({
@@ -248,7 +237,7 @@ export default class DateInput extends Component {
       }, () => this.handleChange())
    }
 
-   handleYearChange(event) {
+   handleYearChange = (event) => {
       let value = event.target.value
       value = this.removeNonNumericCharacters(value)
       value = this.removeLeadingZeroes(value)
@@ -270,7 +259,7 @@ export default class DateInput extends Component {
       return str.replace(/[^\d]/g, '')
    }
 
-   valueToDate(value) {
+   valueToDate = (value) => {
       // Check for and apply proper meridiem/hour
       let hour = value.hour
       if (value.meridiem === 'a' && hour === '12') {

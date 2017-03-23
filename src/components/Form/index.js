@@ -31,17 +31,8 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
-      this.handleSubmit = this.handleSubmit.bind(this)
-
-      // For consumption by form components via context
-      this.getErrors = this.getErrors.bind(this)
-      this.setDefaultValue = this.setDefaultValue.bind(this)
-      this.setRules = this.setRules.bind(this)
-      this.setValue = this.setValue.bind(this)
-      this.validateValue = this.validateValue.bind(this)
-
       this.testContext = {
-         get: this.get.bind(this)
+         get: this.get
       }
 
       this.state = {
@@ -55,7 +46,7 @@ export default class Form extends Component {
    getChildContext() {
       const OIOForm = {
          getErrors: this.getErrors,
-         setDefaultValue: this.setDefaultValue,
+         setInitialValue: this.setInitialValue,
          setRules: this.setRules,
          setValue: this.setValue,
          validateValue: this.validateValue,
@@ -68,13 +59,13 @@ export default class Form extends Component {
 
    // TODO: We can actually do some optimization here to ensure that
    // re-renders are not triggered by form components called `setValue`,
-   // `setDefaultValue`, or `validateValue`
+   // `setInitialValue`, or `validateValue`
    shouldComponentUpdate(nextProps, nextState) {
       return true
    }
 
    // eslint-disable-next-line react/sort-comp
-   setDefaultValue(name, value) {
+   setInitialValue = (name, value) => {
       if (!name) return
 
       this.setState(state => ({
@@ -88,7 +79,7 @@ export default class Form extends Component {
       }))
    }
 
-   setRules(name, rules) {
+   setRules = (name, rules) => {
       this.setState(state => ({
          ...state,
          data: {
@@ -101,7 +92,7 @@ export default class Form extends Component {
       }))
    }
 
-   setValue(name, value) {
+   setValue = (name, value) => {
       if (!name) return
 
       this.setState(state => ({
@@ -116,7 +107,7 @@ export default class Form extends Component {
       }))
    }
 
-   getErrors() {
+   getErrors = () => {
       const errors = {}
       let exist = false
 
@@ -128,7 +119,7 @@ export default class Form extends Component {
       return { errors, exist }
    }
 
-   get(key) {
+   get = (key) => {
       try {
          return this.state.data[key].value
       } catch (e) {
@@ -183,7 +174,7 @@ export default class Form extends Component {
       return formData
    }
 
-   handleSubmit(event) {
+   handleSubmit = (event) => {
       event.preventDefault()
 
       const errors = {}
@@ -216,7 +207,7 @@ export default class Form extends Component {
       }
    }
 
-   validateValue(name, value, rules) {
+   validateValue = (name, value, rules) => {
       if (this.props.novalidate) return null
 
       const validationResult = this.applyRulesToValue(rules, value)

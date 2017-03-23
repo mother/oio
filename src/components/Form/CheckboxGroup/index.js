@@ -4,9 +4,9 @@ import formStyles from '../styles.less'
 export default class CheckboxGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      defaultValue: React.PropTypes.array,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
+      initialValue: React.PropTypes.array,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
@@ -14,7 +14,7 @@ export default class CheckboxGroup extends Component {
    }
 
    static defaultProps = {
-      defaultValue: []
+      initialValue: []
    }
 
    static contextTypes = {
@@ -28,13 +28,10 @@ export default class CheckboxGroup extends Component {
    constructor(props) {
       super(props)
 
-      this.getValue = this.getValue.bind(this)
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = {
          error: props.error,
          initialValue: null,
-         value: props.defaultValue
+         value: props.initialValue
       }
    }
 
@@ -49,7 +46,7 @@ export default class CheckboxGroup extends Component {
 
    componentDidMount() {
       if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
@@ -75,11 +72,9 @@ export default class CheckboxGroup extends Component {
       }
    }
 
-   getValue() {
-      return this.state.value
-   }
+   getValue = () => this.state.value
 
-   handleChange(event) {
+   handleChange = (event) => {
       const checkboxChecked = event.target.checked
       const checkboxValue = event.target.value
       const checkboxGroupValue = this.state.value

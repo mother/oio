@@ -6,9 +6,9 @@ import formStyles from '../styles.less'
 export default class Input extends Component {
    static propTypes = {
       className: React.PropTypes.string,
-      defaultValue: React.PropTypes.string,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
+      initialValue: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
@@ -20,7 +20,7 @@ export default class Input extends Component {
 
    static defaultProps = {
       type: 'text',
-      defaultValue: ''
+      initialValue: ''
    }
 
    static contextTypes = {
@@ -31,19 +31,16 @@ export default class Input extends Component {
    constructor(props) {
       super(props)
 
-      this.handleBlur = this.handleBlur.bind(this)
-      this.handleChange = this.handleChange.bind(this)
-
       this.state = {
          error: props.error,
          initialValue: null,
-         value: props.defaultValue
+         value: props.initialValue
       }
    }
 
    componentDidMount() {
       if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setDefaultValue(this.props.name, this.state.value)
+         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
          this.context.OIOForm.setRules(this.props.name, this.props.rules)
       }
    }
@@ -69,7 +66,7 @@ export default class Input extends Component {
       }
    }
 
-   handleBlur(event) {
+   handleBlur = (event) => {
       if (this.context.OIOForm) {
          const error = this.context.OIOForm.validateValue(
             this.props.name,
@@ -85,7 +82,7 @@ export default class Input extends Component {
       }
    }
 
-   handleChange(event) {
+   handleChange = (event) => {
       this.setState({ value: event.target.value })
 
       if (this.context.OIOForm) {
