@@ -43,20 +43,14 @@ export default class DemoContentView extends Component {
                      <b>float</b> when format is set to <code>float</code> or it will be&nbsp;
                      positoned <b>absolutely</b> when format is set to <code>auto</code>.
                   </p>
-                  <p>
-                     <code>View</code> with format <code>float</code> will have CSS&nbsp;
-                     values as follows: (foat: left; position: relative;)
-                  </p>
-                  <p>
-                     By default, <code>View</code> with format <code>auto</code> will have CSS&nbsp;
-                     values as follows:
-                     (position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;).&nbsp;
-                     These values can be overridden directly on the View component
-                  </p>
                   <Spacer size="4" />
                   <Grid gutter="30px" columns="2">
                      <GridCell colspan="2">
                         <Text weight="semibold">View with format set to float</Text>
+                        <p>
+                           <code>View</code> with format <code>float</code> will have CSS&nbsp;
+                           values as follows: (foat: left; position: relative;)
+                        </p>
                         <Spacer size="2" />
                         <View width="100%" className={style.docsWindow}>
                            <View width="20%" className="bgGray10" padding="18px">
@@ -75,10 +69,17 @@ export default class DemoContentView extends Component {
                            </View>
                         </View>
                      </GridCell>
-                     <GridCell>
+                     <GridCell colspan="2">
                         <Text weight="semibold">View with format set to auto</Text>
-                        <Spacer size="2" />
-                        <View width="100%" height="180px" className={style.docsWindow}>
+                        <p>
+                           By default, <code>View</code> with format <code>auto</code>&nbsp;
+                           will have CSS values as follows:
+                           (position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px;).
+                           &nbsp;These values can be overridden directly on the View component
+                        </p>
+                     </GridCell>
+                     <GridCell>
+                        <View width="100%" height="270px" className={style.docsWindow}>
                            <View format="auto" padding="18px" className="bgGray20">
                               <code>View</code> component with format set to&nbsp;
                               <code>auto</code>. Notice how it fills towards all four corners.
@@ -86,13 +87,11 @@ export default class DemoContentView extends Component {
                         </View>
                      </GridCell>
                      <GridCell>
-                        <Text weight="semibold">&nbsp;</Text>
-                        <Spacer size="2" />
-                        <View width="100%" height="180px" className={style.docsWindow}>
-                           <View format="auto" padding="18px" width="50%" height="120px" className="bgGray20">
+                        <View width="100%" height="270px" className={style.docsWindow}>
+                           <View format="auto" padding="18px" width="50%" height="150px" className="bgGray20">
                               <code>View</code> component with format set to <code>auto</code>&nbsp;
                               with a width set to <code>50%</code> and height set to
-                              <code>120px</code>
+                              <code>150px</code>
                            </View>
                         </View>
                      </GridCell>
