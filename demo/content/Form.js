@@ -106,6 +106,7 @@ export default class DemoContentForm extends Component {
                                  rules={['required']}
                                  value={this.state.firstName}
                               />
+                              {/* onChange={e => this.setState({ firstName: e.target.value })} */}
                            </div>
                         </div>
                         <Input
