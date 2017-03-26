@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-const connectToOIOForm = () => Field => (
+const createOIOFormField = () => Field => (
    class ConnectedField extends Component {
       static propTypes = {
          initialValue: React.PropTypes.string,
@@ -109,4 +109,4 @@ const connectToOIOForm = () => Field => (
    }
 )
 
-export default connectToOIOForm
+export default createOIOFormField

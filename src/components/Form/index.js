@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
 
+export { default as createOIOFormField } from './createField'
+
 const predefinedRules = {
    required: {
       test: value => !!value,

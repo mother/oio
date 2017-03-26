@@ -16,8 +16,8 @@ import {
    /*
    Radio,
    RadioGroup,
-   Select,
    */
+   Select,
    Spacer,
    /*
    Switch,
@@ -153,6 +153,7 @@ export default class DemoContentForm extends Component {
                            initialValue="A cool description"
                            rules={['required']}
                         />
+                        */}
                         <Select
                            name="choice"
                            label="A Choice"
@@ -165,6 +166,7 @@ export default class DemoContentForm extends Component {
                            initialValue="two"
                            rules={['required']}
                         />
+                        {/*
                         <RadioGroup
                            name="gender"
                            label="Gender"

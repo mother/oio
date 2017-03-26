@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { createOIOFormField } from '..'
 import styles from './styles.less'
 import formStyles from '../styles.less'
-
-import connectToOIOForm from '../connectField'
 
 class Input extends Component {
    static propTypes = {
@@ -75,4 +74,4 @@ class Input extends Component {
    }
 }
 
-export default connectToOIOForm()(Input)
+export default createOIOFormField()(Input)

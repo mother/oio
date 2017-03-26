@@ -1,86 +1,39 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { createOIOFormField } from '..'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-export default class Select extends Component {
+class Select extends Component {
    static propTypes = {
       className: React.PropTypes.string,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
-      initialValue: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
+      onBlur: React.PropTypes.func,
       options: React.PropTypes.array,
-      rules: React.PropTypes.array
+      readOnly: React.PropTypes.bool,
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
+      value: React.PropTypes.string
    }
 
    static defaultProps = {
-      initialValue: '',
       options: []
    }
 
-   static contextTypes = {
-      OIOForm: React.PropTypes.object
-   }
+   handleBlur = (event) => {
+      this.props.triggerValidation()
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         error: props.error,
-         initialValue: null,
-         value: props.initialValue
-      }
-   }
-
-   componentDidMount() {
-      if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
-         this.context.OIOForm.setRules(this.props.name, this.props.rules)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
-      // TODO: If name changes, need to remove form value corresponding to old name
-
-      if (nextProps.initialValue && !this.state.initialValue) {
-         this.setState({
-            initialValue: nextProps.initialValue,
-            value: nextProps.initialValue
-         })
-
-         if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, nextProps.initialValue)
-         }
-      }
-
-      if (this.context.OIOForm) {
-         this.setState({
-            error: this.context.OIOForm.getErrors().errors[this.props.name]
-         })
+      if (this.props.onBlur) {
+         this.props.onBlur(event)
       }
    }
 
    handleChange = (event) => {
-      this.setState({ value: event.target.value })
-
-      if (this.context.OIOForm) {
-         this.context.OIOForm.setValue(this.props.name, event.target.value)
-
-         const error = this.context.OIOForm.validateValue(
-            this.props.name,
-            event.target.value,
-            this.props.rules
-         )
-
-         this.setState({ error })
-      }
-
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.value)
-      }
+      this.props.triggerChange(event, event.target.value)
+      this.props.triggerValidation()
    }
 
    render() {
@@ -104,17 +57,20 @@ export default class Select extends Component {
             <select
                className={classNames(classes)}
                id={this.props.id}
-               value={this.state.value}
+               value={this.props.value}
                name={this.props.name}
-               onChange={this.handleChange}>
+               onChange={this.handleChange}
+               readOnly={this.props.readOnly}>
                {children}
             </select>
-            {this.state.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
-                  {this.state.error}
+                  {this.props.error}
                </div>
             }
          </div>
       )
    }
 }
+
+export default createOIOFormField()(Select)
