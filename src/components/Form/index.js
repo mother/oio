@@ -68,15 +68,40 @@ export default class Form extends Component {
    setInitialValue = (name, value) => {
       if (!name) return
 
-      this.setState(state => ({
-         data: {
+      this.setState((state) => {
+         const data = {
+            ...state.data,
+            [name]: {
+               ...state.data[name],
+               initialValue: value,
+               value
+            }
+         }
+
+         return {
+            data,
+            pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
+         }
+      })
+   }
+
+   setValue = (name, value) => {
+      if (!name) return
+
+      this.setState((state) => {
+         const data = {
             ...state.data,
             [name]: {
                ...state.data[name],
                value
             }
          }
-      }))
+
+         return {
+            data,
+            pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
+         }
+      })
    }
 
    setRules = (name, rules) => {
@@ -87,21 +112,6 @@ export default class Form extends Component {
             [name]: {
                ...state.data[name],
                rules
-            }
-         }
-      }))
-   }
-
-   setValue = (name, value) => {
-      if (!name) return
-
-      this.setState(state => ({
-         pristine: false,
-         data: {
-            ...state.data,
-            [name]: {
-               ...state.data[name],
-               value
             }
          }
       }))

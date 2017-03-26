@@ -15,7 +15,9 @@ export default class Input extends Component {
       onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
       type: React.PropTypes.string,
-      rules: React.PropTypes.array
+      readOnly: React.PropTypes.bool,
+      rules: React.PropTypes.array,
+      value: React.PropTypes.string
    }
 
    static defaultProps = {
@@ -31,10 +33,10 @@ export default class Input extends Component {
    constructor(props) {
       super(props)
 
+      this.initialized = props.value || props.initialValue
       this.state = {
          error: props.error,
-         initialValue: null,
-         value: props.initialValue
+         value: props.value || props.initialValue
       }
    }
 
@@ -48,21 +50,30 @@ export default class Input extends Component {
    componentWillReceiveProps(nextProps) {
       // TODO: If name changes, need to remove form value corresponding to old name
 
-      if (nextProps.initialValue && !this.state.initialValue) {
-         this.setState({
-            initialValue: nextProps.initialValue,
-            value: nextProps.initialValue
-         })
+      let nextValue
 
-         if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, nextProps.initialValue)
-         }
+      // If a value is provided
+      if (nextProps.value && this.props.value !== nextProps.value) {
+         this.initialized = true
+         nextValue = nextProps.value
+
+      // If the field is not initialized, and an initialValue is provided
+      } else if (nextProps.initialValue && !this.initialized) {
+         this.initialized = true
+         nextValue = nextProps.initialValue
       }
 
-      if (this.context.OIOForm) {
-         this.setState({
-            error: this.context.OIOForm.getErrors().errors[this.props.name]
-         })
+      if (nextValue) {
+         this.setState({ value: nextValue })
+         if (this.context.OIOForm) {
+            this.context.OIOForm.setValue(this.props.name, nextValue)
+         }
+
+         if (this.context.OIOForm) {
+            this.setState({
+               error: this.context.OIOForm.getErrors().errors[this.props.name]
+            })
+         }
       }
    }
 
@@ -102,6 +113,15 @@ export default class Input extends Component {
          inputStyles.fontFamily = this.context.OIOStyles.fontFamily
       }
 
+      let handleChange
+      if (this.props.value && this.props.onChange) {
+         handleChange = this.props.onChange
+      } else if (!this.props.value) {
+         handleChange = this.handleChange
+      }
+
+      const readOnly = this.props.readOnly || !handleChange
+
       return (
          <div className={formStyles.container}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
@@ -110,9 +130,10 @@ export default class Input extends Component {
                className={classNames(classes)}
                id={this.props.id}
                onBlur={this.handleBlur}
-               onChange={this.handleChange}
+               onChange={handleChange}
                name={this.props.name}
                placeholder={this.props.placeholder}
+               readOnly={readOnly}
                type={this.props.type}
                value={this.state.value}
             />

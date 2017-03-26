@@ -2,21 +2,27 @@ import React, { Component } from 'react'
 import {
    Avatar,
    Button,
+   /*
    Checkbox,
    CheckboxGroup,
    DateInput,
+   */
    FileInput,
    Form,
    Grid,
    GridCell,
    ImageInput,
    Input,
+   /*
    Radio,
    RadioGroup,
    Select,
+   */
    Spacer,
+   /*
    Switch,
    Textarea,
+   */
    Title,
    TitleBar,
    View
@@ -33,6 +39,10 @@ export default class DemoContentForm extends Component {
 
       this.handleError = this.handleError.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
+
+      this.state = {
+         firstName: 'Reade-Ohnly'
+      }
    }
 
    handleError(error, file) {
@@ -43,9 +53,6 @@ export default class DemoContentForm extends Component {
       /* eslint-disable */
       console.log(data)
       console.log(files)
-      const formdata = {}
-      for (const key of formData) { formdata[key[0]] = key[1] }
-      console.log(formdata)
       /* eslint-enable */
 
       return new Promise((resolve, reject) => {
@@ -97,6 +104,7 @@ export default class DemoContentForm extends Component {
                                  placeholder="Please enter your first name"
                                  initialValue="Jane"
                                  rules={['required']}
+                                 value={this.state.firstName}
                               />
                            </div>
                         </div>
@@ -121,6 +129,7 @@ export default class DemoContentForm extends Component {
                               { test: value => value.length > 8, message: 'At least 8 characters' }
                            ]}
                         />
+                        {/*
                         <DateInput
                            name="date.start"
                            label="Start Date"
@@ -177,9 +186,10 @@ export default class DemoContentForm extends Component {
                            name="sports"
                            label="Sports"
                            initialValue={['hockey', 'baseball']}
-                           rules={[
-                              { test: value => value.includes('hockey'), message: 'Must contain hockey!' }
-                           ]}>
+                           rules={[{
+                              test: value => value.includes('hockey'),
+                              message: 'Must contain hockey!'
+                           }]}>
                            <Grid columns="3">
                               <GridCell>
                                  <Checkbox value="baseball" label="Baseball" />
@@ -202,6 +212,7 @@ export default class DemoContentForm extends Component {
                            />
                            <Spacer size="9" />
                         </View>
+                        */}
                         <View width="100%">
                            <Button name="Save Changes" type="submit" autoFormRespond />
                         </View>
