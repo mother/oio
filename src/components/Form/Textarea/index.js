@@ -1,83 +1,37 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { createOIOFormField } from '..'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-export default class Textarea extends Component {
+class Textarea extends Component {
    static propTypes = {
       className: React.PropTypes.string,
       disabled: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
-      initialValue: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
+      readOnly: React.PropTypes.bool,
       rows: React.PropTypes.string,
-      rules: React.PropTypes.array
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
+      value: React.PropTypes.string
    }
 
    static defaultProps = {
       disabled: false,
-      rows: '5',
-      initialValue: ''
+      rows: '5'
    }
 
    static contextTypes = {
-      OIOForm: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         error: props.error,
-         initialValue: null,
-         value: props.initialValue
-      }
-   }
-
-   componentDidMount() {
-      if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
-         this.context.OIOForm.setRules(this.props.name, this.props.rules)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
-      // TODO: If name changes, need to remove form value corresponding to old name
-
-      if (nextProps.initialValue && !this.state.initialValue) {
-         this.setState({
-            initialValue: nextProps.initialValue,
-            value: nextProps.initialValue
-         })
-
-         if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, nextProps.initialValue)
-         }
-      }
-
-      if (this.context.OIOForm) {
-         this.setState({
-            error: this.context.OIOForm.getErrors().errors[this.props.name]
-         })
-      }
-   }
-
    handleBlur = (event) => {
-      if (this.context.OIOForm) {
-         const error = this.context.OIOForm.validateValue(
-            this.props.name,
-            event.target.value,
-            this.props.rules
-         )
-
-         this.setState({ error })
-      }
+      this.props.triggerValidation()
 
       if (this.props.onBlur) {
          this.props.onBlur(event)
@@ -85,15 +39,8 @@ export default class Textarea extends Component {
    }
 
    handleChange = (event) => {
-      this.setState({ value: event.target.value })
-
-      if (this.context.OIOForm) {
-         this.context.OIOForm.setValue(this.props.name, event.target.value)
-      }
-
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.value)
-      }
+      this.props.triggerChange(event, event.target.value)
+      this.props.triggerValidation()
    }
 
    render() {
@@ -110,15 +57,18 @@ export default class Textarea extends Component {
                onChange={this.handleChange}
                name={this.props.name}
                placeholder={this.props.placeholder}
-               value={this.state.value}
+               value={this.props.value}
+               readOnly={this.props.readOnly}
                rows={this.props.rows}
             />
-            {this.state.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
-                  {this.state.error}
+                  {this.props.error}
                </div>
             }
          </div>
       )
    }
 }
+
+export default createOIOFormField()(Textarea)

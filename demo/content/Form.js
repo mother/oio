@@ -21,8 +21,8 @@ import {
    Spacer,
    /*
    Switch,
-   Textarea,
    */
+   Textarea,
    Title,
    TitleBar,
    View
@@ -145,15 +145,15 @@ export default class DemoContentForm extends Component {
                            initialValue={new Date(2015, 7, 11, 5, 8)}
                            enableTime
                         />
+                        */}
                         <Spacer size="2" />
                         <Textarea
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
-                           initialValue="A cool description"
+                           value="A cool description"
                            rules={['required']}
                         />
-                        */}
                         <Select
                            name="choice"
                            label="A Choice"
