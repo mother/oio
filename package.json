@@ -11,6 +11,7 @@
     "test:watch": "mocha --compilers js:babel-core/register --recursive test/test.js --watch --reporter min",
     "lint": "git diff HEAD --name-only --diff-filter=ACM | grep '.js$' | xargs node ./node_modules/eslint/bin/eslint.js --quiet",
     "lint-full": "node ./node_modules/eslint/bin/eslint.js .",
+    "precommit": "npm run lint",
     "postmerge": "npm install",
     "postreceive": "npm install",
     "postrewrite": "npm install"
