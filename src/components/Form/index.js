@@ -59,14 +59,15 @@ export default class Form extends Component {
       return { OIOForm }
    }
 
-   // TODO: We can actually do some optimization here to ensure that
-   // re-renders are not triggered by form components called `setValue`,
-   // `setInitialValue`, or `validateValue`
+   // TODO: Note that this is not very efficient since renders do
+   // not need to occur when updating values. In fact, we shouldn't
+   // be using state at all to store much of this information, and
+   // we only do to ensure context updates properly, which is a hack.
+   // We should not rely on context changes to propagate automatically.
    shouldComponentUpdate(nextProps, nextState) {
       return true
    }
 
-   // eslint-disable-next-line react/sort-comp
    setInitialValue = (name, value) => {
       if (!name) return
 
