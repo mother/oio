@@ -28,8 +28,8 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = {
          firstName: 'Jane',

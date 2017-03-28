@@ -15,8 +15,8 @@ export default class Demo extends Component {
       children: React.PropTypes.node
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
       this.state = {}
    }
 
@@ -103,7 +103,10 @@ export default class Demo extends Component {
                      title={notification.title}
                   />
                   <Title heading={titleHeading} weight="normal" size="7">OIO</Title>
-                  <Text size="2" weight="bold" color="gray40" uppercase>A Happy Style<br/>Framework</Text>
+                  <Text size="2" weight="bold" color="gray40" uppercase>
+                     A Happy Style<br />
+                     Framework
+                  </Text>
                   <Spacer size="9" />
                   <NavList contents={navContent} />
                </View>

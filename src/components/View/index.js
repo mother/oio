@@ -34,8 +34,8 @@ export default class View extends Component {
       visible: 'on'
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = {
          size: getWindowSize(),

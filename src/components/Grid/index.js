@@ -21,8 +21,8 @@ export default class Grid extends Component {
       GridCellStyle: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = {
          size: getWindowSize(),
