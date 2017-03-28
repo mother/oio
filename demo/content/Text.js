@@ -50,8 +50,15 @@ export default class DemoContentText extends Component {
                <GridCell>
                   <Title>Text Sizes</Title>
                   <Text size="2" color="gray50">
-                     <p>The size prop can be used for both the <code>Text</code> and <code>Title</code> component. The default size for the <code>Text</code> component is 3.</p>
-                     <p>As a general guideline, when using multiple text sizes, it is best to use sizes at least 2 units apart (ie. 4,6,8)</p>
+                     <p>
+                        The size prop can be used for both the <code>Text</code>&nbsp;
+                        and <code>Title</code> component. The default size for the&nbsp;
+                        <code>Text</code> component is 3.
+                     </p>
+                     <p>
+                        As a general guideline, when using multiple text sizes,&nbsp;
+                        it is best to use sizes at least 2 units apart (ie. 4,6,8)
+                     </p>
                   </Text>
                </GridCell>
                <GridCell colspan="3">
@@ -69,7 +76,10 @@ export default class DemoContentText extends Component {
                <GridCell>
                   <Title>Paragraphs</Title>
                   <Text size="2" color="gray50">
-                     <p>Wrap paragraphs of text in the <code>p</code> tag. Paragraphs by default have a margin-bottom of 1em</p>
+                     <p>
+                        Wrap paragraphs of text in the <code>p</code> tag.&nbsp;
+                        Paragraphs by default have a margin-bottom of 1em
+                     </p>
                   </Text>
                </GridCell>
                <GridCell colspan="3">
@@ -237,7 +247,11 @@ export default class DemoContentText extends Component {
                               <td><b>editorState</b></td>
                               <td>String</td>
                               <td><code>ready</code></td>
-                              <td>Should the editor indicate something is happening (<code>pending</code>) or is it ready to be used (<code>ready</code>)</td>
+                              <td>
+                                 Should the editor indicate something is happening&nbsp;
+                                 (<code>pending</code>) or is it ready to be used&nbsp;
+                                 (<code>ready</code>)
+                              </td>
                            </tr>
                            <tr>
                               <td><b>editorValue</b></td>

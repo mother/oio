@@ -1,22 +1,61 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
+import Icon from '../Icon'
 import style from './style.less'
 
 export default class Modal extends Component {
    static propTypes = {
+      animation: React.PropTypes.oneOf(['scaleIn', 'slideFromBottom']),
       children: React.PropTypes.node,
       height: React.PropTypes.string,
       closeURL: React.PropTypes.string,
+      mode: React.PropTypes.oneOf(['fixed', 'fill']),
       onClose: React.PropTypes.func,
       width: React.PropTypes.string,
-      windowClassName: React.PropTypes.string
+      windowClassName: React.PropTypes.string,
+      windowMargin: React.PropTypes.string
    }
 
    static defaultProps = {
+      animation: 'scaleIn',
       closeURL: '/',
+      mode: 'fixed',
       width: '600',
-      height: '600'
+      height: '600',
+      windowMargin: '0px'
+   }
+
+   constructor(props) {
+      super(props)
+
+      this.state = {
+         position: 'middleCenter',
+         size: getWindowSize()
+      }
+   }
+
+   componentDidMount() {
+      this.windowSizeUpdated()
+      window.addEventListener('resize', this.windowSizeUpdated, false)
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
+   }
+
+   windowSizeUpdated = () => {
+      const browserWindowHeight = document.documentElement.clientHeight
+      const modalHeight = parseFloat(this.props.height)
+      const windowSize = getWindowSize()
+      const stateObj = { size: windowSize }
+
+      if (modalHeight > browserWindowHeight) {
+         stateObj.position = 'topCenter'
+      }
+
+      this.setState(stateObj)
    }
 
    hideModal = (event) => {
@@ -31,27 +70,55 @@ export default class Modal extends Component {
    }
 
    render() {
-      const width = parseFloat(this.props.width)
-      const height = parseFloat(this.props.height)
-      const windowStyles = {
-         width: `${width}px`,
-         height: `${height}px`,
-         marginLeft: `${(width / 2) * -1}px`,
-         marginTop: `${(height / 2) * -1}px`
+      const size = this.state.size
+      const width = parseFloat(getAttributeForCurrentSize(size, this.props.width))
+      const height = parseFloat(getAttributeForCurrentSize(size, this.props.height))
+      const mode = getAttributeForCurrentSize(size, this.props.mode)
+      const modalWindowMargin = getAttributeForCurrentSize(size, this.props.windowMargin)
+      const modalWindowStyle = {}
+
+      const modalOverlayStyle = {
+         padding: modalWindowMargin
+      }
+
+      const modalWindowClasses = [
+         style.modalWindow,
+         style[this.props.animation],
+         this.props.windowClassName
+      ]
+
+      if (mode === 'fixed') {
+         modalWindowStyle.width = `${width}px`
+         modalWindowStyle.height = `${height}px`
+
+         if (this.state.position === 'middleCenter') {
+            modalWindowClasses.push(style.positionAtMiddleAndCenter)
+            modalWindowStyle.marginTop = `${(height / 2) * -1}px`
+            modalWindowStyle.marginLeft = `${(width / 2) * -1}px`
+         } else if (this.state.position === 'topCenter') {
+            modalWindowClasses.push(style.positionAtTopCenter)
+         }
+      } else if (mode === 'fill') {
+         modalWindowClasses.push(style.positionFill)
+         modalWindowStyle.top = modalWindowMargin
+         modalWindowStyle.left = modalWindowMargin
+         modalWindowStyle.right = modalWindowMargin
+         modalWindowStyle.bottom = modalWindowMargin
       }
 
       return (
          <div
             ref={node => (this.node = node)}
             onClick={this.hideModal}
-            className={style.modalOverlay}>
+            className={style.modalOverlay}
+            style={modalOverlayStyle}>
             <div
-               className={classNames(style.modalWindow, this.props.windowClassName)}
-               style={windowStyles}>
+               className={classNames(modalWindowClasses)}
+               style={modalWindowStyle}>
                {this.props.children}
             </div>
             <Link to={this.props.closeURL}>
-               <div className={classNames('icon', 'ion-ios-close-empty', style.closeButton)} />
+               <Icon name="ion-ios-close-empty" className={style.closeButton} />
             </Link>
          </div>
       )
