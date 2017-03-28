@@ -6,18 +6,19 @@ import ButtonGroup from './content/ButtonGroup'
 import Form from './content/Form'
 import Text from './content/Text'
 import Modal from './content/Modal'
-import Typography from './content/Typography'
+import View from './content/View'
+import Welcome from './content/Welcome'
 import ExamplesWindow from './examples/Window'
 
 export default (
    <Route path="/" component={Demo}>
-      <IndexRoute component={Typography} />
+      <IndexRoute component={Welcome} />
       <Route path="button" component={Button} />
       <Route path="button-group" component={ButtonGroup} />
       <Route path="form" component={Form} />
       <Route path="modal" component={Modal} />
+      <Route path="view" component={View} />
       <Route path="text" component={Text} />
-
       <Route path="examples">
          <IndexRoute component={ExamplesWindow} />
          <Route path="window" component={ExamplesWindow} />
