@@ -20,8 +20,11 @@ class DateInput extends Component {
       ])
    }
 
-   static defaultProps = {
-      value: new Date()
+   componentDidMount() {
+      const dateObj = moment(this.props.value)
+      if (!this.props.value || !dateObj.isValid()) {
+         this.props.triggerChange(null, new Date())
+      }
    }
 
    handleChange = (event) => {
@@ -49,6 +52,7 @@ class DateInput extends Component {
 
    parseDate(value) {
       const dateObj = moment(value)
+
       return {
          year: dateObj.format('YYYY'),
          month: Number(dateObj.format('M')) - 1,
@@ -61,7 +65,10 @@ class DateInput extends Component {
 
    render() {
       const { year, month, day, hour, minute, meridiem } = this.parseDate(this.props.value)
-      const numDaysInMonth = moment(`${year}-${Number(month) + 1}`, 'YYYY-M').daysInMonth()
+      const numDaysInMonth = year && month
+         ? moment(`${year}-${Number(month) + 1}`, 'YYYY-M').daysInMonth()
+         : 31
+
       const daysInMonth = Array.from(new Array(numDaysInMonth), (x, i) => i + 1)
       const currentYear = (new Date()).getFullYear()
       const years = Array.from(new Array(5), (x, i) => currentYear + i)

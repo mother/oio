@@ -35,15 +35,15 @@ export default class DemoContentForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this)
 
       this.state = {
-         firstName: 'Reade-Ohnly',
-         switch: false
+         firstName: 'Jane',
+         age: 1
       }
    }
 
    componentDidMount() {
-      // setInterval(() => {
-      //    this.setState({ switch: !this.state.switch })
-      // }, 1000)
+      setInterval(() => {
+         this.setState({ age: this.state.age + 1 })
+      }, 2000)
    }
 
    handleError(error, file) {
@@ -98,19 +98,14 @@ export default class DemoContentForm extends Component {
                            label="Document"
                         />
                         <Spacer size="2" />
-                        <div>
-                           <div>
-                              <Input
-                                 name="name.first"
-                                 label="First Name"
-                                 placeholder="Please enter your first name"
-                                 initialValue="Jane"
-                                 rules={['required']}
-                                 value={this.state.firstName}
-                              />
-                              {/* onChange={e => this.setState({ firstName: e.target.value })} */}
-                           </div>
-                        </div>
+                        <Input
+                           name="name.first"
+                           label="First Name"
+                           placeholder="Please enter your first name"
+                           rules={['required']}
+                           value={this.state.firstName}
+                           onChange={(e, v) => this.setState({ firstName: v })}
+                        />
                         <Input
                            name="name.last"
                            label="Last Name"
@@ -132,17 +127,25 @@ export default class DemoContentForm extends Component {
                               { test: value => value.length > 8, message: 'At least 8 characters' }
                            ]}
                         />
+                        <Input
+                           name="age"
+                           label="Age"
+                           placeholder="Your age will be automatically calculated"
+                           rules={['required']}
+                           value={this.state.age.toString()}
+                        />
                         <DateInput
                            name="date.start"
                            label="Start Date"
                            placeholder="Please enter a start date"
+                           initialValue={new Date(2015, 9, 5)}
                         />
                         <Spacer size="2" />
                         <DateInput
                            name="date.end"
                            label="End Date"
                            placeholder="Please enter an end date"
-                           initialValue={new Date(2015, 7, 11, 5, 15)}
+                           initialValue={new Date(2019, 7, 11, 5, 15)}
                            enableTime
                         />
                         <Spacer size="2" />
