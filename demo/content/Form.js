@@ -13,10 +13,8 @@ import {
    GridCell,
    ImageInput,
    Input,
-   /*
    Radio,
    RadioGroup,
-   */
    Select,
    Spacer,
    Switch,
@@ -172,26 +170,23 @@ export default class DemoContentForm extends Component {
                            initialValue="two"
                            rules={['required']}
                         />
-                        {/*
                         <RadioGroup
-                           name="gender"
-                           label="Gender"
-                           initialValue="undisclosed"
+                           name="colour"
+                           label="Colour"
+                           initialValue="navy"
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>
-                                 <Radio value="male" label="Male" />
+                                 <Radio value="black" label="Black" />
                               </GridCell>
                               <GridCell>
-                                 <Radio value="female" label="Female" />
+                                 <Radio value="navy" label="Navy" />
                               </GridCell>
                               <GridCell>
-                                 <Radio value="undisclosed" label="Undisclosed" />
+                                 <Radio value="pink" label="Pink" />
                               </GridCell>
                            </Grid>
                         </RadioGroup>
-                        */}
-
                         <Spacer size="3" />
                         <CheckboxGroup
                            name="sports"

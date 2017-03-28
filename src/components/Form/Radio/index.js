@@ -12,11 +12,13 @@ export default class Radio extends Component {
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
+      readOnly: React.PropTypes.bool,
       value: React.PropTypes.string
    }
 
    static defaultProps = {
-      checked: false
+      checked: false,
+      readOnly: false
    }
 
    static contextTypes = {
@@ -34,18 +36,15 @@ export default class Radio extends Component {
 
    componentWillReceiveProps(nextProps) {
       let checked = nextProps.checked
-
       if (this.context.OIOFormRadio) {
-         checked = nextProps.value === this.context.OIOFormRadio.getValue()
+         checked = nextProps.value === this.context.OIOFormRadio.getProps().value
       }
 
       this.setState({ checked })
    }
 
    handleChange = (event) => {
-      if (!this.state.checked) {
-         this.setState({ checked: event.target.checked })
-      }
+      this.setState({ checked: event.target.checked })
 
       if (this.props.onChange) {
          this.props.onChange(event, event.target.checked)
@@ -56,6 +55,16 @@ export default class Radio extends Component {
       const name = this.context.OIOFormRadio
          ? this.context.OIOFormRadio.name
          : this.props.name
+
+      const readOnly = this.context.OIOFormRadio
+         ? this.context.OIOFormRadio.getProps().readOnly
+         : this.props.readOnly
+
+      const readOnlyEventHandlers = {}
+      if (readOnly) {
+         readOnlyEventHandlers.onClick = () => false
+         readOnlyEventHandlers.onKeyDown = () => false
+      }
 
       const primaryColor = this.context.OIOStyles.primaryColor
       let radioIcon = 'ion-ios-circle-outline'
@@ -77,7 +86,8 @@ export default class Radio extends Component {
                   type="radio"
                   name={name}
                   value={this.props.value}
-                  onChange={this.handleChange}
+                  onChange={!readOnly && this.handleChange}
+                  {...readOnlyEventHandlers}
                />
                <Icon name={radioIcon} className={style.icon} style={radioIconStyle} />
                <Text size="3" weight="normal">
