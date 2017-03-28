@@ -39,9 +39,9 @@ export default class Demo extends Component {
       const notification = (this.state && this.state.notification) || {}
 
       const navContent = [{
-         name: 'Style',
+         name: 'Overview',
          buttons: [{
-            name: 'Typography',
+            name: 'Welcome',
             link: '/',
             indexLink: true
          }]
@@ -59,6 +59,9 @@ export default class Demo extends Component {
          }, {
             name: 'Modal',
             link: '/modal'
+         }, {
+            name: 'View',
+            link: '/view'
          }, {
             name: 'Text',
             link: '/text'
@@ -83,7 +86,7 @@ export default class Demo extends Component {
       return (
          <OIO fontFamily="Helvetica Neue" primaryColor="#879ea2">
             <View format="auto">
-               <View width="210px[a-c] 240px[d] 270px[e]" height="100%" padding="36px" className="">
+               <View width="210px[a-c] 240px[d] 270px[e]" height="100%" padding="48px 36px" className="">
                   <Notification
                      buttonAllAction={notification.buttonAllAction}
                      buttonFull={notification.buttonFull}
@@ -105,7 +108,9 @@ export default class Demo extends Component {
                   <NavList contents={navContent} />
                </View>
                <View format="auto" left="210px[a-c] 240px[d] 270px[e]" scroll="on">
-                  <View width="100%" padding="18px 60px 18px 30px">
+                  <View
+                     width="100%"
+                     padding="18px[a-d] 18px 60px 18px 30px[e]">
                      {this.props.children}
                   </View>
                </View>
