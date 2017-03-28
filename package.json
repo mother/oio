@@ -41,6 +41,7 @@
     "blob": "0.0.4",
     "classnames": "2.2.5",
     "form-data": "2.1.2",
+    "moment": "2.18.1",
     "react-files": "2.4.1"
   },
   "devDependencies": {
