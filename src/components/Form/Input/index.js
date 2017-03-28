@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { createOIOFormField } from '..'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-export default class Input extends Component {
+class Input extends Component {
    static propTypes = {
       className: React.PropTypes.string,
       error: React.PropTypes.string,
@@ -11,10 +12,11 @@ export default class Input extends Component {
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
       placeholder: React.PropTypes.string,
-      touched: React.PropTypes.bool,
       type: React.PropTypes.string,
+      readOnly: React.PropTypes.bool,
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
       value: React.PropTypes.string
    }
 
@@ -27,25 +29,16 @@ export default class Input extends Component {
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
-      this.handleChange = this.handleChange.bind(this)
-      this.state = {
-         value: props.value
+   handleBlur = (event) => {
+      this.props.triggerValidation()
+
+      if (this.props.onBlur) {
+         this.props.onBlur(event)
       }
    }
 
-   componentWillReceiveProps(nextProps) {
-      if (nextProps.value !== this.state.value) {
-         this.setState({ value: nextProps.value })
-      }
-   }
-
-   handleChange(event) {
-      this.setState({ value: event.target.value })
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.value)
-      }
+   handleChange = (event) => {
+      this.props.triggerChange(event, event.target.value)
    }
 
    render() {
@@ -63,14 +56,15 @@ export default class Input extends Component {
                style={inputStyles}
                className={classNames(classes)}
                id={this.props.id}
-               onBlur={this.props.onBlur}
+               onBlur={this.handleBlur}
                onChange={this.handleChange}
                name={this.props.name}
                placeholder={this.props.placeholder}
+               readOnly={this.props.readOnly}
                type={this.props.type}
-               value={this.state.value}
+               value={this.props.value}
             />
-            {this.props.touched && this.props.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
                   {this.props.error}
                </div>
@@ -79,3 +73,5 @@ export default class Input extends Component {
       )
    }
 }
+
+export default createOIOFormField()(Input)

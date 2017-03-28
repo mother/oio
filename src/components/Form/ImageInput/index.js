@@ -24,8 +24,12 @@ export default class ImageInput extends Component {
       size: 'contain'
    }
 
-   constructor(props, context) {
-      super(props, context)
+   static contextTypes = {
+      OIOForm: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
 
       this.state = {
          file: null,
@@ -38,9 +42,17 @@ export default class ImageInput extends Component {
    }
 
    handleChange = (files) => {
-      this.setState({ file: files[0] }, () => {
-         this.props.onChange(null, this.state.file)
-      })
+      const file = files[0]
+
+      this.setState({ file })
+
+      if (this.context.OIOForm) {
+         this.context.OIOForm.setValue(this.props.name, file)
+      }
+
+      if (this.props.onChange) {
+         this.props.onChange(file)
+      }
    }
 
    render() {
