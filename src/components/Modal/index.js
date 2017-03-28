@@ -7,11 +7,11 @@ import style from './style.less'
 
 export default class Modal extends Component {
    static propTypes = {
-      animation: React.PropTypes.string,
+      animation: React.PropTypes.oneOf(['scaleIn', 'slideFromBottom']),
       children: React.PropTypes.node,
       height: React.PropTypes.string,
       closeURL: React.PropTypes.string,
-      mode: React.PropTypes.string,
+      mode: React.PropTypes.oneOf(['fixed', 'fill']),
       onClose: React.PropTypes.func,
       width: React.PropTypes.string,
       windowClassName: React.PropTypes.string,

@@ -72,7 +72,7 @@ export default class DemoContentModal extends Component {
                   <GridCell colspan="3">
                      <ButtonGroup>
                         <Link to="/modal/example4">
-                           <Button name="Fill Modal Window" />
+                           <Button name="Responsive Modal Window" />
                         </Link>
                      </ButtonGroup>
                   </GridCell>
@@ -108,7 +108,8 @@ export default class DemoContentModal extends Component {
                            <td>String</td>
                            <td><code>0px</code></td>
                            <td>
-                              It is the pixel from top, left, right, bottom positions of the modal window.
+                              It is the pixel from top, left, right, bottom&nbsp;
+                              positions of the modal window.
                            </td>
                         </tr>
                         <tr>
@@ -141,7 +142,9 @@ export default class DemoContentModal extends Component {
                            <td>String</td>
                            <td>-</td>
                            <td>
-                              URL that user is directed to when they close the <code>Modal</code>
+                              URL that user is directed to when they click the close&nbsp;
+                              button. This feature is still under development and will change&nbsp;
+                              when the new react-router is installed.
                            </td>
                         </tr>
                         <tr>
