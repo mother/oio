@@ -1,88 +1,39 @@
 import React, { Component } from 'react'
+import { createOIOFormField } from '..'
 import formStyles from '../styles.less'
 
-export default class Switch extends Component {
+class Switch extends Component {
    static propTypes = {
       error: React.PropTypes.string,
       id: React.PropTypes.string,
-      initialValue: React.PropTypes.bool,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      rules: React.PropTypes.array,
+      readOnly: React.PropTypes.bool,
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
       value: React.PropTypes.bool
    }
 
    static defaultProps = {
-      initialValue: false
+      value: false
    }
 
    static contextTypes = {
-      OIOForm: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         error: props.error,
-         value: props.value === true || props.value === false
-            ? props.value
-            : props.initialValue
-      }
-   }
-
-   componentDidMount() {
-      if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
-         this.context.OIOForm.setRules(this.props.name, this.props.rules)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
-      // TODO: If name changes, need to remove form value corresponding to old name
-      if (nextProps.value && nextProps.value !== this.state.value) {
-         this.setState({ value: nextProps.value })
-
-         if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, nextProps.value)
-         }
-      }
-
-      if (this.context.OIOForm) {
-         this.setState({
-            error: this.context.OIOForm.getErrors().errors[this.props.name]
-         })
-      }
-   }
-
    handleChange = (event) => {
-      const value = !this.state.value
-      this.setState({ value })
-
-      if (this.context.OIOForm) {
-         this.context.OIOForm.setValue(this.props.name, value)
-
-         const error = this.context.OIOForm.validateValue(
-            this.props.name,
-            value,
-            this.props.rules
-         )
-
-         this.setState({ error })
-      }
-
-      if (this.props.onChange) {
-         this.props.onChange(event, value)
-      }
+      const newValue = !this.props.value
+      this.props.triggerChange(event, newValue, () => {
+         this.props.triggerValidation()
+      })
    }
 
    render() {
       const primaryColor = this.context.OIOStyles.primaryColor
       const switchStyle = {}
 
-      if (this.state.value) {
+      if (this.props.value) {
          switchStyle.backgroundColor = primaryColor
       }
 
@@ -92,19 +43,22 @@ export default class Switch extends Component {
             <label className={formStyles.switch} htmlFor={this.props.id}>
                <input
                   id={this.props.id}
-                  checked={this.state.value}
+                  checked={this.props.value}
                   type="checkbox"
                   name={this.props.name}
-                  onChange={this.handleChange}
+                  onChange={this.props.readOnly ? undefined : this.handleChange}
+                  readOnly={this.props.readOnly}
                />
                <div className={formStyles.switchSlider} style={switchStyle} />
             </label>
-            {this.state.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
-                  {this.state.error}
+                  {this.props.error}
                </div>
             }
          </span>
       )
    }
 }
+
+export default createOIOFormField()(Switch)

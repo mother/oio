@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 const createOIOFormField = () => Field => (
    class ConnectedField extends Component {
       static propTypes = {
-         initialValue: React.PropTypes.string,
+         initialValue: React.PropTypes.any,
          name: React.PropTypes.string,
          onChange: React.PropTypes.func,
          readOnly: React.PropTypes.bool,
          rules: React.PropTypes.array,
-         value: React.PropTypes.string
+         value: React.PropTypes.any
       }
 
       static contextTypes = {
@@ -34,25 +34,29 @@ const createOIOFormField = () => Field => (
       componentWillReceiveProps(nextProps) {
          // TODO: If name changes, need to remove form value corresponding to old name
 
+         let valueChanged = false
          let nextValue
 
          // If a value is provided
-         if (nextProps.value && this.props.value !== nextProps.value) {
+         if (this.props.value !== nextProps.value) {
             this.initialized = true
+            valueChanged = true
             nextValue = nextProps.value
 
          // If the field is not initialized, and an initialValue is provided
          } else if (nextProps.initialValue && !this.initialized) {
             this.initialized = true
+            valueChanged = true
             nextValue = nextProps.initialValue
          }
 
-         if (nextValue) {
+         if (valueChanged) {
             this.setState({ value: nextValue })
             if (this.context.OIOForm) {
                this.context.OIOForm.setValue(this.props.name, nextValue)
             }
 
+            // TODO: Revisit this
             if (this.context.OIOForm) {
                this.setState({
                   error: this.context.OIOForm.getErrors().errors[this.props.name]
@@ -73,17 +77,19 @@ const createOIOFormField = () => Field => (
          }
       }
 
-      triggerChange = (event, value) => {
+      triggerChange = (event, value, callback = () => {}) => {
          // Only update the state (and therefore the value) if both
          // props.value and props.onChange are not specified
          const shouldUpdateState = !(this.props.value && this.props.onChange)
 
          if (shouldUpdateState) {
-            this.setState({ value })
-
-            if (this.context.OIOForm) {
-               this.context.OIOForm.setValue(this.props.name, value)
-            }
+            this.setState({ value }, () => {
+               if (this.context.OIOForm) {
+                  this.context.OIOForm.setValue(this.props.name, value, () => {
+                     callback()
+                  })
+               }
+            })
          }
 
          if (this.props.onChange) {

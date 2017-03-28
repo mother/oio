@@ -87,7 +87,7 @@ export default class Form extends Component {
       })
    }
 
-   setValue = (name, value) => {
+   setValue = (name, value, callback = () => {}) => {
       if (!name) return
 
       this.setState((state) => {
@@ -103,7 +103,7 @@ export default class Form extends Component {
             data,
             pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
          }
-      })
+      }, callback)
    }
 
    setRules = (name, rules) => {

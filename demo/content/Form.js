@@ -19,9 +19,7 @@ import {
    */
    Select,
    Spacer,
-   /*
    Switch,
-   */
    Textarea,
    Title,
    TitleBar,
@@ -41,8 +39,15 @@ export default class DemoContentForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this)
 
       this.state = {
-         firstName: 'Reade-Ohnly'
+         firstName: 'Reade-Ohnly',
+         switch: false
       }
+   }
+
+   componentDidMount() {
+      // setInterval(() => {
+      //    this.setState({ switch: !this.state.switch })
+      // }, 1000)
    }
 
    handleError(error, file) {
@@ -151,7 +156,7 @@ export default class DemoContentForm extends Component {
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
-                           value="A cool description"
+                           initialValue="A cool description"
                            rules={['required']}
                         />
                         <Select
@@ -205,6 +210,7 @@ export default class DemoContentForm extends Component {
                               </GridCell>
                            </Grid>
                         </CheckboxGroup>
+                        */}
                         <Spacer size="3" />
                         <View width="100%">
                            <Switch
@@ -215,7 +221,6 @@ export default class DemoContentForm extends Component {
                            />
                            <Spacer size="9" />
                         </View>
-                        */}
                         <View width="100%">
                            <Button name="Save Changes" type="submit" autoFormRespond />
                         </View>

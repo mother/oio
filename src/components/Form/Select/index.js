@@ -32,8 +32,9 @@ class Select extends Component {
    }
 
    handleChange = (event) => {
-      this.props.triggerChange(event, event.target.value)
-      this.props.triggerValidation()
+      this.props.triggerChange(event, event.target.value, () => {
+         this.props.triggerValidation()
+      })
    }
 
    render() {
