@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import {
    Avatar,
    Button,
-   /*
    Checkbox,
    CheckboxGroup,
+   /*
    DateInput,
    */
    FileInput,
@@ -101,6 +101,7 @@ export default class DemoContentForm extends Component {
                            name="document"
                            label="Document"
                         />
+                        <Spacer size="2" />
                         <div>
                            <div>
                               <Input
@@ -189,6 +190,8 @@ export default class DemoContentForm extends Component {
                               </GridCell>
                            </Grid>
                         </RadioGroup>
+                        */}
+
                         <Spacer size="3" />
                         <CheckboxGroup
                            name="sports"
@@ -210,7 +213,6 @@ export default class DemoContentForm extends Component {
                               </GridCell>
                            </Grid>
                         </CheckboxGroup>
-                        */}
                         <Spacer size="3" />
                         <View width="100%">
                            <Switch

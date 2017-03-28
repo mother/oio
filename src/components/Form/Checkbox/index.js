@@ -12,11 +12,13 @@ export default class Checkbox extends Component {
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onChange: React.PropTypes.func,
+      readOnly: React.PropTypes.bool,
       value: React.PropTypes.string
    }
 
    static defaultProps = {
-      checked: false
+      checked: false,
+      readOnly: false
    }
 
    static contextTypes = {
@@ -34,9 +36,8 @@ export default class Checkbox extends Component {
 
    componentWillReceiveProps(nextProps) {
       let checked = nextProps.checked
-
       if (this.context.OIOFormCheckbox) {
-         checked = this.context.OIOFormCheckbox.getValue().includes(nextProps.value)
+         checked = this.context.OIOFormCheckbox.getProps().value.includes(nextProps.value)
       }
 
       this.setState({ checked })
@@ -54,6 +55,16 @@ export default class Checkbox extends Component {
       const name = this.context.OIOFormCheckbox
          ? this.context.OIOFormCheckbox.name
          : this.props.name
+
+      const readOnly = this.context.OIOFormCheckbox
+         ? this.context.OIOFormCheckbox.getProps().readOnly
+         : this.props.readOnly
+
+      const readOnlyEventHandlers = {}
+      if (readOnly) {
+         readOnlyEventHandlers.onClick = () => false
+         readOnlyEventHandlers.onKeyDown = () => false
+      }
 
       const primaryColor = this.context.OIOStyles.primaryColor
       let checkboxIcon = 'ion-ios-circle-outline'
@@ -75,7 +86,8 @@ export default class Checkbox extends Component {
                   checked={this.state.checked}
                   name={name}
                   value={this.props.value}
-                  onChange={this.handleChange}
+                  onChange={!readOnly && this.handleChange}
+                  {...readOnlyEventHandlers}
                />
                <Icon name={checkboxIcon} className={style.icon} style={checkboxIconStyle} />
                <Text size="3" weight="normal">

@@ -82,6 +82,7 @@ export default class Form extends Component {
 
          return {
             data,
+            // TODO: This doesn't work with array and object comparison
             pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
          }
       })
@@ -101,6 +102,7 @@ export default class Form extends Component {
 
          return {
             data,
+            // TODO: This doesn't work with array and object comparison
             pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
          }
       }, callback)

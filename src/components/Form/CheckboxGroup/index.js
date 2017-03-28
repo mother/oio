@@ -1,123 +1,73 @@
 import React, { Component } from 'react'
+import { createOIOFormField } from '..'
 import formStyles from '../styles.less'
 
-export default class CheckboxGroup extends Component {
+class CheckboxGroup extends Component {
    static propTypes = {
       children: React.PropTypes.node,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
-      initialValue: React.PropTypes.array,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      rules: React.PropTypes.array
+      readOnly: React.PropTypes.bool,
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
+      value: React.PropTypes.array
    }
 
    static defaultProps = {
-      initialValue: []
-   }
-
-   static contextTypes = {
-      OIOForm: React.PropTypes.object
+      value: []
    }
 
    static childContextTypes = {
       OIOFormCheckbox: React.PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         error: props.error,
-         initialValue: null,
-         value: props.initialValue
-      }
-   }
-
    getChildContext() {
       const OIOFormCheckbox = {
          name: this.props.name,
-         getValue: this.getValue
+         getProps: this.getProps
       }
 
       return { OIOFormCheckbox }
    }
 
-   componentDidMount() {
-      if (this.context.OIOForm && this.props.name) {
-         this.context.OIOForm.setInitialValue(this.props.name, this.state.value)
-         this.context.OIOForm.setRules(this.props.name, this.props.rules)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
-      // TODO: If name changes, need to remove form value corresponding to old name
-
-      if (nextProps.initialValue && !this.state.initialValue) {
-         this.setState({
-            initialValue: nextProps.initialValue,
-            value: nextProps.initialValue
-         })
-
-         if (this.context.OIOForm) {
-            this.context.OIOForm.setValue(this.props.name, nextProps.initialValue)
-         }
-      }
-
-      if (this.context.OIOForm) {
-         this.setState({
-            error: this.context.OIOForm.getErrors().errors[this.props.name]
-         })
-      }
-   }
-
-   getValue = () => this.state.value
+   getProps = () => this.props
 
    handleChange = (event) => {
       const checkboxChecked = event.target.checked
       const checkboxValue = event.target.value
-      const checkboxGroupValue = this.state.value
+      const checkboxGroupValue = [...this.props.value]
 
       if (checkboxChecked) {
          checkboxGroupValue.push(checkboxValue)
       } else {
          const index = checkboxGroupValue.indexOf(checkboxValue)
-         if (index > -1) checkboxGroupValue.splice(index, 1)
+         if (index > -1) {
+            checkboxGroupValue.splice(index, 1)
+         }
       }
 
-      this.setState({ checkboxGroupValue })
-
-      if (this.context.OIOForm) {
-         this.context.OIOForm.setValue(this.props.name, checkboxGroupValue)
-
-         const error = this.context.OIOForm.validateValue(
-            this.props.name,
-            checkboxGroupValue,
-            this.props.rules
-         )
-
-         this.setState({ error })
-      }
-
-      if (this.props.onChange) {
-         this.props.onChange(event, checkboxGroupValue)
-      }
+      this.props.triggerChange(event, checkboxGroupValue, () => {
+         this.props.triggerValidation()
+      })
    }
 
    render() {
       return (
          <div className={formStyles.container} name={this.props.name}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
-            <div onChange={this.handleChange}>
+            <div onChange={!this.props.readOnly && this.handleChange}>
                {this.props.children}
             </div>
-            {this.state.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
-                  {this.state.error}
+                  {this.props.error}
                </div>
             }
          </div>
       )
    }
 }
+
+export default createOIOFormField()(CheckboxGroup)
