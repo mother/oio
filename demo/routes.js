@@ -10,13 +10,13 @@ import ModalExample1 from './content/Modal/Example1'
 import ModalExample2 from './content/Modal/Example2'
 import ModalExample3 from './content/Modal/Example3'
 import ModalExample4 from './content/Modal/Example4'
-import Typography from './content/Typography'
 import View from './content/View'
+import Welcome from './content/Welcome'
 import ExamplesWindow from './examples/Window'
 
 export default (
    <Route path="/" component={Demo}>
-      <IndexRoute component={Typography} />
+      <IndexRoute component={Welcome} />
       <Route path="button" component={Button} />
       <Route path="button-group" component={ButtonGroup} />
       <Route path="form" component={Form} />
