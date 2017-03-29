@@ -1,32 +1,101 @@
-import React from 'react'
-import formStyles from '../styles.less'
+import React, { Component } from 'react'
+import Icon from '../../Icon'
+import Text from '../../Text'
+import View from '../../View'
+import style from './style.less'
 
-const Radio = ({
-   checked, id, label, name, onBlur, onChange, value
-}) => (
-   <span className={formStyles.container}>
-      <input
-         id={id}
-         className={formStyles.inputRadio}
-         checked={checked}
-         type="radio"
-         name={name}
-         value={value}
-         onChange={onChange}
-         onBlur={onBlur}
-      />
-      <label className={formStyles.labelRadio} htmlFor={id}>{label}</label>
-   </span>
-)
+export default class Radio extends Component {
+   static propTypes = {
+      checked: React.PropTypes.bool,
+      children: React.PropTypes.node,
+      id: React.PropTypes.string,
+      label: React.PropTypes.string,
+      name: React.PropTypes.string,
+      onChange: React.PropTypes.func,
+      readOnly: React.PropTypes.bool,
+      value: React.PropTypes.string
+   }
 
-Radio.propTypes = {
-   checked: React.PropTypes.bool,
-   id: React.PropTypes.string,
-   label: React.PropTypes.string,
-   name: React.PropTypes.string,
-   onBlur: React.PropTypes.func,
-   onChange: React.PropTypes.func,
-   value: React.PropTypes.string
+   static defaultProps = {
+      checked: false,
+      readOnly: false
+   }
+
+   static contextTypes = {
+      OIOFormRadio: React.PropTypes.object,
+      OIOStyles: React.PropTypes.object
+   }
+
+   constructor(props) {
+      super(props)
+
+      this.state = {
+         checked: props.checked
+      }
+   }
+
+   componentWillReceiveProps(nextProps) {
+      let checked = nextProps.checked
+      if (this.context.OIOFormRadio) {
+         checked = nextProps.value === this.context.OIOFormRadio.getProps().value
+      }
+
+      this.setState({ checked })
+   }
+
+   handleChange = (event) => {
+      this.setState({ checked: event.target.checked })
+
+      if (this.props.onChange) {
+         this.props.onChange(event, event.target.checked)
+      }
+   }
+
+   render() {
+      const name = this.context.OIOFormRadio
+         ? this.context.OIOFormRadio.name
+         : this.props.name
+
+      const readOnly = this.context.OIOFormRadio
+         ? this.context.OIOFormRadio.getProps().readOnly
+         : this.props.readOnly
+
+      const readOnlyEventHandlers = {}
+      if (readOnly) {
+         readOnlyEventHandlers.onClick = () => false
+         readOnlyEventHandlers.onKeyDown = () => false
+      }
+
+      const primaryColor = this.context.OIOStyles.primaryColor
+      let radioIcon = 'ion-ios-circle-outline'
+      let radioIconStyle = {}
+
+      if (this.state.checked) {
+         radioIcon = 'ion-ios-circle-filled'
+         radioIconStyle = {
+            color: primaryColor
+         }
+      }
+
+      return (
+         <View width="100%">
+            <label className={style.radioLabel} htmlFor={this.props.id}>
+               <input
+                  id={this.props.id}
+                  checked={this.state.checked}
+                  type="radio"
+                  name={name}
+                  value={this.props.value}
+                  onChange={!readOnly && this.handleChange}
+                  {...readOnlyEventHandlers}
+               />
+               <Icon name={radioIcon} className={style.icon} style={radioIconStyle} />
+               <Text size="3" weight="normal">
+                  {this.props.label}
+               </Text>
+               {this.props.children}
+            </label>
+         </View>
+      )
+   }
 }
-
-export default Radio

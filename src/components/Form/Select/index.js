@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { createOIOFormField } from '..'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
-export default class Select extends Component {
+class Select extends Component {
    static propTypes = {
       className: React.PropTypes.string,
       error: React.PropTypes.string,
@@ -11,9 +12,10 @@ export default class Select extends Component {
       label: React.PropTypes.string,
       name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
       options: React.PropTypes.array,
-      touched: React.PropTypes.bool,
+      readOnly: React.PropTypes.bool,
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
       value: React.PropTypes.string
    }
 
@@ -21,13 +23,18 @@ export default class Select extends Component {
       options: []
    }
 
-   constructor(props, context) {
-      super(props, context)
-      this.state = { value: undefined }
+   handleBlur = (event) => {
+      this.props.triggerValidation()
+
+      if (this.props.onBlur) {
+         this.props.onBlur(event)
+      }
    }
 
-   handleChange(event) {
-      this.setState({ value: event.target.value })
+   handleChange = (event) => {
+      this.props.triggerChange(event, event.target.value, () => {
+         this.props.triggerValidation()
+      })
    }
 
    render() {
@@ -36,7 +43,12 @@ export default class Select extends Component {
       const children = []
       this.props.options.forEach((option) => {
          children.push(
-            <option key={option.value} value={option.value}>{option.text}</option>
+            <option
+               key={option.value}
+               value={option.value}
+               disabled={option.disabled}>
+               {option.text}
+            </option>
          )
       })
 
@@ -48,14 +60,11 @@ export default class Select extends Component {
                id={this.props.id}
                value={this.props.value}
                name={this.props.name}
-               onBlur={this.props.onBlur}
-               onChange={(event) => {
-                  this.handleChange(event)
-                  this.props.onChange(event)
-               }}>
+               onChange={this.handleChange}
+               readOnly={this.props.readOnly}>
                {children}
             </select>
-            {this.props.touched && this.props.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
                   {this.props.error}
                </div>
@@ -64,3 +73,5 @@ export default class Select extends Component {
       )
    }
 }
+
+export default createOIOFormField()(Select)

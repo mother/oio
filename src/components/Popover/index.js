@@ -22,8 +22,6 @@ export default class Popover extends Component {
    constructor(props) {
       super(props)
 
-      this.hide = this.hide.bind(this)
-      this.show = this.show.bind(this)
       this.state = {
          top: 0,
          left: 0,
@@ -40,7 +38,7 @@ export default class Popover extends Component {
       window.removeEventListener('click', this.hide, false)
    }
 
-   show(event) {
+   show = (event) => {
       event.stopPropagation()
 
       const triggerButton = event.currentTarget
@@ -52,7 +50,7 @@ export default class Popover extends Component {
       })
    }
 
-   hide() {
+   hide = () => {
       this.setState({ visible: false })
    }
 
