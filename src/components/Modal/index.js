@@ -30,8 +30,6 @@ export default class Modal extends Component {
    constructor(props) {
       super(props)
 
-      this.hideModal = this.hideModal.bind(this)
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
       this.state = {
          position: 'middleCenter',
          size: getWindowSize()
@@ -47,7 +45,7 @@ export default class Modal extends Component {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const browserWindowHeight = document.documentElement.clientHeight
       const modalHeight = parseFloat(this.props.height)
       const windowSize = getWindowSize()
@@ -60,7 +58,7 @@ export default class Modal extends Component {
       this.setState(stateObj)
    }
 
-   hideModal(event) {
+   hideModal = (event) => {
       if (this.props.onClose && this.node === event.target) {
          this.props.onClose()
       }

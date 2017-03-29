@@ -44,12 +44,6 @@ export default class Text extends Component {
    constructor(props) {
       super(props)
 
-      this.handleChange = this.handleChange.bind(this)
-      this.handleEditCancel = this.handleEditCancel.bind(this)
-      this.handleEditClick = this.handleEditClick.bind(this)
-      this.handleEditDone = this.handleEditDone.bind(this)
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
-
       this.state = {
          editing: props.editing,
          editorValue: props.editorValue,
@@ -109,7 +103,7 @@ export default class Text extends Component {
    // Event Handlers
    // =====================================================
 
-   handleChange(event) {
+   handleChange = (event) => {
       this.adjustTextareaHeight(event.target)
 
       let value = event.target.value
@@ -120,24 +114,24 @@ export default class Text extends Component {
       this.setState({ editorValue: value })
    }
 
-   handleEditCancel() {
+   handleEditCancel = () => {
       if (this.props.editorOnCancel) this.props.editorOnCancel(this.state.editorValue)
 
       this.setState({ editorValue: this.props.editorValue })
    }
 
-   handleEditClick(event) {
+   handleEditClick = (event) => {
       this.setState({
          editorValue: this.props.editorValue,
          editing: true
       })
    }
 
-   handleEditDone() {
+   handleEditDone = () => {
       if (this.props.editorOnDone) this.props.editorOnDone(this.state.editorValue)
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }
