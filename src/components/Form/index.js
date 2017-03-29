@@ -21,7 +21,6 @@ const predefinedRules = {
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
-      novalidate: React.PropTypes.bool,
       onError: React.PropTypes.func,
       onSubmit: React.PropTypes.func
    }
@@ -223,8 +222,6 @@ export default class Form extends Component {
    }
 
    validateValue = (name, value, rules) => {
-      if (this.props.novalidate) return null
-
       const validationResult = this.applyRulesToValue(rules, value)
 
       if (name) {
