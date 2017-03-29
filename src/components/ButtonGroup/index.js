@@ -47,6 +47,8 @@ export default class ButtonGroup extends Component {
          position: 'relative'
       }
 
+      const innerContainerStyle = {}
+
       if (this.props.align === 'center') {
          style.width = '100%'
          style.textAlign = 'center'
@@ -55,16 +57,19 @@ export default class ButtonGroup extends Component {
       }
 
       if (this.props.mode === 'segmented') {
-         style.border = `2px solid
+         innerContainerStyle.display = 'inline-block'
+         innerContainerStyle.border = `2px solid
             rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
             ${buttonColorRGB.b}, 1)`
 
-         style.borderRadius = '3px'
+         innerContainerStyle.borderRadius = '3px'
       }
 
       return (
-         <div className={this.props.className} style={style}>{this.props.children}</div>
+         <div className={this.props.className} style={style}>
+            <span style={innerContainerStyle}>{this.props.children}</span>
+         </div>
       )
    }
 }
