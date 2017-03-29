@@ -31,7 +31,7 @@ export default class DemoContentView extends Component {
                      The View component is probably one of the most important components within OIO.
                      It is the core OIO component you should use to structure your pages,&nbsp;
                      layouts and components for your application. You can think of the&nbsp;
-                     <code>View</code> component as OIO's take on a <code>div</code>.
+                     <code>View</code> component as OIO&apos;s take on a <code>div</code>.
                   </Text>
                </GridCell>
                <GridCell>
@@ -54,18 +54,18 @@ export default class DemoContentView extends Component {
                         <Spacer size="2" />
                         <View width="100%" className={style.docsWindow}>
                            <View width="20%" className="bgGray10" padding="18px">
-                              <code>View</code> component with format set to <code>float</code>&nbsp;
-                              and width set to <code>20%</code>
+                              <code>View</code> component with format set to&nbsp;
+                              <code>float</code>and width set to <code>20%</code>
                            </View>
                            <View width="30%" aspectRatio="1:1" className="bgGray20" padding="18px">
-                              <code>View</code> component with format set to <code>float</code>&nbsp;
-                              and width set to <code>30%</code> and aspectRatio set to
-                              <code>1:1</code>
+                              <code>View</code> component with format set to&nbsp;
+                              <code>float</code>and width set to <code>30%</code> and&nbsp;
+                              aspectRatio set to <code>1:1</code>
                            </View>
                            <View width="50%" aspectRatio="1:1" className="bgGray30" padding="18px">
-                              <code>View</code> component with format set to <code>float</code>&nbsp;
-                              and width set to <code>50%</code> and aspectRatio set to
-                              <code>1:1</code>
+                              <code>View</code> component with format set to&nbsp;
+                              <code>float</code> and width set to <code>50%</code> and&nbsp;
+                              aspectRatio set to<code>1:1</code>
                            </View>
                         </View>
                      </GridCell>
@@ -88,7 +88,12 @@ export default class DemoContentView extends Component {
                      </GridCell>
                      <GridCell>
                         <View width="100%" height="270px" className={style.docsWindow}>
-                           <View format="auto" padding="18px" width="50%" height="150px" className="bgGray20">
+                           <View
+                              format="auto"
+                              padding="18px"
+                              width="50%"
+                              height="150px"
+                              className="bgGray20">
                               <code>View</code> component with format set to <code>auto</code>&nbsp;
                               with a width set to <code>50%</code> and height set to
                               <code>150px</code>
@@ -232,7 +237,11 @@ export default class DemoContentView extends Component {
                   </GridCell>
                   <GridCell colspan="3">
                      <View width="100%" height="360px" className={style.docsWindow}>
-                        <View width="300px" height="120px" position="middle center" className="bgGray10">
+                        <View
+                           width="300px"
+                           height="120px"
+                           position="middle center"
+                           className="bgGray10">
                            <Text weight="semibold">View 1</Text>
                            <Spacer size="2" />
                            <code>View</code> with format of <code>float</code> with width of&nbsp;
