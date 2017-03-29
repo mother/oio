@@ -18,8 +18,8 @@ export default class Video extends Component {
       width: '100%'
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = {
          size: getWindowSize(),
@@ -28,8 +28,6 @@ export default class Video extends Component {
          videoWidth: 'auto',
          videoHeight: 'auto'
       }
-
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    componentDidMount() {
@@ -78,7 +76,7 @@ export default class Video extends Component {
       }
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }

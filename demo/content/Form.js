@@ -30,11 +30,8 @@ export default class DemoContentForm extends Component {
       contents: React.PropTypes.array
    }
 
-   constructor(props, context) {
-      super(props, context)
-
-      this.handleError = this.handleError.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
+   constructor(props) {
+      super(props)
 
       this.state = {
          firstName: 'Jane',
@@ -42,11 +39,11 @@ export default class DemoContentForm extends Component {
       }
    }
 
-   handleError(error, file) {
+   handleError = (error, file) => {
       console.log(error) // eslint-disable-line no-console
    }
 
-   handleSubmit(data, files, formData, utils) {
+   handleSubmit = (data, files, formData, utils) => {
       /* eslint-disable */
       console.log(data)
       console.log(files)

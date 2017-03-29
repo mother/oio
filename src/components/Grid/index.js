@@ -21,8 +21,8 @@ export default class Grid extends Component {
       GridCellStyle: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = {
          size: getWindowSize(),
@@ -31,8 +31,6 @@ export default class Grid extends Component {
          cellWidth: 'auto',
          cellGutter: 'auto'
       }
-
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    getChildContext() {
@@ -57,7 +55,7 @@ export default class Grid extends Component {
       window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize })
    }
