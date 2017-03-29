@@ -42,12 +42,11 @@ export default class ButtonGroup extends Component {
       const buttonColor = this.context.OIOStyles.primaryColor
       const buttonColorRGB = convertColor(buttonColor)
 
+      const innerContainerStyle = {}
       const style = {
          float: 'left',
          position: 'relative'
       }
-
-      const innerContainerStyle = {}
 
       if (this.props.align === 'center') {
          style.width = '100%'
@@ -58,12 +57,11 @@ export default class ButtonGroup extends Component {
 
       if (this.props.mode === 'segmented') {
          innerContainerStyle.display = 'inline-block'
+         innerContainerStyle.borderRadius = '3px'
          innerContainerStyle.border = `2px solid
             rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
             ${buttonColorRGB.b}, 1)`
-
-         innerContainerStyle.borderRadius = '3px'
       }
 
       return (
