@@ -183,7 +183,7 @@ export default class Form extends Component {
       return null
    }
 
-   constructFormData(data) {
+   constructFormData = (data) => {
       const formData = new FormData()
 
       for (const key of Object.keys(data)) {
@@ -196,6 +196,26 @@ export default class Form extends Component {
       }
 
       return formData
+   }
+
+   reinitializeFormState = () => {
+      this.setState((state) => {
+         const fieldNames = Object.keys(state.data)
+         const newData = Object.assign({}, fieldNames.reduce((newState, key) => {
+            newState[key] = {
+               ...state.data[key],
+               initialValue: state.data[key].value
+            }
+
+            return newState
+         }, {}))
+
+         return {
+            data: newData,
+            pristine: true,
+            submitting: false
+         }
+      })
    }
 
    handleSubmit = (event) => {
@@ -220,29 +240,15 @@ export default class Form extends Component {
       if (errorsExist) {
          if (this.props.onError) this.props.onError(errors)
       } else if (this.props.onSubmit) {
-         const submitPromise = this.props.onSubmit(data, files, formData, this.constructFormData)
+         const submitPromise = this.props.onSubmit(data, files, formData, {
+            constructFormData: this.constructFormData,
+            reinitializeFormState: this.reinitializeFormState
+         })
+
          if (submitPromise instanceof Promise) {
             this.setState({ submitting: true }, () => {
                submitPromise
-               .then(() => {
-                  this.setState((state) => {
-                     const fieldNames = Object.keys(state.data)
-                     const newData = Object.assign({}, fieldNames.reduce((newState, key) => {
-                        newState[key] = {
-                           ...state.data[key],
-                           initialValue: state.data[key].value
-                        }
-
-                        return newState
-                     }, {}))
-
-                     return {
-                        data: newData,
-                        pristine: true,
-                        submitting: false
-                     }
-                  })
-               })
+               .then(() => this.reinitializeFormState())
                .catch(() => this.setState({ submitting: false }))
             })
          }
