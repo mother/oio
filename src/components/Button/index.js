@@ -7,6 +7,7 @@ import style from './style.less'
 
 export default class Button extends Component {
    static propTypes = {
+      autoFormRespond: React.PropTypes.bool,
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       icon: React.PropTypes.string,
@@ -32,6 +33,8 @@ export default class Button extends Component {
 
    static contextTypes = {
       buttonGroup: React.PropTypes.object,
+      buttonGroupStyle: React.PropTypes.object,
+      OIOForm: React.PropTypes.object,
       OIOStyles: React.PropTypes.object
    }
 
@@ -76,7 +79,6 @@ export default class Button extends Component {
       const buttonClasses = [this.props.className]
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
-      const mode = this.props.mode
 
       const buttonStyle = {
          backgroundColor: buttonColor,
@@ -123,6 +125,24 @@ export default class Button extends Component {
       // =======================================================
       // Mode
       // =======================================================
+
+      let mode = this.props.mode
+
+      if (this.props.autoFormRespond) {
+         const formContext = this.context.OIOForm
+         if (this.props.type === 'submit' && formContext) {
+            const isPristine = formContext.pristine
+            const isSubmitting = formContext.submitting
+
+            if (isPristine) mode = 'disabled'
+            else if (isSubmitting) mode = 'loading'
+
+            if (formContext.getErrors().exist) {
+               buttonStyle.backgroundColor = 'red'
+               mode = 'disabled'
+            }
+         }
+      }
 
       if (mode === 'loading') {
          buttonClasses.push(style.isLoading)

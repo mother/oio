@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
+import { createOIOFormField } from '..'
 import formStyles from '../styles.less'
 
-export default class Switch extends Component {
+class Switch extends Component {
    static propTypes = {
       error: React.PropTypes.string,
       id: React.PropTypes.string,
       label: React.PropTypes.string,
       name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      touched: React.PropTypes.bool,
+      readOnly: React.PropTypes.bool,
+      triggerChange: React.PropTypes.func,
+      triggerValidation: React.PropTypes.func,
       value: React.PropTypes.bool
    }
 
@@ -21,31 +22,18 @@ export default class Switch extends Component {
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
-      this.handleChange = this.handleChange.bind(this)
-      this.state = { value: !!props.value }
-   }
-
-   componentWillReceiveProps(nextProps) {
-      const newValue = !!nextProps.value
-      if (this.state.value !== newValue) {
-         this.setState({ value: newValue })
-      }
-   }
-
-   handleChange(event) {
-      this.setState({ value: event.target.checked })
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.checked)
-      }
+   handleChange = (event) => {
+      const newValue = !this.props.value
+      this.props.triggerChange(event, newValue, () => {
+         this.props.triggerValidation()
+      })
    }
 
    render() {
       const primaryColor = this.context.OIOStyles.primaryColor
       const switchStyle = {}
 
-      if (this.state.value) {
+      if (this.props.value) {
          switchStyle.backgroundColor = primaryColor
       }
 
@@ -55,15 +43,15 @@ export default class Switch extends Component {
             <label className={formStyles.switch} htmlFor={this.props.id}>
                <input
                   id={this.props.id}
-                  checked={this.state.value}
+                  checked={this.props.value}
                   type="checkbox"
                   name={this.props.name}
-                  onChange={this.handleChange}
-                  onBlur={this.props.onBlur}
+                  onChange={this.props.readOnly ? undefined : this.handleChange}
+                  readOnly={this.props.readOnly}
                />
                <div className={formStyles.switchSlider} style={switchStyle} />
             </label>
-            {this.props.touched && this.props.error &&
+            {this.props.error &&
                <div className={formStyles.error}>
                   {this.props.error}
                </div>
@@ -72,3 +60,5 @@ export default class Switch extends Component {
       )
    }
 }
+
+export default createOIOFormField()(Switch)
