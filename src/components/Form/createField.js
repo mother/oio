@@ -53,14 +53,7 @@ const createOIOFormField = () => Field => (
          if (valueChanged) {
             this.setState({ value: nextValue })
             if (this.context.OIOForm) {
-               this.context.OIOForm.setValue(this.props.name, nextValue)
-            }
-
-            // TODO: Revisit this
-            if (this.context.OIOForm) {
-               this.setState({
-                  error: this.context.OIOForm.getErrors().errors[this.props.name]
-               })
+               this.context.OIOForm.setValue(this.props.name, nextValue, this.triggerValidation)
             }
          }
       }

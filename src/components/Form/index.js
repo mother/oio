@@ -18,6 +18,14 @@ const predefinedRules = {
    }
 }
 
+const compareFieldValues = (v1, v2) => {
+   if (typeof v1 === 'object' || typeof v2 === 'object') {
+      return JSON.stringify(v1) === JSON.stringify(v2)
+   }
+
+   return v1 === v2
+}
+
 export default class Form extends Component {
    static propTypes = {
       children: React.PropTypes.node,
@@ -82,8 +90,9 @@ export default class Form extends Component {
 
          return {
             data,
-            // TODO: This doesn't work with array and object comparison
-            pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
+            pristine: Object.keys(data).every(n => (
+               compareFieldValues(data[n].value, data[n].initialValue)
+            ))
          }
       })
    }
@@ -102,8 +111,9 @@ export default class Form extends Component {
 
          return {
             data,
-            // TODO: This doesn't work with array and object comparison
-            pristine: Object.keys(data).every(n => data[n].value === data[n].initialValue)
+            pristine: Object.keys(data).every(n => (
+               compareFieldValues(data[n].value, data[n].initialValue)
+            ))
          }
       }, callback)
    }
@@ -214,7 +224,25 @@ export default class Form extends Component {
          if (submitPromise instanceof Promise) {
             this.setState({ submitting: true }, () => {
                submitPromise
-               .then(() => this.setState({ pristine: true, submitting: false }))
+               .then(() => {
+                  this.setState((state) => {
+                     const fieldNames = Object.keys(state.data)
+                     const newData = Object.assign({}, fieldNames.reduce((newState, key) => {
+                        newState[key] = {
+                           ...state.data[key],
+                           initialValue: state.data[key].value
+                        }
+
+                        return newState
+                     }, {}))
+
+                     return {
+                        data: newData,
+                        pristine: true,
+                        submitting: false
+                     }
+                  })
+               })
                .catch(() => this.setState({ submitting: false }))
             })
          }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
    Avatar,
    Button,
+   ButtonGroup,
    Checkbox,
    CheckboxGroup,
    DateInput,
@@ -9,6 +10,7 @@ import {
    Form,
    Grid,
    GridCell,
+   GridRow,
    ImageInput,
    Input,
    Radio,
@@ -38,12 +40,6 @@ export default class DemoContentForm extends Component {
          firstName: 'Jane',
          age: 1
       }
-   }
-
-   componentDidMount() {
-      setInterval(() => {
-         this.setState({ age: this.state.age + 1 })
-      }, 2000)
    }
 
    handleError(error, file) {
@@ -127,13 +123,38 @@ export default class DemoContentForm extends Component {
                               { test: value => value.length > 8, message: 'At least 8 characters' }
                            ]}
                         />
-                        <Input
-                           name="age"
-                           label="Age"
-                           placeholder="Your age will be automatically calculated"
-                           rules={['required']}
-                           value={this.state.age.toString()}
-                        />
+                        <Grid width="100%" columns="5">
+                           <GridRow>
+                              <GridCell colspan="4">
+                                 <Input
+                                    name="age"
+                                    label="Age"
+                                    placeholder="What's your age?"
+                                    rules={[{ test: value => value > 0, message: 'Be older' }]}
+                                    value={this.state.age.toString()}
+                                 />
+                              </GridCell>
+                              <GridCell>
+                                 <br />
+                                 <ButtonGroup align="right">
+                                    <Button
+                                       size="small"
+                                       name="-"
+                                       onClick={() => {
+                                          if (this.state.age > 0) {
+                                             this.setState({ age: this.state.age - 1 })
+                                          }
+                                       }}
+                                    />
+                                    <Button
+                                       size="small"
+                                       name="+"
+                                       onClick={() => this.setState({ age: this.state.age + 1 })}
+                                    />
+                                 </ButtonGroup>
+                              </GridCell>
+                           </GridRow>
+                        </Grid>
                         <DateInput
                            name="date.start"
                            label="Start Date"
