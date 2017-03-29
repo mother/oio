@@ -136,17 +136,19 @@ export default class DemoContentForm extends Component {
                                  <ButtonGroup align="right">
                                     <Button
                                        size="small"
-                                       name="-"
+                                       icon="ion-minus"
                                        onClick={() => {
                                           if (this.state.age > 0) {
                                              this.setState({ age: this.state.age - 1 })
                                           }
                                        }}
+                                       rounded
                                     />
                                     <Button
                                        size="small"
-                                       name="+"
+                                       icon="ion-plus"
                                        onClick={() => this.setState({ age: this.state.age + 1 })}
+                                       rounded
                                     />
                                  </ButtonGroup>
                               </GridCell>
