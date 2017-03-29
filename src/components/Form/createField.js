@@ -11,6 +11,10 @@ const createOIOFormField = () => Field => (
          value: React.PropTypes.any
       }
 
+      static defaultProps = {
+         readOnly: false
+      }
+
       static contextTypes = {
          OIOForm: React.PropTypes.object
       }
@@ -91,7 +95,10 @@ const createOIOFormField = () => Field => (
       }
 
       render() {
-         const readOnly = this.props.readOnly || (this.props.value && !this.props.onChange)
+         const readOnly = Boolean(
+            this.props.readOnly ||
+            (this.props.value && !this.props.onChange)
+         )
 
          return (
             <Field

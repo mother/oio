@@ -75,6 +75,10 @@ export default class Form extends Component {
       return true
    }
 
+   // =======================================================
+   // OIO Form Field Utils (propagated by context)
+   // =======================================================
+
    setInitialValue = (name, value) => {
       if (!name) return
 
@@ -143,6 +147,29 @@ export default class Form extends Component {
       return { errors, exist }
    }
 
+   validateValue = (name, value, rules) => {
+      const validationResult = this.applyRulesToValue(rules, value)
+
+      if (name) {
+         this.setState((state, props) => ({
+            ...state,
+            data: {
+               ...state.data,
+               [name]: {
+                  ...state.data[name],
+                  error: validationResult
+               }
+            }
+         }))
+      }
+
+      return validationResult
+   }
+
+   // =======================================================
+   // Validation Test Util
+   // =======================================================
+
    get = (key) => {
       try {
          return this.state.data[key].value
@@ -150,6 +177,10 @@ export default class Form extends Component {
          return undefined
       }
    }
+
+   // =======================================================
+   // Helpers
+   // =======================================================
 
    applyRulesToValue(rules = [], value) {
       for (const rule of rules) {
@@ -183,94 +214,104 @@ export default class Form extends Component {
       return null
    }
 
-   constructFormData(data) {
+   // =======================================================
+   // Form Submission Utils
+   // =======================================================
+
+   constructFormData = (data, files) => {
       const formData = new FormData()
 
-      for (const key of Object.keys(data)) {
-         const value = data[key]
-         if (value instanceof window.File) {
-            formData.append(key, new Blob([value], { type: value.type }))
-         } else {
-            formData.append(key, value)
-         }
-      }
+      Object.keys(data).forEach(key => formData.append(key, data[key]))
+      Object.keys(files).forEach((key) => {
+         const value = files[key]
+         formData.append(key, new Blob([value], { type: value.type }))
+      })
 
       return formData
+   }
+
+   reinitializeFormState = () => {
+      this.setState((state) => {
+         const fieldNames = Object.keys(state.data)
+         const newData = Object.assign({}, fieldNames.reduce((newState, key) => {
+            newState[key] = {
+               ...state.data[key],
+               initialValue: state.data[key].value
+            }
+
+            return newState
+         }, {}))
+
+         return {
+            data: newData,
+            pristine: true,
+            submitting: false
+         }
+      })
    }
 
    handleSubmit = (event) => {
       event.preventDefault()
 
-      const errors = {}
-      let errorsExist = false
-      const data = {}
-      const files = []
+      const errors = this.getErrors()
+      if (errors.exist) {
+         if (this.props.onError) {
+            this.props.onError(errors.errors)
+         }
 
-      for (const key of Object.keys(this.state.data)) {
-         const value = this.state.data[key].value
-         const rules = this.state.data[key].rules
-         errors[key] = this.validateValue(key, value, rules)
-         if (errors[key]) errorsExist = true
-         data[key] = value
-         if (value instanceof window.File) files.push(value)
+         return
       }
 
-      const formData = this.constructFormData(data)
+      const data = {}
+      const files = {}
 
-      if (errorsExist) {
-         if (this.props.onError) this.props.onError(errors)
-      } else if (this.props.onSubmit) {
-         const submitPromise = this.props.onSubmit(data, files, formData, this.constructFormData)
+      Object.keys(this.state.data).forEach((fieldName) => {
+         const value = this.state.data[fieldName].value
+         if (value instanceof window.File) {
+            files[fieldName] = value
+         } else {
+            data[fieldName] = value
+         }
+      })
+
+      if (this.props.onSubmit) {
+         const formData = this.constructFormData(data, files)
+         const submitPromise = this.props.onSubmit(data, files, formData, {
+            constructFormData: this.constructFormData,
+            reinitializeFormState: this.reinitializeFormState
+         })
+
+         // We check if the reference to the form element is
+         // defined before attempting to modify this component's state,
+         // since the component may be unmounted by the time submitPromise
+         // is fulfilled/rejected
          if (submitPromise instanceof Promise) {
             this.setState({ submitting: true }, () => {
                submitPromise
                .then(() => {
-                  this.setState((state) => {
-                     const fieldNames = Object.keys(state.data)
-                     const newData = Object.assign({}, fieldNames.reduce((newState, key) => {
-                        newState[key] = {
-                           ...state.data[key],
-                           initialValue: state.data[key].value
-                        }
-
-                        return newState
-                     }, {}))
-
-                     return {
-                        data: newData,
-                        pristine: true,
-                        submitting: false
-                     }
-                  })
+                  if (this.formElement) {
+                     this.reinitializeFormState()
+                  }
                })
-               .catch(() => this.setState({ submitting: false }))
+               .catch(() => {
+                  if (this.formElement) {
+                     this.setState({ submitting: false })
+                  }
+               })
             })
          }
       }
    }
 
-   validateValue = (name, value, rules) => {
-      const validationResult = this.applyRulesToValue(rules, value)
-
-      if (name) {
-         this.setState((state, props) => ({
-            ...state,
-            data: {
-               ...state.data,
-               [name]: {
-                  ...state.data[name],
-                  error: validationResult
-               }
-            }
-         }))
-      }
-
-      return validationResult
-   }
+   // =======================================================
+   // Render
+   // =======================================================
 
    render() {
       return (
-         <form onSubmit={this.handleSubmit}>
+         <form
+            onSubmit={this.handleSubmit}
+            ref={(ref) => { this.formElement = ref }}>
             {this.props.children}
          </form>
       )

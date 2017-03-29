@@ -38,19 +38,17 @@ export default class Button extends Component {
       OIOStyles: React.PropTypes.object
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = { hover: false }
-      this.onMouseOver = this.onMouseOver.bind(this)
-      this.onMouseOut = this.onMouseOut.bind(this)
    }
 
-   onMouseOver() {
+   onMouseOver = () => {
       this.setState({ hover: true })
    }
 
-   onMouseOut() {
+   onMouseOut = () => {
       this.setState({ hover: false })
    }
 
