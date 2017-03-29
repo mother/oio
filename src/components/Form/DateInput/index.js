@@ -7,6 +7,7 @@ import formStyles from '../styles.less'
 
 class DateInput extends Component {
    static propTypes = {
+      enableDate: React.PropTypes.bool,
       enableTime: React.PropTypes.bool,
       error: React.PropTypes.string,
       id: React.PropTypes.string,
@@ -18,6 +19,10 @@ class DateInput extends Component {
          React.PropTypes.string,
          React.PropTypes.instanceOf(Date)
       ])
+   }
+
+   static defaultProps = {
+      enableDate: true
    }
 
    componentDidMount() {
@@ -35,23 +40,25 @@ class DateInput extends Component {
    }
 
    constructDate() {
-      const dateComponents = {
+      const date = {
          year: this.yearInput.value,
          month: this.monthInput.value,
-         day: this.dayInput.value
+         day: this.dayInput.value,
+         hour: 0,
+         minute: 0
       }
 
       if (this.props.enableTime) {
          const meridiem = this.meridiemInput.value
-         dateComponents.hour = moment(`${this.hourInput.value}${meridiem}`, 'ha').format('H')
-         dateComponents.minute = this.minuteInput.value
+         date.hour = moment(`${this.hourInput.value}${meridiem}`, 'ha').format('H')
+         date.minute = this.minuteInput.value
       }
 
-      return moment(dateComponents).toDate()
+      return new Date(Date.UTC(date.year, date.month, date.day, date.hour, date.minute))
    }
 
    parseDate(value) {
-      const dateObj = moment(value)
+      const dateObj = moment.utc(value)
 
       return {
          year: dateObj.format('YYYY'),
@@ -63,8 +70,7 @@ class DateInput extends Component {
       }
    }
 
-   render() {
-      const { year, month, day, hour, minute, meridiem } = this.parseDate(this.props.value)
+   selectableDateFieldsJSX(year, month, day) {
       const numDaysInMonth = year && month
          ? moment(`${year}-${Number(month) + 1}`, 'YYYY-M').daysInMonth()
          : 31
@@ -72,44 +78,79 @@ class DateInput extends Component {
       const daysInMonth = Array.from(new Array(numDaysInMonth), (x, i) => i + 1)
       const currentYear = (new Date()).getFullYear()
       const years = Array.from(new Array(5), (x, i) => currentYear + i)
+
+      return (
+         <span>
+         <select
+            className={classNames([styles.select, styles.month])}
+            onChange={this.handleChange}
+            readOnly={this.props.readOnly}
+            ref={(input) => { this.monthInput = input }}
+            value={month}>
+            {moment.months().map((m, i) => (
+               <option key={m} value={i}>{m}</option>
+            ))}
+         </select>
+         <select
+            className={classNames([styles.select, styles.day])}
+            onChange={this.handleChange}
+            readOnly={this.props.readOnly}
+            ref={(input) => { this.dayInput = input }}
+            value={day}>
+            {daysInMonth.map(d => (
+               <option key={d} value={d}>{d}</option>
+            ))}
+         </select>
+         <select
+            className={classNames([styles.select, styles.year])}
+            onChange={this.handleChange}
+            readOnly={this.props.readOnly}
+            ref={(input) => { this.yearInput = input }}
+            value={year}>
+            {years.map(y => (
+               <option key={y} value={y}>{y}</option>
+            ))}
+         </select>
+      </span>
+      )
+   }
+
+   hiddenDateFieldsJSX(year, month, day) {
+      return (
+         <span>
+         <input
+            type="hidden"
+            ref={(input) => { this.monthInput = input }}
+            value={month}
+         />
+         <input
+            type="hidden"
+            ref={(input) => { this.dayInput = input }}
+            value={day}
+         />
+         <input
+            type="hidden"
+            ref={(input) => { this.yearInput = input }}
+            value={year}
+         />
+   </span>
+      )
+   }
+
+   render() {
+      const { year, month, day, hour, minute, meridiem } = this.parseDate(this.props.value)
       const hours = Array.from(new Array(12), (x, i) => i + 1)
       const minutes = ['00', '15', '30', '45']
+
+      const dateFields = this.props.enableDate
+         ? this.selectableDateFieldsJSX(year, month, day)
+         : this.hiddenDateFieldsJSX(year, month, day)
 
       return (
          <div className={formStyles.container}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
             <div className={styles.container}>
-               <select
-                  className={classNames([styles.select, styles.month])}
-                  onChange={this.handleChange}
-                  readOnly={this.props.readOnly}
-                  ref={(input) => { this.monthInput = input }}
-                  value={month}>
-                  {moment.months().map((m, i) => (
-                     <option key={m} value={i}>{m}</option>
-                  ))}
-               </select>
-               <select
-                  className={classNames([styles.select, styles.day])}
-                  onChange={this.handleChange}
-                  readOnly={this.props.readOnly}
-                  ref={(input) => { this.dayInput = input }}
-                  value={day}>
-                  {daysInMonth.map(d => (
-                     <option key={d} value={d}>{d}</option>
-                  ))}
-               </select>
-               <select
-                  className={classNames([styles.select, styles.year])}
-                  onChange={this.handleChange}
-                  readOnly={this.props.readOnly}
-                  ref={(input) => { this.yearInput = input }}
-                  value={year}>
-                  {years.map(y => (
-                     <option key={y} value={y}>{y}</option>
-                  ))}
-               </select>
-
+               {dateFields}
                {this.props.enableTime &&
                   <span>
                      <select
