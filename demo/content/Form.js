@@ -4,6 +4,7 @@ import {
    Button,
    Checkbox,
    CheckboxGroup,
+   DateInput,
    FileInput,
    Form,
    Grid,
@@ -77,6 +78,20 @@ export default class DemoContentForm extends Component {
                            type="file"
                            name="document"
                            label="Document"
+                        />
+                        <DateInput
+                           name="date.start"
+                           label="Start Date"
+                           placeholder="Please enter a start date"
+                           value={new Date(2015, 3, 20)}
+                        />
+                        <Spacer size="2" />
+                        <DateInput
+                           name="date.end"
+                           label="End Date"
+                           placeholder="Please enter an end date"
+                           value={new Date(2015, 7, 11, 5, 8)}
+                           enableTime
                         />
                         <div>
                            <div>
