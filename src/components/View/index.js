@@ -114,8 +114,9 @@ export default class View extends Component {
       if (this.state.width) {
          width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
-            const unit = width.endsWith('px') ? 'px' : '%'
-            stateModifier.currentWidth = parseFloat(width) + unit
+            // const unit = width.endsWith('px') ? 'px' : '%'
+            // stateModifier.currentWidth = parseFloat(width) + unit
+            stateModifier.currentWidth = width
          }
       }
 
@@ -131,8 +132,9 @@ export default class View extends Component {
          if (viewWidth > 0) stateModifier.currentHeight = viewHeight
          else stateModifier.currentHeight = 'auto'
       } else if (height && height !== 'auto') {
-         const unit = height.endsWith('px') ? 'px' : '%'
-         stateModifier.currentHeight = parseFloat(height) + unit
+         // const unit = height.endsWith('px') ? 'px' : '%'
+         // stateModifier.currentHeight = parseFloat(height) + unit
+         stateModifier.currentHeight = height
       }
 
       if (Object.keys(stateModifier).length > 0) {
