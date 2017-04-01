@@ -223,8 +223,8 @@ export default class Form extends Component {
 
       Object.keys(data).forEach(key => formData.append(key, data[key]))
       Object.keys(files).forEach((key) => {
-         const value = files[key]
-         formData.append(key, new Blob([value], { type: value.type }))
+         const file = files[key]
+         formData.append(key, new Blob([file], { type: file.type }), file.name || 'file')
       })
 
       return formData
