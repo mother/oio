@@ -58,10 +58,8 @@ export default class View extends Component {
 
    componentWillMount() {
       if (this.state.width) {
-         let width = getAttributeForCurrentSize(this.state.size, this.state.width)
+         const width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
-            const unit = width.endsWith('px') ? 'px' : '%'
-            width = parseFloat(width) + unit
             this.setState({ currentWidth: width })
          }
       }
