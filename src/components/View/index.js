@@ -58,10 +58,8 @@ export default class View extends Component {
 
    componentWillMount() {
       if (this.state.width) {
-         let width = getAttributeForCurrentSize(this.state.size, this.state.width)
+         const width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
-            const unit = width.endsWith('px') ? 'px' : '%'
-            width = parseFloat(width) + unit
             this.setState({ currentWidth: width })
          }
       }
@@ -114,8 +112,7 @@ export default class View extends Component {
       if (this.state.width) {
          width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
-            const unit = width.endsWith('px') ? 'px' : '%'
-            stateModifier.currentWidth = parseFloat(width) + unit
+            stateModifier.currentWidth = width
          }
       }
 
@@ -131,8 +128,7 @@ export default class View extends Component {
          if (viewWidth > 0) stateModifier.currentHeight = viewHeight
          else stateModifier.currentHeight = 'auto'
       } else if (height && height !== 'auto') {
-         const unit = height.endsWith('px') ? 'px' : '%'
-         stateModifier.currentHeight = parseFloat(height) + unit
+         stateModifier.currentHeight = height
       }
 
       if (Object.keys(stateModifier).length > 0) {

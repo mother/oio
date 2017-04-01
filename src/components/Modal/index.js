@@ -11,7 +11,7 @@ export default class Modal extends Component {
       children: React.PropTypes.node,
       height: React.PropTypes.string,
       closeURL: React.PropTypes.string,
-      mode: React.PropTypes.oneOf(['fixed', 'fill']),
+      mode: React.PropTypes.string,
       onClose: React.PropTypes.func,
       width: React.PropTypes.string,
       windowClassName: React.PropTypes.string,
@@ -22,8 +22,8 @@ export default class Modal extends Component {
       animation: 'scaleIn',
       closeURL: '/',
       mode: 'fixed',
-      width: '600',
-      height: '600',
+      width: '600px',
+      height: '600px',
       windowMargin: '0px'
    }
 
