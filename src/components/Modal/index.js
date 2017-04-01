@@ -22,8 +22,8 @@ export default class Modal extends Component {
       animation: 'scaleIn',
       closeURL: '/',
       mode: 'fixed',
-      width: '600',
-      height: '600',
+      width: '600px',
+      height: '600px',
       windowMargin: '0px'
    }
 
