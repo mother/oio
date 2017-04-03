@@ -5,11 +5,14 @@ import ButtonGroup from './components/ButtonGroup'
 import Checkbox from './components/Form/Checkbox'
 import CheckboxGroup from './components/Form/CheckboxGroup'
 import Cover from './components/Cover'
+import DateInput from './components/Form/DateInput'
 import FileInput from './components/Form/FileInput'
 import Form from './components/Form'
 import Grid from './components/Grid'
 import GridCell from './components/GridCell'
+import GridRow from './components/GridRow'
 import Icon from './components/Icon'
+import ImageInput from './components/Form/ImageInput'
 import Input from './components/Form/Input'
 import Modal from './components/Modal'
 import Nav from './components/Nav'
@@ -40,11 +43,14 @@ export {
    Checkbox,
    CheckboxGroup,
    Cover,
+   DateInput,
    FileInput,
    Form,
    Grid,
    GridCell,
+   GridRow,
    Icon,
+   ImageInput,
    Input,
    Modal,
    Nav,

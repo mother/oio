@@ -2,12 +2,16 @@ import React, { Component } from 'react'
 import {
    Avatar,
    Button,
+   ButtonGroup,
    Checkbox,
    CheckboxGroup,
+   DateInput,
    FileInput,
    Form,
    Grid,
    GridCell,
+   GridRow,
+   ImageInput,
    Input,
    Radio,
    RadioGroup,
@@ -19,12 +23,35 @@ import {
    TitleBar,
    View
 } from '../../src'
-
 import style from '../style.less'
 
 export default class DemoContentForm extends Component {
    static propTypes = {
       contents: React.PropTypes.array
+   }
+
+   constructor(props) {
+      super(props)
+
+      this.state = {
+         firstName: 'Jane',
+         age: 1
+      }
+   }
+
+   handleError = (error, file) => {
+      console.log(error) // eslint-disable-line no-console
+   }
+
+   handleSubmit = (data, files, formData, utils) => {
+      /* eslint-disable */
+      console.log(data)
+      console.log(files)
+      /* eslint-enable */
+
+      return new Promise((resolve, reject) => {
+         setTimeout(resolve, 2000)
+      })
    }
 
    render() {
@@ -42,9 +69,9 @@ export default class DemoContentForm extends Component {
                <GridCell colspan="3">
                   <View width="420px">
                      <Form
-                        onSubmit={(data, files, formData) => this.handleSubmit(data, files, formData)}
-                        onError={error => this.handleError(error)}>
-                        <FileInput
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <ImageInput
                            maxFileSize={5000000}
                            type="image"
                            name="avatar"
@@ -63,22 +90,20 @@ export default class DemoContentForm extends Component {
                            name="document"
                            label="Document"
                         />
-                        <div>
-                           <div>
-                              <Input
-                                 name="name.first"
-                                 label="First Name"
-                                 placeholder="Please enter your first name"
-                                 value="Jared"
-                                 rules={['required']}
-                              />
-                           </div>
-                        </div>
+                        <Spacer size="2" />
+                        <Input
+                           name="name.first"
+                           label="First Name"
+                           placeholder="Please enter your first name"
+                           rules={['required']}
+                           value={this.state.firstName}
+                           onChange={(e, v) => this.setState({ firstName: v })}
+                        />
                         <Input
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
-                           value="Reich"
+                           initialValue="Smith"
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -88,17 +113,68 @@ export default class DemoContentForm extends Component {
                            name="email"
                            label="Email"
                            placeholder="Please enter your email"
-                           value="jared@mother.co"
+                           initialValue="jane@example.com"
                            rules={[
                               'required',
                               { test: 'email', message: 'Enter a valid email!' },
                               { test: value => value.length > 8, message: 'At least 8 characters' }
                            ]}
                         />
+                        <Grid width="100%" columns="5">
+                           <GridRow>
+                              <GridCell colspan="4">
+                                 <Input
+                                    name="age"
+                                    label="Age"
+                                    placeholder="What's your age?"
+                                    rules={[{ test: value => value > 0, message: 'Be older' }]}
+                                    value={this.state.age.toString()}
+                                 />
+                              </GridCell>
+                              <GridCell>
+                                 <br />
+                                 <ButtonGroup align="right">
+                                    <Button
+                                       size="small"
+                                       icon="ion-minus"
+                                       onClick={() => {
+                                          if (this.state.age > 0) {
+                                             this.setState({ age: this.state.age - 1 })
+                                          }
+                                       }}
+                                       rounded
+                                    />
+                                    <Button
+                                       size="small"
+                                       icon="ion-plus"
+                                       onClick={() => this.setState({ age: this.state.age + 1 })}
+                                       rounded
+                                    />
+                                 </ButtonGroup>
+                              </GridCell>
+                           </GridRow>
+                        </Grid>
+                        <DateInput
+                           name="date.start"
+                           label="Start Date"
+                           placeholder="Please enter a start date"
+                           initialValue={new Date(2015, 9, 5)}
+                        />
+                        <Spacer size="2" />
+                        <DateInput
+                           name="date.end"
+                           label="End Date"
+                           placeholder="Please enter an end date"
+                           initialValue={new Date(2019, 7, 11, 5, 15)}
+                           enableTime
+                        />
+                        <Spacer size="2" />
                         <Textarea
                            name="description"
                            label="Description"
-                           placeholder="Please enter the subtitle"
+                           placeholder="Please enter the description"
+                           initialValue="A cool description"
+                           rules={['required']}
                         />
                         <Select
                            name="choice"
@@ -109,44 +185,60 @@ export default class DemoContentForm extends Component {
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
-                           value={null || 'two'}
+                           initialValue="two"
                            rules={['required']}
                         />
                         <RadioGroup
-                           name="gender"
-                           label="Gender">
+                           name="colour"
+                           label="Colour"
+                           initialValue="navy"
+                           rules={['required']}>
                            <Grid columns="3">
-                              <GridCell><Radio value="male" label="Male" /></GridCell>
                               <GridCell>
-                                 <div>
-                                    <div>
-                                       <Radio value="female" label="Female" />
-                                    </div>
-                                 </div>
+                                 <Radio value="black" label="Black" />
                               </GridCell>
-                              <GridCell><Radio value="undecided" label="Undecided" /></GridCell>
+                              <GridCell>
+                                 <Radio value="navy" label="Navy" />
+                              </GridCell>
+                              <GridCell>
+                                 <Radio value="pink" label="Pink" />
+                              </GridCell>
                            </Grid>
                         </RadioGroup>
-                        <Spacer size="6" />
+                        <Spacer size="3" />
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
-                           rules={['required']}
-                           value={null || ['golf', 'hockey']}>
+                           initialValue={['hockey', 'baseball']}
+                           rules={[{
+                              test: value => value.includes('hockey'),
+                              message: 'Must contain hockey!'
+                           }]}>
                            <Grid columns="3">
-                              <GridCell><Checkbox value="baseball" label="Baseball" /></GridCell>
                               <GridCell>
-                                 <div>
-                                    <div>
-                                       <Checkbox value="golf" label="Golf" />
-                                    </div>
-                                 </div>
+                                 <Checkbox value="baseball" label="Baseball" />
                               </GridCell>
-                              <GridCell><Checkbox value="hockey" label="Hockey" /></GridCell>
+                              <GridCell>
+                                 <Checkbox value="golf" label="Golf" />
+                              </GridCell>
+                              <GridCell>
+                                 <Checkbox value="hockey" label="Hockey" />
+                              </GridCell>
                            </Grid>
                         </CheckboxGroup>
-                        <Switch name="notifications" label="Notifications" />
-                        <Button name="Save Changes" type="submit" />
+                        <Spacer size="3" />
+                        <View width="100%">
+                           <Switch
+                              name="notifications"
+                              label="Notifications"
+                              initialValue
+                              rules={['required']}
+                           />
+                           <Spacer size="9" />
+                        </View>
+                        <View width="100%">
+                           <Button name="Save Changes" type="submit" autoFormRespond />
+                        </View>
                      </Form>
                   </View>
                </GridCell>

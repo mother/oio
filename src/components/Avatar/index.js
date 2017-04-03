@@ -4,15 +4,16 @@ import styles from './styles.less'
 
 const Avatar = ({ className, src, style }) => {
    const classes = [styles.avatar, className]
+   const avatarStyle = { ...style }
 
    if (!src) {
       classes.push(styles.defaultAvatar)
    } else {
-      style.backgroundImage = `url(${src})`
+      avatarStyle.backgroundImage = `url(${src})`
    }
 
    return (
-      <div className={classNames(classes)} style={style} />
+      <div className={classNames(classes)} style={avatarStyle} />
    )
 }
 

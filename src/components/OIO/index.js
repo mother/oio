@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import defaults from './defaults'
 import style from './style.less'
 
+// TODO: Deprecate fontFamily and primaryColor props
 export default class OIO extends Component {
    static propTypes = {
       children: React.PropTypes.node,
@@ -12,7 +14,8 @@ export default class OIO extends Component {
 
    static defaultProps = {
       fontFamily: 'Helvetica Neue, Arial',
-      primaryColor: '#78909C'
+      primaryColor: '#78909C',
+      ...defaults
    }
 
    static childContextTypes = {

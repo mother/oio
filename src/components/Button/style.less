@@ -24,13 +24,20 @@
 }
 
 //============================================================================
-// Button Loader
+// Disabled Button Mode
 //============================================================================
 
-.loadingMode {
-   .text {
-      opacity: 0;
-   }
+.isDisabled {
+   opacity: 0.5;
+   cursor: default;
+}
+
+//============================================================================
+// Loading Button Mode
+//============================================================================
+
+.isLoading {
+   .text { opacity: 0; }
 }
 
 .loader {
@@ -43,10 +50,10 @@
    left: 50%;
    margin-top: -8px;
    margin-left: -8px;
-   animation: spin 1s infinite linear;
+   animation: spinLoaderAnimation 1s infinite linear;
 }
 
-@keyframes spin {
+@keyframes spinLoaderAnimation {
    0% {
       -moz-transform: rotate(0deg);
       -ms-transform: rotate(0deg);
@@ -60,6 +67,23 @@
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
    }
+}
+
+//============================================================================
+// Pulsing Button Mode
+//============================================================================
+
+.isPulsing {
+   animation-name: pulsingAnimation;
+	animation-duration: 2000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulsingAnimation {
+	0% { opacity: 0.5; }
+	50% { opacity: 1; }
+	100% { opacity: 0.5; }
 }
 
 //============================================================================
@@ -146,22 +170,6 @@
    }
 }
 
-.outlineNegative {
-   background: none;
-   border: 2px solid rgba(255,255,255,0.25);
-   color: rgba(255,255,255,0.9);
-
-   .text {
-      top: -2px;
-   }
-
-   &:hover {
-      background: none;
-      border: 2px solid rgba(255,255,255,0.35);
-      color: rgba(255,255,255,1);
-   }
-}
-
 .plain {
    background: none;
    border: none;
@@ -172,6 +180,40 @@
       border: none;
    }
 }
+
+.listItem {
+   border-radius: 0px;
+   width: 100%;
+   background: none;
+   border: none;
+   text-transform: uppercase;
+   border-bottom: 1px solid #ddd;
+
+   &:last-child {
+      border-bottom: none !important;
+   }
+
+   &:hover {
+      background: none;
+   }
+}
+
+.segmentedItem {
+   border-radius: 0px;
+   background: none;
+   border: none;
+   margin: 0px;
+   text-transform: uppercase;
+
+   &:first-child {
+      border-left: none !important;
+   }
+
+   &:hover {
+      background: none;
+   }
+}
+
 
 //============================================================================
 // Rounded
@@ -250,6 +292,7 @@
 .mediumIconOnly {
    composes: iconOnly;
    width: @uiBaseComponentHeightMedium;
+   line-height: 22px;
 }
 
 .smallIconOnly {

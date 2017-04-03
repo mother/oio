@@ -34,8 +34,8 @@ export default class View extends Component {
       visible: 'on'
    }
 
-   constructor(props, context) {
-      super(props, context)
+   constructor(props) {
+      super(props)
 
       this.state = {
          size: getWindowSize(),
@@ -54,16 +54,12 @@ export default class View extends Component {
          width: props.width,
          height: props.height
       }
-
-      this.windowSizeUpdated = this.windowSizeUpdated.bind(this)
    }
 
    componentWillMount() {
       if (this.state.width) {
-         let width = getAttributeForCurrentSize(this.state.size, this.state.width)
+         const width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
-            const unit = width.endsWith('px') ? 'px' : '%'
-            width = parseFloat(width) + unit
             this.setState({ currentWidth: width })
          }
       }
@@ -75,11 +71,11 @@ export default class View extends Component {
    }
 
    // TODO: Untested
-   componentWillReceiveProps(newProps) {
+   componentWillReceiveProps(nextProps) {
       const stateModifier = {};
       ['aspectRatio', 'position', 'height', 'width'].forEach((key) => {
-         if (newProps[key] && newProps[key] !== this.state[key]) {
-            stateModifier[key] = newProps[key]
+         if (nextProps[key] && nextProps[key] !== this.state[key]) {
+            stateModifier[key] = nextProps[key]
          }
       })
 
@@ -116,8 +112,7 @@ export default class View extends Component {
       if (this.state.width) {
          width = getAttributeForCurrentSize(this.state.size, this.state.width)
          if (width) {
-            const unit = width.endsWith('px') ? 'px' : '%'
-            stateModifier.currentWidth = parseFloat(width) + unit
+            stateModifier.currentWidth = width
          }
       }
 
@@ -133,8 +128,7 @@ export default class View extends Component {
          if (viewWidth > 0) stateModifier.currentHeight = viewHeight
          else stateModifier.currentHeight = 'auto'
       } else if (height && height !== 'auto') {
-         const unit = height.endsWith('px') ? 'px' : '%'
-         stateModifier.currentHeight = parseFloat(height) + unit
+         stateModifier.currentHeight = height
       }
 
       if (Object.keys(stateModifier).length > 0) {
@@ -189,7 +183,7 @@ export default class View extends Component {
       this.setState({ positionStyles })
    }
 
-   windowSizeUpdated() {
+   windowSizeUpdated = () => {
       const windowSize = getWindowSize()
       this.setState({ size: windowSize }, () => {
          this.updateComponentSizeAndPosition()

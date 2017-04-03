@@ -18,19 +18,20 @@
 
 .container {
    position: fixed;
-   bottom: 12px;
+   bottom: 30px;
    right: -400px;
    z-index: 99;
    width: 90%;
    max-width: 360px;
    box-sizing: border-box;
    background: #0F0F14;
+   background: rgba(26, 27, 31, 0.98);
    border-radius: @radius;
    transition: all 0.9s cubic-bezier(0.165, 0.840, 0.440, 1.000);
 }
 
 .showNotification {
-   right: 12px;
+   right: 30px;
    animation-duration: 700ms;
    animation-name: showNotification;
 
@@ -82,13 +83,13 @@
    display: block;
    border: 0;
    outline: 0;
-   height: 40px;
+   height: 48px;
    text-align: center;
-   border-top: 1px solid #525252;
+   border-top: 1px solid rgba(255,255,255,0.1);
    background-color: transparent;
    color: #D3D3D3;
    text-transform: uppercase;
-   letter-spacing: 3px;
+   letter-spacing: 1px;
    cursor: pointer;
 }
 
@@ -110,7 +111,7 @@
    display: inline;
    width: 50%;
    border-bottom-left-radius: @radius;
-   border-right: 1px solid #525252;
+   border-right: 1px solid rgba(255,255,255,0.1);
 }
 .buttonTwo {
    display: inline;
