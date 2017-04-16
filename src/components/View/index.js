@@ -17,6 +17,10 @@ export default class View extends Component {
       maxWidth: React.PropTypes.string,
       onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
+      paddingTop: React.PropTypes.string,
+      paddingRight: React.PropTypes.string,
+      paddingBottom: React.PropTypes.string,
+      paddingLeft: React.PropTypes.string,
       position: React.PropTypes.string,
       right: React.PropTypes.string,
       scroll: React.PropTypes.string,
@@ -231,6 +235,26 @@ export default class View extends Component {
       if (this.props.padding) {
          const padding = getAttributeForCurrentSize(this.state.size, this.props.padding)
          if (padding !== 0) currentSizeStyles.padding = padding
+      }
+
+      if (this.props.paddingTop) {
+         const paddingTop = getAttributeForCurrentSize(this.state.size, this.props.paddingTop)
+         if (paddingTop !== 0) currentSizeStyles.paddingTop = paddingTop
+      }
+
+      if (this.props.paddingRight) {
+         const paddingRight = getAttributeForCurrentSize(this.state.size, this.props.paddingRight)
+         if (paddingRight !== 0) currentSizeStyles.paddingRight = paddingRight
+      }
+
+      if (this.props.paddingBottom) {
+         const paddingBottom = getAttributeForCurrentSize(this.state.size, this.props.paddingBottom)
+         if (paddingBottom !== 0) currentSizeStyles.paddingBottom = paddingBottom
+      }
+
+      if (this.props.paddingLeft) {
+         const paddingLeft = getAttributeForCurrentSize(this.state.size, this.props.paddingLeft)
+         if (paddingLeft !== 0) currentSizeStyles.paddingLeft = paddingLeft
       }
 
       if (this.props.maxWidth) {
