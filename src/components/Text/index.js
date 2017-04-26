@@ -21,7 +21,10 @@ export default class Text extends Component {
       editorShowEditButton: React.PropTypes.bool,
       editorValue: React.PropTypes.string,
       editing: React.PropTypes.bool,
+      fontFamily: React.PropTypes.string,
+      letterSpacing: React.PropTypes.string,
       size: React.PropTypes.string,
+      style: React.PropTypes.object,
       uppercase: React.PropTypes.bool,
       weight: React.PropTypes.string
    }
@@ -177,7 +180,17 @@ export default class Text extends Component {
 
    render() {
       const fontSize = `textSize${getAttributeForCurrentSize(this.state.size, this.props.size)}`
-      const textStyle = {}
+      const textStyle = {
+         ...this.props.style
+      }
+
+      if (this.props.fontFamily) {
+         textStyle.fontFamily = this.props.fontFamily
+      }
+
+      if (this.props.letterSpacing) {
+         textStyle.letterSpacing = this.props.letterSpacing
+      }
 
       const textClasses = [
          style[fontSize],
