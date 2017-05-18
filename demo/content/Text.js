@@ -178,30 +178,6 @@ export default class DemoContentText extends Component {
                               </td>
                            </tr>
                            <tr>
-                              <td><b>size</b></td>
-                              <td>String</td>
-                              <td>-</td>
-                              <td>Set content size <code>1 - 10</code></td>
-                           </tr>
-                           <tr>
-                              <td><b>uppercase</b></td>
-                              <td>Boolean</td>
-                              <td>-</td>
-                              <td>Make content uppercase</td>
-                           </tr>
-                           <tr>
-                              <td><b>weight</b></td>
-                              <td>String</td>
-                              <td><code>normal</code></td>
-                              <td>
-                                 Set content font-weight
-                                 <code>light</code>
-                                 <code>normal</code>
-                                 <code>semibold</code>
-                                 <code>bold</code>
-                              </td>
-                           </tr>
-                           <tr>
                               <td><b>editable</b></td>
                               <td>Boolean</td>
                               <td><code>false</code></td>
@@ -258,6 +234,57 @@ export default class DemoContentText extends Component {
                               <td>String</td>
                               <td>-</td>
                               <td>Initial and editable body content (replaces children)</td>
+                           </tr>
+                           <tr>
+                              <td><b>fontFamily</b></td>
+                              <td>String</td>
+                              <td>inherits</td>
+                              <td>
+                                 Pass a font family specifically for content&nbsp;
+                                 within this Text component. By default, the font family will&nbsp;
+                                 whatever is specified on the OIO container.
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><b>letterSpacing</b></td>
+                              <td>String</td>
+                              <td>-</td>
+                              <td>
+                                 Specifiy letter-spacing
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><b>size</b></td>
+                              <td>String</td>
+                              <td>-</td>
+                              <td>Set content size <code>1 - 10</code></td>
+                           </tr>
+                           <tr>
+                              <td><b>style</b></td>
+                              <td>Object</td>
+                              <td>-</td>
+                              <td>
+                                 You can set a style prop on the Text component just like on&nbsp;
+                                 any <code>div</code>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><b>uppercase</b></td>
+                              <td>Boolean</td>
+                              <td>-</td>
+                              <td>Make content uppercase</td>
+                           </tr>
+                           <tr>
+                              <td><b>weight</b></td>
+                              <td>String</td>
+                              <td><code>normal</code></td>
+                              <td>
+                                 Set content font-weight
+                                 <code>light</code>
+                                 <code>normal</code>
+                                 <code>semibold</code>
+                                 <code>bold</code>
+                              </td>
                            </tr>
                         </tbody>
                      </table>
