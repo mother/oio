@@ -51,12 +51,12 @@ export default class DemoContentText extends Component {
                   <Title>Text Sizes</Title>
                   <Text size="2" color="gray50">
                      <p>
-                        The size prop can be used for both the <code>Text</code>&nbsp;
-                        and <code>Title</code> component. The default size for the&nbsp;
+                        The size prop can be used for both the <code>Text</code>
+                        and <code>Title</code> component. The default size for the
                         <code>Text</code> component is 3.
                      </p>
                      <p>
-                        As a general guideline, when using multiple text sizes,&nbsp;
+                        As a general guideline, when using multiple text sizes,
                         it is best to use sizes at least 2 units apart (ie. 4,6,8)
                      </p>
                   </Text>
@@ -77,7 +77,7 @@ export default class DemoContentText extends Component {
                   <Title>Paragraphs</Title>
                   <Text size="2" color="gray50">
                      <p>
-                        Wrap paragraphs of text in the <code>p</code> tag.&nbsp;
+                        Wrap paragraphs of text in the <code>p</code> tag.
                         Paragraphs by default have a margin-bottom of 1em
                      </p>
                   </Text>
@@ -224,8 +224,8 @@ export default class DemoContentText extends Component {
                               <td>String</td>
                               <td><code>ready</code></td>
                               <td>
-                                 Should the editor indicate something is happening&nbsp;
-                                 (<code>pending</code>) or is it ready to be used&nbsp;
+                                 Should the editor indicate something is happening
+                                 (<code>pending</code>) or is it ready to be used
                                  (<code>ready</code>)
                               </td>
                            </tr>
@@ -240,8 +240,8 @@ export default class DemoContentText extends Component {
                               <td>String</td>
                               <td>inherits</td>
                               <td>
-                                 Pass a font family specifically for content&nbsp;
-                                 within this Text component. By default, the font family will&nbsp;
+                                 Pass a font family specifically for content
+                                 within this Text component. By default, the font family will
                                  whatever is specified on the OIO container.
                               </td>
                            </tr>
@@ -264,7 +264,7 @@ export default class DemoContentText extends Component {
                               <td>Object</td>
                               <td>-</td>
                               <td>
-                                 You can set a style prop on the Text component just like on&nbsp;
+                                 You can set a style prop on the Text component just like on
                                  any <code>div</code>
                               </td>
                            </tr>
