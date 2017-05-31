@@ -1,16 +1,26 @@
 import React from 'react'
-import styles from './styles.less'
+import { getAttributeForCurrentSize } from '../../utils/size'
 
-const Spacer = ({ size }) => {
-   const spacerSizeClass = `size${size}`
+const Spacer = ({ size }, context) => {
+   const spacerSize = parseFloat(getAttributeForCurrentSize(context.windowSize, size))
+
+   const style = {
+      float: 'left',
+      width: '100%',
+      height: `${spacerSize * 6}px`
+   }
 
    return (
-      <div className={styles[spacerSizeClass]} />
+      <div style={style} />
    )
 }
 
 Spacer.propTypes = {
    size: React.PropTypes.string.isRequired
+}
+
+Spacer.contextTypes = {
+   OIOStyles: React.PropTypes.object
 }
 
 export default Spacer
