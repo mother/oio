@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { IndexLink, Link } from 'react-router'
 import classNames from 'classnames'
 import convertColor from '../../utils/convertColor'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import Icon from '../Icon'
 import style from './style.less'
 
@@ -41,7 +42,18 @@ export default class Button extends Component {
    constructor(props) {
       super(props)
 
-      this.state = { hover: false }
+      this.state = {
+         hover: false,
+         size: getWindowSize()
+      }
+   }
+
+   componentDidMount() {
+      window.addEventListener('resize', this.windowSizeUpdated, false)
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
    onMouseOver = () => {
@@ -50,6 +62,11 @@ export default class Button extends Component {
 
    onMouseOut = () => {
       this.setState({ hover: false })
+   }
+
+   windowSizeUpdated = () => {
+      const windowSize = getWindowSize()
+      this.setState({ size: windowSize })
    }
 
    render() {
@@ -77,6 +94,7 @@ export default class Button extends Component {
       const buttonClasses = [this.props.className]
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
+      const buttonSize = getAttributeForCurrentSize(this.state.size, this.props.size)
 
       const buttonStyle = {
          backgroundColor: buttonColor,
@@ -87,7 +105,7 @@ export default class Button extends Component {
          buttonTextClasses.push(this.props.textClassName)
       }
 
-      buttonClasses.push(style[this.props.size])
+      buttonClasses.push(style[buttonSize])
 
       // Button Color by default will use the OIO primary color
       // Otherwise, it will use the color passed directly to the button
@@ -114,9 +132,9 @@ export default class Button extends Component {
 
       if (this.props.icon) {
          if (this.props.name) {
-            buttonClasses.push(style[`${this.props.size}IconAndText`])
+            buttonClasses.push(style[`${buttonSize}IconAndText`])
          } else {
-            buttonClasses.push(style[`${this.props.size}IconOnly`])
+            buttonClasses.push(style[`${buttonSize}IconOnly`])
          }
       }
 
@@ -156,7 +174,7 @@ export default class Button extends Component {
       // =======================================================
 
       if (this.props.rounded) {
-         buttonClasses.push(style[`${this.props.size}Rounded`])
+         buttonClasses.push(style[`${buttonSize}Rounded`])
       }
 
       if (this.props.outline) {
