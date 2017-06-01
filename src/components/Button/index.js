@@ -198,13 +198,11 @@ export default class Button extends Component {
       if (this.props.plain) {
          buttonClasses.push(style.plain)
          buttonStyle.color = buttonColor
+         buttonStyle.padding = '0px'
          delete buttonStyle.backgroundColor
 
          if (this.state.hover) {
-            buttonStyle.backgroundColor =
-               `rgba(${buttonColorRGB.r},
-               ${buttonColorRGB.g},
-               ${buttonColorRGB.b}, 0.15)`
+            buttonStyle.textDecoration = 'underline'
          }
       }
 
