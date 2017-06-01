@@ -210,6 +210,7 @@ export default class Button extends Component {
 
       if (this.props.translucent) {
          buttonClasses.push(style.plain)
+         buttonStyle.color = buttonColor
          buttonStyle.backgroundColor =
             `rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
