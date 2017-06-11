@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { browserHistory } from 'react-router'
+import { history as browserHistory } from 'react-router-dom'
 import {
    Modal,
    View

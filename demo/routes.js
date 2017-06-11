@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, IndexRoute } from 'react-router-dom'
 import Demo from './Demo'
 import Button from './content/Button'
 import ButtonGroup from './content/ButtonGroup'

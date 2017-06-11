@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import {
    ActionBar,
    Button,
@@ -38,7 +38,8 @@ export default class DemoExampleWindow extends Component {
                <GridCell>
                   <Title>Basic Window Example</Title>
                   <Text size="2" color="gray50">
-                     This is a few common examples of what a window might look like with a few of the components
+                     This is a few common examples of what a window might look like
+                     with a few of the components
                   </Text>
                </GridCell>
                <GridCell colspan="3">
@@ -60,7 +61,8 @@ export default class DemoExampleWindow extends Component {
                <GridCell>
                   <Title>Basic Window Example</Title>
                   <Text size="2" color="gray50">
-                     This is a few common examples of what a window might look like with a few of the components
+                     This is a few common examples of what a window might look
+                     like with a few of the components
                   </Text>
                </GridCell>
                <GridCell colspan="3">
