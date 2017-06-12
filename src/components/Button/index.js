@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import convertColor from '../../utils/convertColor'
 import Icon from '../Icon'
@@ -61,7 +61,7 @@ export default class Button extends Component {
       // Buttons might be used as a html <button>, <Link> or <NavLink>
       // navLink is just a boolean. It requires a link to be passed to the link prop
       if (this.props.link) {
-         ButtonElement = Link
+         ButtonElement = NavLink
          buttonLinkObj = { to: this.props.link }
       }
 
