@@ -1,49 +1,34 @@
 import React, { Component } from 'react'
-import {
-   NavList,
-   Notification,
-   OIO,
-   Spacer,
-   Text,
-   Title,
-   View
-} from '../src'
-import styles from '../src/foundation/styles.less' // eslint-disable-line no-unused-vars
+import { Route } from 'react-router-dom'
+import { NavList, Notification, OIO, Spacer, Text, Title, View } from '../src'
+import ButtonDemo from './content/Button'
+import ButtonGroupDemo from './content/ButtonGroup'
+import FormDemo from './content/Form'
+import TextDemo from './content/Text'
+import ModalDemo from './content/Modal'
+import ViewDemo from './content/View'
+import Welcome from './content/Welcome'
+import ExamplesWindow from './examples/Window'
+
+// eslint-disable-next-line no-unused-vars
+import styles from '../src/foundation/styles.less'
 
 export default class Demo extends Component {
-   static propTypes = {
-      children: React.PropTypes.node
-   }
-
    constructor(props) {
       super(props)
       this.state = {}
    }
 
-   handleSubmit(data, files, formData) {
-      console.log(data, files, formData) // eslint-disable-line
-      // Simulate delayed promise
-      return new Promise((resolve, reject) => {
-         setTimeout(() => {
-            resolve()
-         }, 2000)
-      })
-   }
-
-   handleError(errors) {
-      console.log(errors) // eslint-disable-line
-   }
-
    render() {
       const titleHeading = '1'
-      const notification = (this.state && this.state.notification) || {}
+      const notification = this.state.notification || {}
 
       const navContent = [{
          name: 'Overview',
          buttons: [{
             name: 'Welcome',
             link: '/',
-            indexLink: true
+            exact: true
          }]
       }, {
          name: 'Components',
@@ -114,7 +99,14 @@ export default class Demo extends Component {
                   <View
                      width="100%"
                      padding="18px[a-d] 18px 60px 18px 30px[e]">
-                     {this.props.children}
+                     <Route exact path="/" component={Welcome} />
+                     <Route path="/button" component={ButtonDemo} />
+                     <Route path="/button-group" component={ButtonGroupDemo} />
+                     <Route path="/form" component={FormDemo} />
+                     <Route path="/modal" component={ModalDemo} />
+                     <Route path="/view" component={ViewDemo} />
+                     <Route path="/text" component={TextDemo} />
+                     <Route path="/examples" component={ExamplesWindow} />
                   </View>
                </View>
             </View>

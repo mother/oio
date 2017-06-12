@@ -11,7 +11,6 @@ export default class Button extends Component {
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       icon: React.PropTypes.string,
-      indexLink: React.PropTypes.bool,
       link: React.PropTypes.string,
       mode: React.PropTypes.string,
       name: React.PropTypes.string,
@@ -58,15 +57,11 @@ export default class Button extends Component {
       let ButtonElement = 'button'
       let modeIcon = null
 
-      // Buttons might be used as a html <button>, <Link> or <NavLink>
+      // Buttons might be used as a html <button> or <NavLink>
       // navLink is just a boolean. It requires a link to be passed to the link prop
       if (this.props.link) {
          ButtonElement = NavLink
          buttonLinkObj = { to: this.props.link }
-      }
-
-      if (this.props.indexLink) {
-         ButtonElement = NavLink
       }
 
       // buttonColorRGB is an Object with r,g,b values

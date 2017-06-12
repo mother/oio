@@ -23,8 +23,7 @@ export default class DemoExampleWindow extends Component {
    render() {
       const navContent = [{
          name: 'Active',
-         link: '/examples/window',
-         indexLink: true
+         link: '/examples/window'
       }, {
          name: 'Another Tab',
          link: '/examples/window/2'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import {
    Button,
    ButtonGroup,
@@ -12,11 +12,15 @@ import {
    TitleBar,
    View
 } from '../../../src'
+import ModalExample1 from './Example1'
+import ModalExample2 from './Example2'
+import ModalExample3 from './Example3'
+import ModalExample4 from './Example4'
 import style from '../../style.less'
 
 export default class DemoContentModal extends Component {
    static propTypes = {
-      children: React.PropTypes.node
+      match: React.PropTypes.object
    }
 
    render() {
@@ -152,7 +156,7 @@ export default class DemoContentModal extends Component {
                            <td>Function</td>
                            <td>-</td>
                            <td>
-                              Pass a function that will fire when Modal window is closed
+                              {'Pass a function that will fire when Modal window is closed'}
                            </td>
                         </tr>
                         <tr>
@@ -167,7 +171,11 @@ export default class DemoContentModal extends Component {
                   </table>
                </GridCell>
             </Grid>
-            {this.props.children}
+
+            <Route path={`${this.props.match.url}/example1`} component={ModalExample1} />
+            <Route path={`${this.props.match.url}/example2`} component={ModalExample2} />
+            <Route path={`${this.props.match.url}/example3`} component={ModalExample3} />
+            <Route path={`${this.props.match.url}/example4`} component={ModalExample4} />
          </View>
       )
    }

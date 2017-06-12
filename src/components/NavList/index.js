@@ -35,6 +35,7 @@ export default class NavDirectory extends Component {
 
                return (
                   <NavLink
+                     exact={button.exact}
                      to={button.link}
                      key={`${button.name || buttonIndex}`}
                      className={classNames(buttonClasses)}
