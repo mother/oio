@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import Icon from '../Icon'
@@ -62,7 +62,8 @@ export default class Modal extends Component {
       if (this.props.onClose && this.node === event.target) {
          this.props.onClose()
       }
-      // TODO: Below will be used once we figure out how to get browserHistory working correctly
+      // TODO: Below will be used once we figure out how to get history as
+      // browserHistory working correctly
       // Presumeable, the developer can also pass an onClose function as well
       // if (this.node === event.target) {
       //    browserHistory.push(this.props.closeURL)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { IndexLink, Link } from 'react-router'
+import { NavLink, Link } from 'react-router-dom'
 import classNames from 'classnames'
 import Spacer from '../Spacer'
 import Text from '../Text'
@@ -27,7 +27,6 @@ export default class NavDirectory extends Component {
             <Spacer size="2" />
             {(section.buttons || []).map((button, buttonIndex) => {
                const buttonClasses = [style.navListButton]
-               const ButtonElement = button.indexLink ? IndexLink : Link
                const ButtonIcon = button.icon ? <span className={style.icon} /> : null
 
                if (button.icon) {
@@ -35,14 +34,15 @@ export default class NavDirectory extends Component {
                }
 
                return (
-                  <ButtonElement
+                  <NavLink
+                     exact={button.exact}
                      to={button.link}
                      key={`${button.name || buttonIndex}`}
                      className={classNames(buttonClasses)}
                      activeClassName={style.active}>
                      {ButtonIcon}
                      {button.name}
-                  </ButtonElement>
+                  </NavLink>
                )
             })}
             {(section.actions || []).map(action =>
