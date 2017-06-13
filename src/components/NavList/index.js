@@ -39,7 +39,8 @@ export default class NavDirectory extends Component {
                      to={button.link}
                      key={`${button.name || buttonIndex}`}
                      className={classNames(buttonClasses)}
-                     activeClassName={style.active}>
+                     activeClassName={style.active}
+                     isActive={button.isActive}>
                      {ButtonIcon}
                      {button.name}
                   </NavLink>

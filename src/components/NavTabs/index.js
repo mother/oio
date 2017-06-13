@@ -40,6 +40,7 @@ export default class NavTabs extends Component {
                to={tab.link}
                key={tab.name}
                style={tabStyle}
+               isActive={tab.isActive}
                activeClassName={style.active}
                activeStyle={activeStyle}>
                {tab.name}
