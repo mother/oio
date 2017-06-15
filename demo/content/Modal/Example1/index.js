@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
-import { browserHistory } from 'react-router'
-import {
-   Modal,
-   View
-} from '../../../../src'
+import { Modal, View } from '../../../../src'
 
 export default class DemoContentModalExample1 extends Component {
    static propTypes = {
-      contents: React.PropTypes.array
+      history: React.PropTypes.object
    }
 
    hideModal(closeURL) {
-      browserHistory.push(closeURL)
+      this.props.history.push(closeURL)
    }
 
    render() {

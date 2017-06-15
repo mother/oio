@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { IndexLink, Link } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import convertColor from '../../utils/convertColor'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
@@ -12,7 +12,6 @@ export default class Button extends Component {
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       icon: React.PropTypes.string,
-      indexLink: React.PropTypes.bool,
       link: React.PropTypes.string,
       mode: React.PropTypes.string,
       name: React.PropTypes.string,
@@ -75,14 +74,12 @@ export default class Button extends Component {
       let ButtonElement = 'button'
       let modeIcon = null
 
-      // Buttons might be used as a html <button>, <Link> or <IndexLink>
-      // IndexLink is just a boolean. It requires a link to be passed to the link prop
+      // Buttons might be used as a html <button> or <NavLink>
+      // navLink is just a boolean. It requires a link to be passed to the link prop
       if (this.props.link) {
-         ButtonElement = Link
+         ButtonElement = NavLink
          buttonLinkObj = { to: this.props.link }
       }
-
-      if (this.props.indexLink) ButtonElement = IndexLink
 
       // buttonColorRGB is an Object with r,g,b values
       // Sometimes you want to use the color as is directly,
