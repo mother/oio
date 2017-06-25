@@ -12,7 +12,10 @@ export default class Button extends Component {
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       icon: React.PropTypes.string,
-      link: React.PropTypes.string,
+      link: React.PropTypes.oneOfType([
+         React.PropTypes.string,
+         React.PropTypes.object
+      ]),
       mode: React.PropTypes.string,
       name: React.PropTypes.string,
       onClick: React.PropTypes.func,
