@@ -125,8 +125,6 @@ export default class View extends Component {
          }
       }
 
-      // Will only execute aspect ratio if no height exists
-      // Height takes precedence in setting View size
       if (aspectRatio) {
          const aspectRatioDimensions = aspectRatio.split(':')
          const aspectRatioWidth = aspectRatioDimensions[0]
