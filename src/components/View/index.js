@@ -14,6 +14,8 @@ export default class View extends Component {
       format: React.PropTypes.string,
       height: React.PropTypes.string,
       left: React.PropTypes.string,
+      minHeight: React.PropTypes.string,
+      maxHeight: React.PropTypes.string,
       maxWidth: React.PropTypes.string,
       onScroll: React.PropTypes.func,
       padding: React.PropTypes.string,
@@ -111,6 +113,9 @@ export default class View extends Component {
 
       if (this.state.height) {
          height = getAttributeForCurrentSize(this.state.size, this.state.height)
+         if (height) {
+            stateModifier.currentHeight = height
+         }
       }
 
       if (this.state.width) {
@@ -122,7 +127,7 @@ export default class View extends Component {
 
       // Will only execute aspect ratio if no height exists
       // Height takes precedence in setting View size
-      if (aspectRatio && (!height || height === 'auto')) {
+      if (aspectRatio) {
          const aspectRatioDimensions = aspectRatio.split(':')
          const aspectRatioWidth = aspectRatioDimensions[0]
          const aspectRatioHeight = aspectRatioDimensions[1]
@@ -131,7 +136,7 @@ export default class View extends Component {
 
          if (viewWidth > 0) stateModifier.currentHeight = viewHeight
          else stateModifier.currentHeight = 'auto'
-      } else if (height && height !== 'auto') {
+      } else if (height) {
          stateModifier.currentHeight = height
       }
 
@@ -257,9 +262,19 @@ export default class View extends Component {
          if (paddingLeft !== 0) currentSizeStyles.paddingLeft = paddingLeft
       }
 
+      if (this.props.maxHeight) {
+         const maxHeight = getAttributeForCurrentSize(this.state.size, this.props.maxHeight)
+         if (maxHeight) currentSizeStyles.maxHeight = maxHeight
+      }
+
       if (this.props.maxWidth) {
          const maxWidth = getAttributeForCurrentSize(this.state.size, this.props.maxWidth)
          if (maxWidth) currentSizeStyles.maxWidth = maxWidth
+      }
+
+      if (this.props.minHeight) {
+         const minHeight = getAttributeForCurrentSize(this.state.size, this.props.minHeight)
+         if (minHeight) currentSizeStyles.minHeight = minHeight
       }
 
       if (this.props.textAlign) {
