@@ -266,6 +266,7 @@ export default class DemoContentView extends Component {
                            <th width="90px">Prop Type</th>
                            <th width="120px">Default Value</th>
                            <th>Description/Options</th>
+                           <th>R*</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -283,6 +284,7 @@ export default class DemoContentView extends Component {
                                  &nbsp;It will override any height values.
                               </p>
                            </td>
+                           <td>Y</td>
                         </tr>
                         <tr>
                            <td><b>height</b></td>
@@ -291,6 +293,7 @@ export default class DemoContentView extends Component {
                            <td>
                               Enter a pixel-based size. ie. <code>12px</code>
                            </td>
+                           <td>Y</td>
                         </tr>
                         <tr>
                            <td><b>format</b></td>
@@ -300,7 +303,27 @@ export default class DemoContentView extends Component {
                               <code>float</code>
                               <code>auto</code>
                            </td>
+                           <td>Y</td>
                         </tr>
+                        <tr>
+                           <td><b>maxHeight</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>
+                              Enter a pixel-based size. ie. <code>12px</code>
+                           </td>
+                           <td>Y</td>
+                        </tr>
+                        <tr>
+                           <td><b>minHeight</b></td>
+                           <td>String</td>
+                           <td>-</td>
+                           <td>
+                              Enter a pixel-based size. ie. <code>12px</code>
+                           </td>
+                           <td>Y</td>
+                        </tr>
+
                         <tr>
                            <td><b>padding</b></td>
                            <td>String</td>
@@ -324,6 +347,7 @@ export default class DemoContentView extends Component {
                                  </a>
                               </p>
                            </td>
+                           <td>Y</td>
                         </tr>
                         <tr>
                            <td><b>position</b></td>
@@ -347,6 +371,7 @@ export default class DemoContentView extends Component {
                                  <code>left</code> <code>center</code> <code>right</code>
                               </p>
                            </td>
+                           <td>Y</td>
                         </tr>
                         <tr>
                            <td><b>width</b></td>
@@ -355,9 +380,12 @@ export default class DemoContentView extends Component {
                            <td>
                               Enter a pixel-based size. ie. <code>12px</code>
                            </td>
+                           <td>Y</td>
                         </tr>
                      </tbody>
                   </table>
+                  <Spacer size="3" />
+                  <Text size="2" color="gray60">*Can use OIO Responsive units</Text>
                </GridCell>
             </Grid>
          </View>
