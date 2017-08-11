@@ -38,6 +38,7 @@ export default class DemoContentButton extends Component {
                      <ButtonGroup>
                         <Button name="Button" />
                         <Button name="Button" icon="ion-ios-plus" />
+                        <Button name="Translucent" translucent />
                         <Button name="Outline" outline />
                         <Button name="Plain" plain />
                      </ButtonGroup>
@@ -197,12 +198,30 @@ export default class DemoContentButton extends Component {
                            <td>N</td>
                         </tr>
                         <tr>
+                           <td><b>plain</b></td>
+                           <td>Boolean</td>
+                           <td>
+                              <code>false</code>
+                           </td>
+                           <td>Gives button a plain appearance</td>
+                           <td>N</td>
+                        </tr>
+                        <tr>
                            <td><b>rounded</b></td>
                            <td>Boolean</td>
                            <td>
                               <code>false</code>
                            </td>
                            <td>Gives button a rounded appearance</td>
+                           <td>N</td>
+                        </tr>
+                        <tr>
+                           <td><b>translucent</b></td>
+                           <td>Boolean</td>
+                           <td>
+                              <code>false</code>
+                           </td>
+                           <td>Gives button a translucent appearance</td>
                            <td>N</td>
                         </tr>
                      </tbody>
