@@ -64,6 +64,10 @@ export default class ButtonGroup extends Component {
             ${buttonColorRGB.b}, 1)`
       }
 
+      if (this.props.mode === 'list') {
+         style.width = '100%'
+      }
+
       return (
          <div className={this.props.className} style={style}>
             <span style={innerContainerStyle}>{this.props.children}</span>
