@@ -97,6 +97,7 @@ export default class Button extends Component {
       const buttonSize = getAttributeForCurrentSize(this.state.size, this.props.size)
 
       const buttonStyle = {
+         fontFamily: this.context.OIOStyles.fontFamily,
          backgroundColor: buttonColor,
          color: '#fff'
       }
@@ -198,7 +199,6 @@ export default class Button extends Component {
       if (this.props.plain) {
          buttonClasses.push(style.plain)
          buttonStyle.color = buttonColor
-         buttonStyle.padding = '0px'
          delete buttonStyle.backgroundColor
 
          if (this.state.hover) {
@@ -212,7 +212,7 @@ export default class Button extends Component {
          buttonStyle.backgroundColor =
             `rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
-            ${buttonColorRGB.b}, 0.15)`
+            ${buttonColorRGB.b}, 0.20)`
 
          if (this.state.hover) {
             buttonStyle.backgroundColor =
