@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { getWindowSize } from '../../utils/size'
 import defaults from './defaults'
 import style from './style.less'
 
@@ -22,13 +23,34 @@ export default class OIO extends Component {
       OIOStyles: React.PropTypes.object
    }
 
+   constructor(props) {
+      super(props)
+
+      this.state = { windowSize: '' }
+   }
+
    getChildContext() {
       const OIOStyles = {
          fontFamily: this.props.fontFamily,
-         primaryColor: this.props.primaryColor
+         primaryColor: this.props.primaryColor,
+         windowSize: this.state.windowSize
       }
 
       return { OIOStyles }
+   }
+
+   componentWillMount() {
+      window.addEventListener('resize', this.windowSizeUpdated, false)
+      this.windowSizeUpdated()
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
+   }
+
+   windowSizeUpdated = () => {
+      const windowSize = getWindowSize()
+      this.setState({ windowSize })
    }
 
    render() {
