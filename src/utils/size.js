@@ -5,9 +5,9 @@ export const getWindowSize = () => {
       return 'e'
    } else if (windowWidth >= 1300) {
       return 'd'
-   } else if (windowWidth >= 992) {
+   } else if (windowWidth >= 1000) {
       return 'c'
-   } else if (windowWidth >= 768) {
+   } else if (windowWidth >= 660) {
       return 'b'
    } else if (windowWidth >= 0) {
       return 'a'
