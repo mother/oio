@@ -136,6 +136,8 @@ export default class View extends Component {
          else stateModifier.currentHeight = 'auto'
       } else if (height) {
          stateModifier.currentHeight = height
+      } else {
+         stateModifier.currentHeight = 'auto'
       }
 
       if (Object.keys(stateModifier).length > 0) {
@@ -320,6 +322,10 @@ export default class View extends Component {
          ...this.state.positionStyles,
          width: this.state.currentWidth,
          height: this.state.currentHeight
+      }
+
+      if (style.height === 'auto') {
+         delete style.height
       }
 
       return (
