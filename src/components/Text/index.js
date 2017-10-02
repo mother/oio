@@ -179,9 +179,10 @@ export default class Text extends Component {
    // =====================================================
 
    render() {
-      const fontSize = `textSize${getAttributeForCurrentSize(this.state.size, this.props.size)}`
+      const fontSize = getAttributeForCurrentSize(this.state.size, this.props.size)
       const textStyle = {
-         ...this.props.style
+         ...this.props.style,
+         ...this.context.OIOStyles.fontSizes[fontSize]
       }
 
       if (this.props.fontFamily) {
@@ -193,7 +194,6 @@ export default class Text extends Component {
       }
 
       const textClasses = [
-         style[fontSize],
          style[this.props.weight],
          colors[this.props.color],
          this.props.className

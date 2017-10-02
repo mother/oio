@@ -1,9 +1,9 @@
 export const getWindowSize = () => {
    const windowWidth = document.documentElement.clientWidth
 
-   if (windowWidth >= 1650) {
+   if (windowWidth >= 1700) {
       return 'e'
-   } else if (windowWidth >= 1300) {
+   } else if (windowWidth >= 1400) {
       return 'd'
    } else if (windowWidth >= 1000) {
       return 'c'

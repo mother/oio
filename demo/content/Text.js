@@ -62,6 +62,8 @@ export default class DemoContentText extends Component {
                   </Text>
                </GridCell>
                <GridCell colspan="3">
+                  <Text size="12">Size 12 Text</Text>
+                  <Text size="11">Size 11 Text</Text>
                   <Text size="10">Size 10 Text</Text>
                   <Text size="9">Size 9 Text</Text>
                   <Text size="8">Size 8 Text</Text>
