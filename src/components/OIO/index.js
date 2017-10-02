@@ -9,6 +9,7 @@ export default class OIO extends Component {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       fontFamily: React.PropTypes.string,
+      fontSizes: React.PropTypes.object,
       primaryColor: React.PropTypes.string
    }
 
@@ -25,6 +26,7 @@ export default class OIO extends Component {
    getChildContext() {
       const OIOStyles = {
          fontFamily: this.props.fontFamily,
+         fontSizes: this.props.fontSizes,
          primaryColor: this.props.primaryColor
       }
 
