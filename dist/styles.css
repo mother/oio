@@ -4072,9 +4072,9 @@ td {
   background-image: url(/libraries/mui/images/down-arrow.png);
   background-position: 98% 50%;
   background-repeat: no-repeat;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
   border: none;
   margin-bottom: 12px;
 }
@@ -4104,7 +4104,8 @@ td {
   font-weight: bold;
   font-size: 13px;
   line-height: 17px;
-  color: #888;
+  color: #222;
+  text-transform: uppercase;
 }
 :global label.light {
   font-weight: 300;
@@ -4119,7 +4120,7 @@ td {
   font-weight: 700;
 }
 :global label span {
-  color: #aaa;
+  color: #222;
   font-weight: normal;
 }
 :global .form-title {
