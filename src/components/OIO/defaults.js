@@ -22,7 +22,7 @@ export default {
       },
       3: {
          fontSize: '15px',
-         lineHeight: '18px'
+         lineHeight: '19px'
       },
       4: {
          fontSize: '17px',
@@ -38,11 +38,11 @@ export default {
       },
       7: {
          fontSize: '30px',
-         lineHeight: '1.2em'
+         lineHeight: '1.15em'
       },
       8: {
          fontSize: '36px',
-         lineHeight: '1.2em'
+         lineHeight: '1.1em'
       },
       9: {
          fontSize: '42px',
