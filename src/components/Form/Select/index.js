@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createOIOFormField } from '..'
-import styles from './styles.less'
 import formStyles from '../styles.less'
+import style from './style.less'
 
 class Select extends Component {
    static propTypes = {
@@ -14,6 +14,7 @@ class Select extends Component {
       onBlur: React.PropTypes.func,
       options: React.PropTypes.array,
       readOnly: React.PropTypes.bool,
+      size: React.PropTypes.string,
       triggerChange: React.PropTypes.func,
       triggerValidation: React.PropTypes.func,
       value: React.PropTypes.string
@@ -38,7 +39,7 @@ class Select extends Component {
    }
 
    render() {
-      const classes = [styles.select, this.props.className]
+      const classes = [style.select, this.props.className]
 
       const children = []
       this.props.options.forEach((option) => {
@@ -51,6 +52,10 @@ class Select extends Component {
             </option>
          )
       })
+
+      if (this.props.size) {
+         classes.push(style[this.props.size])
+      }
 
       return (
          <div className={formStyles.container}>
