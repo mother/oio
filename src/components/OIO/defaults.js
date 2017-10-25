@@ -11,49 +11,54 @@ export default {
          tiny: '24px'
       }
    },
-   font: {
-      family: 'Helvetica Neue, Arial, sans-serif',
-      sizes: {
-         1: {
-            fontSize: '9px[a] 10px[b-e]',
-            lineHeight: '16px'
-         },
-         2: {
-            fontSize: '13px',
-            lineHeight: '17px'
-         },
-         3: {
-            fontSize: '15px',
-            lineHeight: '21px'
-         },
-         4: {
-            fontSize: '17px',
-            lineHeight: '22px'
-         },
-         5: {
-            fontSize: '19px',
-            lineHeight: '23px'
-         },
-         6: {
-            fontSize: '25px',
-            lineHeight: '30px'
-         },
-         7: {
-            fontSize: '34px',
-            lineHeight: '1.2'
-         },
-         8: {
-            fontSize: '45px',
-            lineHeight: '1.2em'
-         },
-         9: {
-            fontSize: '56px',
-            lineHeight: '1.1em'
-         },
-         10: {
-            fontSize: '78px',
-            lineHeight: '78px'
-         }
+   fontSizes: {
+      1: {
+         fontSize: '10px',
+         lineHeight: '16px'
+      },
+      2: {
+         fontSize: '13px',
+         lineHeight: '17px'
+      },
+      3: {
+         fontSize: '15px',
+         lineHeight: '19px'
+      },
+      4: {
+         fontSize: '17px',
+         lineHeight: '21px'
+      },
+      5: {
+         fontSize: '19px',
+         lineHeight: '23px'
+      },
+      6: {
+         fontSize: '24px',
+         lineHeight: '30px'
+      },
+      7: {
+         fontSize: '30px',
+         lineHeight: '1.15em'
+      },
+      8: {
+         fontSize: '36px',
+         lineHeight: '1.1em'
+      },
+      9: {
+         fontSize: '42px',
+         lineHeight: '1.1em'
+      },
+      10: {
+         fontSize: '51px',
+         lineHeight: '1em'
+      },
+      11: {
+         fontSize: '60px',
+         lineHeight: '1em'
+      },
+      12: {
+         fontSize: '78px',
+         lineHeight: '78px'
       }
    },
    viewport: {

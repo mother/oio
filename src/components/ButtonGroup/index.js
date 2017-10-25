@@ -7,13 +7,13 @@ export default class ButtonGroup extends Component {
       children: React.PropTypes.node,
       className: React.PropTypes.string,
       mode: React.PropTypes.string,
-      spacing: React.PropTypes.number
+      spacing: React.PropTypes.string
    }
 
    static defaultProps = {
       align: 'left',
       mode: 'normal',
-      spacing: 6
+      spacing: '6px'
    }
 
    static contextTypes = {
@@ -32,7 +32,7 @@ export default class ButtonGroup extends Component {
       const buttonGroup = {
          align: this.props.align,
          mode: this.props.mode,
-         spacing: `${buttonSpacing}px`
+         spacing: `${parseFloat(buttonSpacing)}px`
       }
 
       return { buttonGroup }
@@ -62,6 +62,10 @@ export default class ButtonGroup extends Component {
             rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
             ${buttonColorRGB.b}, 1)`
+      }
+
+      if (this.props.mode === 'list') {
+         style.width = '100%'
       }
 
       return (

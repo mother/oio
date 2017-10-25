@@ -30,13 +30,15 @@ export default class DemoContentButton extends Component {
                   <GridCell>
                      <Title>Button Styles</Title>
                      <Text size="2" color="gray50">
-                        The <code>Button</code> component has a number of style combinations that can be mixed and matched
+                        The <code>Button</code> component has a number of style combinations that
+                         can be mixed and matched
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
                      <ButtonGroup>
                         <Button name="Button" />
                         <Button name="Button" icon="ion-ios-plus" />
+                        <Button name="Translucent" translucent />
                         <Button name="Outline" outline />
                         <Button name="Plain" plain />
                      </ButtonGroup>
@@ -66,7 +68,10 @@ export default class DemoContentButton extends Component {
                   <GridCell>
                      <Title>Button Sizes</Title>
                      <Text size="2" color="gray50">
-                        The <code>Button</code> component comes in four sizes: <code>large</code>, <code>medium</code>, <code>small</code> and <code>tiny</code>. By default, if no size is specified, medium will be used.
+                        The <code>Button</code> component comes in four sizes:
+                        <code>large</code>, <code>medium</code>, <code>small</code> and
+                        <code>tiny</code>.
+                         By default, if no size is specified, medium will be used.
                      </Text>
                   </GridCell>
                   <GridCell colspan="3">
@@ -135,6 +140,7 @@ export default class DemoContentButton extends Component {
                            <th>Prop Type</th>
                            <th>Default Value</th>
                            <th>Description/Options</th>
+                           <th>R (Y/N)*</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -145,6 +151,7 @@ export default class DemoContentButton extends Component {
                            <td>
                               Set ioinicon icon class name
                            </td>
+                           <td>N</td>
                         </tr>
                         <tr>
                            <td><b>mode</b></td>
@@ -155,14 +162,17 @@ export default class DemoContentButton extends Component {
                            <td>
                               If set to <code>loading</code>,
                               a loading indicator will be shown in place in the button.
-                              Mode can also be set to <code>disabled</code> <code>normal</code> and <code>pulsing</code>
+                              Mode can also be set to <code>disabled</code> <code>normal</code>
+                              and <code>pulsing</code>
                            </td>
+                           <td>N</td>
                         </tr>
                         <tr>
                            <td><b>name</b></td>
                            <td>String</td>
                            <td />
                            <td>Text that appears inside the button</td>
+                           <td>N</td>
                         </tr>
                         <tr>
                            <td><b>size</b></td>
@@ -176,6 +186,7 @@ export default class DemoContentButton extends Component {
                               <code>small</code>
                               <code>tiny</code>
                            </td>
+                           <td>Y</td>
                         </tr>
                         <tr>
                            <td><b>outline</b></td>
@@ -184,6 +195,16 @@ export default class DemoContentButton extends Component {
                               <code>false</code>
                            </td>
                            <td>Gives button an outline appearance</td>
+                           <td>N</td>
+                        </tr>
+                        <tr>
+                           <td><b>plain</b></td>
+                           <td>Boolean</td>
+                           <td>
+                              <code>false</code>
+                           </td>
+                           <td>Gives button a plain appearance</td>
+                           <td>N</td>
                         </tr>
                         <tr>
                            <td><b>rounded</b></td>
@@ -192,9 +213,21 @@ export default class DemoContentButton extends Component {
                               <code>false</code>
                            </td>
                            <td>Gives button a rounded appearance</td>
+                           <td>N</td>
+                        </tr>
+                        <tr>
+                           <td><b>translucent</b></td>
+                           <td>Boolean</td>
+                           <td>
+                              <code>false</code>
+                           </td>
+                           <td>Gives button a translucent appearance</td>
+                           <td>N</td>
                         </tr>
                      </tbody>
                   </table>
+                  <Spacer size="6" />
+                  <Text size="2">*Can use OIO Responsive units</Text>
                </GridCell>
             </Grid>
          </View>

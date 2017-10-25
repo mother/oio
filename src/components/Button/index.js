@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { IndexLink, Link } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import convertColor from '../../utils/convertColor'
+import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import Icon from '../Icon'
 import style from './style.less'
 
@@ -11,8 +12,10 @@ export default class Button extends Component {
       className: React.PropTypes.string,
       color: React.PropTypes.string,
       icon: React.PropTypes.string,
-      indexLink: React.PropTypes.bool,
-      link: React.PropTypes.string,
+      link: React.PropTypes.oneOfType([
+         React.PropTypes.string,
+         React.PropTypes.object
+      ]),
       mode: React.PropTypes.string,
       name: React.PropTypes.string,
       onClick: React.PropTypes.func,
@@ -41,7 +44,18 @@ export default class Button extends Component {
    constructor(props) {
       super(props)
 
-      this.state = { hover: false }
+      this.state = {
+         hover: false,
+         size: getWindowSize()
+      }
+   }
+
+   componentDidMount() {
+      window.addEventListener('resize', this.windowSizeUpdated, false)
+   }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.windowSizeUpdated)
    }
 
    onMouseOver = () => {
@@ -52,20 +66,23 @@ export default class Button extends Component {
       this.setState({ hover: false })
    }
 
+   windowSizeUpdated = () => {
+      const windowSize = getWindowSize()
+      this.setState({ size: windowSize })
+   }
+
    render() {
       let activeStyleObj = null
       let buttonLinkObj = null
       let ButtonElement = 'button'
       let modeIcon = null
 
-      // Buttons might be used as a html <button>, <Link> or <IndexLink>
-      // IndexLink is just a boolean. It requires a link to be passed to the link prop
+      // Buttons might be used as a html <button> or <NavLink>
+      // navLink is just a boolean. It requires a link to be passed to the link prop
       if (this.props.link) {
-         ButtonElement = Link
+         ButtonElement = NavLink
          buttonLinkObj = { to: this.props.link }
       }
-
-      if (this.props.indexLink) ButtonElement = IndexLink
 
       // buttonColorRGB is an Object with r,g,b values
       // Sometimes you want to use the color as is directly,
@@ -77,8 +94,10 @@ export default class Button extends Component {
       const buttonClasses = [this.props.className]
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
+      const buttonSize = getAttributeForCurrentSize(this.state.size, this.props.size)
 
       const buttonStyle = {
+         fontFamily: this.context.OIOStyles.fontFamily,
          backgroundColor: buttonColor,
          color: '#fff'
       }
@@ -87,7 +106,7 @@ export default class Button extends Component {
          buttonTextClasses.push(this.props.textClassName)
       }
 
-      buttonClasses.push(style[this.props.size])
+      buttonClasses.push(style[buttonSize])
 
       // Button Color by default will use the OIO primary color
       // Otherwise, it will use the color passed directly to the button
@@ -114,9 +133,9 @@ export default class Button extends Component {
 
       if (this.props.icon) {
          if (this.props.name) {
-            buttonClasses.push(style[`${this.props.size}IconAndText`])
+            buttonClasses.push(style[`${buttonSize}IconAndText`])
          } else {
-            buttonClasses.push(style[`${this.props.size}IconOnly`])
+            buttonClasses.push(style[`${buttonSize}IconOnly`])
          }
       }
 
@@ -156,7 +175,7 @@ export default class Button extends Component {
       // =======================================================
 
       if (this.props.rounded) {
-         buttonClasses.push(style[`${this.props.size}Rounded`])
+         buttonClasses.push(style[`${buttonSize}Rounded`])
       }
 
       if (this.props.outline) {
@@ -183,19 +202,17 @@ export default class Button extends Component {
          delete buttonStyle.backgroundColor
 
          if (this.state.hover) {
-            buttonStyle.backgroundColor =
-               `rgba(${buttonColorRGB.r},
-               ${buttonColorRGB.g},
-               ${buttonColorRGB.b}, 0.15)`
+            buttonStyle.textDecoration = 'underline'
          }
       }
 
       if (this.props.translucent) {
          buttonClasses.push(style.plain)
+         buttonStyle.color = buttonColor
          buttonStyle.backgroundColor =
             `rgba(${buttonColorRGB.r},
             ${buttonColorRGB.g},
-            ${buttonColorRGB.b}, 0.15)`
+            ${buttonColorRGB.b}, 0.20)`
 
          if (this.state.hover) {
             buttonStyle.backgroundColor =
