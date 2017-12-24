@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 const Cover = ({
@@ -23,11 +24,11 @@ const Cover = ({
 }
 
 Cover.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string,
-   position: React.PropTypes.string,
-   size: React.PropTypes.string,
-   src: React.PropTypes.string
+   children: PropTypes.node,
+   className: PropTypes.string,
+   position: PropTypes.string,
+   size: PropTypes.string,
+   src: PropTypes.string
 }
 
 Cover.defaultProps = {

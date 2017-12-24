@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
@@ -7,15 +8,15 @@ import style from './style.less'
 
 export default class Modal extends Component {
    static propTypes = {
-      animation: React.PropTypes.oneOf(['scaleIn', 'slideFromBottom']),
-      children: React.PropTypes.node,
-      height: React.PropTypes.string,
-      closeURL: React.PropTypes.string,
-      mode: React.PropTypes.string,
-      onClose: React.PropTypes.func,
-      width: React.PropTypes.string,
-      windowClassName: React.PropTypes.string,
-      windowMargin: React.PropTypes.string
+      animation: PropTypes.oneOf(['scaleIn', 'slideFromBottom']),
+      children: PropTypes.node,
+      height: PropTypes.string,
+      closeURL: PropTypes.string,
+      mode: PropTypes.string,
+      onClose: PropTypes.func,
+      width: PropTypes.string,
+      windowClassName: PropTypes.string,
+      windowMargin: PropTypes.string
    }
 
    static defaultProps = {

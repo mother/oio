@@ -5,7 +5,6 @@ module.exports = {
    devtool: 'eval',
    entry: [
       'webpack-dev-server/client?http://localhost:8000',
-      'webpack/hot/only-dev-server',
       './demo/index.js'
    ],
    output: {
@@ -18,7 +17,7 @@ module.exports = {
          {
             test: /\.js$/,
             exclude: /node_modules/,
-            use: ['react-hot-loader', 'babel-loader']
+            use: ['babel-loader']
          },
          {
             test: /\.less$/,

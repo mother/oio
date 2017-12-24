@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createOIOFormField } from '..'
@@ -6,19 +7,19 @@ import formStyles from '../styles.less'
 
 class Textarea extends Component {
    static propTypes = {
-      className: React.PropTypes.string,
-      disabled: React.PropTypes.bool,
-      error: React.PropTypes.string,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      placeholder: React.PropTypes.string,
-      readOnly: React.PropTypes.bool,
-      rows: React.PropTypes.string,
-      triggerChange: React.PropTypes.func,
-      triggerValidation: React.PropTypes.func,
-      value: React.PropTypes.string
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      error: PropTypes.string,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      onBlur: PropTypes.func,
+      placeholder: PropTypes.string,
+      readOnly: PropTypes.bool,
+      rows: PropTypes.string,
+      triggerChange: PropTypes.func,
+      triggerValidation: PropTypes.func,
+      value: PropTypes.string
    }
 
    static defaultProps = {
@@ -27,7 +28,7 @@ class Textarea extends Component {
    }
 
    static contextTypes = {
-      OIOStyles: React.PropTypes.object
+      OIOStyles: PropTypes.object
    }
 
    handleBlur = (event) => {

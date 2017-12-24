@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import convertColor from '../../utils/convertColor'
@@ -6,7 +7,7 @@ import style from './style.less'
 
 export default class NavTabs extends Component {
    static propTypes = {
-      content: React.PropTypes.array
+      content: PropTypes.array
    }
 
    static defaultProps = {
@@ -14,7 +15,7 @@ export default class NavTabs extends Component {
    }
 
    static contextTypes = {
-      OIOStyles: React.PropTypes.object
+      OIOStyles: PropTypes.object
    }
 
    render() {

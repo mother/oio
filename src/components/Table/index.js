@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import style from './style.less'
 
@@ -6,7 +7,7 @@ const Table = ({ children }) => (
 )
 
 Table.propTypes = {
-   children: React.PropTypes.node
+   children: PropTypes.node
 }
 
 export default Table

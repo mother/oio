@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import Button from '../Button'
@@ -9,24 +10,24 @@ import colors from '../../foundation/colors.less'
 
 export default class Text extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      color: React.PropTypes.string,
-      editable: React.PropTypes.bool,
-      editorCancelButtonText: React.PropTypes.string,
-      editorDoneButtonText: React.PropTypes.string,
-      editorState: React.PropTypes.oneOf(['ready', 'pending']),
-      editorOnCancel: React.PropTypes.func,
-      editorOnDone: React.PropTypes.func,
-      editorShowEditButton: React.PropTypes.bool,
-      editorValue: React.PropTypes.string,
-      editing: React.PropTypes.bool,
-      fontFamily: React.PropTypes.string,
-      letterSpacing: React.PropTypes.string,
-      size: React.PropTypes.string,
-      style: React.PropTypes.object,
-      uppercase: React.PropTypes.bool,
-      weight: React.PropTypes.string
+      children: PropTypes.node,
+      className: PropTypes.string,
+      color: PropTypes.string,
+      editable: PropTypes.bool,
+      editorCancelButtonText: PropTypes.string,
+      editorDoneButtonText: PropTypes.string,
+      editorState: PropTypes.oneOf(['ready', 'pending']),
+      editorOnCancel: PropTypes.func,
+      editorOnDone: PropTypes.func,
+      editorShowEditButton: PropTypes.bool,
+      editorValue: PropTypes.string,
+      editing: PropTypes.bool,
+      fontFamily: PropTypes.string,
+      letterSpacing: PropTypes.string,
+      size: PropTypes.string,
+      style: PropTypes.object,
+      uppercase: PropTypes.bool,
+      weight: PropTypes.string
    }
 
    static defaultProps = {
@@ -41,7 +42,7 @@ export default class Text extends Component {
    }
 
    static contextTypes = {
-      OIOStyles: React.PropTypes.object
+      OIOStyles: PropTypes.object
    }
 
    constructor(props) {

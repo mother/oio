@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
@@ -15,8 +16,8 @@ const ActionBar = ({ children, flush }) => {
 }
 
 ActionBar.propTypes = {
-   children: React.PropTypes.node,
-   flush: React.PropTypes.bool
+   children: PropTypes.node,
+   flush: PropTypes.bool
 }
 
 export default ActionBar

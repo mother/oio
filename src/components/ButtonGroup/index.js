@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import convertColor from '../../utils/convertColor'
 
 export default class ButtonGroup extends Component {
    static propTypes = {
-      align: React.PropTypes.string,
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      mode: React.PropTypes.string,
-      spacing: React.PropTypes.string
+      align: PropTypes.string,
+      children: PropTypes.node,
+      className: PropTypes.string,
+      mode: PropTypes.string,
+      spacing: PropTypes.string
    }
 
    static defaultProps = {
@@ -17,11 +18,11 @@ export default class ButtonGroup extends Component {
    }
 
    static contextTypes = {
-      OIOStyles: React.PropTypes.object
+      OIOStyles: PropTypes.object
    }
 
    static childContextTypes = {
-      buttonGroup: React.PropTypes.object
+      buttonGroup: PropTypes.object
    }
 
    getChildContext() {

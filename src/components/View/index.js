@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
@@ -5,32 +6,32 @@ import styles from './styles.less'
 
 export default class View extends Component {
    static propTypes = {
-      id: React.PropTypes.string,
-      align: React.PropTypes.string,
-      aspectRatio: React.PropTypes.string,
-      bottom: React.PropTypes.string,
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      format: React.PropTypes.string,
-      height: React.PropTypes.string,
-      left: React.PropTypes.string,
-      minHeight: React.PropTypes.string,
-      maxHeight: React.PropTypes.string,
-      maxWidth: React.PropTypes.string,
-      onScroll: React.PropTypes.func,
-      padding: React.PropTypes.string,
-      paddingTop: React.PropTypes.string,
-      paddingRight: React.PropTypes.string,
-      paddingBottom: React.PropTypes.string,
-      paddingLeft: React.PropTypes.string,
-      position: React.PropTypes.string,
-      right: React.PropTypes.string,
-      scroll: React.PropTypes.string,
-      style: React.PropTypes.object,
-      textAlign: React.PropTypes.string,
-      top: React.PropTypes.string,
-      width: React.PropTypes.string,
-      visible: React.PropTypes.string
+      id: PropTypes.string,
+      align: PropTypes.string,
+      aspectRatio: PropTypes.string,
+      bottom: PropTypes.string,
+      children: PropTypes.node,
+      className: PropTypes.string,
+      format: PropTypes.string,
+      height: PropTypes.string,
+      left: PropTypes.string,
+      minHeight: PropTypes.string,
+      maxHeight: PropTypes.string,
+      maxWidth: PropTypes.string,
+      onScroll: PropTypes.func,
+      padding: PropTypes.string,
+      paddingTop: PropTypes.string,
+      paddingRight: PropTypes.string,
+      paddingBottom: PropTypes.string,
+      paddingLeft: PropTypes.string,
+      position: PropTypes.string,
+      right: PropTypes.string,
+      scroll: PropTypes.string,
+      style: PropTypes.object,
+      textAlign: PropTypes.string,
+      top: PropTypes.string,
+      width: PropTypes.string,
+      visible: PropTypes.string
    }
 
    static defaultProps = {

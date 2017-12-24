@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import View from '../View'
@@ -5,11 +6,11 @@ import { getWindowSize } from '../../utils/size'
 
 export default class Video extends Component {
    static propTypes = {
-      autoPlay: React.PropTypes.bool,
-      className: React.PropTypes.string,
-      height: React.PropTypes.string,
-      src: React.PropTypes.string,
-      width: React.PropTypes.string
+      autoPlay: PropTypes.bool,
+      className: PropTypes.string,
+      height: PropTypes.string,
+      src: PropTypes.string,
+      width: PropTypes.string
    }
 
    static defaultProps = {

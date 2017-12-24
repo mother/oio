@@ -1,18 +1,19 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { createOIOFormField } from '..'
 import formStyles from '../styles.less'
 
 class CheckboxGroup extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      error: React.PropTypes.string,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      readOnly: React.PropTypes.bool,
-      triggerChange: React.PropTypes.func,
-      triggerValidation: React.PropTypes.func,
-      value: React.PropTypes.array
+      children: PropTypes.node,
+      error: PropTypes.string,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      readOnly: PropTypes.bool,
+      triggerChange: PropTypes.func,
+      triggerValidation: PropTypes.func,
+      value: PropTypes.array
    }
 
    static defaultProps = {
@@ -20,7 +21,7 @@ class CheckboxGroup extends Component {
    }
 
    static childContextTypes = {
-      OIOFormCheckbox: React.PropTypes.object
+      OIOFormCheckbox: PropTypes.object
    }
 
    getChildContext() {
