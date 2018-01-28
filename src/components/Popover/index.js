@@ -51,7 +51,8 @@ export default class Popover extends Component {
       })
    }
 
-   hide = () => {
+   hide = (event) => {
+      event.stopPropagation()
       this.setState({ visible: false })
    }
 

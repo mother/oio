@@ -4,7 +4,7 @@ const webpack = require('webpack')
 module.exports = {
    devtool: 'eval',
    entry: [
-      'webpack-dev-server/client?http://localhost:8000',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './demo/index.js'
    ],
    output: {

@@ -43,7 +43,7 @@
     "form-data": "2.1.2",
     "moment": "2.18.1",
     "react-files": "2.4.3",
-    "react-router-dom": "4.1.1"
+    "react-router-dom": "4.2.2"
   },
   "devDependencies": {
     "babel-core": "6.20.0",
@@ -52,7 +52,8 @@
     "babel-preset-react": "6.16.0",
     "babel-preset-stage-0": "6.16.0",
     "css-loader": "0.25.0",
-    "eslint-config-mother": "latest",
+    "eslint-config-mother": "2.0.11",
+    "express": "4.16.2",
     "gulp": "3.9.1",
     "gulp-concat": "2.6.0",
     "gulp-less": "3.1.0",
@@ -66,6 +67,7 @@
     "resolve-url-loader": "1.6.0",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",
-    "webpack-dev-server": "2.4.1"
+    "webpack-dev-middleware": "2.0.4",
+    "webpack-hot-middleware": "2.21.0"
   }
 }

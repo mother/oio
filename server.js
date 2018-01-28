@@ -1,14 +1,30 @@
+const express = require('express')
 const webpack = require('webpack')
-const WebpackDevServer = require('webpack-dev-server')
-const config = require('./config/webpack.dev.config')
+const webpackConfig = require('./config/webpack.dev.config')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 
-new WebpackDevServer(webpack(config), {
-   publicPath: config.output.publicPath,
-   hot: true,
-   historyApiFallback: true
-}).listen(8000, (err, result) => {
-   if (err) {
-      return console.log(err) // eslint-disable-line no-console
+const app = express()
+const compiler = webpack(webpackConfig)
+
+app.use(webpackDevMiddleware(compiler, {
+   publicPath: webpackConfig.output.publicPath,
+   noInfo: true,
+   quiet: false,
+   historyApiFallback: true,
+   stats: {
+      colors: true
    }
-   console.log('Listening at http://localhost:8000/') // eslint-disable-line no-console
+}))
+
+app.use(webpackHotMiddleware(compiler, {
+   log: console.log, // eslint-disable-line no-console
+   path: '/__webpack_hmr',
+   heartbeat: 10 * 1000
+}))
+
+app.get('*', (req, res, next) => {
+   res.sendFile('index.html', { root: `${__dirname}/demo/` })
 })
+
+app.listen(8000)
