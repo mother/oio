@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
@@ -8,24 +9,24 @@ import style from './style.less'
 
 export default class Button extends Component {
    static propTypes = {
-      autoFormRespond: React.PropTypes.bool,
-      className: React.PropTypes.string,
-      color: React.PropTypes.string,
-      icon: React.PropTypes.string,
-      link: React.PropTypes.oneOfType([
-         React.PropTypes.string,
-         React.PropTypes.object
+      autoFormRespond: PropTypes.bool,
+      className: PropTypes.string,
+      color: PropTypes.string,
+      icon: PropTypes.string,
+      link: PropTypes.oneOfType([
+         PropTypes.string,
+         PropTypes.object
       ]),
-      mode: React.PropTypes.string,
-      name: React.PropTypes.string,
-      onClick: React.PropTypes.func,
-      outline: React.PropTypes.bool,
-      plain: React.PropTypes.bool,
-      rounded: React.PropTypes.bool,
-      size: React.PropTypes.string,
-      textClassName: React.PropTypes.string,
-      translucent: React.PropTypes.bool,
-      type: React.PropTypes.string
+      mode: PropTypes.string,
+      name: PropTypes.string,
+      onClick: PropTypes.func,
+      outline: PropTypes.bool,
+      plain: PropTypes.bool,
+      rounded: PropTypes.bool,
+      size: PropTypes.string,
+      textClassName: PropTypes.string,
+      translucent: PropTypes.bool,
+      type: PropTypes.string
    }
 
    static defaultProps = {
@@ -35,10 +36,10 @@ export default class Button extends Component {
    }
 
    static contextTypes = {
-      buttonGroup: React.PropTypes.object,
-      buttonGroupStyle: React.PropTypes.object,
-      OIOForm: React.PropTypes.object,
-      OIOStyles: React.PropTypes.object
+      buttonGroup: PropTypes.object,
+      buttonGroupStyle: PropTypes.object,
+      OIOForm: PropTypes.object,
+      OIOStyles: PropTypes.object
    }
 
    constructor(props) {

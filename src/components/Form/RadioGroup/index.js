@@ -1,17 +1,18 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { createOIOFormField } from '..'
 import formStyles from '../styles.less'
 
 class RadioGroup extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      error: React.PropTypes.string,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      readOnly: React.PropTypes.bool,
-      triggerChange: React.PropTypes.func,
-      triggerValidation: React.PropTypes.func
+      children: PropTypes.node,
+      error: PropTypes.string,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      readOnly: PropTypes.bool,
+      triggerChange: PropTypes.func,
+      triggerValidation: PropTypes.func
    }
 
    static defaultProps = {
@@ -19,7 +20,7 @@ class RadioGroup extends Component {
    }
 
    static childContextTypes = {
-      OIOFormRadio: React.PropTypes.object
+      OIOFormRadio: PropTypes.object
    }
 
    getChildContext() {

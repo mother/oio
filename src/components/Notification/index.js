@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import Spacer from '../Spacer'
@@ -93,19 +94,19 @@ const Notification = ({
 }
 
 Notification.propTypes = {
-   buttonFull: React.PropTypes.string,
-   buttonOne: React.PropTypes.string,
-   buttonTwo: React.PropTypes.string,
-   buttonAllAction: React.PropTypes.func,
-   buttonFullAction: React.PropTypes.func,
-   buttonOneAction: React.PropTypes.func,
-   buttonTwoAction: React.PropTypes.func,
-   message: React.PropTypes.string,
-   mode: React.PropTypes.string,
-   onHide: React.PropTypes.func,
-   onShow: React.PropTypes.func,
-   showing: React.PropTypes.bool,
-   title: React.PropTypes.string
+   buttonFull: PropTypes.string,
+   buttonOne: PropTypes.string,
+   buttonTwo: PropTypes.string,
+   buttonAllAction: PropTypes.func,
+   buttonFullAction: PropTypes.func,
+   buttonOneAction: PropTypes.func,
+   buttonTwoAction: PropTypes.func,
+   message: PropTypes.string,
+   mode: PropTypes.string,
+   onHide: PropTypes.func,
+   onShow: PropTypes.func,
+   showing: PropTypes.bool,
+   title: PropTypes.string
 }
 
 export default Notification

@@ -8,3 +8,7 @@ ReactDOM.render((
       <Demo />
    </BrowserRouter>
 ), document.getElementById('container'))
+
+if (module.hot) {
+   module.hot.accept()
+}

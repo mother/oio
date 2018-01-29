@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
@@ -14,9 +15,9 @@ const Nav = ({ children, className, type }) => {
 }
 
 Nav.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string,
-   type: React.PropTypes.string.isRequired
+   children: PropTypes.node,
+   className: PropTypes.string,
+   type: PropTypes.string.isRequired
 }
 
 export default Nav

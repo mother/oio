@@ -1,15 +1,16 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
 
 export default class Popover extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      height: React.PropTypes.string,
-      offset: React.PropTypes.string,
-      position: React.PropTypes.string,
-      width: React.PropTypes.string
+      children: PropTypes.node,
+      className: PropTypes.string,
+      height: PropTypes.string,
+      offset: PropTypes.string,
+      position: PropTypes.string,
+      width: PropTypes.string
    }
 
    static defaultProps = {
@@ -50,7 +51,8 @@ export default class Popover extends Component {
       })
    }
 
-   hide = () => {
+   hide = (event) => {
+      event.stopPropagation()
       this.setState({ visible: false })
    }
 

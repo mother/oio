@@ -17,15 +17,15 @@ export default {
          lineHeight: '16px'
       },
       2: {
-         fontSize: '13px',
+         fontSize: '12px',
          lineHeight: '17px'
       },
       3: {
-         fontSize: '15px',
+         fontSize: '14px',
          lineHeight: '19px'
       },
       4: {
-         fontSize: '17px',
+         fontSize: '16px',
          lineHeight: '21px'
       },
       5: {

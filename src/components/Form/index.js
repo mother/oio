@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
@@ -28,13 +29,13 @@ const compareFieldValues = (v1, v2) => {
 
 export default class Form extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      onError: React.PropTypes.func,
-      onSubmit: React.PropTypes.func
+      children: PropTypes.node,
+      onError: PropTypes.func,
+      onSubmit: PropTypes.func
    }
 
    static childContextTypes = {
-      OIOForm: React.PropTypes.object
+      OIOForm: PropTypes.object
    }
 
    constructor(props) {

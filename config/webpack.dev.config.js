@@ -4,8 +4,7 @@ const webpack = require('webpack')
 module.exports = {
    devtool: 'eval',
    entry: [
-      'webpack-dev-server/client?http://localhost:8000',
-      'webpack/hot/only-dev-server',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './demo/index.js'
    ],
    output: {
@@ -18,7 +17,7 @@ module.exports = {
          {
             test: /\.js$/,
             exclude: /node_modules/,
-            use: ['react-hot-loader', 'babel-loader']
+            use: ['babel-loader']
          },
          {
             test: /\.less$/,
