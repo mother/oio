@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createOIOFormField } from '..'
@@ -6,17 +7,17 @@ import formStyles from '../styles.less'
 
 class Select extends Component {
    static propTypes = {
-      className: React.PropTypes.string,
-      error: React.PropTypes.string,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      options: React.PropTypes.array,
-      readOnly: React.PropTypes.bool,
-      triggerChange: React.PropTypes.func,
-      triggerValidation: React.PropTypes.func,
-      value: React.PropTypes.string
+      className: PropTypes.string,
+      error: PropTypes.string,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      onBlur: PropTypes.func,
+      options: PropTypes.array,
+      readOnly: PropTypes.bool,
+      triggerChange: PropTypes.func,
+      triggerValidation: PropTypes.func,
+      value: PropTypes.string
    }
 
    static defaultProps = {

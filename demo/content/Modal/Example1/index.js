@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Modal, View } from '../../../../src'
 
 export default class DemoContentModalExample1 extends Component {
    static propTypes = {
-      history: React.PropTypes.object
+      history: PropTypes.object
    }
 
    hideModal(closeURL) {

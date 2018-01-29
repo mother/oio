@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import style from './style.less'
@@ -9,8 +10,8 @@ const GridRow = ({ children, className }) => (
 )
 
 GridRow.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string
+   children: PropTypes.node,
+   className: PropTypes.string
 }
 
 export default GridRow

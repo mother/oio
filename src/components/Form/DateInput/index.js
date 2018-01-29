@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import moment from 'moment'
@@ -7,16 +8,16 @@ import formStyles from '../styles.less'
 
 class DateInput extends Component {
    static propTypes = {
-      enableTime: React.PropTypes.bool,
-      error: React.PropTypes.string,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      readOnly: React.PropTypes.bool,
-      triggerChange: React.PropTypes.func,
-      triggerValidation: React.PropTypes.func,
-      value: React.PropTypes.oneOfType([
-         React.PropTypes.string,
-         React.PropTypes.instanceOf(Date)
+      enableTime: PropTypes.bool,
+      error: PropTypes.string,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      readOnly: PropTypes.bool,
+      triggerChange: PropTypes.func,
+      triggerValidation: PropTypes.func,
+      value: PropTypes.oneOfType([
+         PropTypes.string,
+         PropTypes.instanceOf(Date)
       ])
    }
 

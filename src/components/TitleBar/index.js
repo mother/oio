@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import styles from './styles.less'
@@ -5,12 +6,12 @@ import styles from './styles.less'
 // TODO: This component will have more functionality
 export default class Titlebar extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      flush: React.PropTypes.bool,
-      size: React.PropTypes.string,
-      title: React.PropTypes.string,
-      titleClassName: React.PropTypes.string
+      children: PropTypes.node,
+      className: PropTypes.string,
+      flush: PropTypes.bool,
+      size: PropTypes.string,
+      title: PropTypes.string,
+      titleClassName: PropTypes.string
    }
 
    static defaultProps = {

@@ -1,17 +1,18 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { createOIOFormField } from '..'
 import formStyles from '../styles.less'
 
 class Switch extends Component {
    static propTypes = {
-      error: React.PropTypes.string,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      readOnly: React.PropTypes.bool,
-      triggerChange: React.PropTypes.func,
-      triggerValidation: React.PropTypes.func,
-      value: React.PropTypes.bool
+      error: PropTypes.string,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      readOnly: PropTypes.bool,
+      triggerChange: PropTypes.func,
+      triggerValidation: PropTypes.func,
+      value: PropTypes.bool
    }
 
    static defaultProps = {
@@ -19,7 +20,7 @@ class Switch extends Component {
    }
 
    static contextTypes = {
-      OIOStyles: React.PropTypes.object
+      OIOStyles: PropTypes.object
    }
 
    handleChange = (event) => {

@@ -1,14 +1,15 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 const createOIOFormField = () => Field => (
    class ConnectedField extends Component {
       static propTypes = {
-         initialValue: React.PropTypes.any,
-         name: React.PropTypes.string,
-         onChange: React.PropTypes.func,
-         readOnly: React.PropTypes.bool,
-         rules: React.PropTypes.array,
-         value: React.PropTypes.any
+         initialValue: PropTypes.any,
+         name: PropTypes.string,
+         onChange: PropTypes.func,
+         readOnly: PropTypes.bool,
+         rules: PropTypes.array,
+         value: PropTypes.any
       }
 
       static defaultProps = {
@@ -16,7 +17,7 @@ const createOIOFormField = () => Field => (
       }
 
       static contextTypes = {
-         OIOForm: React.PropTypes.object
+         OIOForm: PropTypes.object
       }
 
       constructor(props) {

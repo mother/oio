@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import classNames from 'classnames'
@@ -7,11 +8,11 @@ import style from './style.less'
 
 export default class NavDirectory extends Component {
    static propTypes = {
-      contents: React.PropTypes.array
+      contents: PropTypes.array
    }
 
    static contextTypes = {
-      OIOStyles: React.PropTypes.object
+      OIOStyles: PropTypes.object
    }
 
    render() {

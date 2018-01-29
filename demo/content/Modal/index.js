@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link, Route } from 'react-router-dom'
 import {
@@ -20,7 +21,7 @@ import style from '../../style.less'
 
 export default class DemoContentModal extends Component {
    static propTypes = {
-      match: React.PropTypes.object
+      match: PropTypes.object
    }
 
    render() {

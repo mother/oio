@@ -1,20 +1,21 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Files from 'react-files'
 import formStyles from '../styles.less'
 
 export default class FileInput extends Component {
    static propTypes = {
-      accepts: React.PropTypes.array,
-      label: React.PropTypes.string,
-      maxFileSize: React.PropTypes.number,
-      name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      onError: React.PropTypes.func,
-      style: React.PropTypes.object
+      accepts: PropTypes.array,
+      label: PropTypes.string,
+      maxFileSize: PropTypes.number,
+      name: PropTypes.string,
+      onChange: PropTypes.func,
+      onError: PropTypes.func,
+      style: PropTypes.object
    }
 
    static contextTypes = {
-      OIOForm: React.PropTypes.object
+      OIOForm: PropTypes.object
    }
 
    constructor(props) {

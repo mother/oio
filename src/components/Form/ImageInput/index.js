@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Files from 'react-files'
 import Cover from '../../Cover'
@@ -7,16 +8,16 @@ const imagePlaceholder = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBl
 
 export default class ImageInput extends Component {
    static propTypes = {
-      accepts: React.PropTypes.array,
-      alt: React.PropTypes.string,
-      label: React.PropTypes.string,
-      maxFileSize: React.PropTypes.number,
-      name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      onError: React.PropTypes.func,
-      position: React.PropTypes.string,
-      size: React.PropTypes.string,
-      style: React.PropTypes.object
+      accepts: PropTypes.array,
+      alt: PropTypes.string,
+      label: PropTypes.string,
+      maxFileSize: PropTypes.number,
+      name: PropTypes.string,
+      onChange: PropTypes.func,
+      onError: PropTypes.func,
+      position: PropTypes.string,
+      size: PropTypes.string,
+      style: PropTypes.object
    }
 
    static defaultProps = {
@@ -25,7 +26,7 @@ export default class ImageInput extends Component {
    }
 
    static contextTypes = {
-      OIOForm: React.PropTypes.object
+      OIOForm: PropTypes.object
    }
 
    constructor(props) {

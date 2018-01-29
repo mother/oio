@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styles from './styles.less'
 
@@ -10,7 +11,7 @@ const Spacer = ({ size }) => {
 }
 
 Spacer.propTypes = {
-   size: React.PropTypes.string.isRequired
+   size: PropTypes.string.isRequired
 }
 
 export default Spacer

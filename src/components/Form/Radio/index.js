@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Icon from '../../Icon'
 import Text from '../../Text'
@@ -6,14 +7,14 @@ import style from './style.less'
 
 export default class Radio extends Component {
    static propTypes = {
-      checked: React.PropTypes.bool,
-      children: React.PropTypes.node,
-      id: React.PropTypes.string,
-      label: React.PropTypes.string,
-      name: React.PropTypes.string,
-      onChange: React.PropTypes.func,
-      readOnly: React.PropTypes.bool,
-      value: React.PropTypes.string
+      checked: PropTypes.bool,
+      children: PropTypes.node,
+      id: PropTypes.string,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      onChange: PropTypes.func,
+      readOnly: PropTypes.bool,
+      value: PropTypes.string
    }
 
    static defaultProps = {
@@ -22,8 +23,8 @@ export default class Radio extends Component {
    }
 
    static contextTypes = {
-      OIOFormRadio: React.PropTypes.object,
-      OIOStyles: React.PropTypes.object
+      OIOFormRadio: PropTypes.object,
+      OIOStyles: PropTypes.object
    }
 
    constructor(props) {

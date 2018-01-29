@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
@@ -5,11 +6,11 @@ import style from './style.less'
 
 export default class Grid extends Component {
    static propTypes = {
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      columns: React.PropTypes.string,
-      gutter: React.PropTypes.string,
-      width: React.PropTypes.string
+      children: PropTypes.node,
+      className: PropTypes.string,
+      columns: PropTypes.string,
+      gutter: PropTypes.string,
+      width: PropTypes.string
    }
 
    static defaultProps = {
@@ -18,7 +19,7 @@ export default class Grid extends Component {
    }
 
    static childContextTypes = {
-      GridCellStyle: React.PropTypes.object
+      GridCellStyle: PropTypes.object
    }
 
    constructor(props) {

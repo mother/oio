@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
@@ -14,9 +15,9 @@ const Icon = ({ name, className, style }) => {
 }
 
 Icon.propTypes = {
-   className: React.PropTypes.string,
-   name: React.PropTypes.string,
-   style: React.PropTypes.object
+   className: PropTypes.string,
+   name: PropTypes.string,
+   style: PropTypes.object
 }
 
 export default Icon

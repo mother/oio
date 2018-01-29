@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
    Avatar,
@@ -27,7 +28,7 @@ import style from '../style.less'
 
 export default class DemoContentForm extends Component {
    static propTypes = {
-      contents: React.PropTypes.array
+      contents: PropTypes.array
    }
 
    constructor(props) {

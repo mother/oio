@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import style from '../Text/style.less'
@@ -33,13 +34,13 @@ const Title = ({ children, className, color, heading, size, uppercase, weight },
 }
 
 Title.propTypes = {
-   children: React.PropTypes.node,
-   className: React.PropTypes.string,
-   color: React.PropTypes.string,
-   heading: React.PropTypes.string,
-   size: React.PropTypes.string,
-   uppercase: React.PropTypes.bool,
-   weight: React.PropTypes.string
+   children: PropTypes.node,
+   className: PropTypes.string,
+   color: PropTypes.string,
+   heading: PropTypes.string,
+   size: PropTypes.string,
+   uppercase: PropTypes.bool,
+   weight: PropTypes.string
 }
 
 Title.defaultProps = {
@@ -47,7 +48,7 @@ Title.defaultProps = {
 }
 
 Title.contextTypes = {
-   OIOStyles: React.PropTypes.object
+   OIOStyles: PropTypes.object
 }
 
 export default Title

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import {
@@ -17,7 +18,7 @@ import style from '../style.less'
 
 export default class DemoExampleWindow extends Component {
    static propTypes = {
-      contents: React.PropTypes.array
+      contents: PropTypes.array
    }
 
    render() {
