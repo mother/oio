@@ -10,14 +10,16 @@ export default class Popover extends Component {
       height: PropTypes.string,
       offset: PropTypes.string,
       position: PropTypes.string,
-      width: PropTypes.string
+      width: PropTypes.string,
+      zIndex: PropTypes.string.isRequired
    }
 
    static defaultProps = {
       height: '60',
       offset: '24',
       position: 'above left',
-      width: '300'
+      width: '300',
+      zIndex: '800'
    }
 
    constructor(props) {
@@ -57,12 +59,12 @@ export default class Popover extends Component {
    }
 
    render() {
-      const position = this.props.position
+      const { position, zIndex } = this.props
       const visibilityClass = this.state.visible ? 'isVisible' : ''
-      const popoverStyle = {}
       const popoverOffset = parseFloat(this.props.offset)
       const popoverWidth = parseFloat(this.props.width)
       const popoverHeight = parseFloat(this.props.height)
+      const popoverStyle = { zIndex }
 
       // Set Popover Vertical Position
       // If above is not specified in the position, assume it should be below
