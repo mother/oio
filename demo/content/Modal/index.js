@@ -168,6 +168,14 @@ export default class DemoContentModal extends Component {
                               -
                            </td>
                         </tr>
+                        <tr>
+                           <td><b>zIndex</b></td>
+                           <td>String</td>
+                           <td>900</td>
+                           <td>
+                              sets the z-index of the Modal component
+                           </td>
+                        </tr>
                      </tbody>
                   </table>
                </GridCell>

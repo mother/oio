@@ -18,7 +18,8 @@ const Notification = ({
    onHide,
    onShow,
    showing,
-   title
+   title,
+   zIndex
 }) => {
    const buttonClickFull = () => {
       if (buttonAllAction) buttonAllAction()
@@ -76,8 +77,10 @@ const Notification = ({
    if (onHide && !showing) onHide()
    if (onShow && showing) onShow()
 
+   const notificationStyle = { zIndex }
+
    return (
-      <div className={classNames(styles.container, styles[displayClass])}>
+      <div className={classNames(styles.container, styles[displayClass])} style={notificationStyle}>
          <div className={styles.notification}>
             {loader}
             <div className={styles.message}>
@@ -106,7 +109,12 @@ Notification.propTypes = {
    onHide: PropTypes.func,
    onShow: PropTypes.func,
    showing: PropTypes.bool,
-   title: PropTypes.string
+   title: PropTypes.string,
+   zIndex: PropTypes.string.isRequired
+}
+
+Notification.defaultProps = {
+   zIndex: '1000'
 }
 
 export default Notification
