@@ -7,7 +7,7 @@ oio
 
 ## Demo
 
-[https://mother.github.io/oio](https://mother.github.io/oio)
+[https://oio.mother.co](https://oio.mother.co)
 
 ## Installation
 
