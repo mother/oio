@@ -8,7 +8,7 @@ import style from './style.less'
 
 export default class Modal extends Component {
    static propTypes = {
-      animation: PropTypes.oneOf(['scaleIn', 'slideFromBottom']),
+      animation: PropTypes.oneOf(['scaleIn', 'slideFromBottom']).isRequired,
       children: PropTypes.node,
       height: PropTypes.string,
       closeURL: PropTypes.string,
@@ -16,7 +16,8 @@ export default class Modal extends Component {
       onClose: PropTypes.func,
       width: PropTypes.string,
       windowClassName: PropTypes.string,
-      windowMargin: PropTypes.string
+      windowMargin: PropTypes.string,
+      zIndex: PropTypes.string.isRequired
    }
 
    static defaultProps = {
@@ -25,7 +26,8 @@ export default class Modal extends Component {
       mode: 'fixed',
       width: '600px',
       height: '600px',
-      windowMargin: '0px'
+      windowMargin: '0px',
+      zIndex: '900'
    }
 
    constructor(props) {
@@ -72,6 +74,7 @@ export default class Modal extends Component {
    }
 
    render() {
+      const { animation, children, closeURL, zIndex, windowClassName } = this.props
       const size = this.state.size
       const width = parseFloat(getAttributeForCurrentSize(size, this.props.width))
       const height = parseFloat(getAttributeForCurrentSize(size, this.props.height))
@@ -80,13 +83,14 @@ export default class Modal extends Component {
       const modalWindowStyle = {}
 
       const modalOverlayStyle = {
-         padding: modalWindowMargin
+         padding: modalWindowMargin,
+         zIndex
       }
 
       const modalWindowClasses = [
          style.modalWindow,
-         style[this.props.animation],
-         this.props.windowClassName
+         style[animation],
+         windowClassName
       ]
 
       if (mode === 'fixed') {
@@ -117,9 +121,9 @@ export default class Modal extends Component {
             <div
                className={classNames(modalWindowClasses)}
                style={modalWindowStyle}>
-               {this.props.children}
+               {children}
             </div>
-            <Link to={this.props.closeURL}>
+            <Link to={closeURL}>
                <Icon name="ion-ios-close-empty" className={style.closeButton} />
             </Link>
          </div>
