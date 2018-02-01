@@ -24,6 +24,12 @@ class Select extends Component {
       options: []
    }
 
+   componentDidMount() {
+      if (!this.props.value && this.props.options.length) {
+         this.props.triggerChange(null, this.props.options[0].value)
+      }
+   }
+
    handleBlur = (event) => {
       this.props.triggerValidation()
 
