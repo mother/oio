@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import Icon from '../Icon'
+import View from '../View'
 import style from './style.less'
 
 export default class Modal extends Component {
@@ -124,7 +125,13 @@ export default class Modal extends Component {
                {children}
             </div>
             <Link to={closeURL}>
-               <Icon name="ion-ios-close-empty" className={style.closeButton} />
+               <View
+                  position="top right"
+                  padding="0px[a-c] 6px[d] 24px[e]"
+                  className={style.closeButtonContainer}
+                  style={{ zIndex: zIndex + 1 }}>
+                  <Icon name="ion-ios-close-empty" className={style.closeButton} />
+               </View>
             </Link>
          </div>
       )
