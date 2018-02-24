@@ -63,22 +63,23 @@ export default class Modal extends Component {
    }
 
    hideModal = (event) => {
-      if (this.props.onClose && this.node === event.target) {
+      if (this.props.onClose &&
+         (event.target === this.overlay || event.target === this.closeButton)) {
          this.props.onClose()
       }
       // TODO: Below will be used once we figure out how to get history as
       // browserHistory working correctly
       // Presumeable, the developer can also pass an onClose function as well
-      // if (this.node === event.target) {
+      // if (this.overlay === event.target) {
       //    browserHistory.push(this.props.closeURL)
       // }
    }
 
    render() {
-      const { animation, children, closeURL, zIndex, windowClassName } = this.props
+      const { animation, children, closeURL, onClose, zIndex, windowClassName } = this.props
       const size = this.state.size
-      const width = parseFloat(getAttributeForCurrentSize(size, this.props.width))
-      const height = parseFloat(getAttributeForCurrentSize(size, this.props.height))
+      const width = getAttributeForCurrentSize(size, this.props.width)
+      const height = getAttributeForCurrentSize(size, this.props.height)
       const mode = getAttributeForCurrentSize(size, this.props.mode)
       const modalWindowMargin = getAttributeForCurrentSize(size, this.props.windowMargin)
       const modalWindowStyle = {}
@@ -95,13 +96,22 @@ export default class Modal extends Component {
       ]
 
       if (mode === 'fixed') {
-         modalWindowStyle.width = `${width}px`
-         modalWindowStyle.height = `${height}px`
+         modalWindowStyle.width = width
+         modalWindowStyle.height = height
 
          if (this.state.position === 'middleCenter') {
+            if (width.endsWith('%')) {
+               modalWindowStyle.left = `${((100 - parseFloat(width)) / 2)}%`
+            } else {
+               modalWindowStyle.marginLeft = `${(parseFloat(width) / 2) * -1}px`
+            }
+
+            if (height.endsWith('%')) {
+               modalWindowStyle.top = `${((100 - parseFloat(height)) / 2)}%`
+            } else {
+               modalWindowStyle.marginTop = `${(parseFloat(height) / 2) * -1}px`
+            }
             modalWindowClasses.push(style.positionAtMiddleAndCenter)
-            modalWindowStyle.marginTop = `${(height / 2) * -1}px`
-            modalWindowStyle.marginLeft = `${(width / 2) * -1}px`
          } else if (this.state.position === 'topCenter') {
             modalWindowClasses.push(style.positionAtTopCenter)
          }
@@ -113,9 +123,26 @@ export default class Modal extends Component {
          modalWindowStyle.bottom = modalWindowMargin
       }
 
+      const closeButtonIcon = (
+         <View
+            position="top right"
+            padding="0px[a-c] 6px[d] 24px[e]"
+            className={style.closeButtonContainer}
+            style={{ cursor: 'pointer', zIndex: zIndex + 1 }}>
+            <div className={style.closeButtonIcon}>
+               <Icon name="ion-ios-close-empty" />
+               <div
+                  onClick={onClose}
+                  ref={(closeButton) => { this.closeButton = closeButton }}
+                  className={style.hitArea}
+               />
+            </div>
+         </View>
+      )
+
       return (
          <div
-            ref={node => (this.node = node)}
+            ref={(overlay) => { this.overlay = overlay }}
             onClick={this.hideModal}
             className={style.modalOverlay}
             style={modalOverlayStyle}>
@@ -124,15 +151,10 @@ export default class Modal extends Component {
                style={modalWindowStyle}>
                {children}
             </div>
-            <Link to={closeURL}>
-               <View
-                  position="top right"
-                  padding="0px[a-c] 6px[d] 24px[e]"
-                  className={style.closeButtonContainer}
-                  style={{ zIndex: zIndex + 1 }}>
-                  <Icon name="ion-ios-close-empty" className={style.closeButton} />
-               </View>
-            </Link>
+            {onClose && closeButtonIcon}
+            {!onClose && closeURL && (
+               <Link to={closeURL}>{closeButtonIcon}</Link>
+            )}
          </div>
       )
    }

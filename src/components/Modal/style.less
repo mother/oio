@@ -78,8 +78,9 @@
    position: fixed !important;
 }
 
-.closeButton {
+.closeButtonIcon {
    float: left;
+   position: relative;
    font-size: 48px;
    line-height: 48px;
    width: 60px;
@@ -88,6 +89,14 @@
    text-align: center;
    color: #666;
    transition: 300ms;
+
+   .hitArea {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+   }
 
    &:hover {
       color: #fff;
