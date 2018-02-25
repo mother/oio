@@ -6,7 +6,6 @@
 
    &.isVisible {
       display: block;
-      animation: showPopover 200ms;
    }
 
    .popoverContainer {
@@ -19,7 +18,13 @@
    }
 }
 
-@keyframes showPopover {
+.scaleIn {
+   animation-duration: 200ms;
+   animation-name: scaleIn;
+   animation-timing-function: ease-out;
+}
+
+@keyframes scaleIn {
    from { opacity: 0; transform: scale(0.9); }
      to { opacity: 100; transform: scale(1); }
 }
