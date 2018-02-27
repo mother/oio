@@ -17,22 +17,24 @@ export default class Button extends Component {
          PropTypes.string,
          PropTypes.object
       ]),
-      mode: PropTypes.string,
+      mode: PropTypes.string.isRequired,
       name: PropTypes.string,
       onClick: PropTypes.func,
       outline: PropTypes.bool,
       plain: PropTypes.bool,
       rounded: PropTypes.bool,
-      size: PropTypes.string,
+      size: PropTypes.string.isRequired,
       textClassName: PropTypes.string,
       translucent: PropTypes.bool,
-      type: PropTypes.string
+      type: PropTypes.string.isRequired,
+      width: PropTypes.string
    }
 
    static defaultProps = {
       mode: 'normal',
       size: 'medium',
-      type: 'button'
+      type: 'button',
+      width: 'auto'
    }
 
    static contextTypes = {
@@ -96,11 +98,13 @@ export default class Button extends Component {
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
       const buttonSize = getAttributeForCurrentSize(this.state.size, this.props.size)
+      const buttonWidth = getAttributeForCurrentSize(this.state.size, this.props.width)
 
       const buttonStyle = {
          fontFamily: this.context.OIOStyles.fontFamily,
          backgroundColor: buttonColor,
-         color: '#fff'
+         color: '#fff',
+         width: buttonWidth
       }
 
       if (this.props.textClassName) {
@@ -203,7 +207,10 @@ export default class Button extends Component {
          delete buttonStyle.backgroundColor
 
          if (this.state.hover) {
-            buttonStyle.textDecoration = 'underline'
+            buttonStyle.backgroundColor =
+               `rgba(${buttonColorRGB.r},
+               ${buttonColorRGB.g},
+               ${buttonColorRGB.b}, 0.1)`
          }
       }
 
