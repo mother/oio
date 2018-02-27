@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
@@ -15,6 +16,8 @@ export default class Modal extends Component {
       closeURL: PropTypes.string,
       mode: PropTypes.string,
       onClose: PropTypes.func,
+      overlayBackground: PropTypes.string,
+      overlayOpacity: PropTypes.number.isRequired,
       width: PropTypes.string,
       windowClassName: PropTypes.string,
       windowMargin: PropTypes.string,
@@ -27,6 +30,7 @@ export default class Modal extends Component {
       mode: 'fixed',
       width: '600px',
       height: '600px',
+      overlayOpacity: 0.97,
       windowMargin: '0px',
       zIndex: '900'
    }
@@ -38,6 +42,18 @@ export default class Modal extends Component {
          position: 'middleCenter',
          size: getWindowSize()
       }
+
+      const oioContainer = document.getElementById('oio-container')
+      this.modalContainer = document.getElementById('modal-container')
+
+      if (!this.modalContainer) {
+         this.modalContainer = document.createElement('div')
+         this.modalContainer.setAttribute('id', 'modal-container')
+         oioContainer.appendChild(this.modalContainer)
+      }
+
+      this.modalElement = document.createElement('div')
+      this.modalContainer.appendChild(this.modalElement)
    }
 
    componentDidMount() {
@@ -47,6 +63,7 @@ export default class Modal extends Component {
 
    componentWillUnmount() {
       window.removeEventListener('resize', this.windowSizeUpdated)
+      this.modalContainer.removeChild(this.modalElement)
    }
 
    windowSizeUpdated = () => {
@@ -76,7 +93,8 @@ export default class Modal extends Component {
    }
 
    render() {
-      const { animation, children, closeURL, onClose, zIndex, windowClassName } = this.props
+      const { animation, children, closeURL, onClose,
+         overlayBackground, overlayOpacity, zIndex, windowClassName } = this.props
       const size = this.state.size
       const width = getAttributeForCurrentSize(size, this.props.width)
       const height = getAttributeForCurrentSize(size, this.props.height)
@@ -85,8 +103,14 @@ export default class Modal extends Component {
       const modalWindowStyle = {}
 
       const modalOverlayStyle = {
+         backgroundColor: `rgba(12,15,20,${overlayOpacity})`,
          padding: modalWindowMargin,
          zIndex
+      }
+
+      // If overlayBackground is supplied through props, override default backgroundColor
+      if (overlayBackground) {
+         modalOverlayStyle.background = overlayBackground
       }
 
       const modalWindowClasses = [
@@ -140,7 +164,7 @@ export default class Modal extends Component {
          </View>
       )
 
-      return (
+      return ReactDOM.createPortal(
          <div
             ref={(overlay) => { this.overlay = overlay }}
             onClick={this.hideModal}
@@ -155,7 +179,8 @@ export default class Modal extends Component {
             {!onClose && closeURL && (
                <Link to={closeURL}>{closeButtonIcon}</Link>
             )}
-         </div>
-      )
+         </div>,
+         this.modalElement
+       )
    }
 }
