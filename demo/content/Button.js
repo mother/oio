@@ -225,6 +225,15 @@ export default class DemoContentButton extends Component {
                            <td>Gives button a translucent appearance</td>
                            <td>N</td>
                         </tr>
+                        <tr>
+                           <td><b>width</b></td>
+                           <td>string</td>
+                           <td>
+                              <code>auto</code>
+                           </td>
+                           <td>Enter a pixel-based or percentage-based width</td>
+                           <td>Y</td>
+                        </tr>
                      </tbody>
                   </table>
                   <Spacer size="6" />
