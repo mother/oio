@@ -107,6 +107,10 @@ export default class Button extends Component {
          width: buttonWidth
       }
 
+      if (buttonStyle.width === 'auto') {
+         delete buttonStyle.width
+      }
+
       if (this.props.textClassName) {
          buttonTextClasses.push(this.props.textClassName)
       }
