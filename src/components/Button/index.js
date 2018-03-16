@@ -23,6 +23,7 @@ export default class Button extends Component {
       outline: PropTypes.bool,
       plain: PropTypes.bool,
       rounded: PropTypes.bool,
+      scale: PropTypes.number,
       size: PropTypes.string.isRequired,
       textClassName: PropTypes.string,
       translucent: PropTypes.bool,
@@ -32,6 +33,7 @@ export default class Button extends Component {
 
    static defaultProps = {
       mode: 'normal',
+      scale: 1,
       size: 'medium',
       type: 'button',
       width: 'auto'
@@ -75,12 +77,12 @@ export default class Button extends Component {
    }
 
    render() {
-      const { color, icon, link, plain } = this.props
+      const { className, color, icon, link, plain, scale, size, type, width } = this.props
       let activeStyleObj = null
       let buttonLinkObj = null
       let ButtonElement = 'button'
       let modeIcon = null
-      let textSize = '1'
+      let textSize = null
 
       // Buttons might be used as a html <button> or <NavLink>
       // navLink is just a boolean. It requires a link to be passed to the link prop
@@ -95,18 +97,23 @@ export default class Button extends Component {
       // you want to use the RGBA values
       let buttonColor = this.context.OIOStyles.primaryColor
       let buttonColorRGB = convertColor(buttonColor)
+      let buttonSize = getAttributeForCurrentSize(this.state.size, size)
 
-      const buttonClasses = [this.props.className]
+      const buttonClasses = [className]
       const buttonTextClasses = [style.text]
       const buttonName = this.props.name
-      const buttonSize = getAttributeForCurrentSize(this.state.size, this.props.size)
-      const buttonWidth = getAttributeForCurrentSize(this.state.size, this.props.width)
+      const buttonWidth = getAttributeForCurrentSize(this.state.size, width)
 
       const buttonStyle = {
          fontFamily: this.context.OIOStyles.fontFamily,
+         fontSize: `${scale * 16}px`,
          backgroundColor: buttonColor,
          color: '#fff',
          width: buttonWidth
+      }
+
+      if (!buttonSize) {
+         buttonSize = 'medium'
       }
 
       if (buttonStyle.width === 'auto') {
@@ -121,8 +128,20 @@ export default class Button extends Component {
 
       if (buttonSize === 'large') {
          textSize = '3'
+         buttonStyle.height = `${scale * 48}px`
+         buttonStyle.padding = `0px ${scale * 30}px`
       } else if (buttonSize === 'medium') {
          textSize = '2'
+         buttonStyle.height = `${scale * 36}px`
+         buttonStyle.padding = `0px ${scale * 18}px`
+      } else if (buttonSize === 'small') {
+         textSize = '1'
+         buttonStyle.height = `${scale * 30}px`
+         buttonStyle.padding = `0px ${scale * 12}px`
+      } else if (buttonSize === 'tiny') {
+         textSize = '1'
+         buttonStyle.height = `${scale * 24}px`
+         buttonStyle.padding = `0px ${scale * 9}px`
       }
 
       // Button Color by default will use the OIO primary color
@@ -160,7 +179,7 @@ export default class Button extends Component {
 
       if (this.props.autoFormRespond) {
          const formContext = this.context.OIOForm
-         if (this.props.type === 'submit' && formContext) {
+         if (type === 'submit' && formContext) {
             const isPristine = formContext.pristine
             const isSubmitting = formContext.submitting
 
@@ -188,7 +207,7 @@ export default class Button extends Component {
       // =======================================================
 
       if (this.props.rounded) {
-         buttonClasses.push(style[`${buttonSize}Rounded`])
+         buttonStyle.borderRadius = parseFloat(buttonStyle.height) / 2
       }
 
       if (this.props.outline) {
@@ -312,13 +331,14 @@ export default class Button extends Component {
             onMouseOver={this.onMouseOver}
             onMouseOut={this.onMouseOut}
             style={buttonStyle}
-            type={this.props.type}
+            type={type}
             {...activeStyleObj}
             {...buttonLinkObj}>
             <div className={style.buttonInner}>
                {icon && <span className={classNames(style.icon, 'icon', icon)} />}
                {buttonName && (
                   <Text
+                     relativeSize
                      size={textSize}
                      weight="semibold"
                      className={classNames(style.text, buttonTextClasses)}>

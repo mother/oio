@@ -25,10 +25,10 @@
 
    .icon {
       position: relative;
-      top: -1px;
+      top: 0px;
       left: -2px;
       margin-right: 6px;
-      font-size: 150%;
+      font-size: 100%;
       line-height: 0px;
    }
 }
@@ -111,30 +111,30 @@
 
 .large {
    composes: button;
-   padding: 0px 30px;
-   height: @uiBaseComponentHeightLarge;
+   // padding: 0px 30px;
+   // height: @uiBaseComponentHeightLarge;
 
    .icon {
-      left: -6px;
+      left: -8px;
    }
 }
 
 .medium {
    composes: button;
-   padding: 0 18px;
-   height: @uiBaseComponentHeightMedium;
+   // padding: 0 18px;
+   // height: @uiBaseComponentHeightMedium;
 }
 
 .small {
    composes: button;
-   padding: 0px 12px;
-   height: @uiBaseComponentHeightSmall;
+   // padding: 0px 12px;
+   // height: @uiBaseComponentHeightSmall;
 }
 
 .tiny {
    composes: button;
-   padding: 0px 9px;
-   height: @uiBaseComponentHeightSmall - 6;
+   // padding: 0px 9px;
+   // height: @uiBaseComponentHeightSmall - 6;
 }
 
 //============================================================================
@@ -199,15 +199,6 @@
       background: none;
    }
 }
-
-//============================================================================
-// Rounded
-//============================================================================
-
-.largeRounded { .rounded(24px); }
-.mediumRounded { .rounded(24px); }
-.smallRounded { .rounded(14px); }
-.tinyRounded { .rounded(9px); }
 
 //============================================================================
 // Icon Only
