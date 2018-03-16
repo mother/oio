@@ -24,6 +24,7 @@ export default class Text extends Component {
       editing: PropTypes.bool,
       fontFamily: PropTypes.string,
       letterSpacing: PropTypes.string,
+      relativeSize: PropTypes.bool,
       size: PropTypes.string,
       style: PropTypes.object,
       uppercase: PropTypes.bool,
@@ -37,6 +38,7 @@ export default class Text extends Component {
       editorState: 'ready',
       editorShowEditButton: false,
       editing: false,
+      relativeSize: false,
       size: '3',
       weight: 'normal'
    }
@@ -180,10 +182,15 @@ export default class Text extends Component {
    // =====================================================
 
    render() {
-      const fontSize = getAttributeForCurrentSize(this.state.size, this.props.size)
+      const { relativeSize, size } = this.props
+      const fontSize = getAttributeForCurrentSize(this.state.size, size)
       const textStyle = {
          ...this.props.style,
          ...this.context.OIOStyles.fontSizes[fontSize]
+      }
+
+      if (relativeSize) {
+         textStyle.fontSize = `${parseFloat(textStyle.fontSize)}em`
       }
 
       if (this.props.fontFamily) {
