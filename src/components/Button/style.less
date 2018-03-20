@@ -111,8 +111,6 @@
 
 .large {
    composes: button;
-   // padding: 0px 30px;
-   // height: @uiBaseComponentHeightLarge;
 
    .icon {
       left: -8px;
@@ -121,20 +119,14 @@
 
 .medium {
    composes: button;
-   // padding: 0 18px;
-   // height: @uiBaseComponentHeightMedium;
 }
 
 .small {
    composes: button;
-   // padding: 0px 12px;
-   // height: @uiBaseComponentHeightSmall;
 }
 
 .tiny {
    composes: button;
-   // padding: 0px 9px;
-   // height: @uiBaseComponentHeightSmall - 6;
 }
 
 //============================================================================
@@ -156,7 +148,6 @@
 .plain {
    background: none;
    border: none;
-   padding: 0px;
 
    &:hover {
       background: none;
@@ -228,4 +219,9 @@
 .smallIconOnly {
    composes: iconOnly;
    width: @uiBaseComponentHeightSmall;
+}
+
+.tinyIconOnly {
+   composes: iconOnly;
+   width: 24px;
 }

@@ -231,6 +231,7 @@ export default class Button extends Component {
       if (plain) {
          buttonClasses.push(style.plain)
          buttonStyle.color = buttonColor
+         buttonStyle.padding = '0px'
          delete buttonStyle.backgroundColor
       }
 
