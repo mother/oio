@@ -41,6 +41,7 @@ export default class DemoContentButton extends Component {
                         <Button name="Button" icon="ion-ios-plus" />
                         <Button name="Translucent" translucent />
                         <Button name="Outline" outline />
+                        <Button name="Button" outline rounded />
                         <Button name="Plain" plain />
                      </ButtonGroup>
                      <Spacer size="1" />
@@ -81,6 +82,7 @@ export default class DemoContentButton extends Component {
                            <Button size="large" name="Large Button" />
                            <Button size="large" name="Icon" icon="ion-ios-plus" />
                            <Button size="large" name="Outline" outline />
+                           <Button size="large" name="Rounded" outline rounded />
                            <Button size="large" name="Plain" plain />
                         </ButtonGroup>
                         <Spacer size="1" />
@@ -88,6 +90,7 @@ export default class DemoContentButton extends Component {
                            <Button name="Medium Button" />
                            <Button name="Icon" icon="ion-ios-plus" />
                            <Button name="Outline" outline />
+                           <Button name="Rounded" outline rounded />
                            <Button name="Plain" plain />
                         </ButtonGroup>
                         <Spacer size="1" />
@@ -95,6 +98,7 @@ export default class DemoContentButton extends Component {
                            <Button size="small" name="Small Button" />
                            <Button size="small" name="Icon" icon="ion-ios-plus" />
                            <Button size="small" name="Outline" outline />
+                           <Button size="small" name="Rounded" outline rounded />
                            <Button size="small" name="Plain" plain />
                         </ButtonGroup>
                         <Spacer size="1" />
@@ -102,6 +106,7 @@ export default class DemoContentButton extends Component {
                            <Button size="tiny" name="Tiny Button" />
                            <Button size="tiny" name="Icon" icon="ion-ios-plus" />
                            <Button size="tiny" name="Outline" outline />
+                           <Button size="tiny" name="Rounded" outline rounded />
                            <Button size="tiny" name="Plain" plain />
                         </ButtonGroup>
                      </OIO>
