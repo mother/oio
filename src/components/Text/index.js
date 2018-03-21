@@ -185,9 +185,9 @@ export default class Text extends Component {
       const { relativeSize, size, weight } = this.props
       const fontSize = getAttributeForCurrentSize(this.state.size, size)
       const textStyle = {
+         fontWeight: this.context.OIOStyles.fontWeights[weight],
          ...this.props.style,
-         ...this.context.OIOStyles.fontSizes[fontSize],
-         ...this.context.OIOStyles.fontWeights[weight]
+         ...this.context.OIOStyles.fontSizes[fontSize]
       }
 
       if (relativeSize) {
