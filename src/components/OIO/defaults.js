@@ -62,6 +62,13 @@ export default {
          lineHeight: '1.125'
       }
    },
+   fontWeights: {
+      light: '300',
+      normal: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700'
+   },
    viewport: {
       breakpoints: {
          a: '0px',

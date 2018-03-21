@@ -25,10 +25,10 @@ export default class Text extends Component {
       fontFamily: PropTypes.string,
       letterSpacing: PropTypes.string,
       relativeSize: PropTypes.bool,
-      size: PropTypes.string,
+      size: PropTypes.string.isRequired,
       style: PropTypes.object,
       uppercase: PropTypes.bool,
-      weight: PropTypes.string
+      weight: PropTypes.string.isRequired
    }
 
    static defaultProps = {
@@ -182,11 +182,12 @@ export default class Text extends Component {
    // =====================================================
 
    render() {
-      const { relativeSize, size } = this.props
+      const { relativeSize, size, weight } = this.props
       const fontSize = getAttributeForCurrentSize(this.state.size, size)
       const textStyle = {
          ...this.props.style,
-         ...this.context.OIOStyles.fontSizes[fontSize]
+         ...this.context.OIOStyles.fontSizes[fontSize],
+         ...this.context.OIOStyles.fontWeights[weight]
       }
 
       if (relativeSize) {
@@ -202,7 +203,6 @@ export default class Text extends Component {
       }
 
       const textClasses = [
-         style[this.props.weight],
          colors[this.props.color],
          this.props.className
       ]
