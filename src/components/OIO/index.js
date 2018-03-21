@@ -39,8 +39,11 @@ export default class OIO extends Component {
 
       if (this.props.fontFamily) {
          OIOStyles.fontFamily = this.props.fontFamily
-         OIOStyles.fontSize = defaults.base.fontSize
+         // OIOStyles.fontSize = defaults.base.fontSize
       }
+
+      // document.setAttribute('style', `fontSize: ${defaults.base.fontSize}`)
+      document.documentElement.setAttribute('style', `font-size: ${defaults.base.fontSize}`)
 
       return (
          <div
