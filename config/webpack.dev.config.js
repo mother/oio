@@ -2,13 +2,13 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-   devtool: 'eval',
+   mode: 'development',
    entry: [
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './demo/index.js'
    ],
    output: {
-      path: path.join(__dirname, '..', 'dist'),
+      path: path.resolve(__dirname, '../dist'),
       filename: 'bundle.js',
       publicPath: '/dist/'
    },
