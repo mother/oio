@@ -42,7 +42,7 @@
     "blob": "0.0.4",
     "classnames": "2.2.5",
     "form-data": "2.1.2",
-    "moment": "2.18.1",
+    "moment": "2.22.0",
     "react-files": "2.4.3",
     "react-router-dom": "4.2.2"
   },
