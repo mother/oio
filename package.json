@@ -43,7 +43,7 @@
     "classnames": "2.2.5",
     "form-data": "2.1.2",
     "moment": "2.22.0",
-    "react-files": "2.4.3",
+    "react-files": "2.4.5",
     "react-router-dom": "4.2.2"
   },
   "devDependencies": {
