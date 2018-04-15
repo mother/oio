@@ -14,7 +14,7 @@ export default class ButtonGroup extends Component {
    static defaultProps = {
       align: 'left',
       mode: 'normal',
-      spacing: '6px'
+      spacing: '9px'
    }
 
    static contextTypes = {
