@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { css, cx } from 'emotion'
-import { breakpoints, getAttributeForCurrentSize } from '../../utils/size'
+import { breakpoints, setAttributeForBreakpoints } from '../../utils/size'
 
 export default class SmartView extends Component {
    /* eslint-disable */
@@ -48,24 +48,6 @@ export default class SmartView extends Component {
       styleObj[breakpoint.key]['-webkit-overflow-scrolling'] = 'touch'
    }
 
-   setAttributeForBreakpoints = (styleObj, attributeName, attributeProp, attributeFunction) => {
-      if (!attributeProp) {
-         return null
-      }
-
-      breakpoints.forEach((breakpoint, index) => {
-         const attributeValue = getAttributeForCurrentSize(breakpoint.name, attributeProp)
-
-         if (attributeValue) {
-            if (attributeFunction) {
-               attributeFunction(styleObj, breakpoint, attributeValue)
-            } else {
-               styleObj[breakpoint.key][attributeName] = attributeValue
-            }
-         }
-      })
-   }
-
    render() {
       const styleProps = [
          'position', 'display',
@@ -85,10 +67,10 @@ export default class SmartView extends Component {
       }
 
       styleProps.forEach((prop) => {
-         this.setAttributeForBreakpoints(styleObj, prop, this.props[prop])
+         setAttributeForBreakpoints(styleObj, prop, this.props[prop])
       })
 
-      this.setAttributeForBreakpoints(styleObj, 'overflow', this.props.scroll, this.setScrollAttributes)
+      setAttributeForBreakpoints(styleObj, 'overflow', this.props.scroll, this.setScrollAttributes)
 
       return (
          <div onScroll={this.props.onScroll} className={cx(css(styleObj), this.props.className)}>

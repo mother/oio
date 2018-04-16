@@ -57,3 +57,23 @@ export const getAttributeForCurrentSize = (currentSize, attributeValue) => {
    return null
 }
 /* eslint-enable */
+
+export const setAttributeForBreakpoints = (
+   styleObj, attributeName, attributeProp, attributeFunction
+) => {
+   if (!attributeProp) {
+      return null
+   }
+
+   breakpoints.forEach((breakpoint, index) => {
+      const attributeValue = getAttributeForCurrentSize(breakpoint.name, attributeProp)
+
+      if (attributeValue) {
+         if (attributeFunction) {
+            attributeFunction(styleObj, breakpoint, attributeValue)
+         } else {
+            styleObj[breakpoint.key][attributeName] = attributeValue
+         }
+      }
+   })
+}
