@@ -24,6 +24,7 @@ import Popover from './components/Popover'
 import Radio from './components/Form/Radio'
 import RadioGroup from './components/Form/RadioGroup'
 import Select from './components/Form/Select'
+import SmartView from './components/SmartView'
 import Spacer from './components/Spacer'
 import Switch from './components/Form/Switch'
 import Table from './components/Table'
@@ -71,5 +72,6 @@ export {
    TitleBar,
    ToolBar,
    Video,
-   View
+   View,
+   SmartView
 }

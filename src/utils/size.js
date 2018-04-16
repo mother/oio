@@ -1,3 +1,20 @@
+export const breakpoints = [{
+   name: 'a',
+   key: '@media (min-width: 0px) and (max-width: 660px)'
+}, {
+   name: 'b',
+   key: '@media (min-width: 660px) and (max-width: 1000px)'
+}, {
+   name: 'c',
+   key: '@media (min-width: 1000px) and (max-width: 1350px)'
+}, {
+   name: 'd',
+   key: '@media (min-width: 1350px) and (max-width: 1700px)'
+}, {
+   name: 'e',
+   key: '@media (min-width: 1700px)'
+}]
+
 export const getWindowSize = () => {
    const windowWidth = document.documentElement.clientWidth
 
@@ -16,6 +33,7 @@ export const getWindowSize = () => {
    return null
 }
 
+/* eslint-disable */
 export const getAttributeForCurrentSize = (currentSize, attributeValue) => {
    let fragments = attributeValue.match(/(.+?)\[([abcdef,-]+)\]/ig)
    if (fragments === null) {
@@ -38,3 +56,4 @@ export const getAttributeForCurrentSize = (currentSize, attributeValue) => {
 
    return null
 }
+/* eslint-enable */
