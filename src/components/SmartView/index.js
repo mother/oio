@@ -14,6 +14,9 @@ export default class SmartView extends Component {
       flexFlow: PropTypes.string,
       height: PropTypes.string,
       justifyContent: PropTypes.string,
+      minHeight: PropTypes.string,
+      maxHeight: PropTypes.string,
+      minWidth: PropTypes.string,
       maxWidth: PropTypes.string,
       padding: PropTypes.string,
       paddingTop: PropTypes.string,
@@ -53,7 +56,7 @@ export default class SmartView extends Component {
          'position', 'display',
          'flex', 'flexFlow', 'alignItems', 'justifyContent',
          'top', 'bottom', 'right', 'left',
-         'height', 'width', 'maxWidth',
+         'height', 'minHeight', 'maxHeight', 'width', 'minWidth', 'maxWidth',
          'padding', 'paddingBottom', 'paddingTop', 'paddingRight', 'paddingLeft'
       ]
 
