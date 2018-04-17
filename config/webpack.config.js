@@ -1,10 +1,12 @@
-const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
-   devtool: 'cheap-module-source-map',
-   entry: './src/index.js',
+   mode: 'production',
+   entry: {
+      main: './src/index.js'
+   },
    output: {
-      path: './dist/',
+      path: path.resolve(__dirname, '../dist'),
       filename: 'index.js',
       libraryTarget: 'umd'
    },
@@ -28,15 +30,5 @@ module.exports = {
             ]
          }
       ]
-   },
-   plugins: [
-      new webpack.DefinePlugin({
-         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-         compress: true,
-         mangle: false,
-         sourceMap: true
-      })
-   ]
+   }
 }
