@@ -23,6 +23,8 @@ export default class SmartView extends Component {
       paddingLeft: PropTypes.string,
       paddingRight: PropTypes.string,
       paddingBottom: PropTypes.string,
+      paddingHorizontal: PropTypes.string,
+      paddingVertical: PropTypes.string,
       position: PropTypes.string,
       style: PropTypes.object,
       top: PropTypes.string,
@@ -51,6 +53,16 @@ export default class SmartView extends Component {
       styleObj[breakpoint.key]['-webkit-overflow-scrolling'] = 'touch'
    }
 
+   setPaddingHorizontal = (styleObj, breakpoint, attributeValue) => {
+      styleObj[breakpoint.key].paddingLeft = attributeValue
+      styleObj[breakpoint.key].paddingRight = attributeValue
+   }
+
+   setPaddingVertical = (styleObj, breakpoint, attributeValue) => {
+      styleObj[breakpoint.key].paddingTop = attributeValue
+      styleObj[breakpoint.key].paddingBottom = attributeValue
+   }
+
    render() {
       const styleProps = [
          'position', 'display',
@@ -73,7 +85,13 @@ export default class SmartView extends Component {
          setAttributeForBreakpoints(styleObj, prop, this.props[prop])
       })
 
-      setAttributeForBreakpoints(styleObj, 'overflow', this.props.scroll, this.setScrollAttributes)
+      setAttributeForBreakpoints(styleObj, null, this.props.scroll, this.setScrollAttributes)
+      setAttributeForBreakpoints(
+         styleObj, null, this.props.paddingHorizontal, this.setPaddingHorizontal
+      )
+      setAttributeForBreakpoints(
+         styleObj, null, this.props.paddingVertical, this.setPaddingVertical
+      )
 
       return (
          <div onScroll={this.props.onScroll} className={cx(css(styleObj), this.props.className)}>
