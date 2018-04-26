@@ -10,6 +10,7 @@ export default class GridCell extends Component {
       className: PropTypes.string,
       colspan: PropTypes.string,
       height: PropTypes.string,
+      offset: PropTypes.string,
       style: PropTypes.object,
    }
 
@@ -32,6 +33,16 @@ export default class GridCell extends Component {
       })
    }
 
+   setGridCellOffset = (styleObj, props) => {
+      if (props.offset) {
+         breakpoints.forEach((breakpoint, index) => {
+            const columns = getAttributeForCurrentSize(breakpoint.name, props.columns)
+            const offset = getAttributeForCurrentSize(breakpoint.name, props.offset)
+            styleObj[breakpoint.key].marginLeft = `${offset * parseFloat(100 / columns)}%`
+         })
+      }
+   }
+
    setGridCellGutter = (styleObj, breakpoint, attributeValue) => {
       const gutter = parseFloat(attributeValue)
       styleObj[breakpoint.key].paddingRight = `${gutter}px`
@@ -39,7 +50,7 @@ export default class GridCell extends Component {
    }
 
    render() {
-      const { className, colspan } = this.props
+      const { className, colspan, offset } = this.props
       const gridContext = this.context.GridCellStyle
 
       const gridCellStyleObj = {
@@ -55,10 +66,8 @@ export default class GridCell extends Component {
       }
 
       this.setGridCellWidth(gridCellStyleObj, { ...gridContext, colspan })
-
-      setAttributeForBreakpoints(
-         gridCellStyleObj, null, gridContext.gutter, this.setGridCellGutter
-      )
+      this.setGridCellOffset(gridCellStyleObj, { ...gridContext, offset })
+      setAttributeForBreakpoints(gridCellStyleObj, null, gridContext.gutter, this.setGridCellGutter)
 
       const gridCellInnerStyleObj = {
          float: 'left',
