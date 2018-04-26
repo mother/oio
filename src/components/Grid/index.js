@@ -45,6 +45,7 @@ export default class Grid extends Component {
       const gridStyleObj = {
          float: 'left',
          display: 'block',
+         overflow: 'hidden',
          [breakpoints[0].key]: {},
          [breakpoints[1].key]: {},
          [breakpoints[2].key]: {},
