@@ -43,9 +43,9 @@ export default class Grid extends Component {
       const styleProps = ['gutter', 'width']
 
       const gridStyleObj = {
-         float: 'left',
          display: 'block',
          overflow: 'hidden',
+         margin: 'auto',
          [breakpoints[0].key]: {},
          [breakpoints[1].key]: {},
          [breakpoints[2].key]: {},
