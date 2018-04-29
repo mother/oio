@@ -10,6 +10,7 @@ export default class Grid extends Component {
       className: PropTypes.string,
       columns: PropTypes.string,
       gutter: PropTypes.string,
+      height: PropTypes.string,
       style: PropTypes.object,
       width: PropTypes.string
    }
@@ -40,7 +41,7 @@ export default class Grid extends Component {
    }
 
    render() {
-      const styleProps = ['gutter', 'width']
+      const styleProps = ['gutter', 'width', 'height']
 
       const gridStyleObj = {
          display: 'block',
@@ -70,6 +71,7 @@ export default class Grid extends Component {
          [breakpoints[4].key]: {}
       }
 
+      setAttributeForBreakpoints(gridInnerStyleObj, 'height', this.props.height)
       setAttributeForBreakpoints(
          gridInnerStyleObj, null, this.props.gutter, this.setGridInnerGutter
       )

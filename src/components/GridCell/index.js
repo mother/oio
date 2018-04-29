@@ -50,7 +50,7 @@ export default class GridCell extends Component {
    }
 
    render() {
-      const { className, colspan, offset } = this.props
+      const { className, colspan, height, offset } = this.props
       const gridContext = this.context.GridCellStyle
 
       const gridCellStyleObj = {
@@ -68,6 +68,7 @@ export default class GridCell extends Component {
       this.setGridCellWidth(gridCellStyleObj, { ...gridContext, colspan })
       this.setGridCellOffset(gridCellStyleObj, { ...gridContext, offset })
       setAttributeForBreakpoints(gridCellStyleObj, null, gridContext.gutter, this.setGridCellGutter)
+      setAttributeForBreakpoints(gridCellStyleObj, 'height', height)
 
       const gridCellInnerStyleObj = {
          float: 'left',
