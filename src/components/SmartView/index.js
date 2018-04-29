@@ -93,6 +93,10 @@ export default class SmartView extends Component {
          styleObj, null, this.props.paddingVertical, this.setPaddingVertical
       )
 
+      if (styleObj.width === 'auto') {
+         delete styleObj.width
+      }
+
       return (
          <div onScroll={this.props.onScroll} className={cx(css(styleObj), this.props.className)}>
             {this.props.children}
