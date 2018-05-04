@@ -10,6 +10,7 @@ export default class GridCell extends Component {
       className: PropTypes.string,
       colspan: PropTypes.string,
       height: PropTypes.string,
+      minHeight: PropTypes.string,
       offset: PropTypes.string,
       style: PropTypes.object,
    }
@@ -50,7 +51,7 @@ export default class GridCell extends Component {
    }
 
    render() {
-      const { className, colspan, height, offset } = this.props
+      const { className, colspan, minHeight, height, offset } = this.props
       const gridContext = this.context.GridCellStyle
 
       const gridCellStyleObj = {
@@ -68,13 +69,20 @@ export default class GridCell extends Component {
       this.setGridCellWidth(gridCellStyleObj, { ...gridContext, colspan })
       this.setGridCellOffset(gridCellStyleObj, { ...gridContext, offset })
       setAttributeForBreakpoints(gridCellStyleObj, null, gridContext.gutter, this.setGridCellGutter)
+      setAttributeForBreakpoints(gridCellStyleObj, 'minHeight', minHeight)
       setAttributeForBreakpoints(gridCellStyleObj, 'height', height)
 
       const gridCellInnerStyleObj = {
          float: 'left',
-         width: '100%'
+         width: '100%',
+         [breakpoints[0].key]: {},
+         [breakpoints[1].key]: {},
+         [breakpoints[2].key]: {},
+         [breakpoints[3].key]: {},
+         [breakpoints[4].key]: {}
       }
 
+      setAttributeForBreakpoints(gridCellInnerStyleObj, 'minHeight', minHeight)
       setAttributeForBreakpoints(gridCellInnerStyleObj, 'height', height)
 
       return (
