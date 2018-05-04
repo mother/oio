@@ -75,6 +75,8 @@ export default class GridCell extends Component {
          width: '100%'
       }
 
+      setAttributeForBreakpoints(gridCellInnerStyleObj, 'height', height)
+
       return (
          <div
             className={cx(css(gridCellStyleObj), className)}>
