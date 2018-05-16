@@ -13,6 +13,14 @@ export default {
       fontSize: '16px'
    },
    fontSizes: {
+      0.8: {
+         fontSize: '0.6rem',
+         lineHeight: '1.2'
+      },
+      0.9: {
+         fontSize: '0.65rem',
+         lineHeight: '1.2'
+      },
       1: {
          fontSize: '0.7rem',
          lineHeight: '1.4'
