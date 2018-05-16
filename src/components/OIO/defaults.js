@@ -14,7 +14,7 @@ export default {
    },
    fontSizes: {
       0.8: {
-         fontSize: '0.5rem',
+         fontSize: '0.55rem',
          lineHeight: '1.2'
       },
       0.9: {
