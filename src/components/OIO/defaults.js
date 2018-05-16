@@ -14,11 +14,11 @@ export default {
    },
    fontSizes: {
       0.8: {
-         fontSize: '0.6rem',
+         fontSize: '0.5rem',
          lineHeight: '1.2'
       },
       0.9: {
-         fontSize: '0.65rem',
+         fontSize: '0.6rem',
          lineHeight: '1.2'
       },
       1: {
