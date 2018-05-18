@@ -12,6 +12,7 @@ export default class SmartView extends Component {
       display: PropTypes.string,
       flex: PropTypes.string,
       flexFlow: PropTypes.string,
+      float: PropTypes.string,
       height: PropTypes.string,
       justifyContent: PropTypes.string,
       minHeight: PropTypes.string,
@@ -65,7 +66,7 @@ export default class SmartView extends Component {
 
    render() {
       const styleProps = [
-         'position', 'display',
+         'position', 'display', 'float',
          'flex', 'flexFlow', 'alignItems', 'justifyContent',
          'top', 'bottom', 'right', 'left',
          'height', 'minHeight', 'maxHeight', 'width', 'minWidth', 'maxWidth',
