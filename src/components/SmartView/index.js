@@ -99,7 +99,10 @@ export default class SmartView extends Component {
       }
 
       return (
-         <div onScroll={this.props.onScroll} className={cx(css(styleObj), this.props.className)}>
+         <div
+            ref={(node) => { this.node = node }}
+            onScroll={this.props.onScroll}
+            className={cx(css(styleObj), this.props.className)}>
             {this.props.children}
          </div>
       )
