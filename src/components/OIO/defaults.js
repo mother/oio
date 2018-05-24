@@ -23,23 +23,23 @@ export default {
       },
       1: {
          fontSize: '0.7rem',
-         lineHeight: '1.4'
+         lineHeight: '1.3'
       },
       2: {
          fontSize: '0.75rem',
-         lineHeight: '1.4'
+         lineHeight: '1.3'
       },
       3: {
          fontSize: '0.875rem',
-         lineHeight: '1.4'
+         lineHeight: '1.3'
       },
       4: {
          fontSize: '1rem',
-         lineHeight: '1.4'
+         lineHeight: '1.3'
       },
       5: {
          fontSize: '1.125rem',
-         lineHeight: '1.4'
+         lineHeight: '1.3'
       },
       6: {
          fontSize: '1.5rem',
