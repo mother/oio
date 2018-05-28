@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { debounce } from 'throttle-debounce'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import styles from './styles.less'
 
@@ -77,7 +76,7 @@ export default class View extends Component {
 
    componentDidMount() {
       this.updateComponentSizeAndPosition()
-      window.addEventListener('resize', debounce(100, this.windowSizeUpdated), false)
+      window.addEventListener('resize', this.windowSizeUpdated, false)
    }
 
    // TODO: Untested
