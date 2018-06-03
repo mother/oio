@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import styles from './styles.less'
+import style from './style.less'
 
 export default class Popover extends Component {
    static propTypes = {
+      animation: PropTypes.oneOf(['scaleIn', 'none']).isRequired,
       children: PropTypes.node,
       className: PropTypes.string,
       height: PropTypes.string,
@@ -15,7 +16,8 @@ export default class Popover extends Component {
    }
 
    static defaultProps = {
-      height: '60',
+      animation: 'scaleIn',
+      height: 'auto',
       offset: '24',
       position: 'above left',
       width: '300',
@@ -50,6 +52,9 @@ export default class Popover extends Component {
          left: triggerButton.offsetLeft,
          buttonWidth: triggerButton.offsetWidth,
          visible: true
+      }, () => {
+         // console.log(this.popover, this.popover.clientHeight,
+         //  this.content, this.content.clientHeight)
       })
    }
 
@@ -59,12 +64,14 @@ export default class Popover extends Component {
    }
 
    render() {
-      const { position, zIndex } = this.props
+      const { animation, height, offset, position, zIndex, width } = this.props
       const visibilityClass = this.state.visible ? 'isVisible' : ''
-      const popoverOffset = parseFloat(this.props.offset)
-      const popoverWidth = parseFloat(this.props.width)
-      const popoverHeight = parseFloat(this.props.height)
-      const popoverStyle = { zIndex }
+      const popoverClasses = [style.popover, style[visibilityClass], style[animation]]
+
+      const popoverOffset = parseFloat(offset)
+      const popoverWidth = parseFloat(width)
+      const popoverHeight = parseFloat(height)
+      const popoverStyle = { zIndex, width }
 
       // Set Popover Vertical Position
       // If above is not specified in the position, assume it should be below
@@ -84,17 +91,23 @@ export default class Popover extends Component {
 
       // Set Popover Margins and Container
       const popoverContainerStyle = {
-         height: `${popoverHeight}px`,
+         height: popoverHeight,
          margin: `${popoverOffset}px`,
-         width: popoverWidth
+         width: '100%'
+      }
+
+      if (height === 'auto') {
+         delete popoverContainerStyle.height
       }
 
       return (
          <div
+            ref={(popover) => { this.popover = popover }}
             style={popoverStyle}
-            className={classNames(styles.popover, styles[visibilityClass])}>
+            className={classNames(popoverClasses)}>
             <div
-               className={classNames(styles.popoverContainer, this.props.className)}
+               ref={(content) => { this.content = content }}
+               className={classNames(style.popoverContainer, this.props.className)}
                style={popoverContainerStyle}>
                {this.props.children}
             </div>
