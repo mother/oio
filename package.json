@@ -38,15 +38,8 @@
     "url": "https://github.com/mother/oio/issues"
   },
   "homepage": "https://github.com/mother/oio",
-  "dependencies": {
-    "blob": "0.0.4",
-    "classnames": "2.2.5",
-    "emotion": "9.1.1",
-    "form-data": "2.1.2",
-    "moment": "2.22.0",
-    "react-files": "2.4.6",
-    "react-router-dom": "4.2.2",
-    "throttle-debounce": "1.0.1"
+  "peerDependencies": {
+    "react": "^16.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.43",
@@ -54,9 +47,13 @@
     "@babel/preset-react": "7.0.0-beta.43",
     "@babel/preset-stage-0": "7.0.0-beta.43",
     "babel-loader": "8.0.0-beta.2",
+    "blob": "0.0.4",
+    "classnames": "2.2.5",
     "css-loader": "0.28.11",
+    "emotion": "9.1.1",
     "eslint-config-mother": "latest",
     "express": "4.16.2",
+    "form-data": "2.1.2",
     "gulp": "3.9.1",
     "gulp-concat": "2.6.0",
     "gulp-less": "4.0.0",
@@ -64,11 +61,14 @@
     "jsdom": "9.4.2",
     "less": "3.0.1",
     "less-loader": "4.1.0",
+    "moment": "2.22.0",
     "prop-types": "15.6.0",
-    "react": "16.2.0",
     "react-dom": "16.2.0",
+    "react-files": "2.4.6",
+    "react-router-dom": "4.2.2",
     "resolve-url-loader": "2.3.0",
     "style-loader": "0.20.3",
+    "throttle-debounce": "1.0.1",
     "webpack": "4.4.1",
     "webpack-bundle-analyzer": "2.11.1",
     "webpack-cli": "2.0.13",
