@@ -44,7 +44,7 @@
     "emotion": "9.1.1",
     "form-data": "2.1.2",
     "moment": "2.22.0",
-    "react-files": "2.4.5",
+    "react-files": "2.4.6",
     "react-router-dom": "4.2.2",
     "throttle-debounce": "1.0.1"
   },
