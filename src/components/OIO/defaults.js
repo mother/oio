@@ -9,57 +9,65 @@ export default {
          medium: '36px',
          small: '30px',
          tiny: '24px'
-      }
+      },
+      fontSize: '16px'
    },
    fontSizes: {
       1: {
-         fontSize: '10px',
-         lineHeight: '16px'
+         fontSize: '0.7rem',
+         lineHeight: '1.4'
       },
       2: {
-         fontSize: '12px',
-         lineHeight: '17px'
+         fontSize: '0.75rem',
+         lineHeight: '1.4'
       },
       3: {
-         fontSize: '14px',
-         lineHeight: '19px'
+         fontSize: '0.875rem',
+         lineHeight: '1.4'
       },
       4: {
-         fontSize: '16px',
-         lineHeight: '21px'
+         fontSize: '1rem',
+         lineHeight: '1.4'
       },
       5: {
-         fontSize: '19px',
-         lineHeight: '23px'
+         fontSize: '1.125rem',
+         lineHeight: '1.4'
       },
       6: {
-         fontSize: '24px',
-         lineHeight: '30px'
+         fontSize: '1.5rem',
+         lineHeight: '1.3'
       },
       7: {
-         fontSize: '30px',
-         lineHeight: '1.15em'
+         fontSize: '1.65rem',
+         lineHeight: '1.3'
       },
       8: {
-         fontSize: '36px',
-         lineHeight: '1.1em'
+         fontSize: '2rem',
+         lineHeight: '1.3'
       },
       9: {
-         fontSize: '42px',
-         lineHeight: '1.1em'
+         fontSize: '2.25rem',
+         lineHeight: '1.2'
       },
       10: {
-         fontSize: '51px',
-         lineHeight: '1em'
+         fontSize: '2.625rem',
+         lineHeight: '1.125'
       },
       11: {
-         fontSize: '60px',
-         lineHeight: '1em'
+         fontSize: '3rem',
+         lineHeight: '1.125'
       },
       12: {
-         fontSize: '78px',
-         lineHeight: '78px'
+         fontSize: '3.375rem',
+         lineHeight: '1.125'
       }
+   },
+   fontWeights: {
+      light: '300',
+      normal: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700'
    },
    viewport: {
       breakpoints: {

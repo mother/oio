@@ -37,7 +37,6 @@
    left: 0px;
    right: 0px;
    bottom: 0px;
-   background: rgba(12,15,20,0.97);
    animation-duration: 400ms;
    animation-name: showOverlay;
    animation-timing-function: ease-out;
@@ -74,21 +73,31 @@
 // Close Button
 // =====================================================
 
-.closeButton {
-   position: fixed;
-   top: 30px;
-   right: 30px;
-   font-size: 60px;
-   line-height: 60px;
+.closeButtonContainer {
+   position: fixed !important;
+}
+
+.closeButtonIcon {
+   float: left;
+   position: relative;
+   font-size: 48px;
+   line-height: 48px;
    width: 60px;
    height: 60px;
-   border-radius: 50%;
+   padding: 6px 0px;
    text-align: center;
    color: #666;
    transition: 300ms;
 
+   .hitArea {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+   }
+
    &:hover {
       color: #fff;
-      background: #222;
    }
 }

@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import { debounce } from 'throttle-debounce'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import styles from './styles.less'
 
 export default class View extends Component {
+   /* eslint-disable */
    static propTypes = {
       id: PropTypes.string,
       align: PropTypes.string,
@@ -33,6 +35,7 @@ export default class View extends Component {
       width: PropTypes.string,
       visible: PropTypes.string
    }
+   /* eslint-enable */
 
    static defaultProps = {
       format: 'float',
@@ -74,7 +77,7 @@ export default class View extends Component {
 
    componentDidMount() {
       this.updateComponentSizeAndPosition()
-      window.addEventListener('resize', this.windowSizeUpdated, false)
+      window.addEventListener('resize', debounce(100, this.windowSizeUpdated), false)
    }
 
    // TODO: Untested
@@ -332,7 +335,7 @@ export default class View extends Component {
       return (
          <div
             id={this.props.id}
-            ref={node => (this.node = node)}
+            ref={(node) => { this.node = node }}
             style={style}
             onScroll={this.props.onScroll}
             className={classNames(viewClasses, this.props.className)}>
