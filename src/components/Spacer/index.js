@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { css, cx } from 'emotion'
 import { breakpoints, setAttributeForBreakpoints } from '../../utils/size'
 
 const setSpacerHeight = (styleObj, breakpoint, attributeValue) => {
@@ -20,7 +21,7 @@ const Spacer = ({ size }) => {
    setAttributeForBreakpoints(styleObj, 'height', size, setSpacerHeight)
 
    return (
-      <div style={styleObj} />
+      <div className={cx(css(styleObj))} />
    )
 }
 
