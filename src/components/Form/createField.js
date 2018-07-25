@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -14,10 +16,6 @@ const createOIOFormField = () => Field => (
 
       static defaultProps = {
          readOnly: false
-      }
-
-      static contextTypes = {
-         OIOForm: PropTypes.object
       }
 
       constructor(props) {

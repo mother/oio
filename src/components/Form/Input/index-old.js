@@ -1,23 +1,19 @@
-/* eslint-disable react/require-default-props */
+/* eslint-disable */
 
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { withFormContext } from '..'
+import { createOIOFormField } from '..'
 import styles from './styles.less'
 import formStyles from '../styles.less'
 
 class Input extends Component {
    static propTypes = {
       className: PropTypes.string,
-      error: PropTypes.string,
       id: PropTypes.string,
-      initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
       label: PropTypes.string,
       name: PropTypes.string,
-      oioFormContext: PropTypes.object.isRequired,
       onBlur: PropTypes.func,
-      onChange: PropTypes.func,
       placeholder: PropTypes.string,
       type: PropTypes.string,
       readOnly: PropTypes.bool,
@@ -25,51 +21,24 @@ class Input extends Component {
    }
 
    static defaultProps = {
-      type: 'text'
+      type: 'text',
+      value: ''
    }
 
-   // TODO: Deprecate
    static contextTypes = {
       OIOStyles: PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-      this.state = {
-         value: props.initialValue || ''
-      }
-   }
-
-   componentDidMount() {
-      if (this.props.initialValue) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.initialValue)
-      } else if (this.props.value) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.value)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
-      if (typeof nextProps.value !== 'undefined' && this.props.value !== nextProps.value) {
-         this.props.oioFormContext.setValue(this.props.name, nextProps.value)
-         this.setState({ value: nextProps.value })
-      }
-   }
-
    handleBlur = (event) => {
+      this.props.triggerValidation()
+
       if (this.props.onBlur) {
          this.props.onBlur(event)
       }
    }
 
    handleChange = (event) => {
-      if (typeof this.props.value === 'undefined') {
-         this.props.oioFormContext.setValue(this.props.name, event.target.value)
-         this.setState({ value: event.target.value })
-      }
-
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.value)
-      }
+      this.props.triggerChange(event, event.target.value)
    }
 
    render() {
@@ -93,7 +62,7 @@ class Input extends Component {
                placeholder={this.props.placeholder}
                readOnly={this.props.readOnly}
                type={this.props.type}
-               value={this.props.value || this.state.value}
+               value={this.props.value}
             />
             {this.props.error &&
                <div className={formStyles.error}>
@@ -105,4 +74,4 @@ class Input extends Component {
    }
 }
 
-export default withFormContext(Input)
+export default createOIOFormField()(Input)

@@ -39,7 +39,8 @@
   },
   "homepage": "https://github.com/mother/oio",
   "peerDependencies": {
-    "react": "^16.2.0"
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.43",
@@ -63,7 +64,6 @@
     "less-loader": "4.1.0",
     "moment": "2.22.0",
     "prop-types": "15.6.0",
-    "react-dom": "16.2.0",
     "react-files": "2.4.6",
     "react-router-dom": "4.2.2",
     "resolve-url-loader": "2.3.0",
@@ -74,5 +74,9 @@
     "webpack-cli": "2.0.13",
     "webpack-dev-middleware": "3.1.0",
     "webpack-hot-middleware": "2.21.2"
+  },
+  "dependencies": {
+    "react": "16.4.1",
+    "react-dom": "16.4.1"
   }
 }

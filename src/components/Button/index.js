@@ -1,13 +1,16 @@
+/* eslint-disable react/require-default-props */
+
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import convertColor from '../../utils/convertColor'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
+import { withFormContext } from '../Form'
 import Text from '../Text'
 import style from './style.less'
 
-export default class Button extends Component {
+class Button extends Component {
    static propTypes = {
       autoFormRespond: PropTypes.bool,
       className: PropTypes.string,
@@ -19,6 +22,7 @@ export default class Button extends Component {
       ]),
       mode: PropTypes.string.isRequired,
       name: PropTypes.string,
+      oioFormContext: PropTypes.object.isRequired,
       onClick: PropTypes.func,
       outline: PropTypes.bool,
       plain: PropTypes.bool,
@@ -42,7 +46,6 @@ export default class Button extends Component {
    static contextTypes = {
       buttonGroup: PropTypes.object,
       buttonGroupStyle: PropTypes.object,
-      OIOForm: PropTypes.object,
       OIOStyles: PropTypes.object
    }
 
@@ -177,19 +180,22 @@ export default class Button extends Component {
 
       let mode = this.props.mode
 
-      if (this.props.autoFormRespond) {
-         const formContext = this.context.OIOForm
-         if (type === 'submit' && formContext) {
+      if (this.props.autoFormRespond && type === 'submit') {
+         const formContext = this.props.oioFormContext
+         if (formContext) {
             const isPristine = formContext.pristine
             const isSubmitting = formContext.submitting
 
-            if (isPristine) mode = 'disabled'
-            else if (isSubmitting) mode = 'loading'
-
-            if (formContext.getErrors().exist) {
-               buttonStyle.backgroundColor = 'red'
+            if (isPristine) {
                mode = 'disabled'
+            } else if (isSubmitting) {
+               mode = 'loading'
             }
+
+            // if (formContext.getErrors().exist) {
+            //    buttonStyle.backgroundColor = 'red'
+            //    mode = 'disabled'
+            // }
          }
       }
 
@@ -352,3 +358,5 @@ export default class Button extends Component {
       )
    }
 }
+
+export default withFormContext(Button)
