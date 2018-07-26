@@ -14,7 +14,7 @@ class Input extends Component {
       id: PropTypes.string,
       initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
       label: PropTypes.string,
-      name: PropTypes.string,
+      name: PropTypes.string.isRequired,
       oioFormContext: PropTypes.object.isRequired,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
@@ -93,7 +93,7 @@ class Input extends Component {
                placeholder={this.props.placeholder}
                readOnly={this.props.readOnly}
                type={this.props.type}
-               value={this.props.value || this.state.value}
+               value={typeof this.props.value !== 'undefined' ? this.props.value : this.state.value}
             />
             {this.props.error &&
                <div className={formStyles.error}>

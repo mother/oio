@@ -1,6 +1,6 @@
 const express = require('express')
 const webpack = require('webpack')
-const webpackConfig = require('./config/webpack.dev.config')
+const webpackConfig = require('../config/webpack.dev.config')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
@@ -24,7 +24,7 @@ app.use(webpackHotMiddleware(compiler, {
 }))
 
 app.get('*', (req, res, next) => {
-   res.sendFile('index.html', { root: `${__dirname}/demo/` })
+   res.sendFile('index.html', { root: `${__dirname}/` })
 })
 
 app.listen(8000)

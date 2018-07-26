@@ -28,11 +28,16 @@ import style from '../style.less'
 export default class DemoContentForm extends Component {
    constructor(props) {
       super(props)
+      this.state = {}
+   }
 
-      this.state = {
-         firstName: 'Jane',
-         age: 1
-      }
+   componentDidMount() {
+      setTimeout(() => {
+         this.setState({
+            firstName: 'Jane',
+            age: 2
+         })
+      }, 1000)
    }
 
    handleError = (error, file) => {
@@ -124,7 +129,7 @@ export default class DemoContentForm extends Component {
                                     label="Age"
                                     placeholder="What's your age?"
                                     rules={[{ test: value => value > 0, message: 'Be older' }]}
-                                    value={this.state.age.toString()}
+                                    value={this.state.age}
                                  />
                               </GridCell>
                               <GridCell>

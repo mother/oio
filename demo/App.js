@@ -4,6 +4,7 @@ import { NavList, Notification, OIO, Spacer, Text, Title, View } from '../src'
 import ButtonDemo from './content/Button'
 import ButtonGroupDemo from './content/ButtonGroup'
 import FormDemo from './content/Form'
+import AsyncFormDemo from './content/FormAsync'
 import TextDemo from './content/Text'
 import ModalDemo from './content/Modal'
 import ViewDemo from './content/View'
@@ -39,9 +40,6 @@ export default class Demo extends Component {
             name: 'ButtonGroup',
             link: '/button-group'
          }, {
-            name: 'Form',
-            link: '/form'
-         }, {
             name: 'Modal',
             link: '/modal'
          }, {
@@ -50,6 +48,18 @@ export default class Demo extends Component {
          }, {
             name: 'Text',
             link: '/text'
+         }]
+      }, {
+         name: 'Forms',
+         buttons: [{
+            name: 'Basic',
+            link: '/form'
+         }, {
+            name: 'Async Initialization',
+            link: '/form-async'
+         }, {
+            name: 'Custom Elements',
+            link: '/form-custom'
          }]
       }, {
          name: 'Navigation',
@@ -103,6 +113,7 @@ export default class Demo extends Component {
                      <Route path="/button" component={ButtonDemo} />
                      <Route path="/button-group" component={ButtonGroupDemo} />
                      <Route path="/form" component={FormDemo} />
+                     <Route path="/form-async" component={AsyncFormDemo} />
                      <Route path="/modal" component={ModalDemo} />
                      <Route path="/view" component={ViewDemo} />
                      <Route path="/text" component={TextDemo} />
