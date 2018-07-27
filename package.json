@@ -44,7 +44,8 @@
     "form-data": "2.1.2",
     "moment": "2.22.0",
     "react-files": "2.4.5",
-    "react-router-dom": "4.2.2"
+    "react-router-dom": "4.2.2",
+    "tinycolor2": "1.4.1"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.43",

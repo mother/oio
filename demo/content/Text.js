@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
    Grid,
@@ -13,10 +12,6 @@ import {
 import style from '../style.less'
 
 export default class DemoContentText extends Component {
-   static propTypes = {
-      contents: PropTypes.array
-   }
-
    constructor(props) {
       super(props)
 
@@ -63,10 +58,10 @@ export default class DemoContentText extends Component {
                   </Text>
                </GridCell>
                <GridCell colspan="3">
-                  <Text size="12">Size 12 Text</Text>
-                  <Text size="11">Size 11 Text</Text>
-                  <Text size="10">Size 10 Text</Text>
-                  <Text size="9">Size 9 Text</Text>
+                  <Text size="12" color="red">Size 12 Text</Text>
+                  <Text size="11" color="fcf000">Size 11 Text</Text>
+                  <Text size="10" color="ff0000">Size 10 Text</Text>
+                  <Text size="9" color="rgba(255,0,0,0.5)">Size 9 Text</Text>
                   <Text size="8">Size 8 Text</Text>
                   <Text size="7">Size 7 Text</Text>
                   <Text size="6">Size 6 Text</Text>
@@ -176,8 +171,10 @@ export default class DemoContentText extends Component {
                               <td>String</td>
                               <td>-</td>
                               <td>
-                                 <p>CSS color (e.g. #CCC)</p>
-                                 <p>Will be able to pass hex, rgba, or preset classes</p>
+                                 <p>
+                                    All css color values supported including hex,
+                                     rgba, or hsl (e.g. #CCC)
+                                 </p>
                               </td>
                            </tr>
                            <tr>
