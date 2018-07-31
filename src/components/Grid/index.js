@@ -44,6 +44,7 @@ export default class Grid extends Component {
    }
 
    render() {
+      const { children, hideBottomGutter } = this.props
       const styleProps = ['gutter', 'width', 'height']
 
       const gridStyleObj = {
@@ -79,15 +80,20 @@ export default class Grid extends Component {
          gridInnerStyleObj, null, this.props.gutter, this.setGridInnerGutter
       )
 
+      let gridContent = children
+
+      if (hideBottomGutter) {
+         gridContent = (
+            React.Children.map(children, (child, index) => (
+               React.cloneElement(child, { totalGridCells: children.length, index })
+            ))
+         )
+      }
+
       return (
          <div className={cx(css(gridStyleObj), this.props.className)}>
             <div className={css(gridInnerStyleObj)}>
-               {React.Children.map(this.props.children, (child, index) => (
-                  React.cloneElement(child, {
-                     totalGridCells: this.props.children.length,
-                     index
-                  })
-               ))}
+               {gridContent}
             </div>
          </div>
       )
