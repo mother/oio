@@ -14,8 +14,8 @@ export default class GridCell extends Component {
       minHeight: PropTypes.string,
       offset: PropTypes.string,
       style: PropTypes.object,
-      index: PropTypes.string,
-      totalGridCells: PropTypes.string
+      index: PropTypes.number,
+      totalGridCells: PropTypes.number
    }
 
    static defaultProps = {
@@ -23,7 +23,7 @@ export default class GridCell extends Component {
       float: 'left',
       style: {},
       index: 0, // this is passed from the Grid Component
-      totalGridCells: '1' // this is passed from the Grid Component
+      totalGridCells: 1 // this is passed from the Grid Component
    }
    /* eslint-enable */
 
@@ -60,7 +60,7 @@ export default class GridCell extends Component {
       const totalGridCells = props.totalGridCells
       const gridCellIndex = props.index
 
-      breakpoints.forEach((breakpoint, index) => {
+      breakpoints.forEach((breakpoint) => {
          const columns = getAttributeForCurrentSize(breakpoint.name, props.columns)
          const remainder = totalGridCells % columns
 
