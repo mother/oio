@@ -14,12 +14,16 @@ export default class GridCell extends Component {
       minHeight: PropTypes.string,
       offset: PropTypes.string,
       style: PropTypes.object,
+      index: PropTypes.string,
+      totalGridCells: PropTypes.string
    }
 
    static defaultProps = {
       colspan: '1',
       float: 'left',
-      style: {}
+      style: {},
+      index: 0, // this is passed from the Grid Component
+      totalGridCells: '1' // this is passed from the Grid Component
    }
    /* eslint-enable */
 
@@ -52,8 +56,25 @@ export default class GridCell extends Component {
       styleObj[breakpoint.key].marginBottom = `${gutter}px`
    }
 
+   hideGutterOnLastRowCells = (styleObj, props) => {
+      const totalGridCells = props.totalGridCells
+      const gridCellIndex = props.index
+
+      breakpoints.forEach((breakpoint, index) => {
+         const columns = getAttributeForCurrentSize(breakpoint.name, props.columns)
+         const remainder = totalGridCells % columns
+
+         if (!remainder && (gridCellIndex === (totalGridCells - 1))) {
+            styleObj[breakpoint.key].marginBottom = '0px'
+         } else if (gridCellIndex > (totalGridCells - remainder - 1)) {
+            styleObj[breakpoint.key].marginBottom = '0px'
+         }
+      })
+   }
+
    render() {
-      const { className, colspan, float, minHeight, height, offset } = this.props
+      const { className, colspan, float, index, minHeight,
+         height, totalGridCells, offset } = this.props
       const gridContext = this.context.GridCellStyle
 
       const gridCellStyleObj = {
@@ -70,10 +91,19 @@ export default class GridCell extends Component {
 
       this.setGridCellWidth(gridCellStyleObj, { ...gridContext, colspan })
       this.setGridCellOffset(gridCellStyleObj, { ...gridContext, offset })
+
       setAttributeForBreakpoints(gridCellStyleObj, null, gridContext.gutter, this.setGridCellGutter)
       setAttributeForBreakpoints(gridCellStyleObj, 'float', float)
       setAttributeForBreakpoints(gridCellStyleObj, 'minHeight', minHeight)
       setAttributeForBreakpoints(gridCellStyleObj, 'height', height)
+
+      // Removes bottom gutter margin on GridCells that are on the last row of the
+      // parent Grid component
+      if (gridContext.hideBottomGutter) {
+         this.hideGutterOnLastRowCells(gridCellStyleObj, {
+            ...gridContext, colspan, index, totalGridCells, offset
+         })
+      }
 
       const gridCellInnerStyleObj = {
          width: '100%',
@@ -88,8 +118,7 @@ export default class GridCell extends Component {
       setAttributeForBreakpoints(gridCellInnerStyleObj, 'height', height)
 
       return (
-         <div
-            className={cx(css(gridCellStyleObj), className)}>
+         <div className={cx(css(gridCellStyleObj), className)}>
             <div className={css(gridCellInnerStyleObj)}>
                {this.props.children}
             </div>
