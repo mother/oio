@@ -64,7 +64,9 @@ export default class GridCell extends Component {
          const columns = getAttributeForCurrentSize(breakpoint.name, props.columns)
          const remainder = totalGridCells % columns
 
-         if (!remainder && (gridCellIndex === (totalGridCells - 1))) {
+         if (remainder === 0 && (totalGridCells <= columns)) {
+            styleObj[breakpoint.key].marginBottom = '0px'
+         } else if (remainder === 0 && (gridCellIndex === (totalGridCells - 1))) {
             styleObj[breakpoint.key].marginBottom = '0px'
          } else if (gridCellIndex > (totalGridCells - remainder - 1)) {
             styleObj[breakpoint.key].marginBottom = '0px'
