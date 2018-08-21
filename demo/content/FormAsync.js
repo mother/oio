@@ -35,6 +35,7 @@ export default class DemoContentForm extends Component {
       setTimeout(() => {
          this.setState({
             firstName: 'Jane',
+            lastName: 'Smith',
             age: 2
          })
       }, 1000)
@@ -97,14 +98,15 @@ export default class DemoContentForm extends Component {
                            label="First Name"
                            placeholder="Please enter your first name"
                            rules={['required']}
-                           value={this.state.firstName}
+                           initialValue={this.state.firstName}
                            onChange={(e, v) => this.setState({ firstName: v })}
                         />
                         <Input
                            name="name.last"
                            label="Last Name"
                            placeholder="Please enter your last name"
-                           initialValue="Smith"
+                           value={this.state.lastName}
+                           onChange={(e, v) => this.setState({ lastName: v })}
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
@@ -181,12 +183,11 @@ export default class DemoContentForm extends Component {
                            name="choice"
                            label="A Choice"
                            options={[
-                              { value: '', text: 'Please select a choice' },
                               { value: 'one', text: 'One' },
                               { value: 'two', text: 'Two' },
                               { value: 'three', text: 'Three' }
                            ]}
-                           initialValue="two"
+                           initialValue={this.state.choice}
                            rules={['required']}
                         />
                         <RadioGroup

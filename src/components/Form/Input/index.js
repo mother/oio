@@ -41,6 +41,11 @@ class Input extends Component {
    }
 
    componentDidMount() {
+      if (this.props.initialValue !== undefined && this.props.value !== undefined) {
+         throw new Error('Input elements must be either controlled or uncontrolled ' +
+            '(specify either the initialValue or value prop, but not both).')
+      }
+
       if (this.props.initialValue) {
          this.props.oioFormContext.setInitialValue(this.props.name, this.props.initialValue)
       } else if (this.props.value) {
@@ -49,7 +54,15 @@ class Input extends Component {
    }
 
    componentWillReceiveProps(nextProps) {
-      if (typeof nextProps.value !== 'undefined' && this.props.value !== nextProps.value) {
+      if (nextProps.initialValue !== undefined && nextProps.value !== undefined) {
+         throw new Error('Input elements must be either controlled or uncontrolled ' +
+            '(specify either the initialValue or value prop, but not both).')
+      }
+
+      if (typeof nextProps.initialValue !== 'undefined') {
+         this.props.oioFormContext.setInitialValue(this.props.name, nextProps.initialValue)
+         this.setState({ value: nextProps.initialValue })
+      } else if (typeof nextProps.value !== 'undefined' && this.props.value !== nextProps.value) {
          this.props.oioFormContext.setValue(this.props.name, nextProps.value)
          this.setState({ value: nextProps.value })
       }
