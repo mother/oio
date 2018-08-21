@@ -55,7 +55,7 @@ class Select extends Component {
             '(specify either the initialValue or value prop, but not both).')
       }
 
-      if (typeof nextProps.initialValue !== 'undefined') {
+      if (typeof nextProps.initialValue !== 'undefined' && this.props.initialValue !== nextProps.initialValue) {
          this.props.oioFormContext.setInitialValue(this.props.name, nextProps.initialValue)
          this.setState({ value: nextProps.initialValue })
       } else if (typeof nextProps.value !== 'undefined' && this.props.value !== nextProps.value) {

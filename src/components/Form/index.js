@@ -39,6 +39,8 @@ export default class Form extends Component {
    }
 
    setInitialValue = (name, value) => {
+      console.log('SET INITIAL VALUE', name, value) // eslint-disable-line no-console
+
       this.initialValues[name] = {
          ...this.initialValues[name],
          value
