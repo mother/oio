@@ -13,7 +13,7 @@
     "postmerge": "npm install",
     "postreceive": "npm install",
     "postrewrite": "npm install",
-    "test": "NODE_ENV=testing ./node_modules/mocha-webpack/bin/mocha-webpack -r jsdom-global/register --webpack-config config/webpack.test.config.js \"tests/**/*.js\"",
+    "test": "NODE_ENV=testing ./node_modules/mocha-webpack/bin/mocha-webpack -r jsdom-global/register --require @babel/polyfill --webpack-config config/webpack.test.config.js \"tests/**/*.js\"",
     "webpack-analyze": "mkdir -p dist; NODE_ENV=production webpack --config config/webpack.config.js --profile --json > dist/stats.json; webpack-bundle-analyzer dist/stats.json"
   },
   "files": [
@@ -57,7 +57,7 @@
     "css-loader": "0.28.11",
     "emotion": "9.1.1",
     "enzyme": "3.4.4",
-    "enzyme-adapter-react-16.3": "1.0.0",
+    "enzyme-adapter-react-16.3": "1.1.1",
     "eslint-config-mother": "latest",
     "express": "4.16.2",
     "form-data": "2.1.2",

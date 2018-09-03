@@ -36,6 +36,26 @@ describe('<Input />', () => {
       expect(formData).to.deep.equal({ firstName: 'John' })
    })
 
+   it('Works with initialValue asynchronously', async () => {
+      const handleSubmit = spy()
+      const wrapper = mount(
+         <Form onSubmit={handleSubmit}>
+            <Input name="firstName" type="text" initialValue={undefined} />
+         </Form>
+      )
+
+      await new Promise(resolve => setTimeout(resolve, 100))
+
+      // Kinda hacky
+      wrapper.setProps({
+         children: React.cloneElement(wrapper.props().children, { initialValue: 'Jane' })
+      })
+
+      wrapper.find('form').simulate('submit')
+      const formData = handleSubmit.getCall(0).args[0]
+      expect(formData).to.deep.equal({ firstName: 'Jane' })
+   })
+
    it('Works when overriding initialValue', () => {
       const handleSubmit = spy()
       const wrapper = mount(

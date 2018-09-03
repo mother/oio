@@ -33,38 +33,37 @@ class Input extends Component {
       OIOStyles: PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-      this.state = {
-         value: props.initialValue || ''
-      }
-   }
-
-   componentDidMount() {
-      if (this.props.initialValue !== undefined && this.props.value !== undefined) {
-         throw new Error('Input elements must be either controlled or uncontrolled ' +
-            '(specify either the initialValue or value prop, but not both).')
-      }
-
-      if (this.props.initialValue) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.initialValue)
-      } else if (this.props.value) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.value)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
+   static getDerivedStateFromProps(nextProps, prevState) {
       if (nextProps.initialValue !== undefined && nextProps.value !== undefined) {
          throw new Error('Input elements must be either controlled or uncontrolled ' +
             '(specify either the initialValue or value prop, but not both).')
       }
 
-      if (typeof nextProps.initialValue !== 'undefined' && this.props.initialValue !== nextProps.initialValue) {
-         this.props.oioFormContext.setInitialValue(this.props.name, nextProps.initialValue)
-         this.setState({ value: nextProps.initialValue })
-      } else if (typeof nextProps.value !== 'undefined' && this.props.value !== nextProps.value) {
-         this.props.oioFormContext.setValue(this.props.name, nextProps.value)
-         this.setState({ value: nextProps.value })
+      const initialValueDefined = typeof nextProps.initialValue !== 'undefined'
+      if (initialValueDefined && nextProps.initialValue !== prevState.initialValue) {
+         nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
+         return {
+            controlled: false,
+            initialValue: nextProps.initialValue,
+            value: nextProps.initialValue
+         }
+      } else if (typeof nextProps.value !== 'undefined' && prevState.controlled) {
+         nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
+         return { value: nextProps.value }
+      }
+
+      return null
+   }
+
+   constructor(props) {
+      super(props)
+
+      const controlled = typeof props.value !== 'undefined'
+      this.state = {
+         controlled,
+         value: controlled
+            ? props.value
+            : (props.initialValue || '')
       }
    }
 
@@ -75,7 +74,7 @@ class Input extends Component {
    }
 
    handleChange = (event) => {
-      if (typeof this.props.value === 'undefined') {
+      if (!this.state.controlled) {
          this.props.oioFormContext.setValue(this.props.name, event.target.value)
          this.setState({ value: event.target.value })
       }
@@ -97,16 +96,16 @@ class Input extends Component {
          <div className={formStyles.container}>
             {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
             <input
+               id={this.props.id}
                style={inputStyles}
                className={classNames(classes)}
-               id={this.props.id}
                onBlur={this.handleBlur}
                onChange={this.handleChange}
                name={this.props.name}
                placeholder={this.props.placeholder}
                readOnly={this.props.readOnly}
                type={this.props.type}
-               value={typeof this.props.value !== 'undefined' ? this.props.value : this.state.value}
+               value={this.state.controlled ? this.props.value : this.state.value}
             />
             {this.props.error &&
                <div className={formStyles.error}>

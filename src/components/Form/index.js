@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Blob from 'blob'
 import FormData from 'form-data'
 
-const FormContext = React.createContext('oioForm')
+const FormContext = React.createContext()
 
 export const withFormContext = WrappedComponent => props => (
    <FormContext.Consumer>
