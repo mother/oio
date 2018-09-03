@@ -35,36 +35,40 @@ class Input extends Component {
 
    static getDerivedStateFromProps(nextProps, prevState) {
       if (nextProps.initialValue !== undefined && nextProps.value !== undefined) {
-         throw new Error('Input elements must be either controlled or uncontrolled ' +
-            '(specify either the initialValue or value prop, but not both).')
+         throw new Error('Input elements must be either controlled or uncontrolled '
+            + '(specify either the initialValue or value prop, but not both).')
       }
 
-      const initialValueDefined = typeof nextProps.initialValue !== 'undefined'
-      if (initialValueDefined && nextProps.initialValue !== prevState.initialValue) {
-         nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
-         return {
-            controlled: false,
-            initialValue: nextProps.initialValue,
-            value: nextProps.initialValue
-         }
-      } else if (typeof nextProps.value !== 'undefined' && prevState.controlled) {
+      const controlled = typeof nextProps.value !== 'undefined'
+      if (controlled) {
          nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
-         return { value: nextProps.value }
+         return { controlled }
       }
 
-      return null
+      if (typeof nextProps.initialValue !== 'undefined') {
+         if (nextProps.initialValue !== prevState.initialValue) {
+            nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
+            return {
+               controlled,
+               initialValue: nextProps.initialValue,
+               value: nextProps.initialValue
+            }
+         }
+      // Default
+      } else if (typeof prevState.value === 'undefined') {
+         nextProps.oioFormContext.setInitialValue(nextProps.name, '')
+         return {
+            controlled,
+            initialValue: '',
+            value: ''
+         }
+      }
+
+      return { controlled }
    }
 
-   constructor(props) {
-      super(props)
-
-      const controlled = typeof props.value !== 'undefined'
-      this.state = {
-         controlled,
-         value: controlled
-            ? props.value
-            : (props.initialValue || '')
-      }
+   state = {
+      controlled: false
    }
 
    handleBlur = (event) => {
@@ -107,11 +111,11 @@ class Input extends Component {
                type={this.props.type}
                value={this.state.controlled ? this.props.value : this.state.value}
             />
-            {this.props.error &&
+            {this.props.error && (
                <div className={formStyles.error}>
                   {this.props.error}
                </div>
-            }
+            )}
          </div>
       )
    }

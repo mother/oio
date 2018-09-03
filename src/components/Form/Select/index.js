@@ -27,47 +27,51 @@ class Select extends Component {
       options: []
    }
 
-   constructor(props) {
-      super(props)
-      this.state = {
-         value: props.initialValue || ''
-      }
-   }
-
-   componentDidMount() {
-      if (this.props.initialValue !== undefined && this.props.value !== undefined) {
-         throw new Error('Input elements must be either controlled or uncontrolled ' +
-            '(specify either the initialValue or value prop, but not both).')
-      }
-
-      if (this.props.initialValue) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.initialValue)
-      } else if (this.props.value) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.value)
-      } else if (Array.isArray(this.props.options) && this.props.options.length) {
-         this.props.oioFormContext.setInitialValue(this.props.name, this.props.options[0].value)
-      }
-   }
-
-   componentWillReceiveProps(nextProps) {
+   static getDerivedStateFromProps(nextProps, prevState) {
       if (nextProps.initialValue !== undefined && nextProps.value !== undefined) {
-         throw new Error('Input elements must be either controlled or uncontrolled ' +
-            '(specify either the initialValue or value prop, but not both).')
+         throw new Error('Input elements must be either controlled or uncontrolled '
+            + '(specify either the initialValue or value prop, but not both).')
       }
 
-      if (typeof nextProps.initialValue !== 'undefined' && this.props.initialValue !== nextProps.initialValue) {
-         this.props.oioFormContext.setInitialValue(this.props.name, nextProps.initialValue)
-         this.setState({ value: nextProps.initialValue })
-      } else if (typeof nextProps.value !== 'undefined' && this.props.value !== nextProps.value) {
-         this.props.oioFormContext.setValue(this.props.name, nextProps.value)
-         this.setState({ value: nextProps.value })
-      // TODO: Clean this up
-      } else if (typeof nextProps.options !== 'undefined' && this.props.options !== nextProps.options && Array.isArray(nextProps.options) && nextProps.options.length) {
-         if (this.state.value && !nextProps.options.map(o => o.value).includes(this.state.value)) {
-            this.props.oioFormContext.setValue(this.props.name, nextProps.options[0].value)
-            this.setState({ value: nextProps.options[0].value })
+      const controlled = typeof nextProps.value !== 'undefined'
+      if (controlled) {
+         nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
+         return { controlled }
+      }
+
+      if (typeof nextProps.initialValue !== 'undefined') {
+         if (nextProps.initialValue !== prevState.initialValue) {
+            nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
+            return {
+               controlled,
+               initialValue: nextProps.initialValue,
+               value: nextProps.initialValue
+            }
+         }
+      // Default
+      } else if (typeof prevState.value === 'undefined') {
+         if (Array.isArray(nextProps.options) && nextProps.options.length) {
+            nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.options[0].value)
+            return {
+               controlled,
+               initialValue: nextProps.options[0].value,
+               value: nextProps.options[0].value
+            }
+         }
+
+         nextProps.oioFormContext.setInitialValue(nextProps.name, '')
+         return {
+            controlled,
+            initialValue: '',
+            value: ''
          }
       }
+
+      return { controlled }
+   }
+
+   state = {
+      controlled: false
    }
 
    handleBlur = (event) => {
@@ -77,7 +81,7 @@ class Select extends Component {
    }
 
    handleChange = (event) => {
-      if (typeof this.props.value === 'undefined') {
+      if (!this.state.controlled) {
          this.props.oioFormContext.setValue(this.props.name, event.target.value)
          this.setState({ value: event.target.value })
       }
@@ -104,17 +108,17 @@ class Select extends Component {
             <select
                className={classNames(classes)}
                id={this.props.id}
-               value={typeof this.props.value !== 'undefined' ? this.props.value : this.state.value}
+               value={this.state.controlled ? this.props.value : this.state.value}
                name={this.props.name}
                onChange={this.handleChange}
                readOnly={this.props.readOnly}>
                {options}
             </select>
-            {this.props.error &&
+            {this.props.error && (
                <div className={formStyles.error}>
                   {this.props.error}
                </div>
-            }
+            )}
          </div>
       )
    }

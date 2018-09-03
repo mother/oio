@@ -10,6 +10,19 @@ import Form from '../src/components/Form'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('<Input />', () => {
+   it('Default is blank', () => {
+      const handleSubmit = spy()
+      const wrapper = mount(
+         <Form onSubmit={handleSubmit}>
+            <Input name="firstName" type="text" />
+         </Form>
+      )
+
+      wrapper.find('form').simulate('submit')
+      const formData = handleSubmit.getCall(0).args[0]
+      expect(formData).to.deep.equal({ firstName: '' })
+   })
+
    it('Works with value', () => {
       const handleSubmit = spy()
       const wrapper = mount(

@@ -34,9 +34,11 @@ export default class DemoContentForm extends Component {
    componentDidMount() {
       setTimeout(() => {
          this.setState({
+            description: 'A cool description',
             firstName: 'Jane',
             lastName: 'Smith',
-            age: 2
+            age: 2,
+            notifications: true
          })
       }, 1000)
    }
@@ -52,7 +54,7 @@ export default class DemoContentForm extends Component {
       /* eslint-enable */
 
       return new Promise((resolve, reject) => {
-         setTimeout(resolve, 2000)
+         setTimeout(resolve, 500)
       })
    }
 
@@ -140,18 +142,20 @@ export default class DemoContentForm extends Component {
                                     <Button
                                        size="small"
                                        icon="ion-minus"
+                                       rounded
                                        onClick={() => {
                                           if (this.state.age > 0) {
-                                             this.setState({ age: this.state.age - 1 })
+                                             this.setState(state => ({ age: state.age - 1 }))
                                           }
                                        }}
-                                       rounded
                                     />
                                     <Button
                                        size="small"
                                        icon="ion-plus"
-                                       onClick={() => this.setState({ age: this.state.age + 1 })}
                                        rounded
+                                       onClick={() => (
+                                          this.setState(state => ({ age: state.age + 1 }))
+                                       )}
                                     />
                                  </ButtonGroup>
                               </GridCell>
@@ -176,7 +180,7 @@ export default class DemoContentForm extends Component {
                            name="description"
                            label="Description"
                            placeholder="Please enter the description"
-                           initialValue="A cool description"
+                           initialValue={this.state.description}
                            rules={['required']}
                         />
                         <Select
@@ -233,7 +237,7 @@ export default class DemoContentForm extends Component {
                            <Switch
                               name="notifications"
                               label="Notifications"
-                              initialValue
+                              initialValue={this.state.notifications}
                               rules={['required']}
                            />
                            <Spacer size="9" />
