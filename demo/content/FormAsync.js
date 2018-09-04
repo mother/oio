@@ -39,7 +39,8 @@ export default class DemoContentForm extends Component {
             lastName: 'Smith',
             age: 2,
             notifications: true,
-            colour: 'navy'
+            colour: 'navy',
+            sports: ['hockey', 'baseball']
          })
       }, 1000)
    }
@@ -216,7 +217,7 @@ export default class DemoContentForm extends Component {
                         <CheckboxGroup
                            name="sports"
                            label="Sports"
-                           initialValue={['hockey', 'baseball']}
+                           initialValue={this.state.sports}
                            rules={[{
                               test: value => value.includes('hockey'),
                               message: 'Must contain hockey!'

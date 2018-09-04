@@ -76,7 +76,7 @@ class Radio extends Component {
          if (checked) {
             const name = this.props.radioGroupState.name || this.props.name
             if (typeof this.props.radioGroupState !== 'undefined') {
-               this.props.radioGroupState.onChange(name, event.target.value)
+               this.props.radioGroupState.onChange(event, event.target.value)
             } else if (typeof this.props.oioFormContext !== 'undefined') {
                this.props.oioFormContext.setValue(name, event.target.value)
             }

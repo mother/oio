@@ -25,6 +25,7 @@ class RadioGroup extends Component {
       oioFormContext: PropTypes.object,
       readOnly: PropTypes.bool,
       onChange: PropTypes.func,
+      initialValue: PropTypes.string,
       value: PropTypes.string
    }
 
@@ -54,7 +55,9 @@ class RadioGroup extends Component {
       return { controlled }
    }
 
-   state = { controlled: false }
+   state = {
+      controlled: false
+   }
 
    handleChange = (event, value) => {
       if (!this.state.controlled) {
