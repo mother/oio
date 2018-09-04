@@ -12,14 +12,16 @@ export default class Grid extends Component {
       gutter: PropTypes.string,
       height: PropTypes.string,
       style: PropTypes.object,
-      width: PropTypes.string
+      width: PropTypes.string,
+      hideBottomGutter: PropTypes.bool
    }
 
    static defaultProps = {
       columns: '12',
       gutter: '6px',
       style: {},
-      width: '100%'
+      width: '100%',
+      hideBottomGutter: false
    }
    /* eslint-enable */
 
@@ -30,7 +32,8 @@ export default class Grid extends Component {
    getChildContext() {
       const GridCellStyle = {
          columns: this.props.columns,
-         gutter: this.props.gutter
+         gutter: this.props.gutter,
+         hideBottomGutter: this.props.hideBottomGutter
       }
 
       return { GridCellStyle }
@@ -41,6 +44,7 @@ export default class Grid extends Component {
    }
 
    render() {
+      const { children, hideBottomGutter } = this.props
       const styleProps = ['gutter', 'width', 'height']
 
       const gridStyleObj = {
@@ -76,10 +80,20 @@ export default class Grid extends Component {
          gridInnerStyleObj, null, this.props.gutter, this.setGridInnerGutter
       )
 
+      let gridContent = children
+
+      if (hideBottomGutter) {
+         gridContent = (
+            React.Children.map(children, (child, index) => (
+               React.cloneElement(child, { totalGridCells: children.length, index })
+            ))
+         )
+      }
+
       return (
          <div className={cx(css(gridStyleObj), this.props.className)}>
             <div className={css(gridInnerStyleObj)}>
-               {this.props.children}
+               {gridContent}
             </div>
          </div>
       )
