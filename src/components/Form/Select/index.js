@@ -58,13 +58,6 @@ class Select extends Component {
                value: nextProps.options[0].value
             }
          }
-
-         nextProps.oioFormContext.setInitialValue(nextProps.name, '')
-         return {
-            controlled,
-            initialValue: '',
-            value: ''
-         }
       }
 
       return { controlled }
