@@ -13,6 +13,7 @@
     "postmerge": "npm install",
     "postreceive": "npm install",
     "postrewrite": "npm install",
+    "testone": "NODE_ENV=testing ./node_modules/mocha-webpack/bin/mocha-webpack -r jsdom-global/register --require @babel/polyfill --webpack-config config/webpack.test.config.js",
     "test": "NODE_ENV=testing ./node_modules/mocha-webpack/bin/mocha-webpack -r jsdom-global/register --require @babel/polyfill --webpack-config config/webpack.test.config.js \"tests/**/*.js\"",
     "webpack-analyze": "mkdir -p dist; NODE_ENV=production webpack --config config/webpack.config.js --profile --json > dist/stats.json; webpack-bundle-analyzer dist/stats.json"
   },
