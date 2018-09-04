@@ -38,7 +38,8 @@ export default class DemoContentForm extends Component {
             firstName: 'Jane',
             lastName: 'Smith',
             age: 2,
-            notifications: true
+            notifications: true,
+            colour: 'navy'
          })
       }, 1000)
    }
@@ -197,7 +198,7 @@ export default class DemoContentForm extends Component {
                         <RadioGroup
                            name="colour"
                            label="Colour"
-                           initialValue="navy"
+                           initialValue={this.state.colour}
                            rules={['required']}>
                            <Grid columns="3">
                               <GridCell>

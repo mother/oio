@@ -72,6 +72,9 @@ class Input extends Component {
    }
 
    handleBlur = (event) => {
+      // TODO: HANDLE STUPID SAFARI AUTOCOMPLETE SCENARIO
+      // console.log('blur', event.target.value)
+
       if (this.props.onBlur) {
          this.props.onBlur(event)
       }
