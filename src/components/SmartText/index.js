@@ -14,14 +14,14 @@ export default class SmartText extends Component {
       scaleRatio: PropTypes.string.isRequired,
       size: PropTypes.string.isRequired,
       style: PropTypes.object,
-      uppercase: PropTypes.false.isRequired,
+      uppercase: PropTypes.bool,
       weight: PropTypes.string.isRequired
    }
    /* eslint-enable */
 
    static defaultProps = {
-      baseFontUnit: '2.2[a] 1.4[b] 0.8[c] 0.7[d-e]',
-      scaleRatio: '1.08[a-b] 1.125[c-e]',
+      baseFontUnit: '2.2[a] 1.2[b] 0.8[c] 0.7[d-e]',
+      scaleRatio: '1.08[a] 1.1[b] 1.125[c-e]',
       size: '3',
       weight: 'normal'
    }
@@ -49,6 +49,10 @@ export default class SmartText extends Component {
 
          if (size > 5) {
             lineHeight = '120%'
+         }
+
+         if (props.uppercase) {
+            adjustedSize *= 0.9
          }
 
          styleObj[breakpoint.key].fontSize = `${baseFontUnit * adjustedSize}vw`
@@ -82,7 +86,7 @@ export default class SmartText extends Component {
          styleObj.textTransform = 'uppercase'
       }
 
-      this.setFontSize(styleObj, { baseFontUnit, scaleRatio, size })
+      this.setFontSize(styleObj, { baseFontUnit, scaleRatio, size, uppercase })
 
       return (
          <div className={cx(css(styleObj), this.props.className)}>
