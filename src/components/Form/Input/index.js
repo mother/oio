@@ -14,6 +14,7 @@ class Input extends Component {
       id: PropTypes.string,
       initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
       label: PropTypes.string,
+      description: PropTypes.string,
       name: PropTypes.string.isRequired,
       oioFormContext: PropTypes.object.isRequired,
       onBlur: PropTypes.func,
@@ -21,10 +22,13 @@ class Input extends Component {
       placeholder: PropTypes.string,
       type: PropTypes.string,
       readOnly: PropTypes.bool,
+      required: PropTypes.bool,
       value: PropTypes.string
    }
 
    static defaultProps = {
+      // error: 'required ',
+      required: true,
       type: 'text'
    }
 
@@ -47,7 +51,7 @@ class Input extends Component {
 
       if (typeof nextProps.initialValue !== 'undefined') {
          if (nextProps.initialValue !== prevState.initialValue) {
-            nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
+            // nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
             return {
                controlled,
                initialValue: nextProps.initialValue,
@@ -56,7 +60,7 @@ class Input extends Component {
          }
       // Default
       } else if (typeof prevState.value === 'undefined') {
-         nextProps.oioFormContext.setInitialValue(nextProps.name, '')
+         // nextProps.oioFormContext.setInitialValue(nextProps.name, '')
          return {
             controlled,
             initialValue: '',
@@ -92,7 +96,7 @@ class Input extends Component {
    }
 
    render() {
-      const classes = [styles.input, this.props.className]
+      const classes = [styles.input, this.props.className, this.props.error && styles.error]
       const inputStyles = {}
 
       if (this.context.OIOStyles && this.context.OIOStyles.fontFamily) {
@@ -101,7 +105,17 @@ class Input extends Component {
 
       return (
          <div className={formStyles.container}>
-            {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
+            <div className={formStyles.lab}>
+               {this.props.label && (
+                  <label htmlFor={this.props.id}>
+                     {this.props.label}
+                     {this.props.required && <div style={{ color: 'red', display: 'inline' }}> *</div>}
+                  </label>
+               )}
+               {this.props.description
+                  && <div className={formStyles.description}>{this.props.description}</div>}
+            </div>
+
             <input
                id={this.props.id}
                style={inputStyles}
@@ -114,6 +128,7 @@ class Input extends Component {
                type={this.props.type}
                value={this.state.controlled ? this.props.value : this.state.value}
             />
+
             {this.props.error && (
                <div className={formStyles.error}>
                   {this.props.error}
