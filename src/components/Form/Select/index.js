@@ -14,17 +14,20 @@ class Select extends Component {
       id: PropTypes.string,
       initialValue: PropTypes.string,
       label: PropTypes.string,
+      description: PropTypes.string,
       name: PropTypes.string.isRequired,
       oioFormContext: PropTypes.object.isRequired,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       options: PropTypes.array,
       readOnly: PropTypes.bool,
+      required: PropTypes.bool,
       value: PropTypes.string
    }
 
    static defaultProps = {
-      options: []
+      options: [],
+      required: false
    }
 
    static getDerivedStateFromProps(nextProps, prevState) {
@@ -85,7 +88,7 @@ class Select extends Component {
    }
 
    render() {
-      const classes = [styles.select, this.props.className]
+      const classes = [styles.select, this.props.className, this.props.error && styles.error]
       const options = this.props.options.map(option => (
          <option
             key={option.value}
@@ -97,7 +100,20 @@ class Select extends Component {
 
       return (
          <div className={formStyles.container}>
-            {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
+            <div className={formStyles.lab}>
+               {this.props.label && (
+                  <label htmlFor={this.props.id}>
+                     {this.props.label}
+                     {this.props.required && <div style={{ color: 'red', display: 'inline' }}> *</div>}
+                  </label>
+               )}
+               {this.props.description && (
+                  <div
+                     className={formStyles.description}>
+                     {this.props.description}
+                  </div>
+               )}
+            </div>
             <select
                className={classNames(classes)}
                id={this.props.id}

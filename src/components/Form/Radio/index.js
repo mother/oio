@@ -100,11 +100,11 @@ class Radio extends Component {
       }
 
       const primaryColor = this.context.OIOStyles.primaryColor
-      let radioIcon = 'ion-ios-circle-outline'
+      let radioIcon = 'ion-android-radio-button-off'
       let radioIconStyle = {}
 
       if (checked) {
-         radioIcon = 'ion-ios-circle-filled'
+         radioIcon = 'ion-android-radio-button-on'
          radioIconStyle = {
             color: primaryColor
          }

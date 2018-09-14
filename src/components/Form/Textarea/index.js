@@ -14,17 +14,20 @@ class Textarea extends Component {
       error: PropTypes.string,
       id: PropTypes.string,
       label: PropTypes.string,
+      description: PropTypes.string,
       name: PropTypes.string,
       oioFormContext: PropTypes.object.isRequired,
       onBlur: PropTypes.func,
       placeholder: PropTypes.string,
       readOnly: PropTypes.bool,
+      required: PropTypes.bool,
       rows: PropTypes.string,
       onChange: PropTypes.func,
       value: PropTypes.string
    }
 
    static defaultProps = {
+      required: false,
       disabled: false,
       rows: '5'
    }
@@ -89,11 +92,24 @@ class Textarea extends Component {
    }
 
    render() {
-      const classes = [styles.textarea, this.props.className]
+      const classes = [styles.textarea, this.props.className, this.props.error && styles.error]
 
       return (
          <div className={formStyles.container}>
-            {this.props.label && <label htmlFor={this.props.id}>{this.props.label}</label>}
+            <div className={formStyles.lab}>
+               {this.props.label && (
+                  <label htmlFor={this.props.id}>
+                     {this.props.label}
+                     {this.props.required && <div style={{ color: 'red', display: 'inline' }}> *</div>}
+                  </label>
+               )}
+               {this.props.description && (
+                  <div
+                     className={formStyles.description}>
+                     {this.props.description}
+                  </div>
+               )}
+            </div>
             <textarea
                className={classNames(classes)}
                disabled={this.props.disabled}

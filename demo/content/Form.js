@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
 import {
-   Avatar,
-   Button,
-   ButtonGroup,
    Checkbox,
    CheckboxGroup,
-   DateInput,
    FileInput,
    Form,
    Grid,
    GridCell,
-   GridRow,
    ImageInput,
    Input,
    Radio,
@@ -19,22 +14,12 @@ import {
    Spacer,
    Switch,
    Textarea,
-   Title,
    TitleBar,
    View
 } from '../../src'
 import style from '../style.less'
 
 export default class DemoContentForm extends Component {
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         firstName: 'Jane',
-         age: 1
-      }
-   }
-
    handleError = (error, file) => {
       console.log(error) // eslint-disable-line no-console
    }
@@ -51,142 +36,159 @@ export default class DemoContentForm extends Component {
    }
 
    render() {
-      const titleHeading = '1'
-      const titleSize = '4'
-
       return (
          <View width="100%" className={style.docs}>
             <TitleBar title="Forms" flush />
             <Spacer size="9" />
-            <Grid columns="1[a] 2[b] 4[c-e]" gutter="60px">
-               <GridCell>
-                  <Title>Forms</Title>
+
+            <Grid columns="1[a] 2[b] 12[c-e]" gutter="60px">
+               <GridCell colspan="2">
+                  <h3>Input</h3>
                </GridCell>
-               <GridCell colspan="3">
+               <GridCell colspan="5">
                   <View width="420px">
                      <Form
                         onSubmit={this.handleSubmit}
                         onError={this.handleError}>
-                        <ImageInput
-                           maxFileSize={5000000}
-                           type="image"
-                           name="avatar"
-                           label="Avatar"
-                           src="http://placehold.it/500x500"
-                           alt="Avatar"
-                           style={{
-                              height: '100px',
-                              width: '100px'
-                           }}
-                        />
-                        <Spacer size="2" />
-                        <FileInput
-                           maxFileSize={5000000}
-                           type="file"
-                           name="document"
-                           label="Document"
-                        />
-                        <Spacer size="2" />
-                        <Input
-                           name="name.first"
-                           label="First Name"
-                           placeholder="Please enter your first name"
-                           rules={['required']}
-                           value={this.state.firstName}
-                           onChange={(e, v) => this.setState({ firstName: v })}
-                        />
                         <Input
                            name="name.last"
-                           label="Last Name"
-                           placeholder="Please enter your last name"
-                           initialValue="Smith"
+                           label="Event Name"
+                           description=""
+                           placeholder="Make it short and descriptive"
+                           initialValue=""
                            rules={['required', {
                               test: (value, ctx) => value !== ctx.get('name.first'),
                               message: 'Must be different than your first name.'
                            }]}
                         />
+                     </Form>
+                  </View>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
                         <Input
-                           name="email"
-                           label="Email"
-                           placeholder="Please enter your email"
-                           initialValue="jane@example.com"
-                           rules={[
-                              'required',
-                              { test: 'email', message: 'Enter a valid email!' },
-                              { test: value => value.length > 8, message: 'At least 8 characters' }
-                           ]}
+                           required
+                           error="Event Name required"
+                           name="name.last"
+                           label="Event Name"
+                           description=""
+                           placeholder="Make it short and descriptive"
+                           initialValue=""
+                           rules={['required', {
+                              test: (value, ctx) => value !== ctx.get('name.first'),
+                              message: 'Must be different than your first name.'
+                           }]}
                         />
-                        <Grid width="100%" columns="5">
-                           <GridRow>
-                              <GridCell colspan="4">
-                                 <Input
-                                    name="age"
-                                    label="Age"
-                                    placeholder="What's your age?"
-                                    rules={[{ test: value => value > 0, message: 'Be older' }]}
-                                    value={this.state.age.toString()}
-                                 />
-                              </GridCell>
-                              <GridCell>
-                                 <br />
-                                 <ButtonGroup align="right">
-                                    <Button
-                                       size="small"
-                                       icon="ion-minus"
-                                       onClick={() => {
-                                          if (this.state.age > 0) {
-                                             this.setState({ age: this.state.age - 1 })
-                                          }
-                                       }}
-                                       rounded
-                                    />
-                                    <Button
-                                       size="small"
-                                       icon="ion-plus"
-                                       onClick={() => this.setState({ age: this.state.age + 1 })}
-                                       rounded
-                                    />
-                                 </ButtonGroup>
-                              </GridCell>
-                           </GridRow>
-                        </Grid>
-                        <DateInput
-                           name="date.start"
-                           label="Start Date"
-                           placeholder="Please enter a start date"
-                           initialValue={new Date(2015, 9, 5)}
-                        />
-                        <Spacer size="2" />
-                        <DateInput
-                           name="date.end"
-                           label="End Date"
-                           placeholder="Please enter an end date"
-                           initialValue={new Date(2019, 7, 11, 5, 15)}
-                           enableTime
-                        />
-                        <Spacer size="2" />
+                     </Form>
+                  </View>
+               </GridCell>
+            </Grid>
+
+            <Grid columns="1[a] 2[b] 12[c-e]" gutter="60px">
+               <GridCell colspan="2">
+                  <h3>Text Area</h3>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
                         <Textarea
                            name="description"
-                           label="Description"
-                           placeholder="Please enter the description"
-                           initialValue="A cool description"
+                           label="Description (Optional)"
+                           description="The description will appear on the schedule event page."
+                           placeholder="Please enter a description"
+                           initialValue=""
                            rules={['required']}
                         />
+                     </Form>
+                  </View>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <Textarea
+                           required
+                           error="Description required"
+                           name="description"
+                           label="Description"
+                           description="The description will appear on the schedule event page."
+                           placeholder="Please enter a description"
+                           initialValue=""
+                           rules={['required']}
+                        />
+                     </Form>
+                  </View>
+               </GridCell>
+            </Grid>
+
+            <Grid columns="1[a] 2[b] 12[c-e]" gutter="60px">
+               <GridCell colspan="2">
+                  <h3>Select</h3>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
                         <Select
                            name="choice"
-                           label="A Choice"
+                           label="Date"
+                           description="Which date does the schedule event take place?"
                            options={[
-                              { value: '', text: 'Please select a choice' },
-                              { value: 'one', text: 'One' },
-                              { value: 'two', text: 'Two' },
-                              { value: 'three', text: 'Three' }
+                              { value: '', text: 'Please select the date', disabled: true },
+                              { value: 'one', text: 'Wednesday, September 12th, 2018 (Day 1)' },
+                              { value: 'two', text: 'Thursday, September 13th, 2018 (Day 2)' },
+                              { value: 'three', text: 'Friday, September 14th, 2018 (Day 3)' }
                            ]}
-                           initialValue="two"
+                           initialValue=""
                            rules={['required']}
                         />
+                     </Form>
+                  </View>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <Select
+                           required
+                           error="Date required"
+                           name="choice"
+                           label="Date"
+                           description="Which date does the schedule event take place?"
+                           options={[
+                              { value: '', text: 'Please select the date', disabled: true },
+                              { value: 'one', text: 'Wednesday, September 12th, 2018 (Day 1)' },
+                              { value: 'two', text: 'Thursday, September 13th, 2018 (Day 2)' },
+                              { value: 'three', text: 'Friday, September 14th, 2018 (Day 3)' }
+                           ]}
+                           initialValue=""
+                           rules={['required']}
+                        />
+                     </Form>
+                  </View>
+               </GridCell>
+            </Grid>
+
+            <Grid columns="1[a] 2[b] 12[c-e]" gutter="60px">
+               <GridCell colspan="2">
+                  <h3>Controls</h3>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
                         <RadioGroup
-                           name="colour"
-                           label="Colour"
+                           name="radio"
+                           label="Radio Group"
                            initialValue="navy"
                            rules={['required']}>
                            <Grid columns="3">
@@ -201,10 +203,10 @@ export default class DemoContentForm extends Component {
                               </GridCell>
                            </Grid>
                         </RadioGroup>
-                        <Spacer size="3" />
+                        <Spacer size="6" />
                         <CheckboxGroup
-                           name="sports"
-                           label="Sports"
+                           name="checkbox"
+                           label="Checkbox Group"
                            initialValue={['hockey', 'baseball']}
                            rules={[{
                               test: value => value.includes('hockey'),
@@ -222,30 +224,65 @@ export default class DemoContentForm extends Component {
                               </GridCell>
                            </Grid>
                         </CheckboxGroup>
-                        <Spacer size="3" />
-                        <View width="100%">
-                           <Switch
-                              name="notifications"
-                              label="Notifications"
-                              initialValue
-                              rules={['required']}
-                           />
-                           <Spacer size="9" />
-                        </View>
-                        <View width="100%">
-                           <Button name="Save Changes" type="submit" autoFormRespond />
-                        </View>
                      </Form>
                   </View>
                </GridCell>
-               <GridCell>
-                  Grid Cell 2
-               </GridCell>
-               <GridCell colspan="3">
-                  <Title heading={titleHeading} size={titleSize}>Avatar</Title>
-                  <Avatar src="http://placekitten.com/g/500/500" style={{ width: '100px', height: '100px' }} />
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <Switch
+                           name="notifications"
+                           label="Switch"
+                           initialValue
+                           rules={['required']}
+                        />
+                     </Form>
+                  </View>
                </GridCell>
             </Grid>
+
+            <Grid columns="1[a] 2[b] 12[c-e]" gutter="60px">
+               <GridCell colspan="2">
+                  <h3>Upload</h3>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <FileInput
+                           maxFileSize={5000000}
+                           type="file"
+                           name="document"
+                           label="File Upload"
+                        />
+                     </Form>
+                  </View>
+               </GridCell>
+               <GridCell colspan="5">
+                  <View width="420px">
+                     <Form
+                        onSubmit={this.handleSubmit}
+                        onError={this.handleError}>
+                        <ImageInput
+                           maxFileSize={5000000}
+                           type="image"
+                           name="avatar"
+                           label="Cover Image Upload"
+                           src="http://placehold.it/500x500"
+                           alt="Avatar"
+                           style={{
+                              height: '100px',
+                              width: '100px'
+                           }}
+                        />
+                     </Form>
+                  </View>
+               </GridCell>
+            </Grid>
+
          </View>
       )
    }

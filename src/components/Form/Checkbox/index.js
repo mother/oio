@@ -101,11 +101,11 @@ class Checkbox extends Component {
       }
 
       const primaryColor = this.context.OIOStyles.primaryColor
-      let checkboxIcon = 'ion-ios-circle-outline'
+      let checkboxIcon = 'ion-android-checkbox-outline-blank'
       let checkboxIconStyle = {}
 
       if (this.state.checked) {
-         checkboxIcon = 'ion-ios-checkmark'
+         checkboxIcon = 'ion-android-checkbox'
          checkboxIconStyle = {
             color: primaryColor
          }
