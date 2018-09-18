@@ -51,9 +51,9 @@ export default class GridCell extends Component {
    }
 
    setGridCellGutter = (styleObj, breakpoint, attributeValue) => {
-      const gutter = parseFloat(attributeValue)
-      styleObj[breakpoint.key].paddingRight = `${gutter}px`
-      styleObj[breakpoint.key].marginBottom = `${gutter}px`
+      const gutter = attributeValue
+      styleObj[breakpoint.key].paddingRight = gutter
+      styleObj[breakpoint.key].marginBottom = gutter
    }
 
    hideGutterOnLastRowCells = (styleObj, props) => {
