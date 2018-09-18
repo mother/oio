@@ -48,7 +48,7 @@ export default class SmartText extends Component {
          }
 
          if (size > 5) {
-            lineHeight = '120%'
+            lineHeight = '130%'
          }
 
          if (props.uppercase) {
