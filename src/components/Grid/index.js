@@ -40,7 +40,7 @@ export default class Grid extends Component {
    }
 
    setGridInnerGutter = (styleObj, breakpoint, attributeValue) => {
-      styleObj[breakpoint.key].width = `calc(100% + ${parseFloat(attributeValue)}px)`
+      styleObj[breakpoint.key].width = `calc(100% + ${attributeValue})`
    }
 
    render() {
