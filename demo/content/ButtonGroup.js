@@ -47,6 +47,17 @@ export default class DemoContentButtonGroup extends Component {
                            </View>
                         </GridCell>
                         <GridCell>
+                           <Text weight="semibold" size="3">Plain</Text>
+                           <Spacer size="3" />
+                           <View width="100%">
+                              <ButtonGroup>
+                                 <Button name="Button One" plain />
+                                 <Button name="Button Two" plain />
+                                 <Button name="Button Three" plain />
+                              </ButtonGroup>
+                           </View>
+                        </GridCell>
+                        <GridCell>
                            <Text weight="semibold" size="3">List</Text>
                            <Spacer size="3" />
                            <View width="150px" height="180px" className={style.docsWindow}>

@@ -1,14 +1,29 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import tinyColor from 'tinycolor2'
 import Button from '../Button'
 import ButtonGroup from '../ButtonGroup'
 import Textarea from '../Form/Textarea'
 import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
 import style from './style.less'
-import colors from '../../foundation/colors.less'
+
+// Legacy Shades of Gray
+// TODO: This will be deprecated
+const legacyGrays = {
+   gray10: '#F5F5F5',
+   gray20: '#EEEEEE',
+   gray30: '#E0E0E0',
+   gray40: '#BDBDBD',
+   gray50: '#9E9E9E',
+   gray60: '#757575',
+   gray70: '#616161',
+   gray80: '#424242',
+   gray90: '#212121'
+}
 
 export default class Text extends Component {
+   /* eslint-disable */
    static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
@@ -24,10 +39,11 @@ export default class Text extends Component {
       editing: PropTypes.bool,
       fontFamily: PropTypes.string,
       letterSpacing: PropTypes.string,
-      size: PropTypes.string,
+      relativeSize: PropTypes.bool,
+      size: PropTypes.string.isRequired,
       style: PropTypes.object,
       uppercase: PropTypes.bool,
-      weight: PropTypes.string
+      weight: PropTypes.string.isRequired
    }
 
    static defaultProps = {
@@ -37,9 +53,11 @@ export default class Text extends Component {
       editorState: 'ready',
       editorShowEditButton: false,
       editing: false,
+      relativeSize: false,
       size: '3',
       weight: 'normal'
    }
+   /* eslint-enable */
 
    static contextTypes = {
       OIOStyles: PropTypes.object
@@ -180,29 +198,44 @@ export default class Text extends Component {
    // =====================================================
 
    render() {
-      const fontSize = getAttributeForCurrentSize(this.state.size, this.props.size)
+      const { color, fontFamily, letterSpacing, relativeSize, size, uppercase, weight } = this.props
+      const fontSize = getAttributeForCurrentSize(this.state.size, size)
       const textStyle = {
+         fontWeight: this.context.OIOStyles.fontWeights[weight],
          ...this.props.style,
          ...this.context.OIOStyles.fontSizes[fontSize]
       }
 
-      if (this.props.fontFamily) {
-         textStyle.fontFamily = this.props.fontFamily
+      if (relativeSize) {
+         textStyle.fontSize = `${parseFloat(textStyle.fontSize)}em`
       }
 
-      if (this.props.letterSpacing) {
-         textStyle.letterSpacing = this.props.letterSpacing
+      if (fontFamily) {
+         textStyle.fontFamily = fontFamily
+      }
+
+      if (letterSpacing) {
+         textStyle.letterSpacing = letterSpacing
+      }
+
+      if (uppercase) {
+         textStyle.textTransform = 'uppercase'
+      }
+
+      if (color) {
+         const legacyShadesOfGrayNames = Object.keys(legacyGrays)
+         const useLegacyColor = legacyShadesOfGrayNames.includes(color)
+
+         if (useLegacyColor) {
+            textStyle.color = legacyGrays[color]
+         } else {
+            textStyle.color = tinyColor(color).toRgbString()
+         }
       }
 
       const textClasses = [
-         style[this.props.weight],
-         colors[this.props.color],
          this.props.className
       ]
-
-      if (this.props.uppercase) {
-         textClasses.push(style.uppercase)
-      }
 
       const editing = this.props.editable && this.state.editing
       const editorValue = this.props.editable && this.props.editorValue
