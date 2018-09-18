@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props,no-restricted-syntax */
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Blob from 'blob'
@@ -268,10 +269,12 @@ export default class Form extends Component {
 
       Object.keys(this.state.data).forEach((fieldName) => {
          const value = this.state.data[fieldName].value
-         if (value instanceof window.File) {
-            files[fieldName] = value
-         } else {
-            data[fieldName] = value
+         if (typeof value !== 'undefined') {
+            if (value instanceof window.File) {
+               files[fieldName] = value
+            } else {
+               data[fieldName] = value
+            }
          }
       })
 
