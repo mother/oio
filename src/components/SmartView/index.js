@@ -7,6 +7,11 @@ export default class SmartView extends Component {
    /* eslint-disable */
    static propTypes = {
       alignItems: PropTypes.string,
+      backgroundColor: PropTypes.string,
+      borderTop: PropTypes.string,
+      borderRight: PropTypes.string,
+      borderBottom: PropTypes.string,
+      borderLeft: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       display: PropTypes.string,
@@ -15,6 +20,11 @@ export default class SmartView extends Component {
       float: PropTypes.string,
       height: PropTypes.string,
       justifyContent: PropTypes.string,
+      margin: PropTypes.string,
+      marginTop: PropTypes.string,
+      marginLeft: PropTypes.string,
+      marginRight: PropTypes.string,
+      marginBottom: PropTypes.string,
       minHeight: PropTypes.string,
       maxHeight: PropTypes.string,
       minWidth: PropTypes.string,
@@ -34,6 +44,7 @@ export default class SmartView extends Component {
       bottom: PropTypes.string,
       width: PropTypes.string,
       scroll: PropTypes.string,
+      onClick: PropTypes.func,
       onScroll: PropTypes.func
    }
 
@@ -69,8 +80,11 @@ export default class SmartView extends Component {
          'position', 'display', 'float',
          'flex', 'flexFlow', 'alignItems', 'justifyContent',
          'top', 'bottom', 'right', 'left',
+         'backgroundColor',
+         'borderTop', 'borderLeft', 'borderBottom', 'borderRight',
          'height', 'minHeight', 'maxHeight', 'width', 'minWidth', 'maxWidth',
-         'padding', 'paddingBottom', 'paddingTop', 'paddingRight', 'paddingLeft'
+         'padding', 'paddingBottom', 'paddingTop', 'paddingRight', 'paddingLeft',
+         'margin', 'marginBottom', 'marginTop', 'marginRight', 'marginLeft'
       ]
 
       const styleObj = {
@@ -101,6 +115,7 @@ export default class SmartView extends Component {
       return (
          <div
             ref={(node) => { this.node = node }}
+            onClick={this.props.onClick}
             onScroll={this.props.onScroll}
             className={cx(css(styleObj), this.props.className)}>
             {this.props.children}
