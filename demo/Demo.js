@@ -4,11 +4,12 @@ import { NavList, Notification, OIO, Spacer, Text, Title, View } from '../src'
 import ButtonDemo from './content/Button'
 import ButtonGroupDemo from './content/ButtonGroup'
 import FormDemo from './content/Form'
-import TextDemo from './content/Text'
+import TextDemo from './content/SmartText'
 import ModalDemo from './content/Modal'
 import ViewDemo from './content/View'
 import Welcome from './content/Welcome'
 import ExamplesWindow from './examples/Window'
+import ExamplesGrid from './examples/Grid'
 
 // eslint-disable-next-line no-unused-vars
 import styles from '../src/foundation/styles.less'
@@ -65,6 +66,9 @@ export default class Demo extends Component {
          buttons: [{
             name: 'Window',
             link: '/examples/window'
+         }, {
+            name: 'Grid',
+            link: '/example-grid'
          }]
       }]
 
@@ -107,6 +111,7 @@ export default class Demo extends Component {
                      <Route path="/view" component={ViewDemo} />
                      <Route path="/text" component={TextDemo} />
                      <Route path="/examples" component={ExamplesWindow} />
+                     <Route path="/example-grid" component={ExamplesGrid} />
                   </View>
                </View>
             </View>

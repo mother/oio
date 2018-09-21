@@ -41,10 +41,13 @@
   "dependencies": {
     "blob": "0.0.4",
     "classnames": "2.2.5",
+    "emotion": "9.1.1",
     "form-data": "2.1.2",
     "moment": "2.22.0",
-    "react-files": "2.4.5",
-    "react-router-dom": "4.2.2"
+    "react-files": "2.4.6",
+    "react-router-dom": "4.2.2",
+    "throttle-debounce": "1.0.1",
+    "tinycolor2": "1.4.1"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.43",
