@@ -20,7 +20,7 @@ export default class SmartText extends Component {
    /* eslint-enable */
 
    static defaultProps = {
-      baseFontUnit: '2.2[a] 1.2[b] 0.8[c] 0.7[d-e]',
+      baseFontUnit: '2.8[a] 1.2[b] 0.75[c] 0.625[d] 0.6[e]',
       scaleRatio: '1.08[a] 1.1[b] 1.125[c-e]',
       size: '3',
       weight: 'normal'
