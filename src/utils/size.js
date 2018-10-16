@@ -1,9 +1,9 @@
 export const breakpoints = [{
    name: 'a',
-   key: '@media (min-width: 0px) and (max-width: 660px)'
+   key: '@media (min-width: 0px) and (max-width: 510px)'
 }, {
    name: 'b',
-   key: '@media (min-width: 660px) and (max-width: 1000px)'
+   key: '@media (min-width: 510px) and (max-width: 1000px)'
 }, {
    name: 'c',
    key: '@media (min-width: 1000px) and (max-width: 1350px)'
@@ -24,7 +24,7 @@ export const getWindowSize = () => {
       return 'd'
    } else if (windowWidth >= 1000) {
       return 'c'
-   } else if (windowWidth >= 660) {
+   } else if (windowWidth >= 510) {
       return 'b'
    } else if (windowWidth >= 0) {
       return 'a'
