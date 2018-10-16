@@ -4,10 +4,20 @@
    margin-bottom: 12px;
 }
 
+.description {
+   .uiTextSize2;
+   color: #454545;
+   margin-top: 3px;
+}
+
+.lab {
+   margin-bottom: 12px;
+}
+
 .error {
-   font-weight: bold;
+   .uiTextSize2;
    color: #DD3300;
-   margin-top: 4px;
+   margin-top: 6px;
 }
 
 // =====================
@@ -17,7 +27,7 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 52px;
+  width: 42px;
   height: 30px;
 }
 
@@ -28,33 +38,36 @@
 .switchSlider {
   position: absolute;
   cursor: pointer;
-  top: 0;
+  top: 6px;
   left: 0;
   right: 0;
-  bottom: 0;
-  border-radius: 15px;
+  bottom: 6px;
+  border-radius: 30px;
   background-color: @uiBaseBorderColor;
   -webkit-transition: .2s;
   transition: .2s;
+  border: 1px solid #DFDFDF
 }
 
 .switchSlider:before {
   position: absolute;
   content: '';
-  height: 22px;
-  width: 22px;
-  left: 4px;
-  bottom: 4px;
+  height: 24px;
+  width: 24px;
+  left: -4px;
+  bottom: -4px;
   border-radius: 50%;
   background-color: white;
   -webkit-transition: .2s;
   transition: .2s;
+  box-shadow: 0 0px 2px rgba(0,0,0,0.34), 0 3px 4px rgba(0,0,0,0.20);
 }
 
 .switch input:checked + .switchSlider:before {
-  -webkit-transform: translateX(22px);
-  -ms-transform: translateX(22px);
-  transform: translateX(22px);
+   background-color: #60787B;
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
 }
 
 // =====================
@@ -62,11 +75,14 @@
 // =====================
 
 .files {
+   text-align: center;
+   color: #A8A8A8;
+   background-color: #FEFEFE;
    position: relative;
-   height: @uiBaseComponentHeightMedium;
+   // height: @uiBaseComponentHeightMedium;
    line-height: @uiBaseComponentHeightMedium - 15px;
-   padding: 5px;
-   border: 2px solid #ddd;
+   padding: 50px;
+   border: 1px dashed #DFDFDF;
    box-sizing: border-box;
    cursor: copy;
    overflow: hidden;

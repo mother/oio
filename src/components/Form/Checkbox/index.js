@@ -1,11 +1,15 @@
+/* eslint-disable react/require-default-props */
+
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Icon from '../../Icon'
 import Text from '../../Text'
 import View from '../../View'
+import { withCheckboxGroupContext } from '../CheckboxGroup'
+import { withFormContext } from '..'
 import style from './style.less'
 
-export default class Checkbox extends Component {
+class Checkbox extends Component {
    static propTypes = {
       checked: PropTypes.bool,
       children: PropTypes.node,
@@ -13,53 +17,82 @@ export default class Checkbox extends Component {
       label: PropTypes.string,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      oioFormContext: PropTypes.object,
+      checkboxGroupState: PropTypes.object,
       readOnly: PropTypes.bool,
       value: PropTypes.string
    }
 
    static defaultProps = {
-      checked: false,
       readOnly: false
    }
 
+   // TODO: DEPRECATE
    static contextTypes = {
-      OIOFormCheckbox: PropTypes.object,
       OIOStyles: PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         checked: props.checked
+   // TODO: An error should be thrown if onChange, name, readOnly is specified
+   // on both RadioGroup and Radio
+   static getDerivedStateFromProps(nextProps, prevState) {
+      // If using Radio inside RadioGroup, cannot set 'checked' on Radio
+      if (typeof nextProps.checked !== 'undefined' && typeof nextProps.checkboxGroupState !== 'undefined') {
+         throw new Error('Input elements must be either controlled or uncontrolled '
+            + '("checked" prop cannot be set when using Checkbox inside CheckboxGroup).')
       }
+
+      // const name = nextProps.checkboxGroupState.name || nextProps.name
+      const controlled = typeof nextProps.checked !== 'undefined'
+      if (controlled) {
+         // TODO: Should attempt to set formContext only if there is no group context present
+         // if (nextProps.checked) {
+         //    nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
+         // }
+
+         return { controlled }
+      }
+
+      if (typeof nextProps.checkboxGroupState !== 'undefined') {
+         if (Array.isArray(nextProps.checkboxGroupState.value)) {
+            const checked = nextProps.checkboxGroupState.value.includes(nextProps.value)
+            // if (checked) {
+            //    nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
+            // }
+
+            return { controlled, checked }
+         }
+      }
+
+      return { controlled }
    }
 
-   componentWillReceiveProps(nextProps) {
-      let checked = nextProps.checked
-      if (this.context.OIOFormCheckbox) {
-         checked = this.context.OIOFormCheckbox.getProps().value.includes(nextProps.value)
-      }
-
-      this.setState({ checked })
+   state = {
+      controlled: false
    }
 
    handleChange = (event) => {
-      this.setState({ checked: event.target.checked })
+      const checked = event.target.checked
+      if (!this.state.controlled) {
+         this.setState({ checked })
+
+         // const name = this.props.checkboxGroupState.name || this.props.name
+         if (typeof this.props.checkboxGroupState !== 'undefined') {
+            this.props.checkboxGroupState.onChange(event, event.target.value)
+         }
+         // else if (typeof this.props.oioFormContext !== 'undefined') {
+         //    this.props.oioFormContext.setValue(name, event.target.value)
+         // }
+      }
 
       if (this.props.onChange) {
-         this.props.onChange(event, event.target.checked)
+         this.props.onChange(event, event.target.value)
       }
    }
 
    render() {
-      const name = this.context.OIOFormCheckbox
-         ? this.context.OIOFormCheckbox.name
-         : this.props.name
-
-      const readOnly = this.context.OIOFormCheckbox
-         ? this.context.OIOFormCheckbox.getProps().readOnly
-         : this.props.readOnly
+      const name = this.props.checkboxGroupState.name || this.props.name
+      const readOnly = this.props.checkboxGroupState.readOnly || this.props.readOnly
+      const checked = this.state.controlled ? this.props.checked : this.state.checked
 
       const readOnlyEventHandlers = {}
       if (readOnly) {
@@ -68,11 +101,11 @@ export default class Checkbox extends Component {
       }
 
       const primaryColor = this.context.OIOStyles.primaryColor
-      let checkboxIcon = 'ion-ios-circle-outline'
+      let checkboxIcon = 'ion-android-checkbox-outline-blank'
       let checkboxIconStyle = {}
 
       if (this.state.checked) {
-         checkboxIcon = 'ion-ios-checkmark'
+         checkboxIcon = 'ion-android-checkbox'
          checkboxIconStyle = {
             color: primaryColor
          }
@@ -84,7 +117,7 @@ export default class Checkbox extends Component {
                <input
                   type="checkbox"
                   id={this.props.id}
-                  checked={this.state.checked}
+                  checked={checked}
                   name={name}
                   value={this.props.value}
                   onChange={!readOnly && this.handleChange}
@@ -100,3 +133,5 @@ export default class Checkbox extends Component {
       )
    }
 }
+
+export default withFormContext(withCheckboxGroupContext(Checkbox))

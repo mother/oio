@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
    Grid,
@@ -13,10 +12,6 @@ import {
 import style from '../style.less'
 
 export default class DemoContentText extends Component {
-   static propTypes = {
-      contents: PropTypes.array
-   }
-
    constructor(props) {
       super(props)
 
@@ -176,8 +171,10 @@ export default class DemoContentText extends Component {
                               <td>String</td>
                               <td>-</td>
                               <td>
-                                 <p>CSS color (e.g. #CCC)</p>
-                                 <p>Will be able to pass hex, rgba, or preset classes</p>
+                                 <p>
+                                    All css color values supported including hex,
+                                     rgba, or hsl (e.g. #CCC)
+                                 </p>
                               </td>
                            </tr>
                            <tr>

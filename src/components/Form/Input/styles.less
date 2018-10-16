@@ -1,6 +1,11 @@
 @import '../../../foundation/mixins';
 
+@uiBaseBorderColor2: #DFDFDF;
+@uiBasePlaceholderColor: #A8A8A8;
+@uiBaseDescription: #454545;
+
 .input {
+   color: rgba(0, 0, 0, 0.87);
    -webkit-appearance: none;
    margin: 0;
    background: none;
@@ -11,12 +16,20 @@
    //.rounded(@uiBaseComponentRadius);
    .uiTextSize3;
    line-height: @uiBaseComponentHeightMedium - 13px;
-   padding: 5px 0px 5px 0px;
+   padding: 10px 10px 10px 10px;
    .transition(300ms);
    //border: none;
-   border-bottom: 2px solid @uiBaseBorderColor;
+   border: 1px solid @uiBaseBorderColor2;
+   border-radius: 3px;
 
-   &:focus {
-      border-bottom: 2px solid #aaa;
+   &:focus {border: 1px solid #aaa;}
+
+   &.error {
+      background-color: #FFF7F7;
+      border: 1px solid #DD3300;
    }
+}
+
+input::placeholder  {
+   color: @uiBasePlaceholderColor;
 }

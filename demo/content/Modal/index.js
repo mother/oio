@@ -161,6 +161,29 @@ export default class DemoContentModal extends Component {
                            </td>
                         </tr>
                         <tr>
+                           <td><b>overlayBackground</b></td>
+                           <td>string</td>
+                           <td>
+                              <code>-</code>
+                           </td>
+                           <td>
+                              Enter a value to overide the default OIO Modal background overlay.
+                               You can enter a value that would be equivalent to one that can be
+                              passed to the css <code>background</code> property
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>overlayOpacity</b></td>
+                           <td>Number</td>
+                           <td>
+                              <code>0.97</code>
+                           </td>
+                           <td>
+                              Set a number for the opacity of the Modal component&apos;s
+                               overlay background
+                           </td>
+                        </tr>
+                        <tr>
                            <td><b>width</b></td>
                            <td>String</td>
                            <td>-</td>
