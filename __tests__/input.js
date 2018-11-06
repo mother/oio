@@ -40,7 +40,6 @@ test('sets the initial value to be an empty string by default', () => {
 
    const inputNode = getByLabelText(/first name/i)
    expect(inputNode.value).toBe('')
-
    expect(setInitialValueSpy).toHaveBeenCalledTimes(1)
    expect(setInitialValueSpy).lastCalledWith('firstName', '')
    expect(setValueSpy).toHaveBeenCalledTimes(0)
@@ -55,7 +54,6 @@ test('setting initialValue prop sets the initial value', () => {
 
    const inputNode = getByLabelText(/first name/i)
    expect(inputNode.value).toBe('John')
-
    expect(setInitialValueSpy).toHaveBeenCalledTimes(1)
    expect(setInitialValueSpy).lastCalledWith('firstName', 'John')
    expect(setValueSpy).toHaveBeenCalledTimes(0)
@@ -70,7 +68,6 @@ test('setting initialValue prop asynchronly sets the initial value', async () =>
 
    const inputNode = getByLabelText(/first name/i)
    expect(inputNode.value).toBe('')
-
    expect(setInitialValueSpy).toHaveBeenCalledTimes(1)
    expect(setInitialValueSpy).lastCalledWith('firstName', '')
    expect(setValueSpy).toHaveBeenCalledTimes(0)
@@ -121,6 +118,7 @@ test('setting initialValue prop then overriding the value', async () => {
    const input = container.querySelector('input')
    fireEvent.change(input, { target: { value: 'Suzie' } })
 
+   expect(input.value).toBe('Suzie')
    expect(setInitialValueSpy).toHaveBeenCalledTimes(1)
    expect(setInitialValueSpy).lastCalledWith('firstName', 'John')
    expect(setValueSpy).toHaveBeenCalledTimes(1)
