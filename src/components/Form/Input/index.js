@@ -15,7 +15,7 @@ class Input extends Component {
       initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
       label: PropTypes.string,
       name: PropTypes.string.isRequired,
-      oioFormContext: PropTypes.object.isRequired,
+      oioFormContext: PropTypes.object,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       placeholder: PropTypes.string,
@@ -24,8 +24,12 @@ class Input extends Component {
       value: PropTypes.string
    }
 
-   static defaultProps = {
-      type: 'text'
+   static get defaultProps() {
+      const rand = Math.floor(Math.random() * Math.floor(100))
+      return {
+         id: `oio-form-component-${Date.now()}-${rand}`,
+         type: 'text'
+      }
    }
 
    // TODO: Deprecate
@@ -33,21 +37,60 @@ class Input extends Component {
       OIOStyles: PropTypes.object
    }
 
-   static getDerivedStateFromProps(nextProps, prevState) {
-      if (nextProps.initialValue !== undefined && nextProps.value !== undefined) {
+   state = {
+      controlled: false
+   }
+
+   componentDidMount() {
+      // console.log('\n\n====================================\n')
+      // console.log('componentDidMount', this.props.initialValue, this.props.value)
+      if (this.props.initialValue !== undefined && this.props.value !== undefined) {
          throw new Error('Input elements must be either controlled or uncontrolled '
             + '(specify either the initialValue or value prop, but not both).')
       }
 
+      if (this.props.value) {
+         this.props.oioFormContext.setValue(this.props.name, this.props.value)
+      } else if (typeof this.props.initialValue !== 'undefined') {
+         this.props.oioFormContext.setInitialValue(this.props.name, this.props.initialValue)
+      // Default
+      } else {
+         this.props.oioFormContext.setInitialValue(this.props.name, '')
+      }
+   }
+
+   componentDidUpdate(prevProps, prevState) {
+      // console.log('componentDidUpdate', this.props.initialValue, this.props.value)
+      if (this.props.initialValue !== undefined && this.props.value !== undefined) {
+         throw new Error('Input elements must be either controlled or uncontrolled '
+            + '(specify either the initialValue or value prop, but not both).')
+      }
+
+      if (typeof this.props.value !== 'undefined') {
+         if (prevState.value !== this.props.value) {
+            this.props.oioFormContext.setValue(this.props.name, this.props.value)
+         }
+      } else if (typeof this.props.initialValue !== 'undefined') {
+         if (this.props.initialValue !== prevState.initialValue) {
+            this.props.oioFormContext.setInitialValue(this.props.name, this.props.initialValue)
+         }
+      // Default
+      } else /* if (typeof prevState.value === 'undefined') */ {
+         this.props.oioFormContext.setInitialValue(this.props.name, '')
+      }
+   }
+
+   static getDerivedStateFromProps(nextProps, prevState) {
       const controlled = typeof nextProps.value !== 'undefined'
       if (controlled) {
-         nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
-         return { controlled }
+         return {
+            controlled,
+            value: nextProps.value
+         }
       }
 
       if (typeof nextProps.initialValue !== 'undefined') {
          if (nextProps.initialValue !== prevState.initialValue) {
-            nextProps.oioFormContext.setInitialValue(nextProps.name, nextProps.initialValue)
             return {
                controlled,
                initialValue: nextProps.initialValue,
@@ -56,7 +99,6 @@ class Input extends Component {
          }
       // Default
       } else if (typeof prevState.value === 'undefined') {
-         nextProps.oioFormContext.setInitialValue(nextProps.name, '')
          return {
             controlled,
             initialValue: '',
@@ -65,10 +107,6 @@ class Input extends Component {
       }
 
       return { controlled }
-   }
-
-   state = {
-      controlled: false
    }
 
    handleBlur = (event) => {

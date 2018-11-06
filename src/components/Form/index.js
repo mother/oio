@@ -29,6 +29,9 @@ export default class Form extends Component {
    constructor(props) {
       super(props)
 
+      this.setInitialValue = this.setInitialValue.bind(this)
+      this.setValue = this.setValue.bind(this)
+
       this.initialValues = {}
       this.data = {}
       this.errors = {}
@@ -38,7 +41,7 @@ export default class Form extends Component {
       }
    }
 
-   setInitialValue = (name, value) => {
+   setInitialValue(name, value) {
       console.log('SET INITIAL VALUE', name, value) // eslint-disable-line no-console
 
       this.initialValues[name] = {
@@ -52,7 +55,7 @@ export default class Form extends Component {
       }
    }
 
-   setValue = (name, value, callback = () => {}) => {
+   setValue(name, value, callback = () => {}) {
       console.log('SET VALUE', name, value) // eslint-disable-line no-console
 
       this.data[name] = {

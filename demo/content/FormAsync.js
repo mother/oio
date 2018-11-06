@@ -5,7 +5,7 @@ import {
    ButtonGroup,
    Checkbox,
    CheckboxGroup,
-   DateInput,
+   // DateInput,
    FileInput,
    Form,
    Grid,
@@ -163,7 +163,7 @@ export default class DemoContentForm extends Component {
                               </GridCell>
                            </GridRow>
                         </Grid>
-                        <DateInput
+                        {/* <DateInput
                            name="date.start"
                            label="Start Date"
                            placeholder="Please enter a start date"
@@ -176,7 +176,7 @@ export default class DemoContentForm extends Component {
                            placeholder="Please enter an end date"
                            initialValue={new Date(2019, 7, 11, 5, 15)}
                            enableTime
-                        />
+                        /> */}
                         <Spacer size="2" />
                         <Textarea
                            name="description"
