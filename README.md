@@ -1,6 +1,8 @@
 oio
 =======================
 
+[![Build Status](https://travis-ci.org/mother/oio.svg?branch=2.0)](https://travis-ci.org/mother/oio)
+
 > A UI component kit for React
 
 # - *UNDER CONSTRUCTION* -
