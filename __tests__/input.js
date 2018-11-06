@@ -1,27 +1,8 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
 import { Form, Input } from '../src'
 
 const renderForm = node => render(<Form>{node}</Form>)
-
-class ErrorBoundary extends React.Component {
-   state = { errorMsg: '' }
-
-   static propTypes = {
-      children: PropTypes.node.isRequired
-   }
-
-   componentDidCatch(error, info) {
-      this.setState({ errorMsg: error.message })
-   }
-
-   render() {
-      return this.state.errorMsg !== ''
-         ? <div>{this.state.errorMsg}</div>
-         : this.props.children
-   }
-}
 
 beforeEach(() => {
    jest.spyOn(console, 'error').mockImplementation(() => {})
@@ -129,9 +110,9 @@ test('initialValue and value props cannot both be present', async () => {
    const setInitialValueSpy = jest.spyOn(Form.prototype, 'setInitialValue')
    const setValueSpy = jest.spyOn(Form.prototype, 'setValue')
    const { container } = renderForm(
-      <ErrorBoundary>
+      <TestErrorBoundary>
          <Input type="text" name="firstName" initialValue="John" value="Pizza" />
-      </ErrorBoundary>
+      </TestErrorBoundary>
    )
 
    expect(container.textContent).toEqual(expect.stringContaining('must be either controlled or uncontrolled'))
@@ -146,9 +127,9 @@ test('Cannot override value of a controlled field', async () => {
    const setInitialValueSpy = jest.spyOn(Form.prototype, 'setInitialValue')
    const setValueSpy = jest.spyOn(Form.prototype, 'setValue')
    const { container } = renderForm(
-      <ErrorBoundary>
+      <TestErrorBoundary>
          <Input type="text" name="firstName" value="Shoo" />
-      </ErrorBoundary>
+      </TestErrorBoundary>
    )
 
    await new Promise(resolve => setTimeout(resolve, 100))

@@ -1,6 +1,7 @@
 {
    "extends": ["../.eslintrc"],
    "rules": {
-      "no-console": 0
+      "no-console": 0,
+      "react/jsx-no-undef": [1, { "allowGlobals": true }]
    }
 }
