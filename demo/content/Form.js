@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
    Avatar,
@@ -6,7 +5,7 @@ import {
    ButtonGroup,
    Checkbox,
    CheckboxGroup,
-   DateInput,
+   // DateInput,
    FileInput,
    Form,
    Grid,
@@ -27,10 +26,6 @@ import {
 import style from '../style.less'
 
 export default class DemoContentForm extends Component {
-   static propTypes = {
-      contents: PropTypes.array
-   }
-
    constructor(props) {
       super(props)
 
@@ -140,7 +135,7 @@ export default class DemoContentForm extends Component {
                                        icon="ion-minus"
                                        onClick={() => {
                                           if (this.state.age > 0) {
-                                             this.setState({ age: this.state.age - 1 })
+                                             this.setState(state => ({ age: state.age - 1 }))
                                           }
                                        }}
                                        rounded
@@ -148,14 +143,16 @@ export default class DemoContentForm extends Component {
                                     <Button
                                        size="small"
                                        icon="ion-plus"
-                                       onClick={() => this.setState({ age: this.state.age + 1 })}
+                                       onClick={() => {
+                                          this.setState(state => ({ age: state.age + 1 }))
+                                       }}
                                        rounded
                                     />
                                  </ButtonGroup>
                               </GridCell>
                            </GridRow>
                         </Grid>
-                        <DateInput
+                        {/* <DateInput
                            name="date.start"
                            label="Start Date"
                            placeholder="Please enter a start date"
@@ -168,7 +165,7 @@ export default class DemoContentForm extends Component {
                            placeholder="Please enter an end date"
                            initialValue={new Date(2019, 7, 11, 5, 15)}
                            enableTime
-                        />
+                        /> */}
                         <Spacer size="2" />
                         <Textarea
                            name="description"

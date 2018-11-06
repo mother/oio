@@ -1,11 +1,15 @@
+/* eslint-disable react/require-default-props */
+
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Icon from '../../Icon'
 import Text from '../../Text'
 import View from '../../View'
+import { withRadioGroupContext } from '../RadioGroup'
+import { withFormContext } from '..'
 import style from './style.less'
 
-export default class Radio extends Component {
+class Radio extends Component {
    static propTypes = {
       checked: PropTypes.bool,
       children: PropTypes.node,
@@ -13,53 +17,81 @@ export default class Radio extends Component {
       label: PropTypes.string,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      oioFormContext: PropTypes.object,
+      radioGroupState: PropTypes.object,
       readOnly: PropTypes.bool,
-      value: PropTypes.string
+      value: PropTypes.string.isRequired
    }
 
    static defaultProps = {
-      checked: false,
       readOnly: false
    }
 
+   // TODO: Deprecate
    static contextTypes = {
-      OIOFormRadio: PropTypes.object,
       OIOStyles: PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         checked: props.checked
+   // TODO: An error should be thrown if onChange, name, readOnly is specified
+   // on both RadioGroup and Radio
+   static getDerivedStateFromProps(nextProps, prevState) {
+      // If using Radio inside RadioGroup, cannot set 'checked' on Radio
+      if (typeof nextProps.checked !== 'undefined' && typeof nextProps.radioGroupState !== 'undefined') {
+         throw new Error('Input elements must be either controlled or uncontrolled '
+            + '("checked" prop cannot be set when using Radio inside RadioGroup).')
       }
+
+      // const name = nextProps.radioGroupState.name || nextProps.name
+      const controlled = typeof nextProps.checked !== 'undefined'
+      if (controlled) {
+         // TODO: Should attempt to set formContext only if there is no group context present
+         // if (nextProps.checked) {
+         //    nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
+         // }
+
+         return { controlled }
+      }
+
+      if (typeof nextProps.radioGroupState !== 'undefined') {
+         const checked = nextProps.radioGroupState.value === nextProps.value
+         // if (checked) {
+         //    nextProps.oioFormContext.setValue(nextProps.name, nextProps.value)
+         // }
+
+         return { controlled, checked }
+      }
+
+      return { controlled }
    }
 
-   componentWillReceiveProps(nextProps) {
-      let checked = nextProps.checked
-      if (this.context.OIOFormRadio) {
-         checked = nextProps.value === this.context.OIOFormRadio.getProps().value
-      }
-
-      this.setState({ checked })
+   state = {
+      controlled: false
    }
 
    handleChange = (event) => {
-      this.setState({ checked: event.target.checked })
+      const checked = event.target.checked
+      if (!this.state.controlled) {
+         this.setState({ checked })
 
-      if (this.props.onChange) {
-         this.props.onChange(event, event.target.checked)
+         if (checked) {
+            const name = this.props.radioGroupState.name || this.props.name
+            if (typeof this.props.radioGroupState !== 'undefined') {
+               this.props.radioGroupState.onChange(event, event.target.value)
+            } else if (typeof this.props.oioFormContext !== 'undefined') {
+               this.props.oioFormContext.setValue(name, event.target.value)
+            }
+         }
+      }
+
+      if (checked && this.props.onChange) {
+         this.props.onChange(event, event.target.value)
       }
    }
 
    render() {
-      const name = this.context.OIOFormRadio
-         ? this.context.OIOFormRadio.name
-         : this.props.name
-
-      const readOnly = this.context.OIOFormRadio
-         ? this.context.OIOFormRadio.getProps().readOnly
-         : this.props.readOnly
+      const name = this.props.radioGroupState.name || this.props.name
+      const readOnly = this.props.radioGroupState.readOnly || this.props.readOnly
+      const checked = this.state.controlled ? this.props.checked : this.state.checked
 
       const readOnlyEventHandlers = {}
       if (readOnly) {
@@ -71,7 +103,7 @@ export default class Radio extends Component {
       let radioIcon = 'ion-ios-circle-outline'
       let radioIconStyle = {}
 
-      if (this.state.checked) {
+      if (checked) {
          radioIcon = 'ion-ios-circle-filled'
          radioIconStyle = {
             color: primaryColor
@@ -83,7 +115,7 @@ export default class Radio extends Component {
             <label className={style.radioLabel} htmlFor={this.props.id}>
                <input
                   id={this.props.id}
-                  checked={this.state.checked}
+                  checked={checked}
                   type="radio"
                   name={name}
                   value={this.props.value}
@@ -100,3 +132,5 @@ export default class Radio extends Component {
       )
    }
 }
+
+export default withFormContext(withRadioGroupContext(Radio))

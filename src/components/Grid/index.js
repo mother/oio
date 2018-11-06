@@ -1,111 +1,84 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import classNames from 'classnames'
-import { getWindowSize, getAttributeForCurrentSize } from '../../utils/size'
-import style from './style.less'
+import { css, cx } from 'emotion'
+import { breakpoints, setAttributeForBreakpoints } from '../../utils/size'
 
 export default class Grid extends Component {
+   /* eslint-disable */
    static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
       columns: PropTypes.string,
       gutter: PropTypes.string,
+      height: PropTypes.string,
+      style: PropTypes.object,
       width: PropTypes.string
    }
 
    static defaultProps = {
       columns: '12',
-      gutter: '6px'
+      gutter: '6px',
+      style: {},
+      width: '100%'
    }
+   /* eslint-enable */
 
    static childContextTypes = {
       GridCellStyle: PropTypes.object
    }
 
-   constructor(props) {
-      super(props)
-
-      this.state = {
-         size: getWindowSize(),
-         width: 'auto',
-         innerWidth: '100%',
-         cellWidth: 'auto',
-         cellGutter: 'auto'
-      }
-   }
-
    getChildContext() {
       const GridCellStyle = {
-         width: this.state.cellWidth,
-         gutter: this.state.cellGutter
+         columns: this.props.columns,
+         gutter: this.props.gutter
       }
 
       return { GridCellStyle }
    }
 
-   componentDidMount() {
-      this.updateGrid()
-      window.addEventListener('resize', this.windowSizeUpdated, false)
-   }
-
-   componentDidUpdate() {
-      this.updateGrid()
-   }
-
-   componentWillUnmount() {
-      window.removeEventListener('resize', this.windowSizeUpdated)
-   }
-
-   windowSizeUpdated = () => {
-      const windowSize = getWindowSize()
-      this.setState({ size: windowSize })
-   }
-
-   updateGrid() {
-      const columns = getAttributeForCurrentSize(this.state.size, this.props.columns)
-      const gutter = getAttributeForCurrentSize(this.state.size, this.props.gutter)
-
-      const calculatedGridWidth = this.node.clientWidth
-      const adjustedGridWidth = parseFloat(calculatedGridWidth) + parseFloat(gutter)
-      const cellWidth = (adjustedGridWidth) / columns
-
-      if (this.state.innerWidth !== adjustedGridWidth) {
-         this.setState({
-            innerWidth: adjustedGridWidth
-         })
-      }
-
-      if (this.state.cellWidth !== cellWidth) {
-         this.setState({
-            cellWidth,
-            cellGutter: gutter
-         })
-      }
+   setGridInnerGutter = (styleObj, breakpoint, attributeValue) => {
+      styleObj[breakpoint.key].width = `calc(100% + ${parseFloat(attributeValue)}px)`
    }
 
    render() {
-      const classes = classNames(style.gridContainer, this.props.className)
-      const gutter = parseFloat(getAttributeForCurrentSize(this.state.size, this.props.gutter))
+      const styleProps = ['gutter', 'width', 'height']
 
-      // TODO: Should use setState
-      if (this.props.width) {
-         const width = getAttributeForCurrentSize(this.state.size, this.props.width)
-         const unit = width.endsWith('px') ? 'px' : '%'
-         this.state.width = parseFloat(width) + unit
+      const gridStyleObj = {
+         display: 'block',
+         overflow: 'hidden',
+         margin: 'auto',
+         [breakpoints[0].key]: {},
+         [breakpoints[1].key]: {},
+         [breakpoints[2].key]: {},
+         [breakpoints[3].key]: {},
+         [breakpoints[4].key]: {},
+         ...this.props.style
+         // , backgroundColor: 'rgba(0,255,0, 0.1)', // XRAY
       }
 
-      const gridStyle = {
-         width: this.state.width
+      styleProps.forEach((prop) => {
+         setAttributeForBreakpoints(gridStyleObj, prop, this.props[prop])
+      })
+
+      const gridInnerStyleObj = {
+         position: 'relative',
+         top: 0,
+         left: 0,
+         [breakpoints[0].key]: {},
+         [breakpoints[1].key]: {},
+         [breakpoints[2].key]: {},
+         [breakpoints[3].key]: {},
+         [breakpoints[4].key]: {}
       }
 
-      const gridInnerStyle = {
-         width: this.state.innerWidth,
-         marginLeft: `-${gutter}px`
-      }
+      setAttributeForBreakpoints(gridInnerStyleObj, 'height', this.props.height)
+      setAttributeForBreakpoints(
+         gridInnerStyleObj, null, this.props.gutter, this.setGridInnerGutter
+      )
 
       return (
-         <div ref={node => (this.node = node)} className={classes} style={gridStyle}>
-            <div className={style.gridInnerContainer} style={gridInnerStyle}>
+         <div className={cx(css(gridStyleObj), this.props.className)}>
+            <div className={css(gridInnerStyleObj)}>
                {this.props.children}
             </div>
          </div>

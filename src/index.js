@@ -5,7 +5,7 @@ import ButtonGroup from './components/ButtonGroup'
 import Checkbox from './components/Form/Checkbox'
 import CheckboxGroup from './components/Form/CheckboxGroup'
 import Cover from './components/Cover'
-import DateInput from './components/Form/DateInput'
+// import DateInput from './components/Form/DateInput'
 import FileInput from './components/Form/FileInput'
 import Form from './components/Form'
 import Grid from './components/Grid'
@@ -24,6 +24,7 @@ import Popover from './components/Popover'
 import Radio from './components/Form/Radio'
 import RadioGroup from './components/Form/RadioGroup'
 import Select from './components/Form/Select'
+import SmartView from './components/SmartView'
 import Spacer from './components/Spacer'
 import Switch from './components/Form/Switch'
 import Table from './components/Table'
@@ -43,7 +44,7 @@ export {
    Checkbox,
    CheckboxGroup,
    Cover,
-   DateInput,
+   // DateInput,
    FileInput,
    Form,
    Grid,
@@ -71,5 +72,6 @@ export {
    TitleBar,
    ToolBar,
    Video,
-   View
+   View,
+   SmartView
 }
