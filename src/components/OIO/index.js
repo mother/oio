@@ -11,7 +11,8 @@ export default class OIO extends Component {
       className: PropTypes.string,
       fontFamily: PropTypes.string,
       fontSizes: PropTypes.object,
-      primaryColor: PropTypes.string
+      primaryColor: PropTypes.string,
+      fontWeights: PropTypes.object
    }
 
    static defaultProps = {
@@ -28,6 +29,7 @@ export default class OIO extends Component {
       const OIOStyles = {
          fontFamily: this.props.fontFamily,
          fontSizes: this.props.fontSizes,
+         fontWeights: this.props.fontWeights,
          primaryColor: this.props.primaryColor
       }
 
@@ -41,8 +43,12 @@ export default class OIO extends Component {
          OIOStyles.fontFamily = this.props.fontFamily
       }
 
+      // Set Root Document font size (for font-sizes using rem units)
+      document.documentElement.setAttribute('style', `font-size: ${defaults.base.fontSize}`)
+
       return (
          <div
+            id="oio-container"
             className={classNames(style.OIO, this.props.className)}
             style={OIOStyles}>
             {this.props.children}

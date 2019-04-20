@@ -5,17 +5,18 @@ import styles from './styles.less'
 
 export default class Popover extends Component {
    static propTypes = {
+      /* eslint-disable */
       children: PropTypes.node,
       className: PropTypes.string,
-      height: PropTypes.string,
       offset: PropTypes.string,
       position: PropTypes.string,
       width: PropTypes.string,
       zIndex: PropTypes.string.isRequired
+      /* eslint-enable */
    }
 
    static defaultProps = {
-      height: '60',
+      height: 'auto',
       offset: '24',
       position: 'above left',
       width: '300',
@@ -34,19 +35,22 @@ export default class Popover extends Component {
    }
 
    componentDidMount() {
-      window.addEventListener('click', this.hide, false)
+      window.addEventListener('mouseup', this.hide, false)
+      window.addEventListener('touchend', this.hide, false)
    }
 
    componentWillUnmount() {
-      window.removeEventListener('click', this.hide, false)
+      window.removeEventListener('mouseup', this.hide, false)
+      window.removeEventListener('touchend', this.hide, false)
    }
 
    show = (event) => {
       event.stopPropagation()
-
+      const position = this.props.position
       const triggerButton = event.currentTarget
+      const top = position.includes('above') ? (-1 * this.popover.clientHeight) : triggerButton.offsetTop
       this.setState({
-         top: triggerButton.offsetTop,
+         top,
          left: triggerButton.offsetLeft,
          buttonWidth: triggerButton.offsetWidth,
          visible: true
@@ -54,8 +58,9 @@ export default class Popover extends Component {
    }
 
    hide = (event) => {
-      event.stopPropagation()
-      this.setState({ visible: false })
+      if (!event.target.closest('.oio-popover')) {
+         this.setState({ visible: false })
+      }
    }
 
    render() {
@@ -63,13 +68,12 @@ export default class Popover extends Component {
       const visibilityClass = this.state.visible ? 'isVisible' : ''
       const popoverOffset = parseFloat(this.props.offset)
       const popoverWidth = parseFloat(this.props.width)
-      const popoverHeight = parseFloat(this.props.height)
       const popoverStyle = { zIndex }
 
       // Set Popover Vertical Position
       // If above is not specified in the position, assume it should be below
       if (position.includes('above')) {
-         popoverStyle.top = `${this.state.top - (2 * popoverOffset) - popoverHeight}px`
+         popoverStyle.top = `${this.state.top}px`
       } else {
          popoverStyle.top = `${this.state.top + popoverOffset}px`
       }
@@ -84,15 +88,15 @@ export default class Popover extends Component {
 
       // Set Popover Margins and Container
       const popoverContainerStyle = {
-         height: `${popoverHeight}px`,
          margin: `${popoverOffset}px`,
          width: popoverWidth
       }
 
       return (
          <div
+            ref={(popover) => { this.popover = popover }}
             style={popoverStyle}
-            className={classNames(styles.popover, styles[visibilityClass])}>
+            className={classNames('oio-popover', styles.popover, styles[visibilityClass])}>
             <div
                className={classNames(styles.popoverContainer, this.props.className)}
                style={popoverContainerStyle}>
